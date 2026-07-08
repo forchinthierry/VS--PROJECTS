@@ -16,6 +16,30 @@
       margin: 0;
       padding: 0;
       line-height: 1.6;
+      opacity: 1;
+      transition: opacity 0.25s ease;
+    }
+
+    body.is-exiting {
+      opacity: 0;
+    }
+
+    body.is-entering {
+      opacity: 0;
+    }
+
+    .page-overlay {
+      position: fixed;
+      inset: 0;
+      background: #fff;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease;
+      z-index: 9999;
+    }
+
+    .page-overlay.is-visible {
+      opacity: 1;
     }
 
     header {
@@ -471,7 +495,9 @@
     }
   </style>
 </head>
-<body>
+<body class="is-entering">
+
+  <div class="page-overlay"></div>
 
   <header>
     <img src="logo.png" alt="G-Spirit logo">
@@ -480,10 +506,10 @@
       <div class="tagline">Powering Dreams</div>
     </div>
     <div class="header-actions">
-      <button type="button" onclick="window.location.href='index.html'">Home</button>
-      <button type="button" onclick="window.location.href='terms.html'">Terms</button>
-      <button type="button" onclick="window.location.href='about.html'">About</button>
-      <button type="button" onclick="window.location.href='contact.html'">Contact Us</button>
+      <button type="button" onclick="navigateWithTransition('index.html')">Home</button>
+      <button type="button" onclick="navigateWithTransition('terms.html')">Terms</button>
+      <button type="button" onclick="navigateWithTransition('about.html')">About</button>
+      <button type="button" onclick="navigateWithTransition('contact.html')">Contact Us</button>
     </div>
   </header>
 
@@ -626,10 +652,33 @@
     &copy; 2026 G-Spirit Loan Solution. All rights reserved.
   </footer>
 
-  <button class="floating-apply" onclick="window.location.href='apply.html'" aria-label="Apply for a Loan">
+  <button class="floating-apply" onclick="navigateWithTransition('apply.html')" aria-label="Apply for a Loan">
     <span class="icon">💰</span>
     <span>Apply for<br>a Loan</span>
   </button>
+
+  <script>
+    (function () {
+      var overlay = document.querySelector('.page-overlay');
+
+      window.navigateWithTransition = function (targetUrl) {
+        if (!targetUrl) return false;
+        document.body.classList.add('is-exiting');
+        overlay.classList.add('is-visible');
+        setTimeout(function () {
+          window.location.href = targetUrl;
+        }, 220);
+        return false;
+      };
+
+      document.addEventListener('DOMContentLoaded', function () {
+        requestAnimationFrame(function () {
+          document.body.classList.remove('is-entering');
+          overlay.classList.remove('is-visible');
+        });
+      });
+    })();
+  </script>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
