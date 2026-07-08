@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="logo.png">
+  <title>Terms and Conditions - G-Spirit Loan Solution</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #e9b5b5;
+      color: #333;
+      margin: 0;
+      padding: 0;
+      line-height: 1.6;
+      opacity: 1;
+      transition: opacity 0.25s ease;
+    }
+
+    body.is-exiting {
+      opacity: 0;
+    }
+
+    body.is-entering {
+      opacity: 0;
+    }
+
+    .page-overlay {
+      position: fixed;
+      inset: 0;
+      background: #fff;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease;
+      z-index: 9999;
+    }
+
+    .page-overlay.is-visible {
+      opacity: 1;
+    }
+
+    header {
+      background-color: #2b3773;
+      color: white;
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    header img {
+      max-height: 80px;
+      width: auto;
+    }
+
+    .brand {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      text-align: left;
+      width: 33%;
+      min-width: 180px;
+      gap: 4px;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 22px;
+      line-height: 1.1;
+      color: white;
+    }
+
+    .tagline {
+      font-size: 14px;
+      font-style: italic;
+      color: #d0e8ef;
+      margin: 0;
+    }
+
+    .header-actions {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 8px;
+      width: auto;
+      min-width: 0;
+      flex-wrap: wrap;
+    }
+
+    .header-actions button {
+      background: none;
+      color: white;
+      border: none;
+      -webkit-appearance: none;
+      appearance: none;
+      padding: 4px;
+      font-size: 12px;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .header-actions button:hover {
+      text-decoration: underline;
+      background: transparent;
+    }
+
+    .container {
+      width: 95%;
+      max-width: 800px;
+      margin: 10px auto;
+      padding: 20px;
+    }
+
+    .card {
+      background: rgb(246, 244, 244);
+      border-radius: 8px;
+      padding: 25px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    }
+
+    .page-title {
+      text-align: center;
+      padding: 24px 18px;
+      margin-bottom: 20px;
+      background: linear-gradient(135deg, #2b3773, #16a085);
+      color: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    }
+
+    .page-title h1 {
+      margin: 0;
+      font-size: 30px;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+
+    h2 {
+      color: #16a085;
+      border-bottom: 2px solid #16a085;
+      padding-bottom: 5px;
+      margin-top: 30px;
+    }
+
+    h2:first-child {
+      margin-top: 0;
+    }
+
+    h3 {
+      color: #2b3773;
+      margin-bottom: 6px;
+    }
+
+    .key-points {
+      background: #fff;
+      border-left: 4px solid #16a085;
+      padding: 14px 18px;
+      margin: 16px 0;
+      border-radius: 4px;
+    }
+
+    .key-points ul {
+      margin: 8px 0 0;
+      padding-left: 20px;
+    }
+
+    ul, ol {
+      padding-left: 22px;
+    }
+
+    li {
+      margin-bottom: 6px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0;
+      font-size: 14px;
+    }
+
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px 10px;
+      text-align: right;
+    }
+
+    th {
+      background-color: #2b3773;
+      color: white;
+      text-align: right;
+    }
+
+    td:first-child, th:first-child {
+      text-align: left;
+    }
+
+    .updated {
+      font-size: 13px;
+      color: #777;
+      margin-top: 4px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      color: #999;
+      font-size: 14px;
+    }
+
+    .floating-apply-btn {
+      position: fixed;
+      right: 20px;
+      bottom: 24px;
+      z-index: 60;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 18px;
+      border: none;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #e2a63b, #c98a1f 70%, #f3c865);
+      color: #4a2e00;
+      font-weight: 700;
+      font-size: 14px;
+      cursor: pointer;
+      box-shadow: 0 12px 25px rgba(201, 138, 31, 0.28);
+      animation: floatPulse 2.2s ease-in-out infinite;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .floating-apply-btn:hover {
+      transform: translateY(-3px) scale(1.03);
+      box-shadow: 0 16px 30px rgba(201, 138, 31, 0.35);
+    }
+
+    .floating-apply-btn:active {
+      transform: scale(0.97);
+    }
+
+    .floating-apply-btn .icon {
+      font-size: 16px;
+    }
+
+    @keyframes floatPulse {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-4px); }
+    }
+
+    .footer-links {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 6px;
+    }
+
+    .footer-links a {
+      color: #2b3773;
+      text-decoration: none;
+      font-size: 13px;
+      padding: 4px 8px;
+      border: 1px solid #2b3773;
+      border-radius: 999px;
+      background: white;
+    }
+
+    .footer-links a:hover {
+      background: #2b3773;
+      color: white;
+    }
+
+    @media (max-width: 600px) {
+      header {
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        gap: 10px;
+        padding: 12px;
+      }
+
+      header img {
+        max-height: 44px;
+      }
+
+      .brand {
+        width: auto;
+        min-width: 0;
+        align-items: flex-start;
+        text-align: left;
+      }
+
+      header h1 {
+        font-size: 15px;
+      }
+
+      .tagline {
+        font-size: 11px;
+      }
+
+      .header-actions {
+        width: 100%;
+        min-width: 0;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+        gap: 6px;
+      }
+
+      .header-actions button {
+        font-size: 10px;
+        padding: 5px 6px;
+      }
+
+      table {
+        font-size: 12px;
+      }
+
+      th, td {
+        padding: 6px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <img src="logo.png" alt="G-Spirit logo">
+    <div class="brand">
+      <h1>G-SPIRIT LOAN SOLUTION</h1>
+      <div class="tagline">Powering Dreams</div>
+    </div>
+    <div class="header-actions">
+      <button type="button" onclick="navigateWithTransition('index.html')">Home</button>
+      <button type="button" onclick="navigateWithTransition('terms.html')">Terms</button>
+      <button type="button" onclick="navigateWithTransition('about.html')">About</button>
+      <button type="button" onclick="navigateWithTransition('contact.html')">Contact Us</button>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="page-title">
+      <h1>Terms and Conditions</h1>
+    </div>
+
+    <div class="card">
+
+      <h2>1. Introduction</h2>
+      <p>Welcome to G-Spirit Loan Solution ("we," "our," or "us"). By accessing or using our loan services, you agree to be bound by these Terms and Conditions. Please read them carefully before applying for a loan.</p>
+
+      <div class="key-points">
+        <strong>Key Points</strong>
+        <ul>
+          <li>Loans are subject to eligibility and collateral verification</li>
+          <li>Interest rate: 10% per month</li>
+          <li>Processing fee: 10% upfront</li>
+          <li>Late payment penalty: 5% per day</li>
+        </ul>
+      </div>
+
+      <h2>2. Eligibility</h2>
+      <p>To apply for a loan with G-Spirit Loan Solution, you must:</p>
+      <ul>
+        <li>Be at least 21 years old</li>
+        <li>Be a citizen or legal resident of Cameroon</li>
+        <li>Have a valid government-issued ID</li>
+        <li>Provide proof of residence (utility bill, rent receipt, etc.)</li>
+        <li>Have a verifiable source of income</li>
+        <li>Own acceptable collateral that can be physically verified</li>
+        <li>Have an active mobile money account (MTN or Orange) or bank account</li>
+      </ul>
+
+      <h2>3. Loan Terms</h2>
+
+      <h3>3.1 Interest Rate</h3>
+      <p>All loans carry a fixed interest rate of 10% per month, calculated on the principal amount for the duration of the loan.</p>
+
+      <h3>3.2 Processing Fee</h3>
+      <p>A one-time processing fee of 10% of the loan amount is deducted upfront, before funds are disbursed.</p>
+
+      <h3>3.3 Repayment</h3>
+      <p>Loans must be repaid by the agreed date. Repaying early is encouraged and carries no penalty — if you settle a loan ahead of schedule, interest is only charged for the period the funds were actually in use.</p>
+
+      <table>
+        <tr>
+          <th>Loan Amount (XAF)</th>
+          <th>Processing Fee (10%)</th>
+          <th>Monthly Interest (10%)</th>
+          <th>Total Repayment (1 month)</th>
+        </tr>
+        <tr>
+          <td>50,000</td>
+          <td>5,000</td>
+          <td>5,000</td>
+          <td>55,000</td>
+        </tr>
+        <tr>
+          <td>100,000</td>
+          <td>10,000</td>
+          <td>10,000</td>
+          <td>110,000</td>
+        </tr>
+        <tr>
+          <td>500,000</td>
+          <td>50,000</td>
+          <td>50,000</td>
+          <td>550,000</td>
+        </tr>
+        <tr>
+          <td>1,000,000</td>
+          <td>100,000</td>
+          <td>100,000</td>
+          <td>1,100,000</td>
+        </tr>
+      </table>
+
+      <h2>4. Collateral Requirements</h2>
+      <p>Every loan requires physical collateral that our team can verify in person. We accept:</p>
+      <ul>
+        <li><strong>Land titles</strong> — must be registered and free of any disputes</li>
+        <li><strong>Vehicle registration papers</strong> — cars, motorcycles, or trucks in good condition</li>
+        <li><strong>Business equipment</strong> — machinery, electronics, or tools, valued based on condition</li>
+        <li><strong>Property deeds</strong> — houses or commercial properties</li>
+        <li><strong>Other valuable assets</strong> — high-value electronics, appliances, or inventory</li>
+      </ul>
+      <p>Collateral must be worth at least 1.5 times the loan amount. A physical inspection is carried out before any loan is approved.</p>
+
+      <h2>5. Late Payments and Default</h2>
+
+      <h3>5.1 Late Payment Penalty</h3>
+      <p>A 5% daily penalty applies to any outstanding balance not repaid by the due date. This penalty continues to accrue until the full amount is settled.</p>
+
+      <h3>5.2 Grace Period</h3>
+      <p>A 3-day grace period follows the due date, during which no extra penalties apply. We encourage borrowers to reach out during this window to discuss extension options.</p>
+
+      <h3>5.3 Default</h3>
+      <p>If a loan remains unpaid 15 days past its due date, it is considered in default. In this case:</p>
+      <ul>
+        <li>Your collateral may be seized and sold to recover the debt</li>
+        <li>Legal action may be taken to recover the outstanding amount</li>
+        <li>Your information may be shared with credit bureaus</li>
+        <li>Collection costs may be added to your balance</li>
+      </ul>
+
+      <h2>6. Loan Extension and Restructuring</h2>
+      <p>If you expect trouble repaying on time, contact us before the due date. Depending on your situation, we may offer:</p>
+      <ul>
+        <li><strong>Extension</strong> — extending your loan term, with adjusted interest</li>
+        <li><strong>Partial payment</strong> — paying part now and extending the remainder</li>
+        <li><strong>Restructuring</strong> — a new payment plan tailored to your circumstances</li>
+      </ul>
+      <p>Extension fees may apply — reach out to discuss what works for you.</p>
+
+      <h2>7. Application Process</h2>
+      <ol>
+        <li><strong>Submit Application</strong> — complete the online form with accurate information</li>
+        <li><strong>Document Verification</strong> — provide your ID, proof of residence, and collateral documents</li>
+        <li><strong>Collateral Inspection</strong> — our agent will contact you to arrange a physical inspection</li>
+        <li><strong>Approval</strong> — once verified, expect a decision within 24 hours</li>
+        <li><strong>Disbursement</strong> — approved funds are sent to your mobile money or bank account</li>
+      </ol>
+
+      <h2>8. Accuracy of Information</h2>
+      <p>By submitting an application, you confirm that everything you've provided is accurate and complete. Submitting false or misleading information may lead to:</p>
+      <ul>
+        <li>Immediate rejection of your application</li>
+        <li>Termination of any active loans</li>
+        <li>Legal action for fraud</li>
+        <li>Permanent exclusion from our services</li>
+      </ul>
+
+      <h2>9. Privacy and Data Protection</h2>
+      <p>We handle your personal information in line with our Privacy Policy. By using our services, you agree to:</p>
+      <ul>
+        <li>The collection and storage of your personal data</li>
+        <li>Verification of your information with relevant third parties</li>
+        <li>Being contacted by phone, email, and WhatsApp</li>
+        <li>Your information being shared with trusted service partners where necessary to deliver our services</li>
+      </ul>
+
+      <h2>10. Communication</h2>
+      <p>By applying for a loan, you agree to receive communications from us via phone call, SMS, WhatsApp, and email — including loan updates, payment reminders, and occasional promotional offers.</p>
+
+      <h2>11. Limitation of Liability</h2>
+      <p>G-Spirit Loan Solution is not liable for indirect, incidental, or consequential damages arising from use (or inability to use) our services, delays in processing or disbursement, inaccurate information you've supplied, or the actions of third-party partners. Our total liability in any case will not exceed the amount of the loan provided.</p>
+
+      <h2>12. Changes to These Terms</h2>
+      <p>We may update these terms from time to time. Changes take effect as soon as they're posted on our website. Continuing to use our services after an update means you accept the revised terms.</p>
+
+      <h2>13. Governing Law</h2>
+      <p>These terms are governed by the laws of the Republic of Cameroon. Any disputes will fall under the exclusive jurisdiction of the courts of Cameroon.</p>
+
+      <p class="updated">Last updated: July 2026</p>
+
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var overlay = document.createElement('div');
+      overlay.className = 'page-overlay';
+      document.body.appendChild(overlay);
+
+      window.navigateWithTransition = function (targetUrl) {
+        if (!targetUrl) return false;
+        document.body.classList.add('is-exiting');
+        overlay.classList.add('is-visible');
+        setTimeout(function () {
+          window.location.href = targetUrl;
+        }, 220);
+        return false;
+      };
+
+      document.addEventListener('DOMContentLoaded', function () {
+        requestAnimationFrame(function () {
+          document.body.classList.remove('is-entering');
+          overlay.classList.remove('is-visible');
+        });
+      });
+    })();
+  </script>
+
+  <button class="floating-apply-btn" type="button" onclick="navigateWithTransition('apply.html')">
+    <span class="icon">💰</span>
+    <span>Apply for Loan</span>
+  </button>
+
+  <footer>
+    <div class="footer-links">
+      <a href="privacy.html" target="_self">Privacy Policy</a>
+      <span>&copy; 2026 G-Spirit Loan Solution. All rights reserved.</span>
+    </div>
+  </footer>
+
+</body>
+</html>

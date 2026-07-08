@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="logo.png">
+  <title>Become a Partner - G-Spirit Loan Solution</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f5eded;
+      color: #333;
+      margin: 0;
+      padding: 0;
+      line-height: 1.6;
+      opacity: 1;
+      transition: opacity 0.25s ease;
+    }
+
+    body.is-exiting {
+      opacity: 0;
+    }
+
+    body.is-entering {
+      opacity: 0;
+    }
+
+    .page-overlay {
+      position: fixed;
+      inset: 0;
+      background: #fff;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease;
+      z-index: 9999;
+    }
+
+    .page-overlay.is-visible {
+      opacity: 1;
+    }
+
+    header {
+      background-color: #2b3773;
+      color: white;
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    header img {
+      max-height: 80px;
+      width: auto;
+    }
+
+    .brand {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      text-align: left;
+      width: 33%;
+      min-width: 180px;
+      gap: 4px;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 22px;
+      line-height: 1.1;
+    }
+
+    .tagline {
+      font-size: 14px;
+      font-style: italic;
+      color: #d0e8ef;
+      margin: 0;
+    }
+
+    .header-actions {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 8px;
+      width: auto;
+      min-width: 0;
+      flex-wrap: nowrap;
+      margin-left: auto;
+      overflow-x: auto;
+    }
+
+    .header-actions button {
+      background: none;
+      color: white;
+      border: none;
+      -webkit-appearance: none;
+      appearance: none;
+      padding: 4px;
+      font-size: 12px;
+      cursor: pointer;
+      white-space: nowrap;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .header-actions button:hover {
+      text-decoration: underline;
+      background: transparent;
+    }
+
+    .page-banner {
+      background: #fff;
+      color: #2b3773;
+      text-align: center;
+      padding: 24px 20px;
+      max-width: 700px;
+      margin: 28px auto 10px;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(43, 55, 115, 0.15);
+      border: 1px solid rgba(22, 160, 133, 0.25);
+    }
+
+    .page-banner h1 {
+      margin: 0;
+      font-size: 30px;
+      color: #16a085;
+    }
+
+    .page-banner p {
+      margin: 8px 0 0;
+      font-size: 15px;
+      color: #5c5c5c;
+      opacity: 1;
+    }
+
+    .container {
+      width: 95%;
+      max-width: 1100px;
+      margin: 10px auto;
+      padding: 20px;
+    }
+
+    .hero {
+      text-align: center;
+      padding: 20px 20px 10px;
+    }
+
+    .hero p {
+      font-size: 17px;
+      color: #555;
+      max-width: 650px;
+      margin: 0 auto;
+    }
+
+    .card {
+      background: rgb(246, 244, 244);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    }
+
+    h2 {
+      color: #16a085;
+      border-bottom: 2px solid #16a085;
+      padding-bottom: 5px;
+      margin-top: 0;
+    }
+
+    h3 {
+      color: #2b3773;
+      margin-bottom: 6px;
+    }
+
+    .share-highlight {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      background: linear-gradient(135deg, #fff8eb 0%, #ffe7b0 60%, #fffdf7 100%);
+      border-radius: 12px;
+      padding: 18px 20px;
+      margin: 16px 0 20px;
+      border: 1px solid rgba(226,166,59,0.35);
+    }
+
+    .share-highlight .num {
+      font-size: 26px;
+      font-weight: bold;
+      color: #2b3773;
+      white-space: nowrap;
+    }
+
+    .share-highlight p {
+      margin: 0;
+      font-size: 14px;
+      color: #4a3f5c;
+    }
+
+    .terms-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 10px;
+    }
+
+    .term-box {
+      background: #fff;
+      border-radius: 10px;
+      padding: 16px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+    }
+
+    .term-box strong {
+      display: block;
+      color: #2b3773;
+      margin-bottom: 4px;
+      font-size: 14px;
+    }
+
+    .term-box span {
+      font-size: 13px;
+      color: #555;
+    }
+
+    .disclaimer {
+      font-size: 12.5px;
+      color: #8a6d00;
+      background: #fff8e1;
+      border-left: 4px solid #e2a63b;
+      padding: 12px 16px;
+      border-radius: 4px;
+      margin-top: 16px;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 24px;
+      align-items: start;
+    }
+
+    .application-panel,
+    .summary-panel {
+      background: #fff;
+      border-radius: 14px;
+      padding: 22px;
+      box-shadow: 0 8px 24px rgba(43, 55, 115, 0.12);
+      border: 1px solid rgba(43, 55, 115, 0.08);
+    }
+
+    .summary-panel {
+      background: linear-gradient(135deg, #fff8eb 0%, #ffe7b0 45%, #fffdf7 100%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .summary-panel::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at top left, rgba(255,255,255,0.8), transparent 44%);
+      pointer-events: none;
+    }
+
+    .summary-panel h3 {
+      border-bottom: 2px solid #16a085;
+      padding-bottom: 5px;
+      color: #16a085;
+    }
+
+    .summary-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 10px;
+      margin-bottom: 12px;
+      border-radius: 999px;
+      background: rgba(22, 160, 133, 0.15);
+      color: #0f6d5d;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .summary-list {
+      display: grid;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .summary-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 12px;
+      background: rgba(255,255,255,0.75);
+      border: 1px solid rgba(43,55,115,0.08);
+      border-radius: 10px;
+    }
+
+    .summary-item strong {
+      color: #2b3773;
+      font-size: 13px;
+    }
+
+    .summary-item span {
+      color: #4a3f5c;
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    label {
+      display: block;
+      font-weight: bold;
+      font-size: 14px;
+      margin-top: 15px;
+    }
+
+    input,
+    textarea,
+    select {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    .consent {
+      margin-bottom: 15px;
+    }
+
+    .checkbox-label {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .checkbox-label input[type="checkbox"] {
+      margin-top: 4px;
+      width: auto;
+    }
+
+    button {
+      background-color: #25D366;
+      color: white;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+      width: 100%;
+    }
+
+    button:hover {
+      background-color: #1ebe5d;
+    }
+
+    .download-btn {
+      background-color: #2b3773;
+      margin-top: 10px;
+    }
+
+    .download-btn:hover {
+      background-color: #1f2857;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      color: #999;
+      font-size: 14px;
+    }
+
+    .floating-apply {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 30%, #ffe9a8, #e2a63b 65%, #c98a1f 100%);
+      color: #4a2e00;
+      border: none;
+      font-family: Arial, sans-serif;
+      font-weight: bold;
+      font-size: 12px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: inset -8px -10px 20px rgba(0,0,0,0.12), inset 8px 8px 16px rgba(255,255,255,0.35), 0 10px 20px rgba(43,55,115,0.3);
+      animation: floatApplyBob 5s ease-in-out infinite;
+      z-index: 999;
+      line-height: 1.2;
+    }
+
+    .floating-apply .icon {
+      font-size: 20px;
+      margin-bottom: 2px;
+    }
+
+    .floating-apply:hover {
+      transform: scale(1.08);
+    }
+
+    @keyframes floatApplyBob {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-12px); }
+    }
+
+    @media (max-width: 600px) {
+      .floating-apply {
+        width: 72px;
+        height: 72px;
+        font-size: 10px;
+        bottom: 16px;
+        right: 16px;
+      }
+
+      .floating-apply .icon {
+        font-size: 16px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      header {
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        gap: 10px;
+        padding: 12px;
+      }
+
+      header img {
+        max-height: 44px;
+      }
+
+      .brand {
+        width: auto;
+        min-width: 0;
+        align-items: flex-start;
+        text-align: left;
+      }
+
+      header h1 {
+        font-size: 15px;
+      }
+
+      .tagline {
+        font-size: 11px;
+      }
+
+      .header-actions {
+        width: 100%;
+        min-width: 0;
+        justify-content: flex-start;
+        flex-wrap: nowrap;
+        gap: 6px;
+        margin-left: 0;
+        overflow-x: auto;
+      }
+
+      .header-actions button {
+        font-size: 10px;
+        padding: 5px 6px;
+      }
+
+      .page-banner h1 {
+        font-size: 24px;
+      }
+
+      .terms-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .share-highlight {
+        flex-direction: column;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body class="is-entering">
+
+  <div class="page-overlay"></div>
+
+  <header>
+    <img src="logo.png" alt="G-Spirit logo">
+    <div class="brand">
+      <h1>G-SPIRIT LOAN SOLUTION</h1>
+      <div class="tagline">Powering Dreams</div>
+    </div>
+    <div class="header-actions">
+      <button type="button" onclick="navigateWithTransition('index.html')">Home</button>
+      <button type="button" onclick="navigateWithTransition('terms.html')">Terms</button>
+      <button type="button" onclick="navigateWithTransition('about.html')">About</button>
+      <button type="button" onclick="navigateWithTransition('contact.html')">Contact Us</button>
+    </div>
+  </header>
+
+  <div class="page-banner">
+    <h1>Become a Partner</h1>
+    <p>Grow your money alongside a business that's already growing dreams</p>
+  </div>
+
+  <div class="container">
+
+    <div class="hero">
+      <p>G-Spirit Loan Solution is opening its doors to a small circle of partners who want their capital working for them — not sitting idle. Every partnership begins with a simple, fixed unit: one Growth Share.</p>
+    </div>
+
+    <div class="card">
+      <h2>The Growth Share</h2>
+
+      <div class="share-highlight">
+        <div class="num">1 Share = 100,000 XAF</div>
+        <p>Every new partner joins by acquiring one or more Growth Shares. Your total contribution is simply the number of shares you hold, multiplied by 100,000 XAF. Straightforward, transparent, and easy to track.</p>
+      </div>
+
+      <h3>How Partnership Works</h3>
+      <div class="terms-grid">
+        <div class="term-box">
+          <strong>🌱 Capital at Work</strong>
+          <span>Your contribution joins the loan pool that funds applicants — teachers, farmers, small businesses, and more.</span>
+        </div>
+        <div class="term-box">
+          <strong>📊 Profit Sharing</strong>
+          <span>Partners receive a share of net profits generated from interest and fees, proportional to the number of shares held.</span>
+        </div>
+        <div class="term-box">
+          <strong>🗓️ Payout Schedule</strong>
+          <span>Profit distributions are reviewed and paid out on a schedule agreed with each partner — typically quarterly.</span>
+        </div>
+        <div class="term-box">
+          <strong>🔒 Commitment Period</strong>
+          <span>Shares are held for a minimum term before withdrawal to keep the loan pool stable for borrowers.</span>
+        </div>
+        <div class="term-box">
+          <strong>🚪 Exit &amp; Withdrawal</strong>
+          <span>Partners may request to withdraw capital after the minimum term, subject to available liquidity and notice period.</span>
+        </div>
+        <div class="term-box">
+          <strong>🤝 Silent Partnership</strong>
+          <span>Partners contribute capital and share in profits but are not involved in day-to-day lending decisions.</span>
+        </div>
+      </div>
+
+      <div class="disclaimer">
+        ⚠️ <strong>Important:</strong> Partnership involves real financial risk — profits are not guaranteed and depend on loan repayment performance. Exact profit-sharing percentages, payout timing, and withdrawal terms will be confirmed in a signed partnership agreement before any funds are accepted. We strongly encourage every prospective partner to review the agreement carefully (and seek independent legal or financial advice) before contributing capital.
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="form-grid">
+        <div class="application-panel">
+          <h2>Partnership Application</h2>
+
+          <form id="partnerForm" onsubmit="sendPartnerToWhatsApp(); return false;">
+            <label for="pname">Full Name</label>
+            <input type="text" id="pname" name="pname" placeholder="Enter your full name" required>
+
+            <label for="pphone">Phone Number</label>
+            <input type="tel" id="pphone" name="pphone" placeholder="e.g. +237 6 1234 5678" pattern="^[0-9+\s-]{7,20}$" required>
+
+            <label for="pemail">Email Address</label>
+            <input type="email" id="pemail" name="pemail" placeholder="you@example.com" required>
+
+            <label for="presidence">Place of Residence</label>
+            <input type="text" id="presidence" name="presidence" placeholder="City, neighborhood, or address" required>
+
+            <label for="poccupation">Occupation / Business</label>
+            <input type="text" id="poccupation" name="poccupation" placeholder="Your profession or business" required>
+
+            <label for="pshares">Number of Growth Shares</label>
+            <input type="number" id="pshares" name="pshares" min="1" step="1" placeholder="e.g. 5" required>
+
+            <label for="ppayout">Preferred Payout Frequency</label>
+            <select id="ppayout" name="ppayout" required>
+              <option value="">Select frequency</option>
+              <option value="Quarterly">Quarterly</option>
+              <option value="Bi-Annual">Bi-Annual</option>
+              <option value="Annual">Annual</option>
+            </select>
+
+            <label for="ppayment">Preferred Payment Method</label>
+            <select id="ppayment" name="ppayment" required>
+              <option value="">Select method</option>
+              <option value="Mobile Money (MTN)">Mobile Money (MTN)</option>
+              <option value="Mobile Money (Orange)">Mobile Money (Orange)</option>
+              <option value="Bank Transfer">Bank Transfer</option>
+              <option value="Cash">Cash</option>
+            </select>
+
+            <label for="preason">Why do you want to partner with us?</label>
+            <textarea id="preason" name="preason" rows="3" placeholder="Tell us briefly what draws you to this partnership"></textarea>
+
+            <label for="pnextofkin">Next of Kin (Name &amp; Contact)</label>
+            <input type="text" id="pnextofkin" name="pnextofkin" placeholder="Full name and phone number">
+
+            <div class="consent">
+              <label class="checkbox-label">
+                <input type="checkbox" id="pconsent" name="pconsent" required>
+                <span>I confirm that all information provided is accurate. I understand that this application is a request to partner, not a binding agreement, and that final terms will be confirmed in a signed partnership contract. I understand that returns are not guaranteed and my capital is at risk.</span>
+              </label>
+            </div>
+
+            <button type="submit">Submit via WhatsApp</button>
+            <button type="button" class="download-btn" onclick="downloadPartnerPDF()">Download Application (PDF)</button>
+          </form>
+        </div>
+
+        <div class="summary-panel">
+          <div class="summary-badge">✨ Your Stake</div>
+          <h3>Partnership Summary</h3>
+          <p style="margin-top:8px; color:#5e506f;">A quick snapshot of your proposed contribution.</p>
+          <div class="summary-list">
+            <div class="summary-item">
+              <strong>Shares</strong>
+              <span id="sharesCount">0</span>
+            </div>
+            <div class="summary-item">
+              <strong>Value per Share</strong>
+              <span>100,000 XAF</span>
+            </div>
+            <div class="summary-item">
+              <strong>Total Contribution</strong>
+              <span id="totalContribution">0.00</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <footer>
+    &copy; 2026 G-Spirit Loan Solution. All rights reserved.
+  </footer>
+
+  <button class="floating-apply" onclick="navigateWithTransition('apply.html')" aria-label="Apply for a Loan">
+    <span class="icon">💰</span>
+    <span>Apply for<br>a Loan</span>
+  </button>
+
+  <script>
+    (function () {
+      var overlay = document.querySelector('.page-overlay');
+
+      window.navigateWithTransition = function (targetUrl) {
+        if (!targetUrl) return false;
+        document.body.classList.add('is-exiting');
+        overlay.classList.add('is-visible');
+        setTimeout(function () {
+          window.location.href = targetUrl;
+        }, 220);
+        return false;
+      };
+
+      document.addEventListener('DOMContentLoaded', function () {
+        requestAnimationFrame(function () {
+          document.body.classList.remove('is-entering');
+          overlay.classList.remove('is-visible');
+        });
+      });
+    })();
+  </script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+  <script>
+    var SHARE_VALUE = 100000;
+
+    function formatCurrency(value) {
+      return parseFloat(value).toLocaleString('en-US', {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      });
+    }
+
+    function updatePartnerSummary() {
+      var shares = parseInt(document.getElementById('pshares').value, 10) || 0;
+      var total = shares * SHARE_VALUE;
+      document.getElementById('sharesCount').textContent = shares;
+      document.getElementById('totalContribution').textContent = formatCurrency(total);
+    }
+
+    function sendPartnerToWhatsApp() {
+      var form = document.getElementById('partnerForm');
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+      }
+
+      updatePartnerSummary();
+
+      var name = document.getElementById('pname').value.trim();
+      var phone = document.getElementById('pphone').value.trim();
+      var email = document.getElementById('pemail').value.trim();
+      var residence = document.getElementById('presidence').value.trim();
+      var occupation = document.getElementById('poccupation').value.trim();
+      var shares = document.getElementById('pshares').value;
+      var payout = document.getElementById('ppayout').value;
+      var payment = document.getElementById('ppayment').value;
+      var reason = document.getElementById('preason').value.trim();
+      var nextOfKin = document.getElementById('pnextofkin').value.trim();
+      var total = document.getElementById('totalContribution').textContent;
+
+      var divider = "――――――――――――――――";
+
+      var text = "*G-SPIRIT PARTNERSHIP APPLICATION*\n" + divider + "\n\n"
+
+               + "*APPLICANT DETAILS*\n"
+               + "Name: " + name + "\n"
+               + "Phone: " + phone + "\n"
+               + "Email: " + email + "\n"
+               + "Residence: " + residence + "\n"
+               + "Occupation/Business: " + occupation + "\n\n"
+
+               + "*PARTNERSHIP REQUEST*\n"
+               + "Growth Shares: " + shares + "\n"
+               + "Value per Share: 100,000 XAF\n"
+               + "Total Contribution: " + total + " XAF\n"
+               + "Preferred Payout: " + payout + "\n"
+               + "Payment Method: " + payment + "\n\n"
+
+               + "*ADDITIONAL INFO*\n"
+               + "Reason for Partnering: " + (reason || "N/A") + "\n"
+               + "Next of Kin: " + (nextOfKin || "N/A") + "\n\n"
+
+               + divider + "\n"
+               + "Partnership Terms: Acknowledged ✓";
+
+      var url = 'https://wa.me/237620569864?text=' + encodeURIComponent(text);
+      window.open(url, '_blank');
+    }
+
+    function loadImageAsDataURL(url) {
+      return fetch(url)
+        .then(function (res) {
+          if (!res.ok) throw new Error('Logo not found');
+          return res.blob();
+        })
+        .then(function (blob) {
+          return new Promise(function (resolve, reject) {
+            var reader = new FileReader();
+            reader.onloadend = function () { resolve(reader.result); };
+            reader.onerror = reject;
+            reader.readAsDataURL(blob);
+          });
+        })
+        .catch(function () {
+          return null;
+        });
+    }
+
+    function downloadPartnerPDF() {
+      var form = document.getElementById('partnerForm');
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+      }
+
+      updatePartnerSummary();
+
+      var name = document.getElementById('pname').value.trim();
+      var phone = document.getElementById('pphone').value.trim();
+      var email = document.getElementById('pemail').value.trim();
+      var residence = document.getElementById('presidence').value.trim();
+      var occupation = document.getElementById('poccupation').value.trim();
+      var shares = document.getElementById('pshares').value;
+      var payout = document.getElementById('ppayout').value;
+      var payment = document.getElementById('ppayment').value;
+      var reason = document.getElementById('preason').value.trim();
+      var nextOfKin = document.getElementById('pnextofkin').value.trim();
+      var total = document.getElementById('totalContribution').textContent;
+
+      loadImageAsDataURL('logo.png').then(function (logoDataUrl) {
+        buildPDF(logoDataUrl);
+      });
+
+      function buildPDF(logo) {
+        var jsPDFLib = window.jspdf.jsPDF;
+        var doc = new jsPDFLib();
+        var pageWidth = doc.internal.pageSize.getWidth();
+        var pageHeight = doc.internal.pageSize.getHeight();
+        var y = 20;
+
+        doc.setFillColor(43, 55, 115);
+        doc.rect(0, 0, pageWidth, 34, 'F');
+
+        if (logo) {
+          try {
+            doc.addImage(logo, 'PNG', 12, 6, 24, 24);
+          } catch (e) {}
+        }
+
+        doc.setTextColor(255, 255, 255);
+        doc.setFontSize(16);
+        doc.text('G-SPIRIT LOAN SOLUTION', logo ? 40 : 12, 15);
+        doc.setFontSize(10);
+        doc.text('Powering Dreams', logo ? 40 : 12, 22);
+
+        doc.setFontSize(9);
+        doc.text(' +237 620 569 864', pageWidth - 12, 12, { align: 'right' });
+        doc.text(' gloansolution@gmail.com', pageWidth - 12, 18, { align: 'right' });
+        doc.text('www.gspiritloans.com', pageWidth - 12, 24, { align: 'right' });
+
+        if (logo) {
+          try {
+            doc.saveGraphicsState();
+            doc.setGState(doc.GState({ opacity: 0.18 }));
+            doc.addImage(logo, 'PNG', pageWidth / 2 - 70, pageHeight / 2 - 70, 140, 140);
+            doc.restoreGraphicsState();
+          } catch (e) {}
+        }
+
+        y = 46;
+        doc.setTextColor(43, 55, 115);
+        doc.setFontSize(14);
+        doc.text('Partnership Application', 12, y);
+        y += 10;
+
+        function section(title) {
+          doc.setFontSize(11);
+          doc.setTextColor(22, 160, 133);
+          doc.text(title, 12, y);
+          doc.setDrawColor(22, 160, 133);
+          doc.line(12, y + 1.5, pageWidth - 12, y + 1.5);
+          y += 8;
+          doc.setTextColor(40, 40, 40);
+          doc.setFontSize(10);
+        }
+
+        function row(label, value) {
+          doc.setFont(undefined, 'bold');
+          doc.text(label + ':', 12, y);
+          doc.setFont(undefined, 'normal');
+          doc.text(String(value || 'N/A'), 60, y);
+          y += 7;
+        }
+
+        section('Applicant Details');
+        row('Name', name);
+        row('Phone', phone);
+        row('Email', email);
+        row('Residence', residence);
+        row('Occupation/Business', occupation);
+        y += 4;
+
+        section('Partnership Request');
+        row('Growth Shares', shares);
+        row('Value per Share', '100,000 XAF');
+        row('Total Contribution', total + ' XAF');
+        row('Preferred Payout', payout);
+        row('Payment Method', payment);
+        y += 4;
+
+        section('Additional Info');
+        row('Reason for Partnering', reason);
+        row('Next of Kin', nextOfKin);
+        y += 6;
+
+        doc.setFontSize(9);
+        doc.setTextColor(120, 120, 120);
+        doc.text('Partnership Terms: Acknowledged', 12, y);
+        y += 8;
+        doc.text('Generated: ' + new Date().toLocaleString(), 12, y);
+
+         y += 10;
+        doc.setFont(undefined, 'bolditalic');
+        doc.setTextColor(22, 160, 133);
+        doc.text('Please send this document on WhatsApp to +237 620 569 864.', pageWidth / 2, y, { align: 'center' });
+
+        doc.setDrawColor(220, 220, 220);
+        doc.line(12, pageHeight - 16, pageWidth - 12, pageHeight - 16);
+        doc.setFontSize(8);
+        doc.setTextColor(140, 140, 140);
+        doc.text('© 2026 G-Spirit Loan Solution. All rights reserved.', pageWidth / 2, pageHeight - 10, { align: 'center' });
+
+        var filename = 'GSpirit_Partnership_Application_' + (name ? name.replace(/\s+/g, '_') : 'applicant') + '.pdf';
+        doc.save(filename);
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+      var sharesField = document.getElementById('pshares');
+      sharesField.addEventListener('input', updatePartnerSummary);
+      updatePartnerSummary();
+    });
+  </script>
+
+</body>
+</html>
