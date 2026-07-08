@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>G-Spirit Loan Solution - Welcome</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Nunito', Arial, sans-serif;
+      color: #2b3773;
+      background: radial-gradient(circle at 20% 15%, #f7d9d9 0%, #e9b5b5 45%, #dba3c4 100%);
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+      opacity: 1;
+      transition: opacity 0.25s ease;
+    }
+
+    body.is-exiting {
+      opacity: 0;
+    }
+
+    body.is-entering {
+      opacity: 0;
+    }
+
+    .page-overlay {
+      position: fixed;
+      inset: 0;
+      background: #fff;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease;
+      z-index: 9999;
+    }
+
+    .page-overlay.is-visible {
+      opacity: 1;
+    }
+
+    header {
+      background-color: #2b3773;
+      color: white;
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      position: relative;
+      z-index: 5;
+    }
+
+    header img {
+      max-height: 60px;
+      width: auto;
+    }
+
+    header h1 {
+      margin: 0;
+      font-family: 'Fredoka', sans-serif;
+      font-size: 20px;
+      letter-spacing: 0.5px;
+    }
+
+    /* Ambient background bubbles */
+    .ambient {
+      position: absolute;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.55), rgba(255,255,255,0.05) 60%);
+      pointer-events: none;
+      z-index: 0;
+      animation: drift 14s ease-in-out infinite;
+    }
+
+    @keyframes drift {
+      0%, 100% { transform: translateY(0px) translateX(0px); }
+      50% { transform: translateY(-30px) translateX(12px); }
+    }
+
+    .a1 { width: 60px; height: 60px; top: 12%; left: 8%; animation-duration: 11s; }
+    .a2 { width: 30px; height: 30px; top: 25%; right: 12%; animation-duration: 9s; animation-delay: 1s; }
+    .a3 { width: 90px; height: 90px; bottom: 18%; left: 6%; animation-duration: 16s; animation-delay: 2s; }
+    .a4 { width: 45px; height: 45px; bottom: 30%; right: 8%; animation-duration: 13s; animation-delay: 0.5s; }
+    .a5 { width: 22px; height: 22px; top: 55%; left: 20%; animation-duration: 8s; animation-delay: 1.5s; }
+
+    .hero {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      justify-content: center;
+      padding: 40px 20px 20px;
+    }
+
+    .hero-card {
+      width: min(92%, 760px);
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(6px);
+      border: 1px solid rgba(255,255,255,0.7);
+      border-radius: 24px;
+      box-shadow: 0 18px 45px rgba(43, 55, 115, 0.18);
+      padding: 34px 28px;
+      text-align: center;
+    }
+
+    .hero h2 {
+      font-family: 'Fredoka', sans-serif;
+      font-weight: 600;
+      font-size: clamp(30px, 5vw, 46px);
+      margin: 0 0 12px;
+      color: #2b3773;
+      line-height: 1.15;
+    }
+
+    .hero p {
+      font-size: clamp(15px, 2.2vw, 19px);
+      color: #4a3f5c;
+      max-width: 560px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      margin-bottom: 14px;
+      padding: 7px 14px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #2b3773, #16a085);
+      color: white;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .bubble-field {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: 30px;
+      padding: 50px 20px 90px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .bubble {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      text-decoration: none;
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-family: 'Fredoka', sans-serif;
+      font-weight: 600;
+      border-radius: 50%;
+      box-shadow: inset -10px -12px 25px rgba(0,0,0,0.12), inset 10px 10px 20px rgba(255,255,255,0.35), 0 12px 24px rgba(43,55,115,0.25);
+      animation: bob 5s ease-in-out infinite;
+      transition: transform 0.25s ease;
+      padding: 10px;
+    }
+
+    .bubble:hover {
+      transform: scale(1.08) translateY(-6px);
+    }
+
+    .bubble:active {
+      transform: scale(0.96);
+    }
+
+    .bubble .icon {
+      font-size: 30px;
+      margin-bottom: 6px;
+    }
+
+    .bubble .label {
+      font-size: 15px;
+      line-height: 1.2;
+      padding: 0 8px;
+    }
+
+    .bubble-apply {
+      width: 220px;
+      height: 220px;
+      background: radial-gradient(circle at 35% 30%, #ffe9a8, #e2a63b 65%, #c98a1f 100%);
+      animation-duration: 6s;
+      color: #4a2e00;
+    }
+
+    .bubble-apply .label {
+      font-size: 18px;
+    }
+
+    .bubble-partner {
+      width: 165px;
+      height: 165px;
+      background: radial-gradient(circle at 35% 30%, #7fe0c8, #16a085 65%, #0e7a63 100%);
+      animation-duration: 7s;
+      animation-delay: 0.6s;
+    }
+
+    .bubble-about {
+      width: 150px;
+      height: 150px;
+      background: radial-gradient(circle at 35% 30%, #a9b6f2, #2b3773 65%, #1b2452 100%);
+      animation-duration: 8s;
+      animation-delay: 1.2s;
+    }
+
+    @keyframes bob {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-14px); }
+    }
+
+    .note {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      font-size: 13px;
+      color: #5c4a6b;
+      padding-bottom: 30px;
+    }
+
+    footer {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      padding: 20px;
+      color: #6b5a78;
+      font-size: 13px;
+    }
+
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 16px;
+      }
+
+      header img {
+        max-height: 44px;
+      }
+
+      .hero-card {
+        padding: 24px 18px;
+      }
+
+      .bubble-field {
+        gap: 22px;
+        padding: 30px 16px 60px;
+      }
+
+      .bubble-apply {
+        width: 170px;
+        height: 170px;
+      }
+
+      .bubble-partner {
+        width: 130px;
+        height: 130px;
+      }
+
+      .bubble-about {
+        width: 118px;
+        height: 118px;
+      }
+
+      .bubble .icon {
+        font-size: 24px;
+      }
+
+      .bubble .label {
+        font-size: 13px;
+      }
+
+      .bubble-apply .label {
+        font-size: 15px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .bubble, .ambient {
+        animation: none;
+      }
+    }
+  </style>
+</head>
+<body class="is-entering">
+
+  <div class="page-overlay"></div>
+
+  <div class="ambient a1"></div>
+  <div class="ambient a2"></div>
+  <div class="ambient a3"></div>
+  <div class="ambient a4"></div>
+  <div class="ambient a5"></div>
+
+  <header>
+    <img src="logo.png" alt="G-Spirit logo">
+    <h1>G-SPIRIT LOAN SOLUTION</h1>
+  </header>
+
+  <div class="hero">
+    <div class="hero-card">
+      <div class="hero-badge">Welcome</div>
+      <h2>Let’s make your next step feel easy.</h2>
+      <p>Quick, honest loans and a community that grows together. Pick a bubble below to get started.</p>
+    </div>
+  </div>
+
+  <div class="bubble-field">
+    <button class="bubble bubble-apply" onclick="window.location.href='apply.html'">
+      <span class="icon">💰</span>
+      <span class="label">Apply for<br>a Loan</span>
+    </button>
+
+    <button class="bubble bubble-partner" onclick="window.location.href='partner.html'">
+      <span class="icon">🤝</span>
+      <span class="label">Become a<br>Partner</span>
+    </button>
+
+    <button class="bubble bubble-about" onclick="navigateWithTransition('about.html')">
+      <span class="icon">✨</span>
+      <span class="label">About Us</span>
+    </button>
+  </div>
+
+
+
+  <footer>
+    &copy; 2026 G-Spirit Loan Solution. All rights reserved.
+  </footer>
+
+  <script>
+    (function () {
+      var overlay = document.querySelector('.page-overlay');
+
+      window.navigateWithTransition = function (targetUrl) {
+        if (!targetUrl) return false;
+        document.body.classList.add('is-exiting');
+        overlay.classList.add('is-visible');
+        setTimeout(function () {
+          window.location.href = targetUrl;
+        }, 220);
+        return false;
+      };
+
+      document.addEventListener('DOMContentLoaded', function () {
+        requestAnimationFrame(function () {
+          document.body.classList.remove('is-entering');
+          overlay.classList.remove('is-visible');
+        });
+      });
+    })();
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Privacy Policy - G-Spirit Loan Solution</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #e9b5b5;
+      color: #333;
+      margin: 0;
+      padding: 0;
+      line-height: 1.6;
+      opacity: 1;
+      transition: opacity 0.25s ease;
+    }
+
+    body.is-exiting {
+      opacity: 0;
+    }
+
+    body.is-entering {
+      opacity: 0;
+    }
+
+    .page-overlay {
+      position: fixed;
+      inset: 0;
+      background: #fff;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease;
+      z-index: 9999;
+    }
+
+    .page-overlay.is-visible {
+      opacity: 1;
+    }
+
+    header {
+      background-color: #2b3773;
+      color: white;
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    header img {
+      max-height: 80px;
+      width: auto;
+    }
+
+    .brand {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      text-align: left;
+      width: 33%;
+      min-width: 180px;
+      gap: 4px;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 22px;
+      line-height: 1.1;
+      color: white;
+    }
+
+    .tagline {
+      font-size: 14px;
+      font-style: italic;
+      color: #d0e8ef;
+      margin: 0;
+    }
+
+    .header-actions {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 8px;
+      width: auto;
+      min-width: 0;
+      flex-wrap: wrap;
+    }
+
+    .header-actions button {
+      background: none;
+      color: white;
+      border: none;
+      -webkit-appearance: none;
+      appearance: none;
+      padding: 4px;
+      font-size: 12px;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .header-actions button:hover {
+      text-decoration: underline;
+      background: transparent;
+    }
+
+    .page-banner {
+      text-align: center;
+      padding: 24px 18px;
+      margin: 20px auto 20px;
+      max-width: 800px;
+      background: linear-gradient(135deg, #2b3773, #16a085);
+      color: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    }
+
+    .page-banner h1 {
+      margin: 0;
+      font-size: 30px;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+
+    .page-banner p {
+      margin: 8px 0 0;
+      font-size: 15px;
+      opacity: 0.9;
+    }
+
+    .container {
+      width: 95%;
+      max-width: 800px;
+      margin: 10px auto;
+      padding: 20px;
+    }
+
+    .card {
+      background: rgb(246, 244, 244);
+      border-radius: 8px;
+      padding: 25px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    }
+
+    h2 {
+      color: #16a085;
+      border-bottom: 2px solid #16a085;
+      padding-bottom: 5px;
+      margin-top: 30px;
+    }
+
+    h2:first-child {
+      margin-top: 0;
+    }
+
+    h3 {
+      color: #2b3773;
+      margin-bottom: 6px;
+    }
+
+    .highlight-box {
+      background: #fff;
+      border-left: 4px solid #16a085;
+      padding: 14px 18px;
+      margin: 16px 0;
+      border-radius: 4px;
+    }
+
+    ul, ol {
+      padding-left: 22px;
+    }
+
+    li {
+      margin-bottom: 6px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0;
+      font-size: 14px;
+    }
+
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px 10px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #2b3773;
+      color: white;
+    }
+
+    .updated {
+      font-size: 13px;
+      color: #777;
+      margin-top: 4px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      color: #999;
+      font-size: 14px;
+    }
+
+    .floating-apply-btn {
+      position: fixed;
+      right: 20px;
+      bottom: 24px;
+      z-index: 60;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 18px;
+      border: none;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #e2a63b, #c98a1f 70%, #f3c865);
+      color: #4a2e00;
+      font-weight: 700;
+      font-size: 14px;
+      cursor: pointer;
+      box-shadow: 0 12px 25px rgba(201, 138, 31, 0.28);
+      animation: floatPulse 2.2s ease-in-out infinite;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .floating-apply-btn:hover {
+      transform: translateY(-3px) scale(1.03);
+      box-shadow: 0 16px 30px rgba(201, 138, 31, 0.35);
+    }
+
+    .floating-apply-btn:active {
+      transform: scale(0.97);
+    }
+
+    .floating-apply-btn .icon {
+      font-size: 16px;
+    }
+
+    @keyframes floatPulse {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-4px); }
+    }
+
+    @media (max-width: 600px) {
+      header {
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        gap: 10px;
+        padding: 12px;
+      }
+
+      header img {
+        max-height: 44px;
+      }
+
+      .brand {
+        width: auto;
+        min-width: 0;
+        align-items: flex-start;
+        text-align: left;
+      }
+
+      header h1 {
+        font-size: 15px;
+      }
+
+      .tagline {
+        font-size: 11px;
+      }
+
+      .header-actions {
+        width: 100%;
+        min-width: 0;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+        gap: 6px;
+      }
+
+      .header-actions button {
+        font-size: 10px;
+        padding: 5px 6px;
+      }
+
+      .page-banner h1 {
+        font-size: 24px;
+      }
+
+      table {
+        font-size: 12px;
+      }
+
+      th, td {
+        padding: 6px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <img src="logo.png" alt="G-Spirit logo">
+    <div class="brand">
+      <h1>G-SPIRIT LOAN SOLUTION</h1>
+      <div class="tagline">Powering Dreams</div>
+    </div>
+    <div class="header-actions">
+      <button type="button" onclick="navigateWithTransition('index.html')">Home</button>
+      <button type="button" onclick="navigateWithTransition('terms.html')">Terms</button>
+      <button type="button" onclick="navigateWithTransition('about.html')">About</button>
+      <button type="button" onclick="navigateWithTransition('contact.html')">Contact Us</button>
+    </div>
+  </header>
+
+  <div class="page-banner">
+    <h1>Privacy Policy</h1>
+    <p>How we collect, use, and protect your information</p>
+  </div>
+
+  <div class="container">
+    <div class="card">
+
+      <h2>1. Introduction</h2>
+      <p>At G-Spirit Loan Solution, we take your privacy seriously. This Privacy Policy explains how we collect, use, disclose, and protect your information when you use our loan services. By using our services, you agree to the practices described here.</p>
+
+      <div class="highlight-box">
+        <strong>Our Commitment</strong>
+        <p style="margin-bottom:0;">We're committed to protecting your personal information and being transparent about how it's used. We follow Cameroonian data protection laws and industry best practices.</p>
+      </div>
+
+      <h2>2. Information We Collect</h2>
+
+      <h3>2.1 Personal Information</h3>
+      <p>When you apply for a loan, we collect:</p>
+      <ul>
+        <li><strong>Identity information:</strong> full name, date of birth, nationality, and government-issued ID number (National ID, Passport, or Driver's License)</li>
+        <li><strong>Contact information:</strong> phone number, WhatsApp number, email address, and physical address</li>
+        <li><strong>Financial information:</strong> income details, occupation, bank account, and mobile money account details</li>
+        <li><strong>Collateral information:</strong> details of assets offered as collateral (land titles, vehicle papers, etc.)</li>
+        <li><strong>Employment information:</strong> occupation, employer details, and proof of income</li>
+      </ul>
+
+      <h3>2.2 Automatically Collected Information</h3>
+      <p>When you visit our website, we also automatically collect:</p>
+      <ul>
+        <li>IP address and device information</li>
+        <li>Browser type and version</li>
+        <li>Pages visited and time spent on site</li>
+        <li>Referring website addresses</li>
+        <li>Cookies and similar technologies</li>
+      </ul>
+
+      <h2>3. How We Use Your Information</h2>
+      <table>
+        <tr>
+          <th>Purpose</th>
+          <th>Legal Basis</th>
+        </tr>
+        <tr><td>Process your loan application</td><td>Contract performance</td></tr>
+        <tr><td>Verify your identity and collateral</td><td>Legal obligation</td></tr>
+        <tr><td>Communicate about your loan</td><td>Contract performance</td></tr>
+        <tr><td>Send payment reminders</td><td>Legitimate interest</td></tr>
+        <tr><td>Improve our services</td><td>Legitimate interest</td></tr>
+        <tr><td>Comply with legal requirements</td><td>Legal obligation</td></tr>
+        <tr><td>Prevent fraud</td><td>Legitimate interest</td></tr>
+      </table>
+
+      <h2>4. Information Sharing and Disclosure</h2>
+      <p>We may share your information in the following circumstances:</p>
+
+      <h3>4.1 Service Providers</h3>
+      <ul>
+        <li><strong>Payment processors</strong> — for fund disbursement and payment collection</li>
+        <li><strong>Verification services</strong> — to confirm your identity and collateral</li>
+        <li><strong>Legal and accounting services</strong> — as needed for business operations</li>
+      </ul>
+
+      <h3>4.2 Legal Requirements</h3>
+      <p>We may disclose your information where required by law or in response to valid requests from public authorities.</p>
+
+      <h3>4.3 Business Transfers</h3>
+      <p>If G-Spirit Loan Solution is ever involved in a merger, acquisition, or sale of assets, your information may be transferred to the new entity.</p>
+
+      <h3>4.4 With Your Consent</h3>
+      <p>We may share your information for other purposes if you've given us explicit consent to do so.</p>
+
+      <h2>5. Data Security</h2>
+      <p>We use a range of technical and organizational measures to protect your information, including:</p>
+      <ul>
+        <li>Encryption of data in transit and at rest</li>
+        <li>Secure servers and firewalls</li>
+        <li>Access controls and authentication</li>
+        <li>Regular security assessments</li>
+        <li>Staff training on data protection</li>
+      </ul>
+      <p>While we work hard to protect your information, no method of transmission over the internet is completely secure, and we can't guarantee absolute security.</p>
+
+      <h2>6. Data Retention</h2>
+      <p>We keep your information for as long as necessary to provide our services, meet legal obligations, resolve disputes, and enforce our agreements. As a general rule, we retain loan application data for 5 years after a loan is fully repaid, or 3 years after a rejected application.</p>
+
+      <h2>7. Your Rights</h2>
+      <p>Under Cameroonian data protection law, you have the right to:</p>
+      <ul>
+        <li><strong>Access</strong> — request a copy of your personal information</li>
+        <li><strong>Rectification</strong> — correct inaccurate or incomplete information</li>
+        <li><strong>Erasure</strong> — request deletion of your information, subject to our legal obligations</li>
+        <li><strong>Restriction</strong> — limit how we use your information</li>
+        <li><strong>Objection</strong> — object to certain types of processing</li>
+        <li><strong>Portability</strong> — receive your information in a structured, transferable format</li>
+      </ul>
+      <p>To exercise any of these rights, contact us at <a href="mailto:gloansolution@gmail.com">gloansolution@gmail.com</a> or via WhatsApp at +237 620 569 864.</p>
+
+      <h2>8. Cookies and Tracking</h2>
+      <p>Our website uses cookies to remember your preferences, analyze site traffic, improve your experience, and serve relevant offers. You can control cookies through your browser settings, though disabling them may affect how the site functions.</p>
+
+      <h2>9. Third-Party Links</h2>
+      <p>Our website may link to third-party sites (such as Facebook). We aren't responsible for their privacy practices, and we encourage you to review their own policies.</p>
+
+      <h2>10. Children's Privacy</h2>
+      <p>Our services are intended for individuals 21 and older. We don't knowingly collect information from minors. If you believe a minor has provided us with information, please contact us so we can address it.</p>
+
+      <h2>11. International Data Transfers</h2>
+      <p>Your information may be processed in countries other than Cameroon. Where this happens, we take steps to ensure appropriate safeguards are in place.</p>
+
+      <h2>12. Changes to This Policy</h2>
+      <p>We may update this Privacy Policy from time to time. Significant changes will be posted on our website with an updated "Last Updated" date. Continuing to use our services after such changes means you accept the updated policy.</p>
+
+      <h2>13. Contact Information</h2>
+      <p>Questions or concerns about this policy or our data practices can be directed to our Data Protection contact:</p>
+      <ul>
+        <li>Phone: +237 673 202 434</li>
+        <li>WhatsApp: +237 620 569 864</li>
+        <li>Email: gloansolution@gmail.com</li>
+        <li>Address: Douala, Cameroon</li>
+      </ul>
+
+      <h2>14. Complaints</h2>
+      <p>If you believe your privacy rights have been violated, you're entitled to lodge a complaint with the relevant Cameroonian data protection authority. We'd appreciate the chance to resolve any concern directly first — please reach out to us before escalating.</p>
+
+      <p class="updated">Last updated: July 2026</p>
+
+    </div>
+  </div>
+
+  <button class="floating-apply-btn" type="button" onclick="navigateWithTransition('apply.html')">
+    <span class="icon">💰</span>
+    <span>Apply for Loan</span>
+  </button>
+
+  <footer>
+    &copy; 2026 G-Spirit Loan Solution. All rights reserved.
+  </footer>
+
+  <script>
+    (function () {
+      var overlay = document.createElement('div');
+      overlay.className = 'page-overlay';
+      document.body.appendChild(overlay);
+
+      window.navigateWithTransition = function (targetUrl) {
+        if (!targetUrl) return false;
+        document.body.classList.add('is-exiting');
+        overlay.classList.add('is-visible');
+        setTimeout(function () {
+          window.location.href = targetUrl;
+        }, 220);
+        return false;
+      };
+
+      document.addEventListener('DOMContentLoaded', function () {
+        requestAnimationFrame(function () {
+          document.body.classList.remove('is-entering');
+          overlay.classList.remove('is-visible');
+        });
+      });
+    })();
+  </script>
+
+</body>
+</html>

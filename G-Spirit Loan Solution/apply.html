@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>G-Spirit Loan Solution</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f5eded;
+      color: #333;
+      margin: 0;
+      padding: 0;
+      line-height: 1.6;
+      opacity: 1;
+      transition: opacity 0.25s ease;
+    }
+
+    body.is-exiting {
+      opacity: 0;
+    }
+
+    body.is-entering {
+      opacity: 0;
+    }
+
+    .page-overlay {
+      position: fixed;
+      inset: 0;
+      background: #fff;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease;
+      z-index: 9999;
+    }
+
+    .page-overlay.is-visible {
+      opacity: 1;
+    }
+
+    header {
+      background-color: #2b3773;
+      color: white;
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    header img {
+      max-height: 80px;
+      width: auto;
+    }
+
+    .brand {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      text-align: left;
+      width: 33%;
+      min-width: 180px;
+      gap: 4px;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 22px;
+      line-height: 1.1;
+    }
+
+    .tagline {
+      font-size: 14px;
+      font-style: italic;
+      color: #d0e8ef;
+      margin: 0;
+    }
+
+    .header-actions {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 8px;
+      width: auto;
+      min-width: 0;
+      flex-wrap: wrap;
+      margin-left: auto;
+    }
+
+    .header-actions button {
+      background: none;
+      color: white;
+      border: none;
+      -webkit-appearance: none;
+      appearance: none;
+      padding: 4px;
+      font-size: 12px;
+      cursor: pointer;
+      white-space: nowrap;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      width: auto;
+    }
+
+    .header-actions button:hover {
+      text-decoration: underline;
+      background: transparent;
+    }
+
+    .container {
+      width: 95%;
+      max-width: 1100px;
+      margin: 10px auto;
+      padding: 20px;
+    }
+
+    .hero {
+      text-align: center;
+      padding: 30px 20px;
+    }
+
+    .hero p {
+      font-size: 18px;
+      color: #555;
+    }
+
+    .card {
+      background: rgb(246, 244, 244);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 24px;
+      align-items: start;
+    }
+
+    .application-panel,
+    .summary-panel {
+      background: #fff;
+      border-radius: 14px;
+      padding: 22px;
+      box-shadow: 0 8px 24px rgba(43, 55, 115, 0.12);
+      border: 1px solid rgba(43, 55, 115, 0.08);
+    }
+
+    .summary-panel {
+      background: linear-gradient(135deg, #fff8eb 0%, #ffe7b0 45%, #fffdf7 100%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .summary-panel::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at top left, rgba(255,255,255,0.8), transparent 44%);
+      pointer-events: none;
+    }
+
+    .summary-panel h3,
+    h2 {
+      color: #16a085;
+      border-bottom: 2px solid #16a085;
+      padding-bottom: 5px;
+      margin-top: 0;
+    }
+
+    .summary-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 10px;
+      margin-bottom: 12px;
+      border-radius: 999px;
+      background: rgba(22, 160, 133, 0.15);
+      color: #0f6d5d;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .summary-list {
+      display: grid;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .summary-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 12px;
+      background: rgba(255,255,255,0.75);
+      border: 1px solid rgba(43,55,115,0.08);
+      border-radius: 10px;
+    }
+
+    .summary-item strong {
+      color: #2b3773;
+      font-size: 13px;
+    }
+
+    .summary-item span {
+      color: #4a3f5c;
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    h2 {
+      margin-top: 0;
+    }
+
+    .steps {
+      list-style: none;
+      padding: 0;
+    }
+
+    .steps li {
+      padding: 10px 0;
+      border-bottom: 1px solid #eee;
+    }
+
+    .steps li:last-child {
+      border-bottom: none;
+    }
+
+    label {
+      display: block;
+      font-weight: bold;
+      font-size: 14px;
+      margin-top: 15px;
+    }
+
+    input,
+    textarea,
+    select {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    .consent {
+      margin-bottom: 15px;
+    }
+
+    .checkbox-label {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .checkbox-label input[type="checkbox"] {
+      margin-top: 4px;
+      width: auto;
+    }
+
+    .checkbox-label span {
+      display: block;
+      max-width: 100%;
+    }
+
+    button {
+      background-color: #25D366;
+      color: white;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+      width: 100%;
+    }
+
+    button:hover {
+      background-color: #1ebe5d;
+    }
+
+    .download-btn {
+      background-color: #2b3773;
+      margin-top: 10px;
+    }
+
+    .download-btn:hover {
+      background-color: #1f2857;
+    }
+
+    .social-links {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+      margin: 24px auto 8px;
+      max-width: 1100px;
+      padding: 0 20px;
+    }
+
+    .social-links a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      color: #000;
+      padding: 10px;
+      border-radius: 50%;
+      width: 46px;
+      height: 46px;
+      border: 1px solid #000;
+      background: #fff;
+      transition: transform 0.2s ease, background 0.2s ease;
+    }
+
+    .social-links a:hover {
+      transform: translateY(-2px);
+      background: #f5f7ff;
+    }
+
+    .social-links a svg {
+      width: 20px;
+      height: 20px;
+      fill: currentColor;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      color: #999;
+      font-size: 14px;
+    }
+
+    .footer-links {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 6px;
+    }
+
+    .footer-links a {
+      color: #2b3773;
+      text-decoration: none;
+      font-size: 13px;
+      padding: 4px 8px;
+      border: 1px solid #2b3773;
+      border-radius: 999px;
+      background: white;
+    }
+
+    .footer-links a:hover {
+      background: #2b3773;
+      color: white;
+    }
+
+    @media (max-width: 600px) {
+      header {
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        gap: 10px;
+        padding: 12px;
+      }
+
+      header img {
+        max-height: 44px;
+      }
+
+      .brand {
+        width: auto;
+        min-width: 0;
+        align-items: flex-start;
+        text-align: left;
+      }
+
+      header h1 {
+        font-size: 15px;
+      }
+
+      .tagline {
+        font-size: 11px;
+      }
+
+      .header-actions {
+        width: 100%;
+        min-width: 0;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+        gap: 6px;
+        overflow-x: hidden;
+        margin-left: 0;
+      }
+
+      .header-actions button {
+        font-size: 10px;
+        padding: 5px 6px;
+        flex-shrink: 0;
+      }
+
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+      
+    
+  </style>
+</head>
+<body>
+
+  <header>
+    <img src="logo.png" alt="G-Spirit logo">
+    <div class="brand">
+      <h1>G-SPIRIT LOAN SOLUTION</h1>
+      <div class="tagline">Powering Dreams</div>
+    </div>
+    <div class="header-actions">
+      <button type="button" onclick="window.location.href='index.html'">Home</button>
+      <button type="button" onclick="window.location.href='terms.html'">Terms</button>
+      <button type="button" onclick="navigateWithTransition('about.html')">About</button>
+      <button type="button" onclick="window.location.href='contact.html'">Contact Us</button>
+    </div>
+  </header>
+
+  <div class="container">
+
+    <div class="hero">
+      <p>Quick, short-term loans — apply in seconds, get a response on WhatsApp.</p>
+    </div>
+
+    <div class="card">
+      <h2>How It Works</h2>
+      <ol class="steps">
+        <li>1. Fill in your details below</li>
+        <li>2. Submit — it opens WhatsApp with your info</li>
+        <li>3. We review and respond directly on WhatsApp</li>
+      </ol>
+    </div>
+
+    <div class="card">
+      <div class="form-grid">
+        <div class="application-panel">
+          <h2>Loan Application</h2>
+
+          <form id="loanForm" onsubmit="sendToWhatsApp(); return false;">
+            <label for="name">Full Name</label>
+            <input type="text" id="name" name="name" placeholder="Enter your full name" required>
+
+            <label for="phone">Phone Number</label>
+            <input type="tel" id="phone" name="phone" placeholder="e.g. +237 6 1234 5678" pattern="^[0-9+\s-]{7,20}$" required>
+
+            <label for="email">Email Address</label>
+            <input type="email" id="email" name="email" placeholder="you@example.com" required>
+
+            <label for="date">Date of Birth</label>
+            <input type="date" id="date" name="date" required>
+
+            <label for="residence">Place of Residence</label>
+            <input type="text" id="residence" name="residence" placeholder="City, neighborhood, or address" required>
+
+            <label for="amount">Loan Amount Requested</label>
+            <input type="number" id="amount" name="amount" min="10000" step="5000" placeholder="Min 10,000" required>
+
+            <label for="term">Desired Loan Term</label>
+            <select id="term" name="term" required>
+              <option value="">Select a term</option>
+              <option value="1 month">1 month</option>
+              <option value="2 months">2 months</option>
+              <option value="3 months">3 months</option>
+              <option value="4 months">4 months</option>
+              <option value="5 months">5 months</option>
+              <option value="6 months">6 months</option>
+            </select>
+
+            <label for="purpose">Purpose of Loan</label>
+            <input type="text" id="purpose" name="purpose" placeholder="Personal expenses, business, education, etc." required>
+
+            <label for="income">Monthly Income</label>
+            <input type="number" id="income" name="income" min="0" placeholder="Your monthly net income" required>
+
+            <label for="employment">Employment Status</label>
+            <select id="employment" name="employment" required>
+              <option value="">Select status</option>
+              <option value="employed">Employed</option>
+              <option value="self-employed">Self-employed</option>
+              <option value="student">Student</option>
+              <option value="unemployed">Unemployed</option>
+              <option value="retired">Retired</option>
+            </select>
+
+            <label for="collateral">Collateral</label>
+            <textarea id="collateral" name="collateral" rows="4" placeholder="Describe collateral, if any"></textarea>
+
+            <div class="consent">
+              <label class="checkbox-label">
+                <input type="checkbox" id="consent" name="consent" required>
+                <span>I confirm that all information provided is accurate and true. I agree to the <a href="terms.html" target="_blank" rel="noopener noreferrer">terms</a> and <a href="privacy.html" target="_blank" rel="noopener noreferrer">privacy policy</a> including the 10% interest rate, 10% processing fee, and 5% daily late penalty. I understand that my collateral will be verified before loan approval.</span>
+              </label>
+            </div>
+
+            <button type="submit">Submit via WhatsApp</button>
+            <button type="button" class="download-btn" onclick="downloadApplicationPDF()">Download Application (PDF)</button>
+          </form>
+        </div>
+
+        <div class="summary-panel">
+          <div class="summary-badge">✨ Quick Estimate</div>
+          <h3>Loan Summary</h3>
+          <p style="margin-top:8px; color:#5e506f;">A quick snapshot of your repayment plan before you submit.</p>
+          <div class="summary-list">
+            <div class="summary-item">
+              <strong>Processing Fee</strong>
+              <span id="processingFee">0.00</span>
+            </div>
+            <div class="summary-item">
+              <strong>Interest</strong>
+              <span id="interest">0.00</span>
+            </div>
+            <div class="summary-item">
+              <strong>Total Repayment</strong>
+              <span id="totalRepayment">0.00</span>
+            </div>
+            <div class="summary-item">
+              <strong>Monthly Repayment</strong>
+              <span id="monthlyRepayment">0.00</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="social-links">
+    <a class="facebook" href="https://facebook.com/gspiritloansolution" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13.5 22v-8.5h2.8l.4-3.2h-3.2V3.8c0-.9.3-1.6 1.6-1.6h1.7V.1C16.2.1 15 0 13.5 0c-2.5 0-4.2 1.5-4.2 4.4v2.4H6.5v3.2h2.8V22z"/></svg>
+    </a>
+    <a class="instagram" href="https://instagram.com/gspiritloansolution" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 2h10a5 5 0 015 5v10a5 5 0 01-5 5H7a5 5 0 01-5-5V7a5 5 0 015-5zm0 2a3 3 0 00-3 3v10a3 3 0 003 3h10a3 3 0 003-3V7a3 3 0 00-3-3H7zm5 3.5A4.5 4.5 0 107.5 12 4.5 4.5 0 0012 7.5zm0 2A2.5 2.5 0 1112 14.5 2.5 2.5 0 0112 9.5zm5.2-3.3a1.1 1.1 0 111.1 1.1 1.1 1.1 0 01-1.1-1.1z"/></svg>
+    </a>
+    <a class="call" href="tel:+237673202434" aria-label="Call">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15.7 15.7 0 006.6 6.6l2.2-2.2a1 1 0 011-.2 11.3 11.3 0 003.6.6 1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 012 3a1 1 0 011-1h3.4a1 1 0 011 1 11.3 11.3 0 00.6 3.6 1 1 0 01-.2 1z"/></svg>
+    </a>
+  </div>
+
+  <footer>
+    <div class="footer-links">
+      <a href="privacy.html" target="_self">Privacy Policy</a>
+      <span>&copy; 2026 G-Spirit Loan Solution. All rights reserved.</span>
+    </div>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+  <script>
+    (function () {
+      var overlay = document.createElement('div');
+      overlay.className = 'page-overlay';
+      document.body.appendChild(overlay);
+
+      window.navigateWithTransition = function (targetUrl) {
+        if (!targetUrl) return false;
+        document.body.classList.add('is-exiting');
+        overlay.classList.add('is-visible');
+        setTimeout(function () {
+          window.location.href = targetUrl;
+        }, 220);
+        return false;
+      };
+
+      document.addEventListener('DOMContentLoaded', function () {
+        requestAnimationFrame(function () {
+          document.body.classList.remove('is-entering');
+          overlay.classList.remove('is-visible');
+        });
+      });
+    })();
+  </script>
+
+  <script>
+    function parseMonths(termValue) {
+      var match = termValue.match(/^(\d+)/);
+      return match ? parseInt(match[1], 10) : 0;
+    }
+
+    function formatCurrency(value) {
+      return parseFloat(value).toLocaleString('en-US', {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      });
+    }
+
+    function updateLoanSummary() {
+      var amountValue = parseFloat(document.getElementById('amount').value) || 0;
+      var termValue = document.getElementById('term').value;
+      var months = parseMonths(termValue);
+      var processingFee = amountValue * 0.10;
+      var interest = amountValue * 0.10 * months;
+      var totalRepayment = amountValue + interest;
+      var monthlyRepayment = months > 0 ? totalRepayment / months : 0;
+
+      document.getElementById('processingFee').textContent = amountValue > 0 ? formatCurrency(processingFee) : '0.00';
+      document.getElementById('interest').textContent = amountValue > 0 && months > 0 ? formatCurrency(interest) : '0.00';
+      document.getElementById('totalRepayment').textContent = amountValue > 0 && months > 0 ? formatCurrency(totalRepayment) : '0.00';
+      document.getElementById('monthlyRepayment').textContent = amountValue > 0 && months > 0 ? formatCurrency(monthlyRepayment) : '0.00';
+    }
+
+    function sendToWhatsApp() {
+      var form = document.getElementById('loanForm');
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+      }
+
+      updateLoanSummary();
+      var name = document.getElementById('name').value.trim();
+      var phone = document.getElementById('phone').value.trim();
+      var email = document.getElementById('email').value.trim();
+      var date = document.getElementById('date').value;
+      var residence = document.getElementById('residence').value.trim();
+      var amount = parseFloat(document.getElementById('amount').value) || 0;
+      var term = document.getElementById('term').value;
+      var purpose = document.getElementById('purpose').value.trim();
+      var income = document.getElementById('income').value;
+      var employment = document.getElementById('employment').value;
+      var collateral = document.getElementById('collateral').value.trim();
+      var processingFee = document.getElementById('processingFee').textContent;
+      var interest = document.getElementById('interest').textContent;
+      var totalRepayment = document.getElementById('totalRepayment').textContent;
+      var monthlyRepayment = document.getElementById('monthlyRepayment').textContent;
+
+      var divider = "――――――――――――――――";
+
+      var text = "*G-SPIRIT LOAN APPLICATION*\n" + divider + "\n\n"
+
+               + "*APPLICANT DETAILS*\n"
+               + "Name: " + name + "\n"
+               + "Phone: " + phone + "\n"
+               + "Email: " + email + "\n"
+               + "Date of Birth: " + date + "\n"
+               + "Residence: " + residence + "\n\n"
+
+               + "*EMPLOYMENT*\n"
+               + "Status: " + employment + "\n"
+               + "Monthly Income: " + income + "\n\n"
+
+               + "*LOAN REQUEST*\n"
+               + "Amount: " + formatCurrency(amount) + " XAF\n"
+               + "Term: " + term + "\n"
+               + "Purpose: " + purpose + "\n"
+               + "Collateral: " + (collateral || "N/A") + "\n\n"
+
+               + "*LOAN SUMMARY*\n"
+               + "Processing Fee: " + processingFee + " XAF\n"
+               + "Interest: " + interest + " XAF\n"
+               + "Total Repayment: " + totalRepayment + " XAF\n"
+               + "Monthly Repayment: " + monthlyRepayment + " XAF\n\n"
+
+               + divider + "\n"
+               + "Terms & Privacy Policy: Accepted ✓";
+
+      var url = 'https://wa.me/237620569864?text=' + encodeURIComponent(text);
+      window.open(url, '_blank');
+    }
+
+    function loadImageAsDataURL(url) {
+      return fetch(url)
+        .then(function (res) {
+          if (!res.ok) throw new Error('Logo not found');
+          return res.blob();
+        })
+        .then(function (blob) {
+          return new Promise(function (resolve, reject) {
+            var reader = new FileReader();
+            reader.onloadend = function () { resolve(reader.result); };
+            reader.onerror = reject;
+            reader.readAsDataURL(blob);
+          });
+        })
+        .catch(function () {
+          return null;
+        });
+    }
+
+    function downloadApplicationPDF() {
+      var form = document.getElementById('loanForm');
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+      }
+
+      updateLoanSummary();
+
+      var name = document.getElementById('name').value.trim();
+      var phone = document.getElementById('phone').value.trim();
+      var email = document.getElementById('email').value.trim();
+      var date = document.getElementById('date').value;
+      var residence = document.getElementById('residence').value.trim();
+      var amount = parseFloat(document.getElementById('amount').value) || 0;
+      var term = document.getElementById('term').value;
+      var purpose = document.getElementById('purpose').value.trim();
+      var income = document.getElementById('income').value;
+      var employment = document.getElementById('employment').value;
+      var collateral = document.getElementById('collateral').value.trim();
+      var processingFee = document.getElementById('processingFee').textContent;
+      var interest = document.getElementById('interest').textContent;
+      var totalRepayment = document.getElementById('totalRepayment').textContent;
+      var monthlyRepayment = document.getElementById('monthlyRepayment').textContent;
+
+      loadImageAsDataURL('logo.png').then(function (logoDataUrl) {
+        buildPDF(logoDataUrl);
+      });
+
+      function buildPDF(logo) {
+        var jsPDFLib = window.jspdf.jsPDF;
+        var doc = new jsPDFLib();
+        var pageWidth = doc.internal.pageSize.getWidth();
+        var pageHeight = doc.internal.pageSize.getHeight();
+        var y = 20;
+
+        doc.setFillColor(43, 55, 115);
+        doc.rect(0, 0, pageWidth, 34, 'F');
+
+        if (logo) {
+          try {
+            doc.addImage(logo, 'PNG', 12, 6, 24, 24);
+          } catch (e) {}
+        }
+
+        doc.setTextColor(255, 255, 255);
+        doc.setFontSize(16);
+        doc.text('G-SPIRIT LOAN SOLUTION', logo ? 40 : 12, 15);
+        doc.setFontSize(10);
+        doc.text('Powering Dreams', logo ? 35 : 12, 22);
+
+        doc.setFontSize(9);
+        doc.text(' +237 620 569 864', pageWidth - 12, 12, { align: 'right' });
+        doc.text(' gloansolution@gmail.com', pageWidth - 12, 18, { align: 'right' });
+        doc.text('www.gspiritloans.com', pageWidth - 12, 24, { align: 'right' });
+
+        if (logo) {
+          try {
+            doc.saveGraphicsState();
+            doc.setGState(doc.GState({ opacity: 0.25 }));
+            doc.addImage(logo, 'PNG', pageWidth / 2 - 70, pageHeight / 2 - 70, 140, 140);
+            doc.restoreGraphicsState();
+          } catch (e) {}
+        }
+
+        y = 46;
+        doc.setTextColor(43, 55, 115);
+        doc.setFontSize(14);
+        doc.text('Loan Application', 12, y);
+        y += 10;
+
+        function section(title) {
+          doc.setFontSize(11);
+          doc.setTextColor(22, 160, 133);
+          doc.text(title, 12, y);
+          doc.setDrawColor(22, 160, 133);
+          doc.line(12, y + 1.5, pageWidth - 12, y + 1.5);
+          y += 8;
+          doc.setTextColor(40, 40, 40);
+          doc.setFontSize(10);
+        }
+
+        function row(label, value) {
+          doc.setFont(undefined, 'bold');
+          doc.text(label + ':', 12, y);
+          doc.setFont(undefined, 'normal');
+          doc.text(String(value || 'N/A'), 60, y);
+          y += 7;
+        }
+
+        section('Applicant Details');
+        row('Name', name);
+        row('Phone', phone);
+        row('Email', email);
+        row('Date of Birth', date);
+        row('Residence', residence);
+        y += 4;
+
+        section('Employment');
+        row('Status', employment);
+        row('Monthly Income', income);
+        y += 4;
+
+        section('Loan Request');
+        row('Amount', formatCurrency(amount) + ' XAF');
+        row('Term', term);
+        row('Purpose', purpose);
+        row('Collateral', collateral);
+        y += 4;
+
+        section('Loan Summary');
+        row('Processing Fee', processingFee + ' XAF');
+        row('Interest', interest + ' XAF');
+        row('Total Repayment', totalRepayment + ' XAF');
+        row('Monthly Repayment', monthlyRepayment + ' XAF');
+        y += 6;
+
+        doc.setFontSize(10);
+        doc.setTextColor(120, 120, 120);
+        doc.text('Terms & Privacy Policy: Accepted', 12, y);
+        y += 10;
+        doc.setFont(undefined, 'bolditalic');
+        doc.setTextColor(22, 160, 133);
+        doc.text('Please send this document on WhatsApp to +237 620 569 864.', pageWidth / 2, y, { align: 'center' });
+        y += 10;
+        doc.setFont(undefined, 'normal');
+        doc.setTextColor(120, 120, 120);
+        doc.text('Generated: ' + new Date().toLocaleString(), 12, y);
+
+        doc.setDrawColor(220, 220, 220);
+        doc.line(12, pageHeight - 16, pageWidth - 12, pageHeight - 16);
+        doc.setFontSize(8);
+        doc.setTextColor(140, 140, 140);
+        doc.text('© 2026 G-Spirit Loan Solution. All rights reserved.', pageWidth / 2, pageHeight - 10, { align: 'center' });
+
+        var filename = 'GSpirit_Loan_Application_' + (name ? name.replace(/\s+/g, '_') : 'applicant') + '.pdf';
+        doc.save(filename);
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+      var amountField = document.getElementById('amount');
+      var termField = document.getElementById('term');
+      amountField.addEventListener('input', updateLoanSummary);
+      termField.addEventListener('change', updateLoanSummary);
+      updateLoanSummary();
+    });
+  </script>
+
+</body>
+</html>

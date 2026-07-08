@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>About Us - G-Spirit Loan Solution</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #e9b5b5;
+      color: #333;
+      margin: 0;
+      padding: 0;
+      line-height: 1.6;
+      opacity: 1;
+      transition: opacity 0.25s ease;
+    }
+
+    body.is-exiting {
+      opacity: 0;
+    }
+
+    body.is-entering {
+      opacity: 0;
+    }
+
+    .page-overlay {
+      position: fixed;
+      inset: 0;
+      background: #fff;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease;
+      z-index: 9999;
+    }
+
+    .page-overlay.is-visible {
+      opacity: 1;
+    }
+
+    header {
+      background-color: #2b3773;
+      color: white;
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    header img {
+      max-height: 80px;
+      width: auto;
+    }
+
+    .brand {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      text-align: left;
+      width: 33%;
+      min-width: 180px;
+      gap: 4px;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 22px;
+      line-height: 1.1;
+      color: white;
+    }
+
+    .tagline {
+      font-size: 14px;
+      font-style: italic;
+      color: #d0e8ef;
+      margin: 0;
+    }
+
+    .header-actions {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 8px;
+      width: auto;
+      min-width: 0;
+      flex-wrap: wrap;
+    }
+
+    .header-actions button {
+      background: none;
+      color: white;
+      border: none;
+      -webkit-appearance: none;
+      appearance: none;
+      padding: 4px;
+      font-size: 12px;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .header-actions button:hover {
+      text-decoration: underline;
+      background: transparent;
+    }
+
+    .page-banner {
+      background-color: #16a085;
+      color: white;
+      text-align: center;
+      padding: 28px 20px;
+    }
+
+    .page-banner h1 {
+      margin: 0;
+      font-size: 32px;
+    }
+
+    .page-banner p {
+      margin: 8px 0 0;
+      font-size: 15px;
+      opacity: 0.9;
+    }
+
+    .container {
+      width: 95%;
+      max-width: 750px;
+      margin: 10px auto;
+      padding: 20px;
+    }
+
+    .card {
+      background: rgb(246, 244, 244);
+      border-radius: 8px;
+      padding: 25px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    }
+
+    .badge {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 30%, #a9b6f2, #2b3773 70%);
+      color: white;
+      font-size: 32px;
+      margin: 0 auto 18px;
+      box-shadow: 0 8px 18px rgba(43,55,115,0.25);
+    }
+
+    h2 {
+      color: #16a085;
+      border-bottom: 2px solid #16a085;
+      padding-bottom: 5px;
+      margin-top: 30px;
+    }
+
+    h2:first-child {
+      margin-top: 0;
+    }
+
+    .quote {
+      font-style: italic;
+      color: #2b3773;
+      border-left: 4px solid #16a085;
+      padding: 10px 18px;
+      margin: 20px 0;
+      background: #fff;
+      border-radius: 4px;
+    }
+
+    .values {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 20px;
+    }
+
+    .value {
+      background: #fff;
+      border-radius: 8px;
+      padding: 16px;
+      text-align: center;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+    }
+
+    .value .emoji {
+      font-size: 26px;
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .value strong {
+      display: block;
+      color: #2b3773;
+      margin-bottom: 4px;
+    }
+
+    .value span {
+      font-size: 13px;
+      color: #555;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      color: #999;
+      font-size: 14px;
+    }
+
+    .floating-apply-btn {
+      position: fixed;
+      right: 20px;
+      bottom: 24px;
+      z-index: 60;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 18px;
+      border: none;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #e2a63b, #c98a1f 70%, #f3c865);
+      color: #4a2e00;
+      font-weight: 700;
+      font-size: 14px;
+      cursor: pointer;
+      box-shadow: 0 12px 25px rgba(201, 138, 31, 0.28);
+      animation: floatPulse 2.2s ease-in-out infinite;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .floating-apply-btn:hover {
+      transform: translateY(-3px) scale(1.03);
+      box-shadow: 0 16px 30px rgba(201, 138, 31, 0.35);
+    }
+
+    .floating-apply-btn:active {
+      transform: scale(0.97);
+    }
+
+    .floating-apply-btn .icon {
+      font-size: 16px;
+    }
+
+    @keyframes floatPulse {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-4px); }
+    }
+
+    @media (max-width: 600px) {
+      header {
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        gap: 10px;
+        padding: 12px;
+      }
+
+      header img {
+        max-height: 44px;
+      }
+
+      .brand {
+        width: auto;
+        min-width: 0;
+        align-items: flex-start;
+        text-align: left;
+      }
+
+      header h1 {
+        font-size: 15px;
+      }
+
+      .tagline {
+        font-size: 11px;
+      }
+
+      .header-actions {
+        width: 100%;
+        min-width: 0;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+        gap: 6px;
+      }
+
+      .header-actions button {
+        font-size: 10px;
+        padding: 5px 6px;
+      }
+
+      .page-banner h1 {
+        font-size: 24px;
+      }
+
+      .values {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body class="is-entering">
+
+  <div class="page-overlay"></div>
+
+  <header>
+    <img src="logo.png" alt="G-Spirit logo">
+    <div class="brand">
+      <h1>G-SPIRIT LOAN SOLUTION</h1>
+      <div class="tagline">Powering Dreams</div>
+    </div>
+    <div class="header-actions">
+      <button type="button" onclick="navigateWithTransition('index.html')">Home</button>
+      <button type="button" onclick="navigateWithTransition('terms.html')">Terms</button>
+      <button type="button" onclick="navigateWithTransition('about.html')">About</button>
+      <button type="button" onclick="navigateWithTransition('contact.html')">Contact Us</button>
+    </div>
+  </header>
+
+  <div class="page-banner">
+    <h1>About Us</h1>
+    <p>The story behind G-Spirit Loan Solution</p>
+  </div>
+
+  <div class="container">
+    <div class="card">
+
+      <div class="badge">🎓</div>
+
+      <h2>Where It Started</h2>
+      <p>G-Spirit Loan Solution began in May 2020, in the middle of the COVID-19 pandemic. Schools across Cameroon had shut down, and with them, the routines and income that so many families depended on. Watching students and young people search for ways to stay afloat, the founder made a decision: instead of standing by, provide the capital these industrious young minds needed to start or sustain small businesses of their own.</p>
+      <p>What began as small amounts of business capital for a handful of determined students grew, over time, into something much bigger — a lending service that now reaches far beyond the classroom.</p>
+
+      <div class="quote">
+        "It started with wanting to help a few students turn a hard season into something productive. It grew because the need was everywhere — not just in schools, but in every corner of daily life."
+      </div>
+
+      <h2>Why "G-Spirit"</h2>
+      <p>The name carries the same spirit brought into every classroom for over ten years: patience, clarity, and genuinely wanting to see people succeed. That spirit didn't stop at the school gate — it's the same one behind every loan application reviewed here.</p>
+
+      <h2>What We Believe</h2>
+      <div class="values">
+        <div class="value">
+          <span class="emoji">🤝</span>
+          <strong>Fairness</strong>
+          <span>Clear terms, no hidden surprises.</span>
+        </div>
+        <div class="value">
+          <span class="emoji">⚡</span>
+          <strong>Speed</strong>
+          <span>Real answers in hours, not weeks.</span>
+        </div>
+        <div class="value">
+          <span class="emoji">💬</span>
+          <strong>People First</strong>
+          <span>Every applicant is a person, not a number.</span>
+        </div>
+      </div>
+
+      <h2>Powering Dreams</h2>
+      <p>From those first loans to student entrepreneurs, G-Spirit Loan Solution has grown to stand behind all kinds of people chasing progress: teachers between paychecks, farmers investing in the next planting season, small business owners restocking inventory, families financing hire purchases, and anyone facing an unforeseen circumstance that just can't wait. Different needs, same spirit — real support, when it's needed most.</p>
+
+    </div>
+  </div>
+
+  <button class="floating-apply-btn" type="button" onclick="navigateWithTransition('apply.html')">
+    <span class="icon">💰</span>
+    <span>Apply for Loan</span>
+  </button>
+
+  <footer>
+    &copy; 2026 G-Spirit Loan Solution. All rights reserved.
+  </footer>
+
+  <script>
+    (function () {
+      var overlay = document.querySelector('.page-overlay');
+
+      window.navigateWithTransition = function (targetUrl) {
+        if (!targetUrl) return false;
+        document.body.classList.add('is-exiting');
+        overlay.classList.add('is-visible');
+        setTimeout(function () {
+          window.location.href = targetUrl;
+        }, 220);
+        return false;
+      };
+
+      document.addEventListener('DOMContentLoaded', function () {
+        requestAnimationFrame(function () {
+          document.body.classList.remove('is-entering');
+          overlay.classList.remove('is-visible');
+        });
+      });
+    })();
+  </script>
+
+</body>
+</html>
