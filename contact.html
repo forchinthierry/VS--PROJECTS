@@ -12,13 +12,34 @@
 
     body {
       font-family: Arial, sans-serif;
-      background-color: #e9b5b5;
+      background: radial-gradient(circle at 20% 15%, #f7d9d9 0%, #e9b5b5 45%, #dba3c4 100%);
       margin: 0;
       padding: 0;
       color: #333;
       opacity: 1;
       transition: opacity 0.25s ease;
+      position: relative;
+      overflow-x: hidden;
     }
+
+    .ambient {
+      position: absolute;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.55), rgba(255,255,255,0.05) 60%);
+      pointer-events: none;
+      z-index: 0;
+      animation: drift 14s ease-in-out infinite;
+    }
+
+    @keyframes drift {
+      0%, 100% { transform: translateY(0px) translateX(0px); }
+      50% { transform: translateY(-30px) translateX(12px); }
+    }
+
+    .a1 { width: 60px; height: 60px; top: 10%; left: 8%; animation-duration: 11s; }
+    .a2 { width: 30px; height: 30px; top: 22%; right: 10%; animation-duration: 9s; animation-delay: 1s; }
+    .a3 { width: 90px; height: 90px; bottom: 15%; left: 6%; animation-duration: 16s; animation-delay: 2s; }
+    .a4 { width: 45px; height: 45px; bottom: 25%; right: 8%; animation-duration: 13s; animation-delay: 0.5s; }
 
     body.is-exiting {
       opacity: 0;
@@ -125,6 +146,20 @@
       max-width: 480px;
       box-shadow: 0 4px 10px rgba(0,0,0,0.15);
       text-align: center;
+      position: relative;
+      z-index: 2;
+      animation: cardPop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+    }
+
+    @keyframes cardPop {
+      from {
+        opacity: 0;
+        transform: translateY(18px) scale(0.96);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
     }
 
     h1 {
@@ -141,12 +176,47 @@
     }
 
     .links a {
-      display: inline-block;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
       text-decoration: none;
       color: white;
-      padding: 12px 16px;
+      padding: 14px 16px;
       border-radius: 999px;
       font-weight: bold;
+      opacity: 0;
+      transform: translateY(14px);
+      animation: linkRise 0.45s ease forwards;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.12);
+    }
+
+    .links a:nth-child(1) { animation-delay: 0.05s; }
+    .links a:nth-child(2) { animation-delay: 0.12s; }
+    .links a:nth-child(3) { animation-delay: 0.19s; }
+    .links a:nth-child(4) { animation-delay: 0.26s; }
+    .links a:nth-child(5) { animation-delay: 0.33s; }
+
+    @keyframes linkRise {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .links a:hover {
+      transform: translateY(-3px) scale(1.03);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+      filter: brightness(1.08);
+    }
+
+    .links a:active {
+      transform: scale(0.96);
+    }
+
+    .link-icon {
+      font-size: 18px;
     }
 
     .facebook {
@@ -283,6 +353,11 @@
 </head>
 <body>
 
+  <div class="ambient a1"></div>
+  <div class="ambient a2"></div>
+  <div class="ambient a3"></div>
+  <div class="ambient a4"></div>
+
   <header>
     <img src="logo.png" alt="G-Spirit logo">
     <div class="brand">
@@ -302,11 +377,11 @@
       <h1>Contact Us</h1>
       <p>Choose one of the options below.</p>
       <div class="links">
-        <a class="facebook" href="https://facebook.com/gspiritloansolution" target="_blank" rel="noopener noreferrer">Facebook</a>
-        <a class="instagram" href="https://instagram.com/gspiritloansolution" target="_blank" rel="noopener noreferrer">Instagram</a>
-        <a class="email" href="mailto:hi@gspiritloans.com">Email</a>
-        <a class="whatsapp" href="https://wa.me/237620569864" target="_blank" rel="noopener noreferrer">WhatsApp</a>
-        <a class="call" href="tel:+237673202434">Call</a>
+        <a class="facebook" href="https://facebook.com/gspiritloansolution" target="_blank" rel="noopener noreferrer"><span class="link-icon">📘</span>Facebook</a>
+        <a class="instagram" href="https://instagram.com/gspiritloansolution" target="_blank" rel="noopener noreferrer"><span class="link-icon">📸</span>Instagram</a>
+        <a class="email" href="mailto:hi@gspiritloans.com"><span class="link-icon">✉️</span>Email</a>
+        <a class="whatsapp" href="https://wa.me/237620569864" target="_blank" rel="noopener noreferrer"><span class="link-icon">💬</span>WhatsApp</a>
+        <a class="call" href="tel:+237673202434"><span class="link-icon">📞</span>Call</a>
       </div>
     </div>
   </div>
