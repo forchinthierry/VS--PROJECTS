@@ -1,0 +1,18 @@
+# macOS system files
+.DS_Store
+
+# Editor folders
+.vscode/
+
+# Node (in case you add build tools later)
+node_modules/
+
+# Cloudflare Wrangler
+.wrangler/
+
+# Environment/secret files
+.env
+.env.local
+
+# Logs
+*.log
