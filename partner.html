@@ -467,6 +467,30 @@
       font-size: 14px;
     }
 
+    .footer-links {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 6px;
+    }
+
+    .footer-links a {
+      color: #2b3773;
+      text-decoration: none;
+      font-size: 13px;
+      padding: 4px 8px;
+      border: 1px solid #2b3773;
+      border-radius: 999px;
+      background: white;
+    }
+
+    .footer-links a:hover {
+      background: #2b3773;
+      color: white;
+    }
+
     .floating-apply {
       position: fixed;
       bottom: 24px;
@@ -737,7 +761,10 @@
   </div>
 
   <footer>
-    &copy; 2026 G-Spirit Loan Solution. All rights reserved.
+    <div class="footer-links">
+      <a href="privacy.html" target="_self">Privacy Policy</a>
+      <span>&copy; 2026 G-Spirit Loan Solution. All rights reserved.</span>
+    </div>
   </footer>
 
   <button class="floating-apply" onclick="navigateWithTransition('apply.html')" aria-label="Apply for a Loan">

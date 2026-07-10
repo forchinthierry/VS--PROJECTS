@@ -12,7 +12,7 @@
 
     body {
       font-family: Arial, sans-serif;
-      background-color: #e9b5b5;
+      background-color: #e7ebdf;
       color: #333;
       margin: 0;
       padding: 0;
@@ -216,6 +216,30 @@
       font-size: 14px;
     }
 
+    .footer-links {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 6px;
+    }
+
+    .footer-links a {
+      color: #2b3773;
+      text-decoration: none;
+      font-size: 13px;
+      padding: 4px 8px;
+      border: 1px solid #2b3773;
+      border-radius: 999px;
+      background: white;
+    }
+
+    .footer-links a:hover {
+      background: #2b3773;
+      color: white;
+    }
+
     .floating-apply-btn {
       position: fixed;
       right: 20px;
@@ -375,7 +399,10 @@
   </button>
 
   <footer>
-    &copy; 2026 G-Spirit Loan Solution. All rights reserved.
+    <div class="footer-links">
+      <a href="privacy.html" target="_self">Privacy Policy</a>
+      <span>&copy; 2026 G-Spirit Loan Solution. All rights reserved.</span>
+    </div>
   </footer>
 
   <script>
