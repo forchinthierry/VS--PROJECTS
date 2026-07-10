@@ -134,8 +134,119 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      min-height: calc(100vh - 100px);
-      padding: 30px 15px;
+      min-height: calc(100vh - 220px);
+      padding: 30px 15px 10px;
+    }
+
+    .icon-row {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+      padding: 10px 15px 30px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .icon-circle {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      font-size: 20px;
+      text-decoration: none;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+      opacity: 0;
+      transform: translateY(14px);
+      animation: linkRise 0.45s ease forwards;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+    }
+
+    .icon-circle svg {
+      width: 20px;
+      height: 20px;
+      fill: white;
+    }
+
+    .icon-circle:nth-child(1) { animation-delay: 0.05s; }
+    .icon-circle:nth-child(2) { animation-delay: 0.12s; }
+    .icon-circle:nth-child(3) { animation-delay: 0.19s; }
+    .icon-circle:nth-child(4) { animation-delay: 0.26s; }
+    .icon-circle:nth-child(5) { animation-delay: 0.33s; }
+
+    .icon-circle:hover {
+      transform: translateY(-3px) scale(1.08);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+      filter: brightness(1.08);
+    }
+
+    .icon-circle:active {
+      transform: scale(0.94);
+    }
+
+    .query-card {
+      text-align: left;
+    }
+
+    .query-card h1 {
+      text-align: center;
+    }
+
+    .query-card > p {
+      text-align: center;
+    }
+
+    .query-form label {
+      display: block;
+      font-weight: bold;
+      font-size: 13px;
+      margin-top: 14px;
+      color: #2b3773;
+    }
+
+    .query-form input,
+    .query-form textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-family: Arial, sans-serif;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .query-form input:focus,
+    .query-form textarea:focus {
+      outline: none;
+      border-color: #16a085;
+      box-shadow: 0 0 0 3px rgba(22, 160, 133, 0.15);
+    }
+
+    .query-submit {
+      margin-top: 18px;
+      width: 100%;
+      background-color: #2b3773;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 999px;
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.2s ease;
+    }
+
+    .query-submit:hover {
+      background-color: #1f2857;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 14px rgba(43, 55, 115, 0.3);
+    }
+
+    .query-submit:active {
+      transform: scale(0.97);
     }
 
     .card {
@@ -348,6 +459,17 @@
         font-size: 10px;
         padding: 5px 6px;
       }
+
+      .icon-circle {
+        width: 40px;
+        height: 40px;
+        font-size: 17px;
+      }
+
+      .icon-circle svg {
+        width: 17px;
+        height: 17px;
+      }
     }
   </style>
 </head>
@@ -373,17 +495,41 @@
   </header>
 
   <div class="page-body">
-    <div class="card">
-      <h1>Contact Us</h1>
-      <p>Choose one of the options below.</p>
-      <div class="links">
-        <a class="facebook" href="https://facebook.com/gspiritloansolution" target="_blank" rel="noopener noreferrer"><span class="link-icon">📘</span>Facebook</a>
-        <a class="instagram" href="https://instagram.com/gspiritloansolution" target="_blank" rel="noopener noreferrer"><span class="link-icon">📸</span>Instagram</a>
-        <a class="email" href="mailto:hi@gspiritloans.com"><span class="link-icon">✉️</span>Email</a>
-        <a class="whatsapp" href="https://wa.me/237620569864" target="_blank" rel="noopener noreferrer"><span class="link-icon">💬</span>WhatsApp</a>
-        <a class="call" href="tel:+237673202434"><span class="link-icon">📞</span>Call</a>
-      </div>
+    <div class="card query-card">
+      <h1>Send Us a Message</h1>
+      <p>Have a question? Write it below and it'll land straight in our inbox.</p>
+
+      <form action="https://formspree.io/f/mjgqndkn" method="POST" class="query-form">
+        <label for="qname">Name</label>
+        <input type="text" id="qname" name="name" placeholder="Your full name" required>
+
+        <label for="qemail">Email</label>
+        <input type="email" id="qemail" name="email" placeholder="you@example.com" required>
+
+        <label for="qmessage">Your Message</label>
+        <textarea id="qmessage" name="message" rows="4" placeholder="Type your question or query here..." required></textarea>
+
+        <button type="submit" class="query-submit">Send Message</button>
+      </form>
     </div>
+  </div>
+
+  <div class="icon-row">
+    <a class="icon-circle facebook" href="https://facebook.com/gspiritloansolution" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+      <svg viewBox="0 0 320 512" aria-hidden="true"><path d="M279.14 288l14.22-92.66h-88.91v-60.13c0-25.35 12.42-50.06 52.24-50.06h40.42V6.26S260.43 0 225.36 0c-73.22 0-121.08 44.38-121.08 124.72v70.62H22.89V288h81.39v224h100.17V288z"/></svg>
+    </a>
+    <a class="icon-circle instagram" href="https://instagram.com/gspiritloansolution" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+      <svg viewBox="0 0 448 512" aria-hidden="true"><path d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z"/></svg>
+    </a>
+    <a class="icon-circle email" href="mailto:hi@gspiritloans.com" aria-label="Email">
+      <svg viewBox="0 0 512 512" aria-hidden="true"><path d="M48 64C21.5 64 0 85.5 0 112c0 15.1 7.1 29.3 19.2 38.4L236.8 313.6c11.4 8.5 27 8.5 38.4 0L492.8 150.4c12.1-9.1 19.2-23.3 19.2-38.4c0-26.5-21.5-48-48-48H48zM0 176V384c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V176L294.4 339.2c-22.8 17.1-54 17.1-76.8 0L0 176z"/></svg>
+    </a>
+    <a class="icon-circle whatsapp" href="https://wa.me/237620569864" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
+      <svg viewBox="0 0 448 512" aria-hidden="true"><path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7 .9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/></svg>
+    </a>
+    <a class="icon-circle call" href="tel:+237673202434" aria-label="Call">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.62 10.79a15.05 15.05 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1.02-.24 11.36 11.36 0 0 0 3.57.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.24.2 2.45.57 3.57a1 1 0 0 1-.25 1.02l-2.2 2.2z"/></svg>
+    </a>
   </div>
 
   <button class="floating-apply-btn" type="button" onclick="navigateWithTransition('apply.html')">
