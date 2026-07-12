@@ -18,15 +18,17 @@
       padding: 0;
       line-height: 1.6;
       opacity: 1;
-      transition: opacity 0.25s ease;
+      transition: opacity 0.35s cubic-bezier(0.22, 1, 0.36, 1), transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
     }
 
     body.is-exiting {
       opacity: 0;
+      transform: scale(0.98);
     }
 
     body.is-entering {
       opacity: 0;
+      transform: scale(0.98);
     }
 
     .page-overlay {
@@ -35,7 +37,7 @@
       background: #fff;
       opacity: 0;
       pointer-events: none;
-      transition: opacity 0.25s ease;
+      transition: opacity 0.35s cubic-bezier(0.22, 1, 0.36, 1), transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
       z-index: 9999;
     }
 
@@ -63,8 +65,9 @@
       flex-direction: column;
       align-items: flex-start;
       text-align: left;
-      width: 33%;
-      min-width: 180px;
+      width: auto;
+      min-width: 0;
+      flex-shrink: 0;
       gap: 4px;
     }
 
@@ -73,6 +76,7 @@
       font-size: 22px;
       line-height: 1.1;
       color: white;
+      white-space: nowrap;
     }
 
     .tagline {
@@ -327,6 +331,73 @@
         grid-template-columns: 1fr;
       }
     }
+  
+    /* Reveal-on-scroll utility */
+    .reveal {
+      opacity: 0;
+      transform: translateY(26px);
+      transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .reveal.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .reveal-stagger > * {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1), transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .reveal-stagger.is-visible > * {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .reveal-stagger.is-visible > *:nth-child(1) { transition-delay: 0.04s; }
+    .reveal-stagger.is-visible > *:nth-child(2) { transition-delay: 0.10s; }
+    .reveal-stagger.is-visible > *:nth-child(3) { transition-delay: 0.16s; }
+    .reveal-stagger.is-visible > *:nth-child(4) { transition-delay: 0.22s; }
+    .reveal-stagger.is-visible > *:nth-child(5) { transition-delay: 0.28s; }
+    .reveal-stagger.is-visible > *:nth-child(6) { transition-delay: 0.34s; }
+    .reveal-stagger.is-visible > *:nth-child(7) { transition-delay: 0.40s; }
+    .reveal-stagger.is-visible > *:nth-child(8) { transition-delay: 0.46s; }
+    .reveal-stagger.is-visible > *:nth-child(9) { transition-delay: 0.52s; }
+    .reveal-stagger.is-visible > *:nth-child(10) { transition-delay: 0.58s; }
+    .reveal-stagger.is-visible > *:nth-child(11) { transition-delay: 0.64s; }
+    .reveal-stagger.is-visible > *:nth-child(12) { transition-delay: 0.70s; }
+    .reveal-stagger.is-visible > *:nth-child(13) { transition-delay: 0.76s; }
+    .reveal-stagger.is-visible > *:nth-child(14) { transition-delay: 0.82s; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .reveal, .reveal-stagger > * {
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
+      }
+    }
+
+  
+    .logo-btn {
+      background: none;
+      border: none;
+      padding: 0;
+      margin: 0;
+      cursor: pointer;
+      display: inline-flex;
+      line-height: 0;
+      transition: transform 0.2s ease, opacity 0.2s ease;
+    }
+
+    .logo-btn:hover {
+      transform: scale(1.05);
+      opacity: 0.92;
+    }
+
+    .logo-btn:active {
+      transform: scale(0.96);
+    }
   </style>
 </head>
 <body class="is-entering">
@@ -334,7 +405,7 @@
   <div class="page-overlay"></div>
 
   <header>
-    <img src="logo.png" alt="G-Spirit logo">
+    <button type="button" class="logo-btn" onclick="navigateWithTransition('index.html')" aria-label="Go to homepage"><img src="logo.png" alt="G-Spirit logo"></button>
     <div class="brand">
       <h1>G-SPIRIT LOAN SOLUTION</h1>
       <div class="tagline">Powering Dreams</div>
@@ -355,40 +426,48 @@
   <div class="container">
     <div class="card">
 
-      <div class="badge">🎓</div>
+      <div class="badge reveal is-visible">🎓</div>
 
-      <h2>Where It Started</h2>
-      <p>G-Spirit Loan Solution began in May 2020, in the middle of the COVID-19 pandemic. Schools across Cameroon had shut down, and with them, the routines and income that so many families depended on. Watching students and young people search for ways to stay afloat, the founder made a decision: instead of standing by, provide the capital these industrious young minds needed to start or sustain small businesses of their own.</p>
-      <p>What began as small amounts of business capital for a handful of determined students grew, over time, into something much bigger — a lending service that now reaches far beyond the classroom.</p>
+      <div class="reveal">
+        <h2>Where It Started</h2>
+        <p>G-Spirit Loan Solution began in May 2020, in the middle of the COVID-19 pandemic. Schools across Cameroon had shut down, and with them, the routines and income that so many families depended on. Watching students and young people search for ways to stay afloat, the founder made a decision: instead of standing by, provide the capital these industrious young minds needed to start or sustain small businesses of their own.</p>
+        <p>What began as small amounts of business capital for a handful of determined students grew, over time, into something much bigger — a lending service that now reaches far beyond the classroom.</p>
 
-      <div class="quote">
-        "It started with wanting to help a few students turn a hard season into something productive. It grew because the need was everywhere — not just in schools, but in every corner of daily life."
-      </div>
-
-      <h2>Why "G-Spirit"</h2>
-      <p>The name carries the same spirit brought into every classroom for over ten years: patience, clarity, and genuinely wanting to see people succeed. That spirit didn't stop at the school gate — it's the same one behind every loan application reviewed here.</p>
-
-      <h2>What We Believe</h2>
-      <div class="values">
-        <div class="value">
-          <span class="emoji">🤝</span>
-          <strong>Fairness</strong>
-          <span>Clear terms, no hidden surprises.</span>
-        </div>
-        <div class="value">
-          <span class="emoji">⚡</span>
-          <strong>Speed</strong>
-          <span>Real answers in hours, not weeks.</span>
-        </div>
-        <div class="value">
-          <span class="emoji">💬</span>
-          <strong>People First</strong>
-          <span>Every applicant is a person, not a number.</span>
+        <div class="quote">
+          "It started with wanting to help a few students turn a hard season into something productive. It grew because the need was everywhere — not just in schools, but in every corner of daily life."
         </div>
       </div>
 
-      <h2>Powering Dreams</h2>
-      <p>From those first loans to student entrepreneurs, G-Spirit Loan Solution has grown to stand behind all kinds of people chasing progress: teachers between paychecks, farmers investing in the next planting season, small business owners restocking inventory, families financing hire purchases, and anyone facing an unforeseen circumstance that just can't wait. Different needs, same spirit — real support, when it's needed most.</p>
+      <div class="reveal">
+        <h2>Why "G-Spirit"</h2>
+        <p>The name carries the same spirit brought into every classroom for over ten years: patience, clarity, and genuinely wanting to see people succeed. That spirit didn't stop at the school gate — it's the same one behind every loan application reviewed here.</p>
+      </div>
+
+      <div class="reveal">
+        <h2>What We Believe</h2>
+        <div class="values reveal-stagger">
+          <div class="value">
+            <span class="emoji">🤝</span>
+            <strong>Fairness</strong>
+            <span>Clear terms, no hidden surprises.</span>
+          </div>
+          <div class="value">
+            <span class="emoji">⚡</span>
+            <strong>Speed</strong>
+            <span>Real answers in hours, not weeks.</span>
+          </div>
+          <div class="value">
+            <span class="emoji">💬</span>
+            <strong>People First</strong>
+            <span>Every applicant is a person, not a number.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="reveal">
+        <h2>Powering Dreams</h2>
+        <p>From those first loans to student entrepreneurs, G-Spirit Loan Solution has grown to stand behind all kinds of people chasing progress: teachers between paychecks, farmers investing in the next planting season, small business owners restocking inventory, families financing hire purchases, and anyone facing an unforeseen circumstance that just can't wait. Different needs, same spirit — real support, when it's needed most.</p>
+      </div>
 
     </div>
   </div>
@@ -415,7 +494,7 @@
         overlay.classList.add('is-visible');
         setTimeout(function () {
           window.location.href = targetUrl;
-        }, 220);
+        }, 320);
         return false;
       };
 
@@ -425,6 +504,25 @@
           overlay.classList.remove('is-visible');
         });
       });
+    })();
+  </script>
+
+  <script>
+    (function () {
+      var revealEls = document.querySelectorAll('.reveal, .reveal-stagger');
+      if (!('IntersectionObserver' in window) || revealEls.length === 0) {
+        revealEls.forEach(function (el) { el.classList.add('is-visible'); });
+        return;
+      }
+      var observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12, rootMargin: '0px 0px -30px 0px' });
+      revealEls.forEach(function (el) { observer.observe(el); });
     })();
   </script>
 

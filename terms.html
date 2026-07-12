@@ -18,15 +18,17 @@
       padding: 0;
       line-height: 1.6;
       opacity: 1;
-      transition: opacity 0.25s ease;
+      transition: opacity 0.35s cubic-bezier(0.22, 1, 0.36, 1), transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
     }
 
     body.is-exiting {
       opacity: 0;
+      transform: scale(0.98);
     }
 
     body.is-entering {
       opacity: 0;
+      transform: scale(0.98);
     }
 
     .page-overlay {
@@ -35,7 +37,7 @@
       background: #fff;
       opacity: 0;
       pointer-events: none;
-      transition: opacity 0.25s ease;
+      transition: opacity 0.35s cubic-bezier(0.22, 1, 0.36, 1), transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
       z-index: 9999;
     }
 
@@ -63,8 +65,9 @@
       flex-direction: column;
       align-items: flex-start;
       text-align: left;
-      width: 33%;
-      min-width: 180px;
+      width: auto;
+      min-width: 0;
+      flex-shrink: 0;
       gap: 4px;
     }
 
@@ -73,6 +76,7 @@
       font-size: 22px;
       line-height: 1.1;
       color: white;
+      white-space: nowrap;
     }
 
     .tagline {
@@ -325,12 +329,79 @@
         padding: 6px;
       }
     }
+  
+    /* Reveal-on-scroll utility */
+    .reveal {
+      opacity: 0;
+      transform: translateY(26px);
+      transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .reveal.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .reveal-stagger > * {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1), transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .reveal-stagger.is-visible > * {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .reveal-stagger.is-visible > *:nth-child(1) { transition-delay: 0.04s; }
+    .reveal-stagger.is-visible > *:nth-child(2) { transition-delay: 0.10s; }
+    .reveal-stagger.is-visible > *:nth-child(3) { transition-delay: 0.16s; }
+    .reveal-stagger.is-visible > *:nth-child(4) { transition-delay: 0.22s; }
+    .reveal-stagger.is-visible > *:nth-child(5) { transition-delay: 0.28s; }
+    .reveal-stagger.is-visible > *:nth-child(6) { transition-delay: 0.34s; }
+    .reveal-stagger.is-visible > *:nth-child(7) { transition-delay: 0.40s; }
+    .reveal-stagger.is-visible > *:nth-child(8) { transition-delay: 0.46s; }
+    .reveal-stagger.is-visible > *:nth-child(9) { transition-delay: 0.52s; }
+    .reveal-stagger.is-visible > *:nth-child(10) { transition-delay: 0.58s; }
+    .reveal-stagger.is-visible > *:nth-child(11) { transition-delay: 0.64s; }
+    .reveal-stagger.is-visible > *:nth-child(12) { transition-delay: 0.70s; }
+    .reveal-stagger.is-visible > *:nth-child(13) { transition-delay: 0.76s; }
+    .reveal-stagger.is-visible > *:nth-child(14) { transition-delay: 0.82s; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .reveal, .reveal-stagger > * {
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
+      }
+    }
+
+  
+    .logo-btn {
+      background: none;
+      border: none;
+      padding: 0;
+      margin: 0;
+      cursor: pointer;
+      display: inline-flex;
+      line-height: 0;
+      transition: transform 0.2s ease, opacity 0.2s ease;
+    }
+
+    .logo-btn:hover {
+      transform: scale(1.05);
+      opacity: 0.92;
+    }
+
+    .logo-btn:active {
+      transform: scale(0.96);
+    }
   </style>
 </head>
 <body>
 
   <header>
-    <img src="logo.png" alt="G-Spirit logo">
+    <button type="button" class="logo-btn" onclick="navigateWithTransition('index.html')" aria-label="Go to homepage"><img src="logo.png" alt="G-Spirit logo"></button>
     <div class="brand">
       <h1>G-SPIRIT LOAN SOLUTION</h1>
       <div class="tagline">Powering Dreams</div>
@@ -350,7 +421,7 @@
 
     <div class="card">
 
-      <h2>1. Introduction</h2>
+      <div class="reveal">      <h2>1. Introduction</h2>
       <p>Welcome to G-Spirit Loan Solution ("we," "our," or "us"). By accessing or using our loan services, you agree to be bound by these Terms and Conditions. Please read them carefully before applying for a loan.</p>
 
       <div class="key-points">
@@ -362,8 +433,9 @@
           <li>Late payment penalty: 5% per day</li>
         </ul>
       </div>
+      </div>
 
-      <h2>2. Eligibility</h2>
+      <div class="reveal">      <h2>2. Eligibility</h2>
       <p>To apply for a loan with G-Spirit Loan Solution, you must:</p>
       <ul>
         <li>Be at least 21 years old</li>
@@ -374,8 +446,9 @@
         <li>Own acceptable collateral that can be physically verified</li>
         <li>Have an active mobile money account (MTN or Orange) or bank account</li>
       </ul>
+      </div>
 
-      <h2>3. Loan Terms</h2>
+      <div class="reveal">      <h2>3. Loan Terms</h2>
 
       <h3>3.1 Interest Rate</h3>
       <p>All loans carry a fixed interest rate of 10% per month, calculated on the principal amount for the duration of the loan.</p>
@@ -418,8 +491,9 @@
           <td>1,100,000</td>
         </tr>
       </table>
+      </div>
 
-      <h2>4. Collateral Requirements</h2>
+      <div class="reveal">      <h2>4. Collateral Requirements</h2>
       <p>Every loan requires physical collateral that our team can verify in person. We accept:</p>
       <ul>
         <li><strong>Land titles</strong> — must be registered and free of any disputes</li>
@@ -429,8 +503,9 @@
         <li><strong>Other valuable assets</strong> — high-value electronics, appliances, or inventory</li>
       </ul>
       <p>Collateral must be worth at least 1.5 times the loan amount. A physical inspection is carried out before any loan is approved.</p>
+      </div>
 
-      <h2>5. Late Payments and Default</h2>
+      <div class="reveal">      <h2>5. Late Payments and Default</h2>
 
       <h3>5.1 Late Payment Penalty</h3>
       <p>A 5% daily penalty applies to any outstanding balance not repaid by the due date. This penalty continues to accrue until the full amount is settled.</p>
@@ -446,8 +521,9 @@
         <li>Your information may be shared with credit bureaus</li>
         <li>Collection costs may be added to your balance</li>
       </ul>
+      </div>
 
-      <h2>6. Loan Extension and Restructuring</h2>
+      <div class="reveal">      <h2>6. Loan Extension and Restructuring</h2>
       <p>If you expect trouble repaying on time, contact us before the due date. Depending on your situation, we may offer:</p>
       <ul>
         <li><strong>Extension</strong> — extending your loan term, with adjusted interest</li>
@@ -455,8 +531,9 @@
         <li><strong>Restructuring</strong> — a new payment plan tailored to your circumstances</li>
       </ul>
       <p>Extension fees may apply — reach out to discuss what works for you.</p>
+      </div>
 
-      <h2>7. Application Process</h2>
+      <div class="reveal">      <h2>7. Application Process</h2>
       <ol>
         <li><strong>Submit Application</strong> — complete the online form with accurate information</li>
         <li><strong>Document Verification</strong> — provide your ID, proof of residence, and collateral documents</li>
@@ -464,8 +541,9 @@
         <li><strong>Approval</strong> — once verified, expect a decision within 24 hours</li>
         <li><strong>Disbursement</strong> — approved funds are sent to your mobile money or bank account</li>
       </ol>
+      </div>
 
-      <h2>8. Accuracy of Information</h2>
+      <div class="reveal">      <h2>8. Accuracy of Information</h2>
       <p>By submitting an application, you confirm that everything you've provided is accurate and complete. Submitting false or misleading information may lead to:</p>
       <ul>
         <li>Immediate rejection of your application</li>
@@ -473,8 +551,9 @@
         <li>Legal action for fraud</li>
         <li>Permanent exclusion from our services</li>
       </ul>
+      </div>
 
-      <h2>9. Privacy and Data Protection</h2>
+      <div class="reveal">      <h2>9. Privacy and Data Protection</h2>
       <p>We handle your personal information in line with our Privacy Policy. By using our services, you agree to:</p>
       <ul>
         <li>The collection and storage of your personal data</li>
@@ -482,18 +561,25 @@
         <li>Being contacted by phone, email, and WhatsApp</li>
         <li>Your information being shared with trusted service partners where necessary to deliver our services</li>
       </ul>
+      </div>
 
-      <h2>10. Communication</h2>
+      <div class="reveal">      <h2>10. Communication</h2>
       <p>By applying for a loan, you agree to receive communications from us via phone call, SMS, WhatsApp, and email — including loan updates, payment reminders, and occasional promotional offers.</p>
+      </div>
 
-      <h2>11. Limitation of Liability</h2>
+      <div class="reveal">      <h2>11. Limitation of Liability</h2>
       <p>G-Spirit Loan Solution is not liable for indirect, incidental, or consequential damages arising from use (or inability to use) our services, delays in processing or disbursement, inaccurate information you've supplied, or the actions of third-party partners. Our total liability in any case will not exceed the amount of the loan provided.</p>
+      </div>
 
-      <h2>12. Changes to These Terms</h2>
+      <div class="reveal">      <h2>12. Changes to These Terms</h2>
       <p>We may update these terms from time to time. Changes take effect as soon as they're posted on our website. Continuing to use our services after an update means you accept the revised terms.</p>
+      </div>
 
-      <h2>13. Governing Law</h2>
+      <div class="reveal">      <h2>13. Governing Law</h2>
       <p>These terms are governed by the laws of the Republic of Cameroon. Any disputes will fall under the exclusive jurisdiction of the courts of Cameroon.</p>
+
+      
+      </div>
 
       <p class="updated">Last updated: July 2026</p>
 
@@ -512,7 +598,7 @@
         overlay.classList.add('is-visible');
         setTimeout(function () {
           window.location.href = targetUrl;
-        }, 220);
+        }, 320);
         return false;
       };
 
@@ -536,6 +622,25 @@
       <span>&copy; 2026 G-Spirit Loan Solution. All rights reserved.</span>
     </div>
   </footer>
+
+  <script>
+    (function () {
+      var revealEls = document.querySelectorAll('.reveal, .reveal-stagger');
+      if (!('IntersectionObserver' in window) || revealEls.length === 0) {
+        revealEls.forEach(function (el) { el.classList.add('is-visible'); });
+        return;
+      }
+      var observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12, rootMargin: '0px 0px -30px 0px' });
+      revealEls.forEach(function (el) { observer.observe(el); });
+    })();
+  </script>
 
 </body>
 </html>

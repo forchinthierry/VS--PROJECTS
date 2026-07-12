@@ -18,15 +18,17 @@
       padding: 0;
       line-height: 1.6;
       opacity: 1;
-      transition: opacity 0.25s ease;
+      transition: opacity 0.35s cubic-bezier(0.22, 1, 0.36, 1), transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
     }
 
     body.is-exiting {
       opacity: 0;
+      transform: scale(0.98);
     }
 
     body.is-entering {
       opacity: 0;
+      transform: scale(0.98);
     }
 
     .page-overlay {
@@ -35,7 +37,7 @@
       background: #fff;
       opacity: 0;
       pointer-events: none;
-      transition: opacity 0.25s ease;
+      transition: opacity 0.35s cubic-bezier(0.22, 1, 0.36, 1), transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
       z-index: 9999;
     }
 
@@ -63,8 +65,9 @@
       flex-direction: column;
       align-items: flex-start;
       text-align: left;
-      width: 33%;
-      min-width: 180px;
+      width: auto;
+      min-width: 0;
+      flex-shrink: 0;
       gap: 4px;
     }
 
@@ -73,6 +76,7 @@
       font-size: 22px;
       line-height: 1.1;
       color: white;
+      white-space: nowrap;
     }
 
     .tagline {
@@ -302,12 +306,79 @@
         padding: 6px;
       }
     }
+  
+    /* Reveal-on-scroll utility */
+    .reveal {
+      opacity: 0;
+      transform: translateY(26px);
+      transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .reveal.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .reveal-stagger > * {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1), transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .reveal-stagger.is-visible > * {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .reveal-stagger.is-visible > *:nth-child(1) { transition-delay: 0.04s; }
+    .reveal-stagger.is-visible > *:nth-child(2) { transition-delay: 0.10s; }
+    .reveal-stagger.is-visible > *:nth-child(3) { transition-delay: 0.16s; }
+    .reveal-stagger.is-visible > *:nth-child(4) { transition-delay: 0.22s; }
+    .reveal-stagger.is-visible > *:nth-child(5) { transition-delay: 0.28s; }
+    .reveal-stagger.is-visible > *:nth-child(6) { transition-delay: 0.34s; }
+    .reveal-stagger.is-visible > *:nth-child(7) { transition-delay: 0.40s; }
+    .reveal-stagger.is-visible > *:nth-child(8) { transition-delay: 0.46s; }
+    .reveal-stagger.is-visible > *:nth-child(9) { transition-delay: 0.52s; }
+    .reveal-stagger.is-visible > *:nth-child(10) { transition-delay: 0.58s; }
+    .reveal-stagger.is-visible > *:nth-child(11) { transition-delay: 0.64s; }
+    .reveal-stagger.is-visible > *:nth-child(12) { transition-delay: 0.70s; }
+    .reveal-stagger.is-visible > *:nth-child(13) { transition-delay: 0.76s; }
+    .reveal-stagger.is-visible > *:nth-child(14) { transition-delay: 0.82s; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .reveal, .reveal-stagger > * {
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
+      }
+    }
+
+  
+    .logo-btn {
+      background: none;
+      border: none;
+      padding: 0;
+      margin: 0;
+      cursor: pointer;
+      display: inline-flex;
+      line-height: 0;
+      transition: transform 0.2s ease, opacity 0.2s ease;
+    }
+
+    .logo-btn:hover {
+      transform: scale(1.05);
+      opacity: 0.92;
+    }
+
+    .logo-btn:active {
+      transform: scale(0.96);
+    }
   </style>
 </head>
 <body>
 
   <header>
-    <img src="logo.png" alt="G-Spirit logo">
+    <button type="button" class="logo-btn" onclick="navigateWithTransition('index.html')" aria-label="Go to homepage"><img src="logo.png" alt="G-Spirit logo"></button>
     <div class="brand">
       <h1>G-SPIRIT LOAN SOLUTION</h1>
       <div class="tagline">Powering Dreams</div>
@@ -328,15 +399,16 @@
   <div class="container">
     <div class="card">
 
-      <h2>1. Introduction</h2>
+      <div class="reveal">      <h2>1. Introduction</h2>
       <p>At G-Spirit Loan Solution, we take your privacy seriously. This Privacy Policy explains how we collect, use, disclose, and protect your information when you use our loan services. By using our services, you agree to the practices described here.</p>
 
       <div class="highlight-box">
         <strong>Our Commitment</strong>
         <p style="margin-bottom:0;">We're committed to protecting your personal information and being transparent about how it's used. We follow Cameroonian data protection laws and industry best practices.</p>
       </div>
+      </div>
 
-      <h2>2. Information We Collect</h2>
+      <div class="reveal">      <h2>2. Information We Collect</h2>
 
       <h3>2.1 Personal Information</h3>
       <p>When you apply for a loan, we collect:</p>
@@ -357,8 +429,9 @@
         <li>Referring website addresses</li>
         <li>Cookies and similar technologies</li>
       </ul>
+      </div>
 
-      <h2>3. How We Use Your Information</h2>
+      <div class="reveal">      <h2>3. How We Use Your Information</h2>
       <table>
         <tr>
           <th>Purpose</th>
@@ -372,8 +445,9 @@
         <tr><td>Comply with legal requirements</td><td>Legal obligation</td></tr>
         <tr><td>Prevent fraud</td><td>Legitimate interest</td></tr>
       </table>
+      </div>
 
-      <h2>4. Information Sharing and Disclosure</h2>
+      <div class="reveal">      <h2>4. Information Sharing and Disclosure</h2>
       <p>We may share your information in the following circumstances:</p>
 
       <h3>4.1 Service Providers</h3>
@@ -391,8 +465,9 @@
 
       <h3>4.4 With Your Consent</h3>
       <p>We may share your information for other purposes if you've given us explicit consent to do so.</p>
+      </div>
 
-      <h2>5. Data Security</h2>
+      <div class="reveal">      <h2>5. Data Security</h2>
       <p>We use a range of technical and organizational measures to protect your information, including:</p>
       <ul>
         <li>Encryption of data in transit and at rest</li>
@@ -402,11 +477,13 @@
         <li>Staff training on data protection</li>
       </ul>
       <p>While we work hard to protect your information, no method of transmission over the internet is completely secure, and we can't guarantee absolute security.</p>
+      </div>
 
-      <h2>6. Data Retention</h2>
+      <div class="reveal">      <h2>6. Data Retention</h2>
       <p>We keep your information for as long as necessary to provide our services, meet legal obligations, resolve disputes, and enforce our agreements. As a general rule, we retain loan application data for 5 years after a loan is fully repaid, or 3 years after a rejected application.</p>
+      </div>
 
-      <h2>7. Your Rights</h2>
+      <div class="reveal">      <h2>7. Your Rights</h2>
       <p>Under Cameroonian data protection law, you have the right to:</p>
       <ul>
         <li><strong>Access</strong> — request a copy of your personal information</li>
@@ -417,23 +494,29 @@
         <li><strong>Portability</strong> — receive your information in a structured, transferable format</li>
       </ul>
       <p>To exercise any of these rights, contact us at <a href="mailto: hi@gspiritloans.com">hi@gspiritloans.com</a> or via WhatsApp at +237 620 569 864.</p>
+      </div>
 
-      <h2>8. Cookies and Tracking</h2>
+      <div class="reveal">      <h2>8. Cookies and Tracking</h2>
       <p>Our website uses cookies to remember your preferences, analyze site traffic, improve your experience, and serve relevant offers. You can control cookies through your browser settings, though disabling them may affect how the site functions.</p>
+      </div>
 
-      <h2>9. Third-Party Links</h2>
+      <div class="reveal">      <h2>9. Third-Party Links</h2>
       <p>Our website may link to third-party sites (such as Facebook). We aren't responsible for their privacy practices, and we encourage you to review their own policies.</p>
+      </div>
 
-      <h2>10. Children's Privacy</h2>
+      <div class="reveal">      <h2>10. Children's Privacy</h2>
       <p>Our services are intended for individuals 21 and older. We don't knowingly collect information from minors. If you believe a minor has provided us with information, please contact us so we can address it.</p>
+      </div>
 
-      <h2>11. International Data Transfers</h2>
+      <div class="reveal">      <h2>11. International Data Transfers</h2>
       <p>Your information may be processed in countries other than Cameroon. Where this happens, we take steps to ensure appropriate safeguards are in place.</p>
+      </div>
 
-      <h2>12. Changes to This Policy</h2>
+      <div class="reveal">      <h2>12. Changes to This Policy</h2>
       <p>We may update this Privacy Policy from time to time. Significant changes will be posted on our website with an updated "Last Updated" date. Continuing to use our services after such changes means you accept the updated policy.</p>
+      </div>
 
-      <h2>13. Contact Information</h2>
+      <div class="reveal">      <h2>13. Contact Information</h2>
       <p>Questions or concerns about this policy or our data practices can be directed to our Data Protection contact:</p>
       <ul>
         <li>Phone: +237 673 202 434</li>
@@ -441,9 +524,13 @@
         <li>Email: <a href="mailto: support@gspiritloans.com">support@gspiritloans.com</a></li>
         <li>Address: Douala, Cameroon</li>
       </ul>
+      </div>
 
-      <h2>14. Complaints</h2>
+      <div class="reveal">      <h2>14. Complaints</h2>
       <p>If you believe your privacy rights have been violated, you're entitled to lodge a complaint with the relevant Cameroonian data protection authority. We'd appreciate the chance to resolve any concern directly first — please reach out to us before escalating.</p>
+
+      
+      </div>
 
       <p class="updated">Last updated: July 2026</p>
 
@@ -471,7 +558,7 @@
         overlay.classList.add('is-visible');
         setTimeout(function () {
           window.location.href = targetUrl;
-        }, 220);
+        }, 320);
         return false;
       };
 
@@ -481,6 +568,25 @@
           overlay.classList.remove('is-visible');
         });
       });
+    })();
+  </script>
+
+  <script>
+    (function () {
+      var revealEls = document.querySelectorAll('.reveal, .reveal-stagger');
+      if (!('IntersectionObserver' in window) || revealEls.length === 0) {
+        revealEls.forEach(function (el) { el.classList.add('is-visible'); });
+        return;
+      }
+      var observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12, rootMargin: '0px 0px -30px 0px' });
+      revealEls.forEach(function (el) { observer.observe(el); });
     })();
   </script>
 
