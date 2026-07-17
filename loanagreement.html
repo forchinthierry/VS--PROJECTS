@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="logo.png">
+  <title>Loan Agreement - G-Spirit Loan Solution</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #701e1e;
+      color: #333;
+      margin: 0;
+      padding: 0;
+      line-height: 1.6;
+      opacity: 1;
+      transition: opacity 0.35s cubic-bezier(0.22, 1, 0.36, 1), transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    body.is-exiting { opacity: 0; transform: scale(0.98); }
+    body.is-entering { opacity: 0; transform: scale(0.98); }
+
+    .page-overlay {
+      position: fixed;
+      inset: 0;
+      background: #fff;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.35s ease;
+      z-index: 9999;
+    }
+
+    .page-overlay.is-visible { opacity: 1; }
+
+    header {
+      background-color: #2b3773;
+      color: white;
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    header img { max-height: 80px; width: auto; }
+
+    .logo-btn {
+      background: none;
+      border: none;
+      padding: 0;
+      margin: 0;
+      width: auto;
+      cursor: pointer;
+      display: inline-flex;
+      line-height: 0;
+      transition: transform 0.2s ease, opacity 0.2s ease;
+    }
+
+    .logo-btn:hover { transform: scale(1.05); opacity: 0.92; }
+    .logo-btn:active { transform: scale(0.96); }
+
+    .brand {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      text-align: left;
+      width: auto;
+      min-width: 0;
+      flex-shrink: 0;
+      gap: 4px;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 22px;
+      line-height: 1.1;
+      color: white;
+      white-space: nowrap;
+    }
+
+    .tagline { font-size: 14px; font-style: italic; color: #d0e8ef; margin: 0; }
+
+    .header-actions {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 8px;
+      width: auto;
+      min-width: 0;
+      flex-wrap: wrap;
+    }
+
+    .header-actions button {
+      background: none;
+      color: white;
+      border: none;
+      -webkit-appearance: none;
+      appearance: none;
+      padding: 4px;
+      font-size: 12px;
+      cursor: pointer;
+      white-space: nowrap;
+      width: auto;
+    }
+
+    .header-actions button:hover { text-decoration: underline; background: transparent; }
+
+    .page-banner {
+      text-align: center;
+      padding: 24px 18px;
+      margin: 20px auto 20px;
+      max-width: 800px;
+      background: linear-gradient(135deg, #2b3773, #16a085);
+      color: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    }
+
+    .page-banner h1 { margin: 0; font-size: 28px; font-weight: 700; }
+    .page-banner p { margin: 8px 0 0; font-size: 15px; opacity: 0.9; }
+
+    .container { width: 95%; max-width: 900px; margin: 10px auto; padding: 20px; }
+
+    .card {
+      background: rgb(246, 244, 244);
+      border-radius: 12px;
+      padding: 22px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    }
+
+    h2 {
+      color: #16a085;
+      border-bottom: 2px solid #16a085;
+      padding-bottom: 5px;
+      margin-top: 0;
+    }
+
+    label {
+      display: block;
+      font-weight: bold;
+      font-size: 14px;
+      margin-top: 14px;
+    }
+
+    input, textarea, select {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-family: Arial, sans-serif;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    input:focus, textarea:focus, select:focus {
+      outline: none;
+      border-color: #16a085;
+      box-shadow: 0 0 0 3px rgba(22, 160, 133, 0.15);
+    }
+
+    .hint { font-size: 12.5px; color: #777; margin-top: 4px; }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0 20px;
+    }
+
+    .borrower-block {
+      background: #fff;
+      border: 1px solid rgba(43,55,115,0.12);
+      border-radius: 10px;
+      padding: 16px;
+      margin-top: 14px;
+      position: relative;
+    }
+
+    .borrower-block h4 { margin: 0 0 4px; color: #2b3773; }
+
+    .remove-borrower-btn {
+      width: auto;
+      background: #d9534f;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      padding: 6px 10px;
+      cursor: pointer;
+      font-size: 12px;
+      float: right;
+    }
+
+    .summary-preview {
+      display: flex;
+      gap: 16px;
+      margin-top: 14px;
+      flex-wrap: wrap;
+    }
+
+    .summary-box {
+      flex: 1 1 140px;
+      background: #fff;
+      border-radius: 8px;
+      padding: 12px 14px;
+      border: 1px solid rgba(43,55,115,0.1);
+    }
+
+    .summary-box strong { display: block; color: #2b3773; font-size: 12.5px; }
+    .summary-box span { font-size: 17px; font-weight: bold; color: #16a085; }
+
+    button.submit-btn {
+      background-color: #2b3773;
+      color: white;
+      padding: 13px 20px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 16px;
+      width: 100%;
+      margin-top: 24px;
+      transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.2s ease;
+    }
+
+    button.submit-btn:hover {
+      background-color: #1f2857;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 14px rgba(43, 55, 115, 0.3);
+    }
+
+    button.submit-btn:active { transform: scale(0.98); }
+
+    .disclaimer {
+      font-size: 12.5px;
+      color: #8a6d00;
+      background: #fff8e1;
+      border-left: 4px solid #e2a63b;
+      padding: 12px 16px;
+      border-radius: 4px;
+      margin-bottom: 20px;
+    }
+
+    footer { text-align: center; padding: 20px; color: #999; font-size: 14px; }
+
+    .footer-links {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 6px;
+    }
+
+    .footer-links a {
+      color: #2b3773;
+      text-decoration: none;
+      font-size: 13px;
+      padding: 4px 8px;
+      border: 1px solid #2b3773;
+      border-radius: 999px;
+      background: white;
+    }
+
+    .footer-links a:hover { background: #2b3773; color: white; }
+
+    @media (max-width: 700px) {
+      .two-col { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 600px) {
+      header { flex-wrap: wrap; justify-content: flex-start; gap: 10px; padding: 12px; }
+      header img { max-height: 44px; }
+      .brand { width: auto; min-width: 0; align-items: flex-start; text-align: left; }
+      header h1 { font-size: 15px; }
+      .tagline { font-size: 11px; }
+      .header-actions { width: 100%; min-width: 0; justify-content: flex-start; flex-wrap: wrap; gap: 6px; }
+      .header-actions button { font-size: 10px; padding: 5px 6px; }
+      .page-banner h1 { font-size: 22px; }
+    }
+  </style>
+</head>
+<body class="is-entering">
+
+  <div class="page-overlay"></div>
+
+  <header>
+    <button type="button" class="logo-btn" onclick="navigateWithTransition('index.html')" aria-label="Go to homepage">
+      <img src="logo.png" alt="G-Spirit logo">
+    </button>
+    <div class="brand">
+      <h1>G-SPIRIT LOAN SOLUTION</h1>
+      <div class="tagline">Powering Dreams</div>
+    </div>
+    <div class="header-actions">
+      <button type="button" onclick="navigateWithTransition('index.html')">Home</button>
+      <button type="button" onclick="navigateWithTransition('terms.html')">Terms</button>
+      <button type="button" onclick="navigateWithTransition('about.html')">About</button>
+      <button type="button" onclick="navigateWithTransition('contact.html')">Contact Us</button>
+    </div>
+  </header>
+
+  <div class="page-banner">
+    <h1>Loan Agreement</h1>
+    <p>Fill in the details below to generate a signable loan agreement</p>
+  </div>
+
+  <div class="container">
+
+    <div class="disclaimer">
+      ⚠️ This tool generates a draft loan agreement based on the information you provide. It is not a substitute for legal advice — have the final document reviewed before either party signs.
+    </div>
+
+    <div class="card">
+      <h2>Agreement Details</h2>
+      <label for="agreementDate">Agreement Date</label>
+      <input type="date" id="agreementDate" required>
+
+      <label for="loanTermMonths">Loan Term (months)</label>
+      <input type="number" id="loanTermMonths" min="1" value="1" required>
+    </div>
+
+    <div class="card">
+      <h2>Borrower(s)</h2>
+      <p class="hint">Add every person who is jointly responsible for repaying this loan.</p>
+      <div id="borrowersContainer"></div>
+      <button type="button" onclick="addBorrowerBlock()" style="width:auto; background:#16a085; color:white; border:none; padding:8px 14px; border-radius:4px; cursor:pointer; font-size:13px; margin-top:10px;">+ Add Borrower</button>
+    </div>
+
+    <div class="card">
+      <h2>Lender Details</h2>
+      <label for="lenderName">Lender</label>
+      <input type="text" id="lenderName" value="G-Spirit Loan Solution" required>
+
+      <div class="two-col">
+        <div>
+          <label for="lenderRepName">Authorized Representative Name</label>
+          <input type="text" id="lenderRepName" required>
+
+          <label for="lenderRepId">Representative NIC No.</label>
+          <input type="text" id="lenderRepId" required>
+        </div>
+        <div>
+          <label for="lenderAddress">Business Address</label>
+          <input type="text" id="lenderAddress" value="Buea" required>
+
+          <label for="lenderPhone">Phone</label>
+          <input type="tel" id="lenderPhone" value="+237 620 569 984" required>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Loan Details</h2>
+      <div class="two-col">
+        <div>
+          <label for="loanAmount">Amount of Loan (XAF)</label>
+          <input type="number" id="loanAmount" min="0" required>
+
+          <label for="loanInterest">Interest (XAF)</label>
+          <input type="number" id="loanInterest" min="0" value="0" required>
+        </div>
+        <div>
+          <label for="otherDesc">Other Charges (describe)</label>
+          <input type="text" id="otherDesc" placeholder="e.g. Processing fee">
+
+          <label for="otherAmount">Other Charges (XAF)</label>
+          <input type="number" id="otherAmount" min="0" value="0">
+        </div>
+      </div>
+
+      <label for="monthlyRate">Monthly Percentage Rate (%)</label>
+      <input type="number" id="monthlyRate" min="0" step="0.1" value="10" required>
+
+      <div class="summary-preview" id="loanSummaryPreview"></div>
+    </div>
+
+    <div class="card">
+      <h2>Repayment of Loan</h2>
+      <label for="numInstallments">Number of Installments</label>
+      <input type="number" id="numInstallments" min="1" value="1" required>
+
+      <label for="paymentDay">Day of Each Month Payment Is Due</label>
+      <input type="number" id="paymentDay" min="1" max="31" value="1" required>
+
+      <label for="firstPaymentDate">First Payment Date</label>
+      <input type="date" id="firstPaymentDate" required>
+
+      <label for="lastPaymentDate">Final Payment Date</label>
+      <input type="date" id="lastPaymentDate" required>
+    </div>
+
+    <div class="card">
+      <h2>Additional Information</h2>
+      <label for="remark">Remark (optional)</label>
+      <textarea id="remark" rows="2"></textarea>
+
+      <label for="nextOfKinName">Borrower's Next of Kin (Name)</label>
+      <input type="text" id="nextOfKinName">
+
+      <label for="nextOfKinPhone">Next of Kin (Phone)</label>
+      <input type="tel" id="nextOfKinPhone">
+
+      <label for="witnessName">Witness Name (optional)</label>
+      <input type="text" id="witnessName">
+    </div>
+
+    <button type="button" class="submit-btn" onclick="generateLoanAgreementPDF()">Generate Loan Agreement (PDF)</button>
+
+  </div>
+
+  <footer>
+    <div class="footer-links">
+      <a href="privacy.html" target="_self">Privacy Policy</a>
+      <span>&copy; 2026 G-Spirit Loan Solution. All rights reserved.</span>
+    </div>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+  <script>
+    (function () {
+      var overlay = document.querySelector('.page-overlay');
+      window.navigateWithTransition = function (targetUrl) {
+        if (!targetUrl) return false;
+        document.body.classList.add('is-exiting');
+        overlay.classList.add('is-visible');
+        setTimeout(function () { window.location.href = targetUrl; }, 320);
+        return false;
+      };
+      document.addEventListener('DOMContentLoaded', function () {
+        requestAnimationFrame(function () {
+          document.body.classList.remove('is-entering');
+          overlay.classList.remove('is-visible');
+        });
+      });
+    })();
+
+    function formatCurrency(value) {
+      return parseFloat(value || 0).toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+    }
+
+    var ONES = ['', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten',
+      'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen'];
+    var TENS = ['', '', 'twenty', 'thirty', 'forty', 'fifty', 'sixty', 'seventy', 'eighty', 'ninety'];
+
+    function threeDigitsToWords(n) {
+      var str = '';
+      if (n >= 100) { str += ONES[Math.floor(n / 100)] + ' hundred '; n %= 100; }
+      if (n >= 20) { str += TENS[Math.floor(n / 10)] + ' '; n %= 10; }
+      if (n > 0) { str += ONES[n] + ' '; }
+      return str.trim();
+    }
+
+    function numberToWords(num) {
+      num = Math.round(num);
+      if (num === 0) return 'zero';
+      var units = ['', 'thousand', 'million', 'billion'];
+      var parts = [];
+      var unitIndex = 0;
+      while (num > 0) {
+        var chunk = num % 1000;
+        if (chunk > 0) parts.unshift(threeDigitsToWords(chunk) + (units[unitIndex] ? ' ' + units[unitIndex] : ''));
+        num = Math.floor(num / 1000);
+        unitIndex++;
+      }
+      return parts.join(', ').replace(/\s+/g, ' ').trim();
+    }
+
+    function amountWithWords(amount) {
+      var words = numberToWords(amount);
+      var capitalized = words.charAt(0).toUpperCase() + words.slice(1);
+      return formatCurrency(amount) + ' XAF (' + capitalized + ' Central African Francs)';
+    }
+
+    var borrowerCount = 0;
+    function addBorrowerBlock() {
+      borrowerCount++;
+      var uid = borrowerCount;
+      var wrapper = document.createElement('div');
+      wrapper.className = 'borrower-block';
+      wrapper.setAttribute('data-uid', uid);
+      wrapper.innerHTML =
+        '<button type="button" class="remove-borrower-btn" onclick="removeBorrowerBlock(' + uid + ')">Remove</button>' +
+        '<h4>Borrower #' + uid + '</h4>' +
+        '<div class="two-col">' +
+          '<div>' +
+            '<label>Full Name</label>' +
+            '<input type="text" class="b-name" required>' +
+            '<label>National ID Card No.</label>' +
+            '<input type="text" class="b-nic" required>' +
+          '</div>' +
+          '<div>' +
+            '<label>Residence</label>' +
+            '<input type="text" class="b-residence" required>' +
+            '<label>Phone</label>' +
+            '<input type="tel" class="b-phone" required>' +
+          '</div>' +
+        '</div>';
+      document.getElementById('borrowersContainer').appendChild(wrapper);
+    }
+
+    function removeBorrowerBlock(uid) {
+      var block = document.querySelector('.borrower-block[data-uid="' + uid + '"]');
+      if (block) block.remove();
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+      addBorrowerBlock();
+      updateLoanSummary();
+    });
+
+    function updateLoanSummary() {
+      var amount = parseFloat(document.getElementById('loanAmount').value) || 0;
+      var interest = parseFloat(document.getElementById('loanInterest').value) || 0;
+      var other = parseFloat(document.getElementById('otherAmount').value) || 0;
+      var total = amount + interest + other;
+      var installments = parseInt(document.getElementById('numInstallments').value, 10) || 1;
+      var perInstallment = installments > 0 ? total / installments : 0;
+
+      document.getElementById('loanSummaryPreview').innerHTML =
+        '<div class="summary-box"><strong>Total of Payments</strong><span>' + formatCurrency(total) + ' XAF</span></div>' +
+        '<div class="summary-box"><strong>Per Installment</strong><span>' + formatCurrency(perInstallment) + ' XAF</span></div>';
+    }
+
+    ['loanAmount', 'loanInterest', 'otherAmount', 'numInstallments'].forEach(function (id) {
+      document.getElementById(id).addEventListener('input', updateLoanSummary);
+    });
+
+    function loadImageAsDataURL(url) {
+      return fetch(url)
+        .then(function (res) { if (!res.ok) throw new Error('Logo not found'); return res.blob(); })
+        .then(function (blob) {
+          return new Promise(function (resolve, reject) {
+            var reader = new FileReader();
+            reader.onloadend = function () { resolve(reader.result); };
+            reader.onerror = reject;
+            reader.readAsDataURL(blob);
+          });
+        })
+        .catch(function () { return null; });
+    }
+
+    function generateLoanAgreementPDF() {
+      var borrowerBlocks = Array.prototype.slice.call(document.querySelectorAll('.borrower-block'));
+      if (borrowerBlocks.length === 0) {
+        alert('Add at least one Borrower.');
+        return;
+      }
+
+      var required = ['agreementDate', 'loanTermMonths', 'lenderRepName', 'lenderRepId', 'lenderAddress',
+                       'lenderPhone', 'loanAmount', 'monthlyRate', 'numInstallments', 'paymentDay',
+                       'firstPaymentDate', 'lastPaymentDate'];
+      for (var i = 0; i < required.length; i++) {
+        var el = document.getElementById(required[i]);
+        if (!el.value) {
+          el.focus();
+          alert('Please fill in all required fields.');
+          el.style.borderColor = '#d9534f';
+          return;
+        }
+      }
+
+      var borrowers = borrowerBlocks.map(function (b) {
+        return {
+          name: b.querySelector('.b-name').value,
+          nic: b.querySelector('.b-nic').value,
+          residence: b.querySelector('.b-residence').value,
+          phone: b.querySelector('.b-phone').value
+        };
+      });
+
+      var agreementDate = document.getElementById('agreementDate').value;
+      var loanTermMonths = document.getElementById('loanTermMonths').value;
+      var lenderName = document.getElementById('lenderName').value;
+      var lenderRepName = document.getElementById('lenderRepName').value;
+      var lenderRepId = document.getElementById('lenderRepId').value;
+      var lenderAddress = document.getElementById('lenderAddress').value;
+      var lenderPhone = document.getElementById('lenderPhone').value;
+
+      var amount = parseFloat(document.getElementById('loanAmount').value) || 0;
+      var interest = parseFloat(document.getElementById('loanInterest').value) || 0;
+      var otherDesc = document.getElementById('otherDesc').value || 'N/A';
+      var otherAmount = parseFloat(document.getElementById('otherAmount').value) || 0;
+      var total = amount + interest + otherAmount;
+      var monthlyRate = document.getElementById('monthlyRate').value;
+
+      var numInstallments = parseInt(document.getElementById('numInstallments').value, 10) || 1;
+      var perInstallment = total / numInstallments;
+      var paymentDay = document.getElementById('paymentDay').value;
+      var firstPaymentDate = document.getElementById('firstPaymentDate').value;
+      var lastPaymentDate = document.getElementById('lastPaymentDate').value;
+
+      var remark = document.getElementById('remark').value || 'None';
+      var nextOfKinName = document.getElementById('nextOfKinName').value || 'N/A';
+      var nextOfKinPhone = document.getElementById('nextOfKinPhone').value || 'N/A';
+      var witnessName = document.getElementById('witnessName').value;
+
+      loadImageAsDataURL('logo.png').then(function (logo) {
+        buildPDF(logo);
+      });
+
+      function buildPDF(logo) {
+        var jsPDFLib = window.jspdf.jsPDF;
+        var doc = new jsPDFLib();
+        var pageWidth = doc.internal.pageSize.getWidth();
+        var pageHeight = doc.internal.pageSize.getHeight();
+        var margin = 14;
+        var maxWidth = pageWidth - margin * 2;
+        var y = margin;
+
+        function ensureSpace(neededHeight) {
+          if (y + neededHeight > pageHeight - 16) {
+            doc.addPage();
+            y = margin;
+          }
+        }
+
+        function heading(text) {
+          ensureSpace(9);
+          doc.setFont(undefined, 'bold');
+          doc.setFontSize(10.5);
+          doc.setTextColor(22, 160, 133);
+          doc.text(text, margin, y);
+          y += 5.5;
+        }
+
+        function paragraph(text, size) {
+          doc.setFont(undefined, 'normal');
+          doc.setFontSize(size || 9.5);
+          doc.setTextColor(30, 30, 30);
+          var lines = doc.splitTextToSize(text, maxWidth);
+          lines.forEach(function (line) {
+            ensureSpace(5);
+            doc.text(line, margin, y);
+            y += 4.6;
+          });
+          y += 2;
+        }
+
+        // Header banner
+        doc.setFillColor(43, 55, 115);
+        doc.rect(0, 0, pageWidth, 24, 'F');
+        if (logo) {
+          try { doc.addImage(logo, 'PNG', margin, 3, 16, 16); } catch (e) {}
+        }
+        doc.setTextColor(255, 255, 255);
+        doc.setFontSize(12);
+        doc.setFont(undefined, 'bold');
+        doc.text('G-SPIRIT LOAN SOLUTION', logo ? margin + 20 : margin, 13);
+        doc.setFontSize(7.5);
+        doc.setFont(undefined, 'normal');
+        doc.text('+237 620 569 984', pageWidth - margin, 7, { align: 'right' });
+        doc.text('hi@gspiritloans.com', pageWidth - margin, 12, { align: 'right' });
+        doc.text('Buea', pageWidth - margin, 17, { align: 'right' });
+
+        // Faint watermark
+        if (logo) {
+          try {
+            doc.saveGraphicsState();
+            doc.setGState(doc.GState({ opacity: 0.06 }));
+            doc.addImage(logo, 'PNG', pageWidth / 2 - 50, pageHeight / 2 - 50, 100, 100);
+            doc.restoreGraphicsState();
+          } catch (e) {}
+        }
+
+        y = 32;
+        doc.setFont(undefined, 'bold');
+        doc.setFontSize(15);
+        doc.setTextColor(43, 55, 115);
+        doc.text('LOAN AGREEMENT', pageWidth / 2, y, { align: 'center' });
+        y += 8;
+
+        paragraph('This Loan Agreement is made and effective on ' + agreementDate + ', between the Borrower(s) named below and ' + lenderName + ' (hereafter the "Lender").', 9.5);
+
+        heading('Borrower(s)');
+        borrowers.forEach(function (b, idx) {
+          paragraph((borrowers.length > 1 ? 'Borrower ' + (idx + 1) + ': ' : '') + b.name + ', National ID Card No. ' + b.nic + ', resident at ' + b.residence + ', telephone ' + b.phone + '.');
+        });
+
+        heading('Lender');
+        paragraph(lenderName + ', represented by ' + lenderRepName + ' (NIC No. ' + lenderRepId + '), of ' + lenderAddress + ', telephone ' + lenderPhone + '.');
+
+        heading('Promise to Pay');
+        paragraph('Within ' + loanTermMonths + ' month(s) from the date of this Agreement, the Borrower(s) promise to pay the Lender ' + amountWithWords(total) + ', comprising the principal amount, interest, and other charges as set out below.');
+
+        heading('Liability');
+        paragraph('Where this Agreement is signed by more than one Borrower, each Borrower understands and agrees that they are individually, jointly, and severally liable for repaying the full amount owed under this Agreement.');
+
+        heading('Details of Loan');
+        var col1 = margin;
+        var col2 = margin + 70;
+        function loanRow(label, value) {
+          ensureSpace(5.5);
+          doc.setFont(undefined, 'bold');
+          doc.setFontSize(9.5);
+          doc.setTextColor(43, 55, 115);
+          doc.text(label, col1, y);
+          doc.setFont(undefined, 'normal');
+          doc.setTextColor(30, 30, 30);
+          doc.text(String(value), col2, y);
+          y += 5.2;
+        }
+        loanRow('Amount of Loan:', formatCurrency(amount) + ' XAF');
+        loanRow('Interest:', formatCurrency(interest) + ' XAF');
+        loanRow('Other (' + otherDesc + '):', formatCurrency(otherAmount) + ' XAF');
+        loanRow('Total of Payments:', formatCurrency(total) + ' XAF');
+        loanRow('Monthly Percentage Rate:', monthlyRate + '%');
+        y += 2;
+
+        heading('Repayment of Loan');
+        paragraph('The Borrower(s) will repay this loan in ' + numInstallments + ' equal monthly installment(s) of ' + formatCurrency(perInstallment) + ' XAF each, due on the ' + paymentDay + getOrdinalSuffix(paymentDay) + ' day of each month, beginning ' + firstPaymentDate + ' and ending ' + lastPaymentDate + '.');
+
+        if (remark && remark !== 'None') {
+          heading('Remark');
+          paragraph(remark);
+        }
+
+        heading('Next of Kin');
+        paragraph(nextOfKinName + ', telephone ' + nextOfKinPhone + '.');
+
+        // Signatures
+        ensureSpace(40);
+        y += 3;
+        doc.setFont(undefined, 'bold');
+        doc.setFontSize(10);
+        doc.setTextColor(43, 55, 115);
+        doc.text('Signatures', margin, y);
+        y += 8;
+
+        var colWidth = (maxWidth - 10) / 2;
+        var signLines = [];
+        borrowers.forEach(function (b, idx) {
+          signLines.push({ label: (borrowers.length > 1 ? 'Borrower ' + (idx + 1) : 'Borrower') + ' — ' + b.name });
+        });
+        signLines.push({ label: 'Lender — ' + lenderRepName + ' (for ' + lenderName + ')' });
+        if (witnessName) signLines.push({ label: 'Witness — ' + witnessName });
+
+        for (var s = 0; s < signLines.length; s += 2) {
+          ensureSpace(20);
+          doc.setFont(undefined, 'normal');
+          doc.setFontSize(9);
+          doc.setTextColor(40, 40, 40);
+          doc.text(signLines[s].label, margin, y);
+          if (signLines[s + 1]) doc.text(signLines[s + 1].label, margin + colWidth + 10, y);
+          y += 12;
+          doc.line(margin, y, margin + colWidth, y);
+          if (signLines[s + 1]) doc.line(margin + colWidth + 10, y, margin + colWidth + 10 + colWidth, y);
+          y += 4;
+          doc.setFontSize(8);
+          doc.setTextColor(120, 120, 120);
+          doc.text('Signature & Date', margin, y);
+          if (signLines[s + 1]) doc.text('Signature & Date', margin + colWidth + 10, y);
+          y += 10;
+        }
+
+        // Footer
+        var totalPages = doc.internal.getNumberOfPages();
+        for (var p = 1; p <= totalPages; p++) {
+          doc.setPage(p);
+          doc.setFontSize(7.5);
+          doc.setTextColor(150, 150, 150);
+          doc.text('G-Spirit Loan Solution — Loan Agreement', margin, pageHeight - 8);
+          doc.text('Page ' + p + ' of ' + totalPages, pageWidth - margin, pageHeight - 8, { align: 'right' });
+        }
+
+        var filename = 'Loan_Agreement_' + (borrowers[0].name || 'borrower').replace(/\s+/g, '_') + '.pdf';
+        doc.save(filename);
+      }
+    }
+
+    function getOrdinalSuffix(n) {
+      n = parseInt(n, 10);
+      if (n % 10 === 1 && n !== 11) return 'st';
+      if (n % 10 === 2 && n !== 12) return 'nd';
+      if (n % 10 === 3 && n !== 13) return 'rd';
+      return 'th';
+    }
+  </script>
+
+</body>
+</html>
