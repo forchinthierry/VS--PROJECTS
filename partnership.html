@@ -1,0 +1,1134 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="logo.png">
+  <title>Partnership &amp; Investment Agreement - G-Spirit Loan Solution</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f5eded;
+      color: #333;
+      margin: 0;
+      padding: 0;
+      line-height: 1.6;
+      opacity: 1;
+      transition: opacity 0.35s cubic-bezier(0.22, 1, 0.36, 1), transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    body.is-exiting { opacity: 0; transform: scale(0.98); }
+    body.is-entering { opacity: 0; transform: scale(0.98); }
+
+    .page-overlay {
+      position: fixed;
+      inset: 0;
+      background: #fff;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.35s ease;
+      z-index: 9999;
+    }
+
+    .page-overlay.is-visible { opacity: 1; }
+
+    header {
+      background-color: #2b3773;
+      color: white;
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    header img { max-height: 80px; width: auto; }
+
+    .logo-btn {
+      background: none;
+      border: none;
+      padding: 0;
+      margin: 0;
+      width: auto;
+      cursor: pointer;
+      display: inline-flex;
+      line-height: 0;
+      transition: transform 0.2s ease, opacity 0.2s ease;
+    }
+
+    .logo-btn:hover { transform: scale(1.05); opacity: 0.92; }
+    .logo-btn:active { transform: scale(0.96); }
+
+    .brand {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      text-align: left;
+      width: auto;
+      min-width: 0;
+      flex-shrink: 0;
+      gap: 4px;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 22px;
+      line-height: 1.1;
+      color: white;
+      white-space: nowrap;
+    }
+
+    .tagline {
+      font-size: 14px;
+      font-style: italic;
+      color: #d0e8ef;
+      margin: 0;
+    }
+
+    .header-actions {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 8px;
+      width: auto;
+      min-width: 0;
+      flex-wrap: wrap;
+    }
+
+    .header-actions button {
+      background: none;
+      color: white;
+      border: none;
+      -webkit-appearance: none;
+      appearance: none;
+      padding: 4px;
+      font-size: 12px;
+      cursor: pointer;
+      white-space: nowrap;
+      width: auto;
+    }
+
+    .header-actions button:hover { text-decoration: underline; background: transparent; }
+
+    .page-banner {
+      text-align: center;
+      padding: 24px 18px;
+      margin: 20px auto 20px;
+      max-width: 800px;
+      background: linear-gradient(135deg, #2b3773, #16a085);
+      color: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    }
+
+    .page-banner h1 { margin: 0; font-size: 28px; font-weight: 700; }
+    .page-banner p { margin: 8px 0 0; font-size: 15px; opacity: 0.9; }
+
+    .container {
+      width: 95%;
+      max-width: 900px;
+      margin: 10px auto;
+      padding: 20px;
+    }
+
+    .card {
+      background: rgb(246, 244, 244);
+      border-radius: 12px;
+      padding: 22px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    }
+
+    h2 {
+      color: #16a085;
+      border-bottom: 2px solid #16a085;
+      padding-bottom: 5px;
+      margin-top: 0;
+    }
+
+    .party-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    label {
+      display: block;
+      font-weight: bold;
+      font-size: 14px;
+      margin-top: 14px;
+    }
+
+    input, textarea, select {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-family: Arial, sans-serif;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    input:focus, textarea:focus, select:focus {
+      outline: none;
+      border-color: #16a085;
+      box-shadow: 0 0 0 3px rgba(22, 160, 133, 0.15);
+    }
+
+    .checkbox-group {
+      margin-top: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .checkbox-group label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: normal;
+      font-size: 14px;
+      margin-top: 0;
+    }
+
+    .checkbox-group input[type="checkbox"] {
+      width: auto;
+      margin: 0;
+    }
+
+    .ownership-preview {
+      display: flex;
+      gap: 16px;
+      margin-top: 14px;
+      flex-wrap: wrap;
+    }
+
+    .ownership-box {
+      flex: 1 1 160px;
+      background: #fff;
+      border-radius: 8px;
+      padding: 12px 14px;
+      border: 1px solid rgba(43,55,115,0.1);
+    }
+
+    .ownership-box strong {
+      display: block;
+      color: #2b3773;
+      font-size: 13px;
+    }
+
+    .ownership-box span {
+      font-size: 18px;
+      font-weight: bold;
+      color: #16a085;
+    }
+
+    .hint {
+      font-size: 12.5px;
+      color: #777;
+      margin-top: 4px;
+    }
+
+    .team-row {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      margin-top: 8px;
+    }
+
+    .team-row input {
+      margin-top: 0;
+    }
+
+    .team-row button {
+      width: auto;
+      flex-shrink: 0;
+      background: #d9534f;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      padding: 8px 10px;
+      cursor: pointer;
+      font-size: 13px;
+    }
+
+    .partner-block {
+      background: #fff;
+      border: 1px solid rgba(43,55,115,0.12);
+      border-radius: 10px;
+      padding: 16px;
+      margin-top: 14px;
+      position: relative;
+    }
+
+    .partner-block .partner-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0 20px;
+    }
+
+    .partner-block h4 {
+      margin: 0 0 4px;
+      color: #2b3773;
+    }
+
+    .remove-partner-btn {
+      width: auto;
+      background: #d9534f;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      padding: 6px 10px;
+      cursor: pointer;
+      font-size: 12px;
+      float: right;
+    }
+
+    @media (max-width: 700px) {
+      .partner-block .partner-grid { grid-template-columns: 1fr; }
+    }
+
+    button.submit-btn {
+      background-color: #2b3773;
+      color: white;
+      padding: 13px 20px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 16px;
+      width: 100%;
+      margin-top: 24px;
+      transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.2s ease;
+    }
+
+    button.submit-btn:hover {
+      background-color: #1f2857;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 14px rgba(43, 55, 115, 0.3);
+    }
+
+    button.submit-btn:active { transform: scale(0.98); }
+
+    .disclaimer {
+      font-size: 12.5px;
+      color: #8a6d00;
+      background: #fff8e1;
+      border-left: 4px solid #e2a63b;
+      padding: 12px 16px;
+      border-radius: 4px;
+      margin-bottom: 20px;
+    }
+
+    footer { text-align: center; padding: 20px; color: #999; font-size: 14px; }
+
+    .footer-links {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 6px;
+    }
+
+    .footer-links a {
+      color: #2b3773;
+      text-decoration: none;
+      font-size: 13px;
+      padding: 4px 8px;
+      border: 1px solid #2b3773;
+      border-radius: 999px;
+      background: white;
+    }
+
+    .footer-links a:hover { background: #2b3773; color: white; }
+
+    @media (max-width: 700px) {
+      .party-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 600px) {
+      header { flex-wrap: wrap; justify-content: flex-start; gap: 10px; padding: 12px; }
+      header img { max-height: 44px; }
+      .brand { width: auto; min-width: 0; align-items: flex-start; text-align: left; }
+      header h1 { font-size: 15px; }
+      .tagline { font-size: 11px; }
+      .header-actions { width: 100%; min-width: 0; justify-content: flex-start; flex-wrap: wrap; gap: 6px; }
+      .header-actions button { font-size: 10px; padding: 5px 6px; }
+      .page-banner h1 { font-size: 22px; }
+    }
+  </style>
+</head>
+<body class="is-entering">
+
+  <div class="page-overlay"></div>
+
+  <header>
+    <button type="button" class="logo-btn" onclick="navigateWithTransition('index.html')" aria-label="Go to homepage">
+      <img src="logo.png" alt="G-Spirit logo">
+    </button>
+    <div class="brand">
+      <h1>G-SPIRIT LOAN SOLUTION</h1>
+      <div class="tagline">Powering Dreams</div>
+    </div>
+    <div class="header-actions">
+      <button type="button" onclick="navigateWithTransition('index.html')">Home</button>
+      <button type="button" onclick="navigateWithTransition('terms.html')">Terms</button>
+      <button type="button" onclick="navigateWithTransition('about.html')">About</button>
+      <button type="button" onclick="navigateWithTransition('contact.html')">Contact Us</button>
+    </div>
+  </header>
+
+  <div class="page-banner">
+    <h1>Partnership &amp; Investment Agreement</h1>
+    <p>Fill in the details below to generate a signable agreement</p>
+  </div>
+
+  <div class="container">
+
+    <div class="disclaimer">
+      ⚠️ This tool generates a draft agreement based on the information you provide. It is not a substitute for legal advice. Have a qualified lawyer in Cameroon review the final document before either party signs, especially the ownership, buyout, and dispute resolution terms.
+    </div>
+
+    <div class="card">
+      <h2>Business Details</h2>
+      <p class="hint">This agreement is for admitting new partner(s)/investor(s) into a business that already exists.</p>
+
+      <label for="jvName">Name of the Business</label>
+      <input type="text" id="jvName" placeholder="e.g. G-Spirit Loan Solution" required>
+
+      <label for="agreementDate">Agreement Date</label>
+      <input type="date" id="agreementDate" required>
+
+      <label for="establishedDate">Business Established / Operating Since (optional)</label>
+      <input type="text" id="establishedDate" placeholder="e.g. May 2020">
+
+      <label>Purpose / Activities of the Business</label>
+      <div class="checkbox-group">
+        <label><input type="checkbox" class="purpose-cb" value="Purchasing assets such as motorcycles or vehicles to offer on hire purchase" checked> Hire purchase of assets (bikes, cars, etc.)</label>
+        <label><input type="checkbox" class="purpose-cb" value="Providing loans to small businesses and individuals" checked> Business and personal loans</label>
+        <label><input type="checkbox" class="purpose-cb" value="Buying and selling goods and services"> Buying and selling goods/services</label>
+        <label><input type="checkbox" class="purpose-cb" value="Trading cryptocurrencies and stocks"> Trading cryptocurrencies and stocks</label>
+      </div>
+      <label for="purposeOther">Other purpose (optional)</label>
+      <input type="text" id="purposeOther" placeholder="Add any other purpose not listed above">
+
+      <label for="bankName">Bank for the Business Account</label>
+      <input type="text" id="bankName" placeholder="e.g. Afriland First Bank">
+
+      <label for="initialTerm">Term of This Agreement (years)</label>
+      <input type="number" id="initialTerm" min="1" value="2" required>
+    </div>
+
+    <div class="card">
+      <h2>Founder Details</h2>
+      <div>
+        <label for="founderName">Full Name</label>
+        <input type="text" id="founderName" required>
+
+        <label for="founderNationality">Nationality</label>
+        <input type="text" id="founderNationality" placeholder="e.g. Cameroonian" required>
+
+        <label for="founderId">National ID Number</label>
+        <input type="text" id="founderId" required>
+
+        <label for="founderResidence">Residence</label>
+        <input type="text" id="founderResidence" required>
+
+        <label for="founderOccupation">Occupation</label>
+        <input type="text" id="founderOccupation">
+
+        <label for="founderEmployer">Employer / Business</label>
+        <input type="text" id="founderEmployer">
+
+        <label for="founderPhone">Phone</label>
+        <input type="tel" id="founderPhone" required>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Existing Ownership (Before This Agreement)</h2>
+      <p class="hint">Record how the business is owned right now, before any new partner/investor is admitted. This determines how much existing owners are diluted by new capital.</p>
+
+      <label for="preMoneyValue">Agreed Value of the Business Right Now (XAF, before new investment)</label>
+      <input type="number" id="preMoneyValue" min="0" placeholder="e.g. 5000000" required>
+
+      <label for="founderExistingPct">Founder's Current Ownership (%)</label>
+      <input type="number" id="founderExistingPct" min="0" max="100" step="0.1" value="100" required>
+
+      <label style="margin-top:18px;">Other Existing Partners/Investors Already in the Business (if any)</label>
+      <div id="existingPartnersContainer"></div>
+      <button type="button" onclick="addExistingPartnerBlock()" style="width:auto; background:#2b3773; color:white; border:none; padding:8px 14px; border-radius:4px; cursor:pointer; font-size:13px; margin-top:10px;">+ Add Existing Partner</button>
+
+      <p class="hint" id="existingTotalHint" style="margin-top:12px;">Existing ownership total: 100.0% (should add up to 100%)</p>
+    </div>
+
+    <div class="card">
+      <h2>New Partners &amp; Investors Joining Now</h2>
+      <p class="hint">Add one entry for each new partner or investor being admitted through this agreement, and the fresh capital they're contributing.</p>
+      <div id="partnersContainer"></div>
+      <button type="button" onclick="addPartnerBlock()" style="width:auto; background:#16a085; color:white; border:none; padding:8px 14px; border-radius:4px; cursor:pointer; font-size:13px; margin-top:10px;">+ Add Partner / Investor</button>
+    </div>
+
+    <div class="card">
+      <h2>Ownership Overview (After This Investment)</h2>
+      <div class="ownership-preview" id="ownershipPreview"></div>
+      <p class="hint">Calculated automatically: existing owners are diluted based on the business's agreed pre-investment value, while new partners receive ownership based on their fresh contribution.</p>
+    </div>
+
+    <div class="card">
+      <h2>Profit &amp; Loss Sharing</h2>
+
+      <label for="profitSplit">Profit &amp; Loss Sharing Method</label>
+      <select id="profitSplit">
+        <option value="Proportional to each Party's percentage of ownership">Proportional to ownership percentage</option>
+        <option value="Split equally between the Parties regardless of contribution">Equal split, regardless of contribution</option>
+      </select>
+    </div>
+
+    <div class="card">
+      <h2>Management &amp; Responsibilities</h2>
+
+      <label>Management Team</label>
+      <div id="managementTeamRows"></div>
+      <button type="button" onclick="addTeamRow()" style="width:auto; background:#16a085; color:white; border:none; padding:8px 14px; border-radius:4px; cursor:pointer; font-size:13px; margin-top:6px;">+ Add Team Member</button>
+
+      <label for="managementDesc" style="margin-top:20px;">Decision-Making Process</label>
+      <textarea id="managementDesc" rows="3">Major decisions (including new loans or purchases above 500,000 XAF, or changes to this Agreement) require the written agreement of the Founder and any partners holding an active management role. Day-to-day operational decisions may be made by the Founder alone. As set out below, the admission of any further new partner or investor beyond this Agreement is subject to the Founder's sole approval.</textarea>
+
+      <label for="founderResponsibilities">Founder's Responsibilities</label>
+      <textarea id="founderResponsibilities" rows="4">General management of the business; loan and hire-purchase approvals; maintaining financial records; finding prospective clients and customers.</textarea>
+
+      <label for="partnerResponsibilities">Partner's Responsibilities</label>
+      <textarea id="partnerResponsibilities" rows="4">Finding prospective clients and customers; reviewing financial performance; participating in major decisions as described above.</textarea>
+
+      <label for="buyoutNotice">Exit / Buyout Notice Period (days)</label>
+      <input type="number" id="buyoutNotice" min="1" value="30">
+    </div>
+
+    <button type="button" class="submit-btn" onclick="generateAgreementPDF()">Generate Agreement (PDF)</button>
+
+  </div>
+
+  <footer>
+    <div class="footer-links">
+      <a href="privacy.html" target="_self">Privacy Policy</a>
+      <span>&copy; 2026 G-Spirit Loan Solution. All rights reserved.</span>
+    </div>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+  <script>
+    (function () {
+      var overlay = document.querySelector('.page-overlay');
+      window.navigateWithTransition = function (targetUrl) {
+        if (!targetUrl) return false;
+        document.body.classList.add('is-exiting');
+        overlay.classList.add('is-visible');
+        setTimeout(function () { window.location.href = targetUrl; }, 320);
+        return false;
+      };
+      document.addEventListener('DOMContentLoaded', function () {
+        requestAnimationFrame(function () {
+          document.body.classList.remove('is-entering');
+          overlay.classList.remove('is-visible');
+        });
+      });
+    })();
+
+    function formatCurrency(value) {
+      return parseFloat(value || 0).toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+    }
+
+    var teamRowCount = 0;
+    function addTeamRow(name, position) {
+      teamRowCount++;
+      var wrapper = document.createElement('div');
+      wrapper.className = 'team-row';
+      wrapper.innerHTML =
+        '<input type="text" placeholder="Name" class="team-name" value="' + (name || '') + '">' +
+        '<input type="text" placeholder="Position" class="team-position" value="' + (position || '') + '">' +
+        '<button type="button" onclick="this.parentNode.remove()">Remove</button>';
+      document.getElementById('managementTeamRows').appendChild(wrapper);
+    }
+
+    // Seed with Founder and Partner as default management team members
+    document.addEventListener('DOMContentLoaded', function () {
+      addTeamRow('', 'Managing Partner (Founder)');
+      addTeamRow('', 'Partner');
+      addPartnerBlock();
+      updateOwnershipPreview();
+    });
+
+    var ONES = ['', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten',
+      'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen'];
+    var TENS = ['', '', 'twenty', 'thirty', 'forty', 'fifty', 'sixty', 'seventy', 'eighty', 'ninety'];
+
+    function threeDigitsToWords(n) {
+      var str = '';
+      if (n >= 100) {
+        str += ONES[Math.floor(n / 100)] + ' hundred ';
+        n %= 100;
+      }
+      if (n >= 20) {
+        str += TENS[Math.floor(n / 10)] + ' ';
+        n %= 10;
+      }
+      if (n > 0) {
+        str += ONES[n] + ' ';
+      }
+      return str.trim();
+    }
+
+    function numberToWords(num) {
+      num = Math.round(num);
+      if (num === 0) return 'zero';
+      var units = ['', 'thousand', 'million', 'billion'];
+      var parts = [];
+      var unitIndex = 0;
+      while (num > 0) {
+        var chunk = num % 1000;
+        if (chunk > 0) {
+          parts.unshift(threeDigitsToWords(chunk) + (units[unitIndex] ? ' ' + units[unitIndex] : ''));
+        }
+        num = Math.floor(num / 1000);
+        unitIndex++;
+      }
+      return parts.join(', ').replace(/\s+/g, ' ').trim();
+    }
+
+    function amountWithWords(amount) {
+      var words = numberToWords(amount);
+      var capitalized = words.charAt(0).toUpperCase() + words.slice(1);
+      return formatCurrency(amount) + ' XAF (' + capitalized + ' Central African Francs)';
+    }
+
+    var existingPartnerCount = 0;
+
+    function addExistingPartnerBlock() {
+      existingPartnerCount++;
+      var uid = existingPartnerCount;
+      var wrapper = document.createElement('div');
+      wrapper.className = 'team-row';
+      wrapper.setAttribute('data-existing-uid', uid);
+      wrapper.innerHTML =
+        '<input type="text" placeholder="Name" class="ep-name">' +
+        '<input type="text" placeholder="Phone" class="ep-phone">' +
+        '<input type="number" placeholder="Current %" class="ep-pct" min="0" max="100" step="0.1" style="max-width:110px;">' +
+        '<button type="button" onclick="this.parentNode.remove(); updateOwnershipPreview();">Remove</button>';
+      document.getElementById('existingPartnersContainer').appendChild(wrapper);
+      wrapper.querySelector('.ep-pct').addEventListener('input', updateOwnershipPreview);
+      updateOwnershipPreview();
+    }
+
+    var partnerBlockCount = 0;
+
+    function addPartnerBlock(prefill) {
+      partnerBlockCount++;
+      var uid = partnerBlockCount;
+      var wrapper = document.createElement('div');
+      wrapper.className = 'partner-block';
+      wrapper.setAttribute('data-uid', uid);
+      wrapper.innerHTML =
+        '<button type="button" class="remove-partner-btn" onclick="removePartnerBlock(' + uid + ')">Remove</button>' +
+        '<h4>New Partner / Investor #' + uid + '</h4>' +
+        '<div class="partner-grid">' +
+          '<div>' +
+            '<label>Full Name</label>' +
+            '<input type="text" class="p-name" required>' +
+            '<label>Nationality</label>' +
+            '<input type="text" class="p-nationality" placeholder="e.g. Cameroonian" required>' +
+            '<label>National ID Number</label>' +
+            '<input type="text" class="p-id" required>' +
+            '<label>Residence</label>' +
+            '<input type="text" class="p-residence" required>' +
+          '</div>' +
+          '<div>' +
+            '<label>Occupation</label>' +
+            '<input type="text" class="p-occupation">' +
+            '<label>Employer / Business</label>' +
+            '<input type="text" class="p-employer">' +
+            '<label>Phone</label>' +
+            '<input type="tel" class="p-phone" required>' +
+            '<label>Role in the Venture</label>' +
+            '<select class="p-role">' +
+              '<option value="Active Partner">Active Partner (shares in management)</option>' +
+              '<option value="Passive Investor">Passive Investor (capital only)</option>' +
+            '</select>' +
+          '</div>' +
+        '</div>' +
+        '<label>New Contribution (XAF)</label>' +
+        '<input type="number" class="p-contribution" min="0" required>';
+
+      document.getElementById('partnersContainer').appendChild(wrapper);
+      wrapper.querySelector('.p-contribution').addEventListener('input', updateOwnershipPreview);
+      updateOwnershipPreview();
+    }
+
+    function removePartnerBlock(uid) {
+      var block = document.querySelector('.partner-block[data-uid="' + uid + '"]');
+      if (block) block.remove();
+      updateOwnershipPreview();
+    }
+
+    function getExistingPartners() {
+      return Array.prototype.slice.call(document.querySelectorAll('#existingPartnersContainer .team-row')).map(function (row) {
+        return {
+          name: row.querySelector('.ep-name').value || 'Existing Partner',
+          phone: row.querySelector('.ep-phone').value || 'N/A',
+          pct: parseFloat(row.querySelector('.ep-pct').value) || 0
+        };
+      });
+    }
+
+    function updateOwnershipPreview() {
+      var preMoneyValue = parseFloat(document.getElementById('preMoneyValue').value) || 0;
+      var founderExistingPct = parseFloat(document.getElementById('founderExistingPct').value) || 0;
+      var existingPartners = getExistingPartners();
+
+      var existingTotalPct = founderExistingPct + existingPartners.reduce(function (a, p) { return a + p.pct; }, 0);
+      var hint = document.getElementById('existingTotalHint');
+      hint.textContent = 'Existing ownership total: ' + existingTotalPct.toFixed(1) + '% (should add up to 100%)';
+      hint.style.color = Math.abs(existingTotalPct - 100) < 0.05 ? '#777' : '#d9534f';
+
+      var partnerBlocks = Array.prototype.slice.call(document.querySelectorAll('.partner-block'));
+      var newContributions = partnerBlocks.map(function (b) {
+        return parseFloat(b.querySelector('.p-contribution').value) || 0;
+      });
+      var totalNewCapital = newContributions.reduce(function (a, b) { return a + b; }, 0);
+      var postMoneyValue = preMoneyValue + totalNewCapital;
+      var dilutionFactor = postMoneyValue > 0 ? (preMoneyValue / postMoneyValue) : 1;
+
+      var preview = document.getElementById('ownershipPreview');
+      preview.innerHTML = '';
+
+      var founderNewPct = founderExistingPct * dilutionFactor;
+      preview.innerHTML += '<div class="ownership-box"><strong>Founder</strong><span>' + founderNewPct.toFixed(1) + '%</span></div>';
+
+      existingPartners.forEach(function (p) {
+        var newPct = p.pct * dilutionFactor;
+        preview.innerHTML += '<div class="ownership-box"><strong>' + p.name + '</strong><span>' + newPct.toFixed(1) + '%</span></div>';
+      });
+
+      partnerBlocks.forEach(function (b, i) {
+        var name = b.querySelector('.p-name').value || ('New Partner ' + (i + 1));
+        var pct = postMoneyValue > 0 ? (newContributions[i] / postMoneyValue * 100) : 0;
+        preview.innerHTML += '<div class="ownership-box"><strong>' + name + '</strong><span>' + pct.toFixed(1) + '%</span></div>';
+      });
+
+      preview.innerHTML += '<div class="ownership-box"><strong>Post-Investment Value</strong><span>' + formatCurrency(postMoneyValue) + ' XAF</span></div>';
+    }
+
+    document.getElementById('preMoneyValue').addEventListener('input', updateOwnershipPreview);
+    document.getElementById('founderExistingPct').addEventListener('input', updateOwnershipPreview);
+
+    function loadImageAsDataURL(url) {
+      return fetch(url)
+        .then(function (res) { if (!res.ok) throw new Error('Logo not found'); return res.blob(); })
+        .then(function (blob) {
+          return new Promise(function (resolve, reject) {
+            var reader = new FileReader();
+            reader.onloadend = function () { resolve(reader.result); };
+            reader.onerror = reject;
+            reader.readAsDataURL(blob);
+          });
+        })
+        .catch(function () { return null; });
+    }
+
+    function generateAgreementPDF() {
+      var required = ['founderName','founderId','founderResidence','founderPhone',
+                       'jvName','agreementDate','preMoneyValue','founderExistingPct'];
+      for (var i = 0; i < required.length; i++) {
+        var el = document.getElementById(required[i]);
+        if (!el.value) {
+          el.focus();
+          alert('Please fill in all required fields (marked with a red border once you try to submit).');
+          el.style.borderColor = '#d9534f';
+          return;
+        }
+      }
+
+      var newPartnerBlocks = Array.prototype.slice.call(document.querySelectorAll('.partner-block'));
+      if (newPartnerBlocks.length === 0) {
+        alert('Add at least one new Partner/Investor joining the business.');
+        return;
+      }
+
+      var founder = {
+        name: document.getElementById('founderName').value,
+        nationality: document.getElementById('founderNationality').value || 'N/A',
+        id: document.getElementById('founderId').value,
+        residence: document.getElementById('founderResidence').value,
+        occupation: document.getElementById('founderOccupation').value || 'N/A',
+        employer: document.getElementById('founderEmployer').value || 'N/A',
+        phone: document.getElementById('founderPhone').value
+      };
+
+      var existingPartners = getExistingPartners();
+
+      var newPartners = newPartnerBlocks.map(function (b) {
+        return {
+          name: b.querySelector('.p-name').value,
+          nationality: b.querySelector('.p-nationality').value || 'N/A',
+          id: b.querySelector('.p-id').value,
+          residence: b.querySelector('.p-residence').value,
+          occupation: b.querySelector('.p-occupation').value || 'N/A',
+          employer: b.querySelector('.p-employer').value || 'N/A',
+          phone: b.querySelector('.p-phone').value,
+          role: b.querySelector('.p-role').value,
+          contribution: parseFloat(b.querySelector('.p-contribution').value) || 0
+        };
+      });
+
+      var teamMembers = Array.prototype.slice.call(document.querySelectorAll('.team-row')).filter(function (r) {
+        return r.querySelector('.team-name');
+      }).map(function (row) {
+        var name = row.querySelector('.team-name').value.trim();
+        var position = row.querySelector('.team-position').value.trim();
+        return { name: name || '(Name to be confirmed)', position: position || 'Team Member' };
+      });
+
+      var jvName = document.getElementById('jvName').value;
+      var agreementDate = document.getElementById('agreementDate').value;
+      var establishedDate = document.getElementById('establishedDate').value.trim();
+      var bankName = document.getElementById('bankName').value || 'a bank to be agreed upon by the Parties';
+      var initialTerm = document.getElementById('initialTerm').value || '2';
+
+      var purposes = Array.prototype.slice.call(document.querySelectorAll('.purpose-cb:checked')).map(function (cb) { return cb.value; });
+      var otherPurpose = document.getElementById('purposeOther').value.trim();
+      if (otherPurpose) purposes.push(otherPurpose);
+      if (purposes.length === 0) purposes.push('Activities as mutually agreed in writing by the Parties');
+
+      var preMoneyValue = parseFloat(document.getElementById('preMoneyValue').value) || 0;
+      var founderExistingPct = parseFloat(document.getElementById('founderExistingPct').value) || 0;
+      var totalNewCapital = newPartners.reduce(function (sum, p) { return sum + p.contribution; }, 0);
+      var postMoneyValue = preMoneyValue + totalNewCapital;
+      var dilutionFactor = postMoneyValue > 0 ? (preMoneyValue / postMoneyValue) : 1;
+
+      var founderNewPct = founderExistingPct * dilutionFactor;
+      var existingPartnersWithNewPct = existingPartners.map(function (p) {
+        return { name: p.name, phone: p.phone, priorPct: p.pct, newPct: p.pct * dilutionFactor };
+      });
+      var newPartnersWithPct = newPartners.map(function (p) {
+        return Object.assign({}, p, { newPct: postMoneyValue > 0 ? (p.contribution / postMoneyValue * 100) : 0 });
+      });
+
+      var profitSplit = document.getElementById('profitSplit').value;
+      var managementDesc = document.getElementById('managementDesc').value;
+      var founderResp = document.getElementById('founderResponsibilities').value;
+      var partnerResp = document.getElementById('partnerResponsibilities').value;
+      var buyoutNotice = document.getElementById('buyoutNotice').value || '30';
+
+      loadImageAsDataURL('logo.png').then(function (logo) {
+        buildPDF(logo);
+      });
+
+      function buildPDF(logo) {
+        var jsPDFLib = window.jspdf.jsPDF;
+        var doc = new jsPDFLib();
+        var pageWidth = doc.internal.pageSize.getWidth();
+        var pageHeight = doc.internal.pageSize.getHeight();
+        var margin = 15;
+        var maxWidth = pageWidth - margin * 2;
+        var y = margin;
+        var sectionCount = 0;
+
+        function ensureSpace(neededHeight) {
+          if (y + neededHeight > pageHeight - 20) {
+            doc.addPage();
+            y = margin;
+          }
+        }
+
+        function title(text) {
+          ensureSpace(14);
+          doc.setFont(undefined, 'bold');
+          doc.setFontSize(16);
+          doc.setTextColor(43, 55, 115);
+          doc.text(text, pageWidth / 2, y, { align: 'center' });
+          y += 10;
+        }
+
+        function sectionHeading(text) {
+          sectionCount++;
+          ensureSpace(12);
+          doc.setFont(undefined, 'bold');
+          doc.setFontSize(12);
+          doc.setTextColor(22, 160, 133);
+          doc.text(sectionCount + '. ' + text, margin, y);
+          doc.setDrawColor(22, 160, 133);
+          doc.line(margin, y + 1.5, pageWidth - margin, y + 1.5);
+          y += 8;
+        }
+
+        function paragraph(text) {
+          doc.setFont(undefined, 'normal');
+          doc.setFontSize(10.5);
+          doc.setTextColor(40, 40, 40);
+          var lines = doc.splitTextToSize(text, maxWidth);
+          lines.forEach(function (line) {
+            ensureSpace(6);
+            doc.text(line, margin, y);
+            y += 5.6;
+          });
+          y += 3;
+        }
+
+        function bulletList(items) {
+          doc.setFont(undefined, 'normal');
+          doc.setFontSize(10.5);
+          doc.setTextColor(40, 40, 40);
+          items.forEach(function (item) {
+            var lines = doc.splitTextToSize('•  ' + item, maxWidth - 4);
+            lines.forEach(function (line, idx) {
+              ensureSpace(6);
+              doc.text(line, margin + (idx === 0 ? 0 : 6), y);
+              y += 5.6;
+            });
+          });
+          y += 3;
+        }
+
+        function simpleTable(headers, rows, colWidths) {
+          var rowHeight = 8;
+          var x = margin;
+
+          doc.setFillColor(43, 55, 115);
+          doc.setTextColor(255, 255, 255);
+          doc.setFont(undefined, 'bold');
+          doc.setFontSize(9.5);
+          ensureSpace(rowHeight);
+          x = margin;
+          headers.forEach(function (h, i) {
+            doc.rect(x, y - 5.5, colWidths[i], rowHeight, 'F');
+            doc.text(h, x + 3, y);
+            x += colWidths[i];
+          });
+          y += rowHeight;
+
+          doc.setFont(undefined, 'normal');
+          doc.setTextColor(40, 40, 40);
+          rows.forEach(function (row, rIdx) {
+            ensureSpace(rowHeight);
+            x = margin;
+            if (rIdx % 2 === 0) {
+              doc.setFillColor(238, 238, 238);
+              var totalW = colWidths.reduce(function (a, b) { return a + b; }, 0);
+              doc.rect(margin, y - 5.5, totalW, rowHeight, 'F');
+            }
+            row.forEach(function (cell, cIdx) {
+              doc.text(String(cell), x + 3, y);
+              x += colWidths[cIdx];
+            });
+            y += rowHeight;
+          });
+          y += 4;
+        }
+
+        // Header banner
+        doc.setFillColor(43, 55, 115);
+        doc.rect(0, 0, pageWidth, 26, 'F');
+
+        if (logo) {
+          try { doc.addImage(logo, 'PNG', margin, 4, 18, 18); } catch (e) {}
+        }
+
+        doc.setTextColor(255, 255, 255);
+        doc.setFontSize(13);
+        doc.setFont(undefined, 'bold');
+        doc.text('G-SPIRIT LOAN SOLUTION', logo ? margin + 22 : margin, 15);
+
+        doc.setFontSize(8);
+        doc.setFont(undefined, 'normal');
+        doc.text('+237 620 569 984', pageWidth - margin, 8, { align: 'right' });
+        doc.text('hi@gspiritloans.com', pageWidth - margin, 13, { align: 'right' });
+        doc.text('Buea', pageWidth - margin, 18, { align: 'right' });
+
+        y = 36;
+
+        title('PARTNERSHIP AND INVESTMENT AGREEMENT');
+        doc.setFontSize(10);
+        doc.setFont(undefined, 'normal');
+        doc.setTextColor(90, 90, 90);
+        doc.text('Business: ' + jvName, pageWidth / 2, y, { align: 'center' });
+        y += 5;
+        doc.text('Date: ' + agreementDate, pageWidth / 2, y, { align: 'center' });
+        y += 10;
+
+        paragraph('This Partnership and Investment Agreement (the "Agreement") is made and entered into on ' + agreementDate + ', in respect of the existing business known as "' + jvName + '" (the "Business")' + (establishedDate ? ', operating since ' + establishedDate : '') + ', by and between the following parties (together, the "Parties"):');
+
+        paragraph('FOUNDER: ' + founder.name + ', of ' + founder.nationality + ' nationality, holder of National ID Number ' + founder.id + ', residing at ' + founder.residence + ', occupation ' + founder.occupation + ', working at ' + founder.employer + ', telephone ' + founder.phone + ' (hereinafter the "Founder"), who founded and currently operates the Business.');
+
+        if (existingPartners.length > 0) {
+          existingPartners.forEach(function (p) {
+            paragraph('EXISTING PARTNER: ' + p.name + ', telephone ' + p.phone + ', already holding an ownership interest in the Business prior to this Agreement (hereinafter an "Existing Partner").');
+          });
+        }
+
+        newPartners.forEach(function (p, idx) {
+          var label = newPartners.length > 1 ? 'NEW PARTNER ' + (idx + 1) : 'NEW PARTNER';
+          paragraph(label + ': ' + p.name + ', of ' + p.nationality + ' nationality, holder of National ID Number ' + p.id + ', residing at ' + p.residence + ', occupation ' + p.occupation + ', working at ' + p.employer + ', telephone ' + p.phone + ', joining the Business as ' + (p.role === 'Passive Investor' ? 'a Passive Investor, contributing capital without a day-to-day management role' : 'an Active Partner, sharing in the management of the Business') + ' (hereinafter a "New Partner").');
+        });
+
+        paragraph('The Business already exists and is operated by the Founder' + (existingPartners.length > 0 ? ' together with the Existing Partner(s) named above' : '') + '. This Agreement records the admission of the New Partner(s)/Investor(s) named above, their capital contribution, and the resulting updated ownership of the Business, in consideration of the mutual commitments set out below.');
+
+        sectionHeading('Background and Purpose');
+        paragraph('The Business operates under the name "' + jvName + '"' + (establishedDate ? ', established ' + establishedDate : '') + '. This Agreement does not create a new legal entity separate from the Business as it already exists, unless and until the Parties agree in writing to convert it into a registered company, as described further below. The Business is engaged in the following activities:');
+        bulletList(purposes);
+
+        sectionHeading('Existing Ownership and Valuation');
+        paragraph('The Parties agree that, immediately before this Agreement, the Business is worth ' + amountWithWords(preMoneyValue) + ' (the "Pre-Investment Value"), and is owned as follows:');
+        var existingRows = [[founder.name + ' (Founder)', founderExistingPct.toFixed(1) + '%']];
+        existingPartners.forEach(function (p) {
+          existingRows.push([p.name + ' (Existing Partner)', p.pct.toFixed(1) + '%']);
+        });
+        simpleTable(['Existing Owner', 'Ownership % (Before)'], existingRows, [130, 50]);
+
+        sectionHeading('New Investment and Updated Ownership');
+        newPartners.forEach(function (p) {
+          paragraph(p.name + ' shall contribute ' + amountWithWords(p.contribution) + ' in new capital to the Business.');
+        });
+        paragraph('Adding this new capital of ' + amountWithWords(totalNewCapital) + ' to the Pre-Investment Value gives a post-investment value of ' + amountWithWords(postMoneyValue) + '. A dedicated account shall be opened at ' + bankName + ' for the Business if one does not already exist, and each New Partner\'s contribution shall be deposited into this account by the date set out above. Ownership of the Business is updated as follows:');
+
+        var ledgerRows = [[founder.name, founderExistingPct.toFixed(1) + '%', '—', founderNewPct.toFixed(1) + '%']];
+        existingPartnersWithNewPct.forEach(function (p) {
+          ledgerRows.push([p.name, p.priorPct.toFixed(1) + '%', '—', p.newPct.toFixed(1) + '%']);
+        });
+        newPartnersWithPct.forEach(function (p) {
+          ledgerRows.push([p.name, '—', formatCurrency(p.contribution), p.newPct.toFixed(1) + '%']);
+        });
+        simpleTable(['Party', 'Prior %', 'New Capital (XAF)', 'New %'], ledgerRows, [65, 30, 50, 35]);
+        paragraph('This Ownership Ledger governs each Party\'s share of profits, losses, voting weight in major decisions, and any proceeds upon dissolution or buyout, and shall be updated again whenever further capital is admitted, as described in Section 8.');
+
+        sectionHeading('Profit and Loss Sharing');
+        paragraph('All net income and losses of the Business shall be distributed to the Parties as follows: ' + profitSplit + '. Distributions shall be calculated and paid out at intervals agreed by the Parties, and every Party shall have the right to review the Business\'s financial records upon reasonable request.');
+
+        sectionHeading('Management and Decision-Making');
+        paragraph('The Business shall be managed by the following individuals:');
+        simpleTable(
+          ['Name', 'Position'],
+          teamMembers.map(function (m) { return [m.name, m.position]; }),
+          [90, 90]
+        );
+        paragraph(managementDesc);
+
+        sectionHeading('Duties and Responsibilities');
+        paragraph('Founder\'s Responsibilities:');
+        bulletList(founderResp.split(/;|\n/).map(function (s) { return s.trim(); }).filter(Boolean));
+        paragraph('New Partner(s)/Investor(s) Responsibilities:');
+        bulletList(partnerResp.split(/;|\n/).map(function (s) { return s.trim(); }).filter(Boolean));
+
+        sectionHeading('Admission of Future Partners');
+        paragraph('Beyond the New Partner(s) admitted through this Agreement, no further partner or investor may be admitted to the Business without the Founder\'s written approval, which the Founder may withhold at their sole discretion. Any Party may identify, propose, and negotiate with prospective future partners or investors, but such admission only takes effect once the Founder has given written consent. Once approved, the admission shall be documented through a signed Addendum to this Partnership and Investment Agreement, which shall record the new party\'s capital contribution, their role (Active Partner or Passive Investor), an updated Ownership Ledger for all partners, and any additional terms specific to their admission. Once signed by the Founder, the incoming party, and any other Parties whose consent is required, the Addendum becomes part of this Agreement.');
+        paragraph('Before offering an ownership stake to any outside party, the Business shall first offer existing Parties the right (but not the obligation) to contribute proportionally to any new capital round, so that a Party who wishes to maintain their existing ownership percentage may do so before any further dilution occurs. A Party who declines this right shall have their ownership percentage recalculated downward in proportion to the new total value, as reflected in the updated Ownership Ledger, using the same pre-investment/post-investment method applied in Section 4.');
+
+        sectionHeading('Exit and Buyout Provisions');
+        paragraph('A Party wishing to exit the Business must provide the other Parties with at least ' + buyoutNotice + ' days\' written notice. The remaining Parties shall have the first right to buy out the exiting Party\'s ownership share at a fair value agreed by the Parties or, failing agreement, determined by an independent valuer appointed jointly by the Parties. Until a buyout is completed, the exiting Party remains entitled to their proportional share of profits and losses accrued up to the effective date of exit.');
+
+        sectionHeading('Term and Termination');
+        paragraph('This Agreement commences on the date first written above and continues for an initial term of ' + initialTerm + ' year(s) (the "Initial Term"), automatically renewing in further one-year terms unless a Party gives at least 30 days\' written notice before the end of the then-current term, or the Agreement is otherwise terminated by mutual written consent or under Section 9.');
+
+        sectionHeading('Confidentiality');
+        paragraph('Each Party agrees to keep confidential all non-public financial, operational, and client information obtained through the Business, and not to disclose such information to third parties without the other Parties\' written consent, except as required by law. This obligation survives the termination of this Agreement.');
+
+        sectionHeading('Dispute Resolution');
+        paragraph('The Parties shall first attempt to resolve any dispute arising from this Agreement through good-faith discussion. If unresolved within 30 days, the dispute shall be submitted to mediation, and if still unresolved, to the competent courts of the Republic of Cameroon.');
+
+        sectionHeading('Conversion to a Registered Company');
+        paragraph('The Parties may, by mutual written agreement, convert the Business into a formally registered company under the laws of Cameroon. Upon such conversion, each Party\'s ownership percentage under this Agreement shall convert into an equivalent shareholding in the new entity, unless the Parties agree otherwise in writing.');
+
+        sectionHeading('Non-Exclusivity');
+        paragraph('This Agreement does not create an exclusive relationship between the Parties, and no Party is obligated to offer the others any business opportunity outside the scope of the Business.');
+
+        sectionHeading('Assignment');
+        paragraph('No Party may assign or transfer their rights or obligations under this Agreement without the prior written consent of the other Parties, except as part of the admission of a new partner under Section 8.');
+
+        sectionHeading('Governing Law');
+        paragraph('This Agreement is governed by and shall be construed in accordance with the laws of the Republic of Cameroon.');
+
+        sectionHeading('Notices');
+        paragraph('All notices under this Agreement must be in writing and delivered by hand, courier, or email to the addresses and contacts provided by each Party above, and shall be considered received upon delivery confirmation.');
+
+        sectionHeading('Entire Agreement and Amendments');
+        paragraph('This Agreement, together with any signed Addendum, constitutes the entire understanding between the Parties regarding the Business, superseding any prior oral or written agreements. It may only be amended by written agreement signed by all Parties.');
+
+        sectionHeading('Severability and Counterparts');
+        paragraph('If any provision of this Agreement is found unenforceable, the remainder shall continue in full force and effect. This Agreement may be signed in counterparts, including electronically, each of which shall be considered an original.');
+
+        // Signatures — one block per party: Founder, Existing Partners, New Partners
+        var allSigners = [{ label: 'FOUNDER', name: founder.name }];
+        existingPartners.forEach(function (p) { allSigners.push({ label: 'EXISTING PARTNER', name: p.name }); });
+        newPartners.forEach(function (p, idx) {
+          allSigners.push({ label: newPartners.length > 1 ? 'NEW PARTNER ' + (idx + 1) : 'NEW PARTNER', name: p.name });
+        });
+
+        ensureSpace(30);
+        y += 6;
+        doc.setFont(undefined, 'bold');
+        doc.setFontSize(12);
+        doc.setTextColor(43, 55, 115);
+        var witnessLines = doc.splitTextToSize('IN WITNESS WHEREOF, the Parties have executed this Agreement as of the date first written above.', maxWidth);
+        witnessLines.forEach(function (line) { ensureSpace(7); doc.text(line, margin, y); y += 7; });
+        y += 8;
+
+        var colWidth = (maxWidth - 10) / 2;
+        for (var s = 0; s < allSigners.length; s += 2) {
+          ensureSpace(35);
+          doc.setFont(undefined, 'normal');
+          doc.setFontSize(10.5);
+          doc.setTextColor(40, 40, 40);
+
+          doc.setFont(undefined, 'bold');
+          doc.text(allSigners[s].label, margin, y);
+          if (allSigners[s + 1]) doc.text(allSigners[s + 1].label, margin + colWidth + 10, y);
+          y += 14;
+
+          doc.line(margin, y, margin + colWidth, y);
+          if (allSigners[s + 1]) doc.line(margin + colWidth + 10, y, margin + colWidth + 10 + colWidth, y);
+          y += 5;
+          doc.setFont(undefined, 'normal');
+          doc.text('Name & Signature', margin, y);
+          if (allSigners[s + 1]) doc.text('Name & Signature', margin + colWidth + 10, y);
+          y += 14;
+
+          doc.line(margin, y, margin + colWidth, y);
+          if (allSigners[s + 1]) doc.line(margin + colWidth + 10, y, margin + colWidth + 10 + colWidth, y);
+          y += 5;
+          doc.text('Date', margin, y);
+          if (allSigners[s + 1]) doc.text('Date', margin + colWidth + 10, y);
+          y += 14;
+        }
+
+        // Footer + page numbers + watermark on every page
+        var totalPages = doc.internal.getNumberOfPages();
+        for (var p = 1; p <= totalPages; p++) {
+          doc.setPage(p);
+
+          if (logo) {
+            try {
+              doc.saveGraphicsState();
+              doc.setGState(doc.GState({ opacity: 0.08 }));
+              doc.addImage(logo, 'PNG', pageWidth / 2 - 55, pageHeight / 2 - 55, 110, 110);
+              doc.restoreGraphicsState();
+            } catch (e) {}
+          }
+
+          doc.setFontSize(8);
+          doc.setTextColor(150, 150, 150);
+          doc.text('G-Spirit Loan Solution — Partnership & Investment Agreement', margin, pageHeight - 10);
+          doc.text('Page ' + p + ' of ' + totalPages, pageWidth - margin, pageHeight - 10, { align: 'right' });
+        }
+
+        var filename = 'Partnership_Agreement_' + jvName.replace(/\s+/g, '_') + '.pdf';
+        doc.save(filename);
+      }
+    }
+  </script>
+
+</body>
+</html>

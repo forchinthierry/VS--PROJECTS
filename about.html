@@ -9,7 +9,7 @@
     * {
       box-sizing: border-box;
     }
-
+ 
     body {
       font-family: Arial, sans-serif;
       background-color: #e7ebdf;
@@ -114,11 +114,17 @@
     }
 
     .page-banner {
-      background-color: #16a085;
+      background: linear-gradient(135deg,#1a2f7a,#16a085,#e2a63b);
+      background-size: 200% 200%;
+      animation: bannerShift 8s ease infinite;
       color: white;
       text-align: center;
-      padding: 28px 20px;
+      padding: 42px 20px;
+      position: relative;
+      overflow:hidden;
     }
+    .page-banner::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at top right,rgba(255,255,255,.25),transparent 40%);}
+    @keyframes bannerShift{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
 
     .page-banner h1 {
       margin: 0;
@@ -398,7 +404,11 @@
     .logo-btn:active {
       transform: scale(0.96);
     }
-  </style>
+  
+.agreement-buttons{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin:30px 0 10px;}
+.agreement-btn{background:#2b3773;color:white;border:none;border-radius:999px;padding:14px 22px;cursor:pointer;font-weight:700;box-shadow:0 8px 18px rgba(43,55,115,.2);}
+.agreement-btn:hover{transform:translateY(-2px);}
+</style>
 </head>
 <body class="is-entering">
 
@@ -469,6 +479,10 @@
         <p>From those first loans to student entrepreneurs, G-Spirit Loan Solution has grown to stand behind all kinds of people chasing progress: teachers between paychecks, farmers investing in the next planting season, small business owners restocking inventory, families financing hire purchases, and anyone facing an unforeseen circumstance that just can't wait. Different needs, same spirit — real support, when it's needed most.</p>
       </div>
 
+      <div class="agreement-buttons reveal">
+        <button class="agreement-btn" type="button" onclick="alert('Loan Agreement coming soon')">Open Loan Agreement</button>
+        <button class="agreement-btn" type="button" onclick="navigateWithTransition('partnership.html')">Open Partnership Agreement</button>
+      </div>
     </div>
   </div>
 
@@ -526,5 +540,14 @@
     })();
   </script>
 
+
+<script>
+document.addEventListener('DOMContentLoaded',()=>{
+document.querySelectorAll('.page-banner,.card').forEach((el,i)=>{
+el.style.opacity='0';el.style.transform='translateY(20px)';
+setTimeout(()=>{el.style.transition='all .7s ease';el.style.opacity='1';el.style.transform='translateY(0)';},200*i);
+});
+});
+</script>
 </body>
 </html>
