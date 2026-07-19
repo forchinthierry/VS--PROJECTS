@@ -395,10 +395,10 @@
       <label for="remark">Remark (optional)</label>
       <textarea id="remark" rows="2"></textarea>
 
-      <label for="nextOfKinName">Borrower's Next of Kin (Name)</label>
+      <label for="nextOfKinName">Lender's Next of Kin (Name)</label>
       <input type="text" id="nextOfKinName">
 
-      <label for="nextOfKinPhone">Next of Kin (Phone)</label>
+      <label for="nextOfKinPhone">Lender's Next of Kin (Phone)</label>
       <input type="tel" id="nextOfKinPhone">
 
       <label for="witnessName">Witness Name (optional)</label>
@@ -592,8 +592,8 @@
       var lastPaymentDate = document.getElementById('lastPaymentDate').value;
 
       var remark = document.getElementById('remark').value || 'None';
-      var nextOfKinName = document.getElementById('nextOfKinName').value || 'N/A';
-      var nextOfKinPhone = document.getElementById('nextOfKinPhone').value || 'N/A';
+      var collectorName = document.getElementById('nextOfKinName').value || 'N/A';
+      var collectorPhone = document.getElementById('nextOfKinPhone').value || 'N/A';
       var witnessName = document.getElementById('witnessName').value;
 
       loadImageAsDataURL('logo.png').then(function (logo) {
@@ -603,40 +603,87 @@
       function buildPDF(logo) {
         var jsPDFLib = window.jspdf.jsPDF;
         var doc = new jsPDFLib();
+        var FONT = 'times';
+        doc.setFont(FONT, 'normal');
         var pageWidth = doc.internal.pageSize.getWidth();
         var pageHeight = doc.internal.pageSize.getHeight();
-        var margin = 14;
+        var margin = 16;
         var maxWidth = pageWidth - margin * 2;
         var y = margin;
 
         function ensureSpace(neededHeight) {
-          if (y + neededHeight > pageHeight - 16) {
+          if (y + neededHeight > pageHeight - 18) {
             doc.addPage();
             y = margin;
           }
         }
 
         function heading(text) {
-          ensureSpace(9);
-          doc.setFont(undefined, 'bold');
-          doc.setFontSize(10.5);
+          ensureSpace(10);
+          y += 1.5;
+          doc.setFont(FONT, 'bold');
+          doc.setFontSize(11);
           doc.setTextColor(22, 160, 133);
           doc.text(text, margin, y);
-          y += 5.5;
+          doc.setDrawColor(22, 160, 133);
+          doc.setLineWidth(0.3);
+          doc.line(margin, y + 1.3, pageWidth - margin, y + 1.3);
+          y += 6;
         }
 
         function paragraph(text, size) {
-          doc.setFont(undefined, 'normal');
-          doc.setFontSize(size || 9.5);
-          doc.setTextColor(30, 30, 30);
+          doc.setFont(FONT, 'normal');
+          doc.setFontSize(size || 10);
+          doc.setTextColor(25, 25, 25);
           var lines = doc.splitTextToSize(text, maxWidth);
-          lines.forEach(function (line) {
-            ensureSpace(5);
-            doc.text(line, margin, y);
-            y += 4.6;
+          lines.forEach(function (line, idx) {
+            ensureSpace(5.2);
+            var isLast = idx === lines.length - 1;
+            doc.text(line, margin, y, isLast ? {} : { align: 'justify', maxWidth: maxWidth });
+            y += 5;
           });
-          y += 2;
+          y += 2.5;
         }
+
+        // Renders a paragraph made of segments, underlining any segment marked underline:true.
+        // Wraps words onto new lines automatically when they exceed the page width.
+        function richParagraph(segments, size) {
+          doc.setFontSize(size || 10);
+          doc.setTextColor(25, 25, 25);
+          var lineHeight = 5;
+          var x = margin;
+          ensureSpace(lineHeight);
+
+          segments.forEach(function (seg) {
+            var words = seg.text.split(' ');
+            words.forEach(function (word, wIdx) {
+              if (word === '') return;
+              var toRender = word + (wIdx < words.length - 1 ? ' ' : '');
+              doc.setFont(FONT, seg.bold ? 'bold' : 'normal');
+              var wWidth = doc.getTextWidth(toRender);
+
+              if (x + wWidth > margin + maxWidth) {
+                y += lineHeight;
+                ensureSpace(lineHeight);
+                x = margin;
+              }
+
+              doc.text(toRender, x, y);
+              if (seg.underline) {
+                var trimmedWidth = doc.getTextWidth(word);
+                doc.setDrawColor(25, 25, 25);
+                doc.setLineWidth(0.15);
+                doc.line(x, y + 0.8, x + trimmedWidth, y + 0.8);
+              }
+              x += wWidth;
+            });
+          });
+
+          y += lineHeight + 2.5;
+        }
+
+        function d(text) { return { text: text, underline: true }; }
+        function t(text) { return { text: text }; }
 
         // Header banner
         doc.setFillColor(43, 55, 115);
@@ -646,10 +693,10 @@
         }
         doc.setTextColor(255, 255, 255);
         doc.setFontSize(12);
-        doc.setFont(undefined, 'bold');
+        doc.setFont(FONT, 'bold');
         doc.text('G-SPIRIT LOAN SOLUTION', logo ? margin + 20 : margin, 13);
         doc.setFontSize(7.5);
-        doc.setFont(undefined, 'normal');
+        doc.setFont(FONT, 'normal');
         doc.text('+237 620 569 984', pageWidth - margin, 7, { align: 'right' });
         doc.text('hi@gspiritloans.com', pageWidth - margin, 12, { align: 'right' });
         doc.text('Buea', pageWidth - margin, 17, { align: 'right' });
@@ -658,75 +705,116 @@
         if (logo) {
           try {
             doc.saveGraphicsState();
-            doc.setGState(doc.GState({ opacity: 0.06 }));
+            doc.setGState(doc.GState({ opacity: 0.05 }));
             doc.addImage(logo, 'PNG', pageWidth / 2 - 50, pageHeight / 2 - 50, 100, 100);
             doc.restoreGraphicsState();
           } catch (e) {}
         }
 
-        y = 32;
-        doc.setFont(undefined, 'bold');
-        doc.setFontSize(15);
+        y = 33;
+        doc.setFont(FONT, 'bold');
+        doc.setFontSize(16);
         doc.setTextColor(43, 55, 115);
         doc.text('LOAN AGREEMENT', pageWidth / 2, y, { align: 'center' });
+        y += 3;
+        doc.setDrawColor(43, 55, 115);
+        doc.setLineWidth(0.5);
+        doc.line(pageWidth / 2 - 30, y, pageWidth / 2 + 30, y);
         y += 8;
 
-        paragraph('This Loan Agreement is made and effective on ' + agreementDate + ', between the Borrower(s) named below and ' + lenderName + ' (hereafter the "Lender").', 9.5);
+        richParagraph([
+          t('This Loan Agreement is made and effective on '), d(agreementDate),
+          t(', between the Borrower(s) named below and '), d(lenderName),
+          t(' (hereafter the "Lender").')
+        ]);
 
         heading('Borrower(s)');
         borrowers.forEach(function (b, idx) {
-          paragraph((borrowers.length > 1 ? 'Borrower ' + (idx + 1) + ': ' : '') + b.name + ', National ID Card No. ' + b.nic + ', resident at ' + b.residence + ', telephone ' + b.phone + '.');
+          var segs = [];
+          if (borrowers.length > 1) segs.push(t('Borrower ' + (idx + 1) + ': '));
+          segs.push(d(b.name), t(', National ID Card No. '), d(b.nic), t(', resident at '), d(b.residence), t(', telephone '), d(b.phone), t('.'));
+          richParagraph(segs);
         });
 
         heading('Lender');
-        paragraph(lenderName + ', represented by ' + lenderRepName + ' (NIC No. ' + lenderRepId + '), of ' + lenderAddress + ', telephone ' + lenderPhone + '.');
+        richParagraph([
+          d(lenderName), t(', represented by '), d(lenderRepName), t(' (NIC No. '), d(lenderRepId),
+          t('), of '), d(lenderAddress), t(', telephone '), d(lenderPhone), t('.')
+        ]);
 
         heading('Promise to Pay');
-        paragraph('Within ' + loanTermMonths + ' month(s) from the date of this Agreement, the Borrower(s) promise to pay the Lender ' + amountWithWords(total) + ', comprising the principal amount, interest, and other charges as set out below.');
+        richParagraph([
+          t('Within '), d(loanTermMonths + ' month(s)'), t(' from the date of this Agreement, the Borrower(s) promise to pay the Lender '),
+          d(amountWithWords(total)), t(', comprising the principal amount, interest, and other charges as set out below.')
+        ]);
 
         heading('Liability');
         paragraph('Where this Agreement is signed by more than one Borrower, each Borrower understands and agrees that they are individually, jointly, and severally liable for repaying the full amount owed under this Agreement.');
 
         heading('Details of Loan');
-        var col1 = margin;
-        var col2 = margin + 70;
-        function loanRow(label, value) {
-          ensureSpace(5.5);
-          doc.setFont(undefined, 'bold');
+        var tableRows = [
+          ['Amount of Loan', formatCurrency(amount) + ' XAF'],
+          ['Interest', formatCurrency(interest) + ' XAF'],
+          ['Other (' + otherDesc + ')', formatCurrency(otherAmount) + ' XAF'],
+          ['Total of Payments', formatCurrency(total) + ' XAF'],
+          ['Monthly Percentage Rate', monthlyRate + '%']
+        ];
+        var rowH = 7.5;
+        var tblCol1W = 85;
+        var tblCol2W = maxWidth - tblCol1W;
+        ensureSpace(rowH * tableRows.length + 2);
+        doc.setDrawColor(200, 200, 200);
+        doc.setLineWidth(0.2);
+        tableRows.forEach(function (row, idx) {
+          ensureSpace(rowH);
+          if (idx % 2 === 0) {
+            doc.setFillColor(243, 243, 243);
+            doc.rect(margin, y - 5, maxWidth, rowH, 'F');
+          }
+          doc.rect(margin, y - 5, tblCol1W, rowH);
+          doc.rect(margin + tblCol1W, y - 5, tblCol2W, rowH);
+          doc.setFont(FONT, 'bold');
           doc.setFontSize(9.5);
           doc.setTextColor(43, 55, 115);
-          doc.text(label, col1, y);
-          doc.setFont(undefined, 'normal');
-          doc.setTextColor(30, 30, 30);
-          doc.text(String(value), col2, y);
-          y += 5.2;
-        }
-        loanRow('Amount of Loan:', formatCurrency(amount) + ' XAF');
-        loanRow('Interest:', formatCurrency(interest) + ' XAF');
-        loanRow('Other (' + otherDesc + '):', formatCurrency(otherAmount) + ' XAF');
-        loanRow('Total of Payments:', formatCurrency(total) + ' XAF');
-        loanRow('Monthly Percentage Rate:', monthlyRate + '%');
-        y += 2;
+          doc.text(row[0], margin + 3, y);
+          doc.setFont(FONT, 'normal');
+          doc.setTextColor(25, 25, 25);
+          var valWidth = doc.getTextWidth(row[1]);
+          doc.text(row[1], margin + tblCol1W + 3, y);
+          doc.setLineWidth(0.15);
+          doc.line(margin + tblCol1W + 3, y + 0.8, margin + tblCol1W + 3 + valWidth, y + 0.8);
+          y += rowH;
+        });
+        y += 4;
 
         heading('Repayment of Loan');
-        paragraph('The Borrower(s) will repay this loan in ' + numInstallments + ' equal monthly installment(s) of ' + formatCurrency(perInstallment) + ' XAF each, due on the ' + paymentDay + getOrdinalSuffix(paymentDay) + ' day of each month, beginning ' + firstPaymentDate + ' and ending ' + lastPaymentDate + '.');
+        richParagraph([
+          t('The Borrower(s) will repay this loan in '), d(String(numInstallments)), t(' equal monthly installment(s) of '),
+          d(formatCurrency(perInstallment) + ' XAF'), t('  each, due on the '), d(paymentDay + getOrdinalSuffix(paymentDay) + ' day'),
+          t(' of each month, beginning '), d(firstPaymentDate), t(' and ending '), d(lastPaymentDate), t('.')
+        ]);
 
         if (remark && remark !== 'None') {
           heading('Remark');
-          paragraph(remark);
+          richParagraph([d(remark)]);
         }
 
-        heading('Next of Kin');
-        paragraph(nextOfKinName + ', telephone ' + nextOfKinPhone + '.');
+        heading('Lender\'s Next of Kin');
+        richParagraph([
+          d(collectorName), t(', telephone '), d(collectorPhone), t(', is the Lender\'s designated next of kin for matters relating to this Agreement.')
+        ]);
 
         // Signatures
         ensureSpace(40);
-        y += 3;
-        doc.setFont(undefined, 'bold');
-        doc.setFontSize(10);
+        y += 4;
+        doc.setFont(FONT, 'bold');
+        doc.setFontSize(11);
         doc.setTextColor(43, 55, 115);
         doc.text('Signatures', margin, y);
-        y += 8;
+        doc.setDrawColor(43, 55, 115);
+        doc.setLineWidth(0.3);
+        doc.line(margin, y + 1.3, pageWidth - margin, y + 1.3);
+        y += 9;
 
         var colWidth = (maxWidth - 10) / 2;
         var signLines = [];
@@ -738,26 +826,32 @@
 
         for (var s = 0; s < signLines.length; s += 2) {
           ensureSpace(20);
-          doc.setFont(undefined, 'normal');
-          doc.setFontSize(9);
+          doc.setFont(FONT, 'normal');
+          doc.setFontSize(9.5);
           doc.setTextColor(40, 40, 40);
           doc.text(signLines[s].label, margin, y);
           if (signLines[s + 1]) doc.text(signLines[s + 1].label, margin + colWidth + 10, y);
-          y += 12;
+          y += 13;
+          doc.setDrawColor(120, 120, 120);
+          doc.setLineWidth(0.2);
           doc.line(margin, y, margin + colWidth, y);
           if (signLines[s + 1]) doc.line(margin + colWidth + 10, y, margin + colWidth + 10 + colWidth, y);
-          y += 4;
+          y += 4.5;
           doc.setFontSize(8);
           doc.setTextColor(120, 120, 120);
           doc.text('Signature & Date', margin, y);
           if (signLines[s + 1]) doc.text('Signature & Date', margin + colWidth + 10, y);
-          y += 10;
+          y += 11;
         }
 
         // Footer
         var totalPages = doc.internal.getNumberOfPages();
         for (var p = 1; p <= totalPages; p++) {
           doc.setPage(p);
+          doc.setDrawColor(220, 220, 220);
+          doc.setLineWidth(0.2);
+          doc.line(margin, pageHeight - 13, pageWidth - margin, pageHeight - 13);
+          doc.setFont(FONT, 'normal');
           doc.setFontSize(7.5);
           doc.setTextColor(150, 150, 150);
           doc.text('G-Spirit Loan Solution — Loan Agreement', margin, pageHeight - 8);
