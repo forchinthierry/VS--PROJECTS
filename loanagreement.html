@@ -369,9 +369,6 @@
         </div>
       </div>
 
-      <label for="monthlyRate">Monthly Percentage Rate (%)</label>
-      <input type="number" id="monthlyRate" min="0" step="0.1" value="10" required>
-
       <div class="summary-preview" id="loanSummaryPreview"></div>
     </div>
 
@@ -467,6 +464,13 @@
       return parts.join(', ').replace(/\s+/g, ' ').trim();
     }
 
+    function formatDateDMY(isoDate) {
+      if (!isoDate) return isoDate;
+      var parts = isoDate.split('-');
+      if (parts.length !== 3) return isoDate;
+      return parts[2] + '/' + parts[1] + '/' + parts[0];
+    }
+
     function amountWithWords(amount) {
       var words = numberToWords(amount);
       var capitalized = words.charAt(0).toUpperCase() + words.slice(1);
@@ -549,7 +553,7 @@
       }
 
       var required = ['agreementDate', 'loanTermMonths', 'lenderRepName', 'lenderRepId', 'lenderAddress',
-                       'lenderPhone', 'loanAmount', 'monthlyRate', 'numInstallments', 'paymentDay',
+                       'lenderPhone', 'loanAmount', 'numInstallments', 'paymentDay',
                        'firstPaymentDate', 'lastPaymentDate'];
       for (var i = 0; i < required.length; i++) {
         var el = document.getElementById(required[i]);
@@ -570,7 +574,7 @@
         };
       });
 
-      var agreementDate = document.getElementById('agreementDate').value;
+      var agreementDate = formatDateDMY(document.getElementById('agreementDate').value);
       var loanTermMonths = document.getElementById('loanTermMonths').value;
       var lenderName = document.getElementById('lenderName').value;
       var lenderRepName = document.getElementById('lenderRepName').value;
@@ -583,13 +587,12 @@
       var otherDesc = document.getElementById('otherDesc').value || 'N/A';
       var otherAmount = parseFloat(document.getElementById('otherAmount').value) || 0;
       var total = amount + interest + otherAmount;
-      var monthlyRate = document.getElementById('monthlyRate').value;
 
       var numInstallments = parseInt(document.getElementById('numInstallments').value, 10) || 1;
       var perInstallment = total / numInstallments;
       var paymentDay = document.getElementById('paymentDay').value;
-      var firstPaymentDate = document.getElementById('firstPaymentDate').value;
-      var lastPaymentDate = document.getElementById('lastPaymentDate').value;
+      var firstPaymentDate = formatDateDMY(document.getElementById('firstPaymentDate').value);
+      var lastPaymentDate = formatDateDMY(document.getElementById('lastPaymentDate').value);
 
       var remark = document.getElementById('remark').value || 'None';
       var collectorName = document.getElementById('nextOfKinName').value || 'N/A';
@@ -654,29 +657,37 @@
           var x = margin;
           ensureSpace(lineHeight);
 
+          // Flatten segments into individual word tokens with normalized spacing,
+          // rather than relying on whitespace surviving inside the original strings.
+          var tokens = [];
           segments.forEach(function (seg) {
-            var words = seg.text.split(' ');
-            words.forEach(function (word, wIdx) {
-              if (word === '') return;
-              var toRender = word + (wIdx < words.length - 1 ? ' ' : '');
-              doc.setFont(FONT, seg.bold ? 'bold' : 'normal');
-              var wWidth = doc.getTextWidth(toRender);
-
-              if (x + wWidth > margin + maxWidth) {
-                y += lineHeight;
-                ensureSpace(lineHeight);
-                x = margin;
-              }
-
-              doc.text(toRender, x, y);
-              if (seg.underline) {
-                var trimmedWidth = doc.getTextWidth(word);
-                doc.setDrawColor(25, 25, 25);
-                doc.setLineWidth(0.15);
-                doc.line(x, y + 0.8, x + trimmedWidth, y + 0.8);
-              }
-              x += wWidth;
+            var words = seg.text.trim().split(/\s+/).filter(function (w) { return w.length > 0; });
+            words.forEach(function (word) {
+              var noSpaceBefore = tokens.length === 0 || /^[,.\):;!?]/.test(word);
+              tokens.push({ text: word, underline: seg.underline, bold: seg.bold, noSpaceBefore: noSpaceBefore });
             });
+          });
+
+          tokens.forEach(function (tok) {
+            doc.setFont(FONT, tok.bold ? 'bold' : 'normal');
+            var spaceW = tok.noSpaceBefore ? 0 : doc.getTextWidth(' ');
+            var wordW = doc.getTextWidth(tok.text);
+
+            if (x + spaceW + wordW > margin + maxWidth) {
+              y += lineHeight;
+              ensureSpace(lineHeight);
+              x = margin;
+              spaceW = 0;
+            }
+
+            x += spaceW;
+            doc.text(tok.text, x, y);
+            if (tok.underline) {
+              doc.setDrawColor(25, 25, 25);
+              doc.setLineWidth(0.15);
+              doc.line(x, y + 0.8, x + wordW, y + 0.8);
+            }
+            x += wordW;
           });
 
           y += lineHeight + 2.5;
@@ -699,13 +710,13 @@
         doc.setFont(FONT, 'normal');
         doc.text('+237 620 569 984', pageWidth - margin, 7, { align: 'right' });
         doc.text('hi@gspiritloans.com', pageWidth - margin, 12, { align: 'right' });
-        doc.text('Buea', pageWidth - margin, 17, { align: 'right' });
+        doc.text('Douala,Cameroon', pageWidth - margin, 17, { align: 'right' });
 
         // Faint watermark
         if (logo) {
           try {
             doc.saveGraphicsState();
-            doc.setGState(doc.GState({ opacity: 0.05 }));
+            doc.setGState(doc.GState({ opacity: 0.08 }));
             doc.addImage(logo, 'PNG', pageWidth / 2 - 50, pageHeight / 2 - 50, 100, 100);
             doc.restoreGraphicsState();
           } catch (e) {}
@@ -756,8 +767,7 @@
           ['Amount of Loan', formatCurrency(amount) + ' XAF'],
           ['Interest', formatCurrency(interest) + ' XAF'],
           ['Other (' + otherDesc + ')', formatCurrency(otherAmount) + ' XAF'],
-          ['Total of Payments', formatCurrency(total) + ' XAF'],
-          ['Monthly Percentage Rate', monthlyRate + '%']
+          ['Total of Payments', formatCurrency(total) + ' XAF']
         ];
         var rowH = 7.5;
         var tblCol1W = 85;
@@ -790,7 +800,7 @@
         heading('Repayment of Loan');
         richParagraph([
           t('The Borrower(s) will repay this loan in '), d(String(numInstallments)), t(' equal monthly installment(s) of '),
-          d(formatCurrency(perInstallment) + ' XAF'), t('  each, due on the '), d(paymentDay + getOrdinalSuffix(paymentDay) + ' day'),
+          d(formatCurrency(perInstallment) + ' XAF'), t(' each, due on the '), d(paymentDay + getOrdinalSuffix(paymentDay) + ' day'),
           t(' of each month, beginning '), d(firstPaymentDate), t(' and ending '), d(lastPaymentDate), t('.')
         ]);
 
@@ -805,7 +815,19 @@
         ]);
 
         // Signatures
-        ensureSpace(40);
+        var colWidth = (maxWidth - 10) / 2;
+        var signLines = [];
+        borrowers.forEach(function (b, idx) {
+          signLines.push({ label: (borrowers.length > 1 ? 'Borrower ' + (idx + 1) : 'Borrower') + ' — ' + b.name });
+        });
+        signLines.push({ label: 'Lender — ' + lenderRepName + ' (for ' + lenderName + ')' });
+        if (witnessName) signLines.push({ label: 'Witness — ' + witnessName });
+
+        var sigRowHeight = 16;
+        var sigRows = Math.ceil(signLines.length / 2);
+        var sigBlockHeight = 13 + (sigRows * sigRowHeight);
+        ensureSpace(sigBlockHeight);
+
         y += 4;
         doc.setFont(FONT, 'bold');
         doc.setFontSize(11);
@@ -816,32 +838,23 @@
         doc.line(margin, y + 1.3, pageWidth - margin, y + 1.3);
         y += 9;
 
-        var colWidth = (maxWidth - 10) / 2;
-        var signLines = [];
-        borrowers.forEach(function (b, idx) {
-          signLines.push({ label: (borrowers.length > 1 ? 'Borrower ' + (idx + 1) : 'Borrower') + ' — ' + b.name });
-        });
-        signLines.push({ label: 'Lender — ' + lenderRepName + ' (for ' + lenderName + ')' });
-        if (witnessName) signLines.push({ label: 'Witness — ' + witnessName });
-
         for (var s = 0; s < signLines.length; s += 2) {
-          ensureSpace(20);
           doc.setFont(FONT, 'normal');
           doc.setFontSize(9.5);
           doc.setTextColor(40, 40, 40);
           doc.text(signLines[s].label, margin, y);
           if (signLines[s + 1]) doc.text(signLines[s + 1].label, margin + colWidth + 10, y);
-          y += 13;
+          y += 7;
           doc.setDrawColor(120, 120, 120);
           doc.setLineWidth(0.2);
           doc.line(margin, y, margin + colWidth, y);
           if (signLines[s + 1]) doc.line(margin + colWidth + 10, y, margin + colWidth + 10 + colWidth, y);
-          y += 4.5;
+          y += 4;
           doc.setFontSize(8);
           doc.setTextColor(120, 120, 120);
           doc.text('Signature & Date', margin, y);
           if (signLines[s + 1]) doc.text('Signature & Date', margin + colWidth + 10, y);
-          y += 11;
+          y += 7;
         }
 
         // Footer
