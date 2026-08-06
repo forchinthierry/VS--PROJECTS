@@ -111,6 +111,62 @@
 
     .tab-btn.active { background: #2b3773; color: white; }
 
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      margin-bottom: 14px;
+    }
+
+    .toolbar input {
+      flex: 1;
+      min-width: 220px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-size: 14px;
+    }
+
+    .toolbar button {
+      border: none;
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-size: 13px;
+      cursor: pointer;
+      min-width: 130px;
+    }
+
+    .delete-btn {
+      background: #e74c3c;
+      color: white;
+    }
+
+    .delete-btn:hover {
+      background: #c0392b;
+    }
+
+    .results-count {
+      color: #555;
+      font-size: 13px;
+      margin-left: auto;
+    }
+
+    .whatsapp-btn {
+      background: #25d366;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      padding: 6px 10px;
+      cursor: pointer;
+      font-size: 12px;
+      white-space: nowrap;
+    }
+
+    .whatsapp-btn:hover {
+      background: #1faa53;
+    }
+
     .card {
       background: white;
       border-radius: 10px;
@@ -185,6 +241,14 @@
         <button class="tab-btn" id="tabPartners" onclick="switchTab('partners')">Partnership Applications</button>
       </div>
 
+      <div class="toolbar">
+        <input id="searchInput" type="text" placeholder="Search by applicant name..." oninput="applySearch()">
+        <button class="delete-btn" onclick="toggleSelectAll()">Select Visible</button>
+        <button class="delete-btn" onclick="deleteSelected()">Delete Selected</button>
+        <button class="delete-btn" onclick="deleteAll()">Delete All</button>
+        <div id="resultsCount" class="results-count">0 results</div>
+      </div>
+
       <div class="card">
         <div class="table-wrap" id="tableWrap">
           <div class="empty-state">Loading...</div>
@@ -197,6 +261,9 @@
   var API_BASE = 'https://gspiritloans-api.forchinthierry.workers.dev';
     var currentTab = 'loans';
     var adminToken = '';
+    var currentData = [];
+    var currentFiltered = [];
+    var selectedIds = {};
 
     function login() {
       var token = document.getElementById('tokenInput').value;
@@ -227,8 +294,8 @@
           return res.json();
         })
         .then(function (data) {
-          if (currentTab === 'loans') renderLoans(data);
-          else renderPartners(data);
+          currentData = data || [];
+          renderCurrentView();
         })
         .catch(function (err) {
           if (err.message === 'unauthorized') {
@@ -264,16 +331,134 @@
       });
     }
 
+    function applySearch() {
+      renderCurrentView();
+    }
+
+    function renderCurrentView() {
+      var searchValue = document.getElementById('searchInput').value.trim().toLowerCase();
+      currentFiltered = currentData.filter(function (row) {
+        return searchValue === '' || (row.name || '').toLowerCase().indexOf(searchValue) !== -1;
+      });
+      updateResultsCount();
+      if (currentTab === 'loans') renderLoans(currentFiltered);
+      else renderPartners(currentFiltered);
+    }
+
+    function updateResultsCount() {
+      var selectedCount = Object.keys(selectedIds).length;
+      var countText = currentFiltered.length + ' result' + (currentFiltered.length === 1 ? '' : 's');
+      if (selectedCount > 0) {
+        countText += ' · ' + selectedCount + ' selected';
+      }
+      document.getElementById('resultsCount').textContent = countText;
+    }
+
+    function toggleSelectAll() {
+      var anyUnselected = currentFiltered.some(function (row) { return !selectedIds[row.id]; });
+      currentFiltered.forEach(function (row) {
+        if (anyUnselected) selectedIds[row.id] = true;
+        else delete selectedIds[row.id];
+      });
+      renderCurrentView();
+    }
+
+    function toggleSelection(checkbox, id) {
+      if (checkbox.checked) selectedIds[id] = true;
+      else delete selectedIds[id];
+      updateResultsCount();
+    }
+
+    function deleteSelected() {
+      var ids = Object.keys(selectedIds).map(function (id) { return Number(id); });
+      if (ids.length === 0) {
+        alert('Select at least one application first.');
+        return;
+      }
+      if (!confirm('Delete the selected application(s)? This cannot be undone.')) return;
+      deleteApplications(ids);
+    }
+
+    function deleteAll() {
+      if (!confirm('Delete all applications in this tab? This cannot be undone.')) return;
+      deleteApplications([], true);
+    }
+
+    function deleteApplications(ids, all) {
+      var table = currentTab === 'loans' ? 'loan_applications' : 'partnership_applications';
+      fetch(API_BASE + '/api/admin/delete', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + adminToken },
+        body: JSON.stringify({ table: table, ids: ids, all: Boolean(all) })
+      })
+      .then(function (res) {
+        if (!res.ok) throw new Error('Delete failed');
+        return res.json();
+      })
+      .then(function (data) {
+        if (!data.success) throw new Error('Delete failed');
+        selectedIds = {};
+        document.getElementById('searchInput').value = '';
+        loadCurrentTab();
+      })
+      .catch(function (err) {
+        alert('Unable to delete applications. Please try again.');
+        console.error(err);
+      });
+    }
+
+    function sendStatusWhatsApp(type, id) {
+      var row = currentData.find(function (item) { return item.id === id; });
+      if (!row) return;
+      var divider = "――――――――――――――――";
+      var text = '';
+      if (type === 'loan') {
+        text = '*G-SPIRIT LOAN APPLICATION STATUS*\n' + divider + '\n\n'
+             + 'Name: ' + (row.name || '') + '\n'
+             + 'Phone: ' + (row.phone || '') + '\n'
+             + 'Email: ' + (row.email || '') + '\n'
+             + 'Amount: ' + Number(row.amount || 0).toLocaleString() + ' XAF\n'
+             + 'Status: ' + (row.status || '') + '\n'
+             + 'Term: ' + (row.term || '') + '\n'
+             + 'Purpose: ' + (row.purpose || '') + '\n';
+      } else {
+        text = '*G-SPIRIT PARTNERSHIP APPLICATION STATUS*\n' + divider + '\n\n'
+             + 'Name: ' + (row.name || '') + '\n'
+             + 'Phone: ' + (row.phone || '') + '\n'
+             + 'Email: ' + (row.email || '') + '\n'
+             + 'Shares: ' + (row.shares || 0) + '\n'
+             + 'Contribution: ' + Number(row.total_contribution || 0).toLocaleString() + ' XAF\n'
+             + 'Status: ' + (row.status || '') + '\n'
+             + 'Payout: ' + (row.payout || '') + '\n';
+      }
+      var phone = (row.phone || '').replace(/[^0-9+]/g, '');
+      if (!phone) {
+        alert('Applicant phone number is missing.');
+        return;
+      }
+      if (phone.startsWith('0')) {
+        phone = '237' + phone.slice(1);
+      }
+      var cleanPhone = phone.replace(/^\+/, '');
+      var url = 'https://wa.me/' + cleanPhone + '?text=' + encodeURIComponent(text);
+      window.open(url, '_blank');
+    }
+
     function renderLoans(rows) {
       if (!rows || rows.length === 0) {
-        document.getElementById('tableWrap').innerHTML = '<div class="empty-state">No loan applications yet.</div>';
+        var hasSearch = document.getElementById('searchInput').value.trim() !== '';
+        document.getElementById('tableWrap').innerHTML = '<div class="empty-state">' + (hasSearch ? 'No loan applications match that search.' : 'No loan applications yet.') + '</div>';
         return;
       }
       var html = '<table><thead><tr>' +
-        '<th>Date</th><th>Name</th><th>Phone</th><th>Email</th><th>DOB</th><th>Residence</th><th>Amount</th><th>Term</th><th>Purpose</th><th>Income</th><th>Employment</th><th>Collateral</th><th>Status</th>' +
+        '<th><input type="checkbox" id="selectAllBox" onclick="toggleSelectAll(this.checked)"></th>' +
+        '<th>#</th><th>Date</th><th>Name</th><th>Phone</th><th>Email</th><th>DOB</th><th>Residence</th><th>Amount</th><th>Term</th><th>Purpose</th><th>Income</th><th>Employment</th><th>Collateral</th><th>Status</th><th>Action</th>' +
         '</tr></thead><tbody>';
-      rows.forEach(function (r) {
+      rows.forEach(function (r, index) {
+        var checked = selectedIds[r.id] ? ' checked' : '';
         html += '<tr>' +
+          '<td><input type="checkbox" class="row-select" onchange="toggleSelection(this, ' + r.id + ')"' + checked + '></td>' +
+          '<td>' + (index + 1) + '</td>' +
           '<td>' + new Date(r.created_at).toLocaleDateString() + '</td>' +
           '<td>' + (r.name || '') + '</td>' +
           '<td>' + (r.phone || '') + '</td>' +
@@ -287,22 +472,29 @@
           '<td>' + (r.employment || '') + '</td>' +
           '<td>' + (r.collateral || '') + '</td>' +
           '<td><select class="status-select" onchange="updateStatus(\'loan_applications\', ' + r.id + ', this)">' + statusOptions(r.status) + '</select></td>' +
+          '<td><button class="whatsapp-btn" onclick="sendStatusWhatsApp(\'loan\', ' + r.id + ')">Send Status</button></td>' +
           '</tr>';
       });
       html += '</tbody></table>';
       document.getElementById('tableWrap').innerHTML = html;
+      document.getElementById('selectAllBox').checked = currentFiltered.length > 0 && currentFiltered.every(function (r) { return selectedIds[r.id]; });
     }
 
     function renderPartners(rows) {
       if (!rows || rows.length === 0) {
-        document.getElementById('tableWrap').innerHTML = '<div class="empty-state">No partnership applications yet.</div>';
+        var hasSearch = document.getElementById('searchInput').value.trim() !== '';
+        document.getElementById('tableWrap').innerHTML = '<div class="empty-state">' + (hasSearch ? 'No partnership applications match that search.' : 'No partnership applications yet.') + '</div>';
         return;
       }
       var html = '<table><thead><tr>' +
-        '<th>Date</th><th>Name</th><th>Phone</th><th>Email</th><th>Residence</th><th>Occupation</th><th>Shares</th><th>Contribution</th><th>Payout</th><th>Payment Method</th><th>Next of Kin</th><th>Reason</th><th>Status</th>' +
+        '<th><input type="checkbox" id="selectAllBox" onclick="toggleSelectAll(this.checked)"></th>' +
+        '<th>#</th><th>Date</th><th>Name</th><th>Phone</th><th>Email</th><th>Residence</th><th>Occupation</th><th>Shares</th><th>Contribution</th><th>Payout</th><th>Payment Method</th><th>Next of Kin</th><th>Reason</th><th>Status</th><th>Action</th>' +
         '</tr></thead><tbody>';
-      rows.forEach(function (r) {
+      rows.forEach(function (r, index) {
+        var checked = selectedIds[r.id] ? ' checked' : '';
         html += '<tr>' +
+          '<td><input type="checkbox" class="row-select" onchange="toggleSelection(this, ' + r.id + ')"' + checked + '></td>' +
+          '<td>' + (index + 1) + '</td>' +
           '<td>' + new Date(r.created_at).toLocaleDateString() + '</td>' +
           '<td>' + (r.name || '') + '</td>' +
           '<td>' + (r.phone || '') + '</td>' +
@@ -316,10 +508,12 @@
           '<td>' + (r.next_of_kin || '') + '</td>' +
           '<td>' + (r.reason || '') + '</td>' +
           '<td><select class="status-select" onchange="updateStatus(\'partnership_applications\', ' + r.id + ', this)">' + statusOptions(r.status) + '</select></td>' +
+          '<td><button class="whatsapp-btn" onclick="sendStatusWhatsApp(\'partner\', ' + r.id + ')">Send Status</button></td>' +
           '</tr>';
       });
       html += '</tbody></table>';
       document.getElementById('tableWrap').innerHTML = html;
+      document.getElementById('selectAllBox').checked = currentFiltered.length > 0 && currentFiltered.every(function (r) { return selectedIds[r.id]; });
     }
 
     // Auto-login if a token is already stored for this browser session

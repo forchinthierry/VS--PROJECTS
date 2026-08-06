@@ -81,6 +81,27 @@ export default {
         return json({ success: true });
       }
 
+      // --- Admin: delete applications ---
+      if (url.pathname === '/api/admin/delete' && request.method === 'POST') {
+        if (!isAuthorized(request)) return json({ error: 'Unauthorized' }, 401);
+        const { table, ids, all } = await request.json();
+        const validTables = ['loan_applications', 'partnership_applications'];
+        if (!validTables.includes(table)) return json({ error: 'Invalid table' }, 400);
+
+        if (all) {
+          await env.DB.prepare(`DELETE FROM ${table}`).run();
+          return json({ success: true });
+        }
+
+        if (!Array.isArray(ids) || ids.length === 0) {
+          return json({ error: 'No ids provided' }, 400);
+        }
+
+        const placeholders = ids.map(() => '?').join(',');
+        await env.DB.prepare(`DELETE FROM ${table} WHERE id IN (${placeholders})`).bind(...ids).run();
+        return json({ success: true });
+      }
+
       return json({ error: 'Not found' }, 404);
     } catch (err) {
       return json({ error: err.message }, 500);
