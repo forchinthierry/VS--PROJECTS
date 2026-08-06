@@ -71,6 +71,27 @@
     .login-card button:hover { background: #1f2857; }
     .login-error { color: #d9534f; font-size: 13px; margin-top: 8px; display: none; }
 
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-left: auto;
+    }
+
+    .nav-btn {
+      background: #4d79ff;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 13px;
+    }
+
+    .nav-btn:hover {
+      background: #3a5dd6;
+    }
+
     .tabs {
       display: flex;
       gap: 10px;
@@ -249,17 +270,22 @@
         return;
       }
       var html = '<table><thead><tr>' +
-        '<th>Date</th><th>Name</th><th>Phone</th><th>Amount</th><th>Term</th><th>Purpose</th><th>Employment</th><th>Status</th>' +
+        '<th>Date</th><th>Name</th><th>Phone</th><th>Email</th><th>DOB</th><th>Residence</th><th>Amount</th><th>Term</th><th>Purpose</th><th>Income</th><th>Employment</th><th>Collateral</th><th>Status</th>' +
         '</tr></thead><tbody>';
       rows.forEach(function (r) {
         html += '<tr>' +
           '<td>' + new Date(r.created_at).toLocaleDateString() + '</td>' +
           '<td>' + (r.name || '') + '</td>' +
           '<td>' + (r.phone || '') + '</td>' +
+          '<td>' + (r.email || '') + '</td>' +
+          '<td>' + (r.dob || '') + '</td>' +
+          '<td>' + (r.residence || '') + '</td>' +
           '<td>' + Number(r.amount || 0).toLocaleString() + ' XAF</td>' +
           '<td>' + (r.term || '') + '</td>' +
           '<td>' + (r.purpose || '') + '</td>' +
+          '<td>' + Number(r.income || 0).toLocaleString() + '</td>' +
           '<td>' + (r.employment || '') + '</td>' +
+          '<td>' + (r.collateral || '') + '</td>' +
           '<td><select class="status-select" onchange="updateStatus(\'loan_applications\', ' + r.id + ', this)">' + statusOptions(r.status) + '</select></td>' +
           '</tr>';
       });
@@ -273,17 +299,22 @@
         return;
       }
       var html = '<table><thead><tr>' +
-        '<th>Date</th><th>Name</th><th>Phone</th><th>Shares</th><th>Contribution</th><th>Payout</th><th>Payment Method</th><th>Status</th>' +
+        '<th>Date</th><th>Name</th><th>Phone</th><th>Email</th><th>Residence</th><th>Occupation</th><th>Shares</th><th>Contribution</th><th>Payout</th><th>Payment Method</th><th>Next of Kin</th><th>Reason</th><th>Status</th>' +
         '</tr></thead><tbody>';
       rows.forEach(function (r) {
         html += '<tr>' +
           '<td>' + new Date(r.created_at).toLocaleDateString() + '</td>' +
           '<td>' + (r.name || '') + '</td>' +
           '<td>' + (r.phone || '') + '</td>' +
+          '<td>' + (r.email || '') + '</td>' +
+          '<td>' + (r.residence || '') + '</td>' +
+          '<td>' + (r.occupation || '') + '</td>' +
           '<td>' + (r.shares || '') + '</td>' +
           '<td>' + Number(r.total_contribution || 0).toLocaleString() + ' XAF</td>' +
           '<td>' + (r.payout || '') + '</td>' +
           '<td>' + (r.payment_method || '') + '</td>' +
+          '<td>' + (r.next_of_kin || '') + '</td>' +
+          '<td>' + (r.reason || '') + '</td>' +
           '<td><select class="status-select" onchange="updateStatus(\'partnership_applications\', ' + r.id + ', this)">' + statusOptions(r.status) + '</select></td>' +
           '</tr>';
       });

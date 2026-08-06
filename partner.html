@@ -880,6 +880,8 @@
       });
     }
 
+    var API_BASE = 'https://gspiritloans-api.forchinthierry.workers.dev';
+
     function updatePartnerSummary() {
       var shares = parseInt(document.getElementById('pshares').value, 10) || 0;
       var total = shares * SHARE_VALUE;
@@ -908,41 +910,70 @@
       var email = document.getElementById('pemail').value.trim();
       var residence = document.getElementById('presidence').value.trim();
       var occupation = document.getElementById('poccupation').value.trim();
-      var shares = document.getElementById('pshares').value;
+      var shares = parseInt(document.getElementById('pshares').value, 10) || 0;
       var payout = document.getElementById('ppayout').value;
       var payment = document.getElementById('ppayment').value;
       var reason = document.getElementById('preason').value.trim();
       var nextOfKin = document.getElementById('pnextofkin').value.trim();
-      var total = document.getElementById('totalContribution').textContent;
+      var total = shares * SHARE_VALUE;
 
-      var divider = "――――――――――――――――";
+      var payload = {
+        name: name,
+        phone: phone,
+        email: email,
+        residence: residence,
+        occupation: occupation,
+        shares: shares,
+        totalContribution: total,
+        payout: payout,
+        paymentMethod: payment,
+        reason: reason,
+        nextOfKin: nextOfKin
+      };
 
-      var text = "*G-SPIRIT PARTNERSHIP APPLICATION*\n" + divider + "\n\n"
+      fetch(API_BASE + '/api/partner', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      })
+      .then(function (res) {
+        if (!res.ok) throw new Error('Failed to save partnership application');
+        return res.json();
+      })
+      .then(function (data) {
+        if (!data.success) throw new Error('Could not save partnership application');
 
-               + "*APPLICANT DETAILS*\n"
-               + "Name: " + name + "\n"
-               + "Phone: " + phone + "\n"
-               + "Email: " + email + "\n"
-               + "Residence: " + residence + "\n"
-               + "Occupation/Business: " + occupation + "\n\n"
+        var divider = "――――――――――――――――";
+        var text = "*G-SPIRIT PARTNERSHIP APPLICATION*\n" + divider + "\n\n"
+                 + "*APPLICANT DETAILS*\n"
+                 + "Name: " + name + "\n"
+                 + "Phone: " + phone + "\n"
+                 + "Email: " + email + "\n"
+                 + "Residence: " + residence + "\n"
+                 + "Occupation/Business: " + occupation + "\n\n"
 
-               + "*PARTNERSHIP REQUEST*\n"
-               + "Growth Shares: " + shares + "\n"
-               + "Value per Share: 100,000 XAF\n"
-               + "Total Contribution: " + total + " XAF\n"
-               + "Preferred Payout: " + payout + "\n"
-               + "Payment Method: " + payment + "\n\n"
+                 + "*PARTNERSHIP REQUEST*\n"
+                 + "Growth Shares: " + shares + "\n"
+                 + "Value per Share: 100,000 XAF\n"
+                 + "Total Contribution: " + formatCurrency(total) + " XAF\n"
+                 + "Preferred Payout: " + payout + "\n"
+                 + "Payment Method: " + payment + "\n\n"
 
-               + "*ADDITIONAL INFO*\n"
-               + "Reason for Partnering: " + (reason || "N/A") + "\n"
-               + "Next of Kin: " + (nextOfKin || "N/A") + "\n\n"
+                 + "*ADDITIONAL INFO*\n"
+                 + "Reason for Partnering: " + (reason || "N/A") + "\n"
+                 + "Next of Kin: " + (nextOfKin || "N/A") + "\n\n"
 
-               + divider + "\n"
-               + "Partnership Terms: Acknowledged ✓\n\n"
-               + "Join our channel to be in touch with updates, schedules, and reminders\nhttps://whatsapp.com/channel/0029VbCzmKr0G0XhgxfXbD0o";
+                 + divider + "\n"
+                 + "Partnership Terms: Acknowledged ✓\n\n"
+                 + "Join our channel to be in touch with updates, schedules, and reminders\nhttps://whatsapp.com/channel/0029VbCzmKr0G0XhgxfXbD0o";
 
-      var url = 'https://wa.me/237620569864?text=' + encodeURIComponent(text);
-      window.open(url, '_blank');
+        var url = 'https://wa.me/237620569864?text=' + encodeURIComponent(text);
+        window.open(url, '_blank');
+      })
+      .catch(function (err) {
+        alert('Unable to save partnership application. Please try again later.');
+        console.error(err);
+      });
     }
 
     function loadImageAsDataURL(url) {

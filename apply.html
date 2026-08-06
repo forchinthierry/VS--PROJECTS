@@ -753,6 +753,8 @@
       return match ? parseInt(match[1], 10) : 0;
     }
 
+    var API_BASE = 'https://gspiritloans-api.forchinthierry.workers.dev';
+
     function formatCurrency(value) {
       return parseFloat(value).toLocaleString('en-US', {
         minimumFractionDigits: 2,
@@ -800,7 +802,7 @@
       var amount = parseFloat(document.getElementById('amount').value) || 0;
       var term = document.getElementById('term').value;
       var purpose = document.getElementById('purpose').value.trim();
-      var income = document.getElementById('income').value;
+      var income = parseFloat(document.getElementById('income').value) || 0;
       var employment = document.getElementById('employment').value;
       var collateral = document.getElementById('collateral').value.trim();
       var processingFee = document.getElementById('processingFee').textContent;
@@ -809,40 +811,69 @@
       var monthlyRepayment = document.getElementById('monthlyRepayment').textContent;
       var defaultPenalty = document.getElementById('defaultPenalty').textContent;
 
-      var divider = "――――――――――――――――";
+      var payload = {
+        name: name,
+        phone: phone,
+        email: email,
+        dob: date,
+        residence: residence,
+        amount: amount,
+        term: term,
+        purpose: purpose,
+        income: income,
+        employment: employment,
+        collateral: collateral
+      };
 
-      var text = "*G-SPIRIT LOAN APPLICATION*\n" + divider + "\n\n"
+      fetch(API_BASE + '/api/apply', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      })
+      .then(function (res) {
+        if (!res.ok) throw new Error('Failed to save application');
+        return res.json();
+      })
+      .then(function (data) {
+        if (!data.success) throw new Error('Could not save application');
 
-               + "*APPLICANT DETAILS*\n"
-               + "Name: " + name + "\n"
-               + "Phone: " + phone + "\n"
-               + "Email: " + email + "\n"
-               + "Date of Birth: " + date + "\n"
-               + "Residence: " + residence + "\n\n"
+        var divider = "――――――――――――――――";
+        var text = "*G-SPIRIT LOAN APPLICATION*\n" + divider + "\n\n"
+                 + "*APPLICANT DETAILS*\n"
+                 + "Name: " + name + "\n"
+                 + "Phone: " + phone + "\n"
+                 + "Email: " + email + "\n"
+                 + "Date of Birth: " + date + "\n"
+                 + "Residence: " + residence + "\n\n"
 
-               + "*EMPLOYMENT*\n"
-               + "Status: " + employment + "\n"
-               + "Monthly Income: " + income + "\n\n"
+                 + "*EMPLOYMENT*\n"
+                 + "Status: " + employment + "\n"
+                 + "Monthly Income: " + income + "\n\n"
 
-               + "*LOAN REQUEST*\n"
-               + "Amount: " + formatCurrency(amount) + " XAF\n"
-               + "Term: " + term + "\n"
-               + "Purpose: " + purpose + "\n"
-               + "Collateral: " + (collateral || "N/A") + "\n\n"
+                 + "*LOAN REQUEST*\n"
+                 + "Amount: " + formatCurrency(amount) + " XAF\n"
+                 + "Term: " + term + "\n"
+                 + "Purpose: " + purpose + "\n"
+                 + "Collateral: " + (collateral || "N/A") + "\n\n"
 
-               + "*LOAN SUMMARY*\n"
-               + "Processing Fee: " + processingFee + " XAF\n"
-               + "Platform Charge: " + interest + " XAF\n"
-               + "Total Repayment: " + totalRepayment + " XAF\n"
-               + "Monthly Repayment: " + monthlyRepayment + " XAF\n\n"
-               + "Default Penalty: " + defaultPenalty + " XAF per day\n"
+                 + "*LOAN SUMMARY*\n"
+                 + "Processing Fee: " + processingFee + " XAF\n"
+                 + "Platform Charge: " + interest + " XAF\n"
+                 + "Total Repayment: " + totalRepayment + " XAF\n"
+                 + "Monthly Repayment: " + monthlyRepayment + " XAF\n\n"
+                 + "Default Penalty: " + defaultPenalty + " XAF per day\n"
 
-               + divider + "\n"
-               + "Terms & Privacy Policy: Accepted ✓\n\n"
-               + "Join our channel to be in touch with updates, schedules, and reminders\nhttps://whatsapp.com/channel/0029VbCzmKr0G0XhgxfXbD0o";
+                 + divider + "\n"
+                 + "Terms & Privacy Policy: Accepted ✓\n\n"
+                 + "Join our channel to be in touch with updates, schedules, and reminders\nhttps://whatsapp.com/channel/0029VbCzmKr0G0XhgxfXbD0o";
 
-      var url = 'https://wa.me/237620569864?text=' + encodeURIComponent(text);
-      window.open(url, '_blank');
+        var url = 'https://wa.me/237620569864?text=' + encodeURIComponent(text);
+        window.open(url, '_blank');
+      })
+      .catch(function (err) {
+        alert('Unable to save loan application. Please try again later.');
+        console.error(err);
+      });
     }
 
     function loadImageAsDataURL(url) {
