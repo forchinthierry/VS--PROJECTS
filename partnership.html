@@ -831,9 +831,11 @@
       function buildPDF(logo) {
         var jsPDFLib = window.jspdf.jsPDF;
         var doc = new jsPDFLib();
+        var FONT = 'times';
+        doc.setFont(FONT, 'normal');
         var pageWidth = doc.internal.pageSize.getWidth();
         var pageHeight = doc.internal.pageSize.getHeight();
-        var margin = 15;
+        var margin = 16;
         var maxWidth = pageWidth - margin * 2;
         var y = margin;
         var sectionCount = 0;
@@ -847,8 +849,8 @@
 
         function title(text) {
           ensureSpace(14);
-          doc.setFont(undefined, 'bold');
-          doc.setFontSize(16);
+          doc.setFont(FONT, 'bold');
+          doc.setFontSize(17);
           doc.setTextColor(43, 55, 115);
           doc.text(text, pageWidth / 2, y, { align: 'center' });
           y += 10;
@@ -857,32 +859,35 @@
         function sectionHeading(text) {
           sectionCount++;
           ensureSpace(12);
-          doc.setFont(undefined, 'bold');
-          doc.setFontSize(12);
+          y += 1.5;
+          doc.setFont(FONT, 'bold');
+          doc.setFontSize(12.5);
           doc.setTextColor(22, 160, 133);
           doc.text(sectionCount + '. ' + text, margin, y);
           doc.setDrawColor(22, 160, 133);
+          doc.setLineWidth(0.3);
           doc.line(margin, y + 1.5, pageWidth - margin, y + 1.5);
-          y += 8;
+          y += 7.5;
         }
 
         function paragraph(text) {
-          doc.setFont(undefined, 'normal');
+          doc.setFont(FONT, 'normal');
           doc.setFontSize(10.5);
-          doc.setTextColor(40, 40, 40);
+          doc.setTextColor(30, 30, 30);
           var lines = doc.splitTextToSize(text, maxWidth);
-          lines.forEach(function (line) {
-            ensureSpace(6);
-            doc.text(line, margin, y);
+          lines.forEach(function (line, idx) {
+            ensureSpace(5.8);
+            var isLast = idx === lines.length - 1;
+            doc.text(line, margin, y, isLast ? {} : { align: 'justify', maxWidth: maxWidth });
             y += 5.6;
           });
           y += 3;
         }
 
         function bulletList(items) {
-          doc.setFont(undefined, 'normal');
+          doc.setFont(FONT, 'normal');
           doc.setFontSize(10.5);
-          doc.setTextColor(40, 40, 40);
+          doc.setTextColor(30, 30, 30);
           items.forEach(function (item) {
             var lines = doc.splitTextToSize('•  ' + item, maxWidth - 4);
             lines.forEach(function (line, idx) {
@@ -898,30 +903,35 @@
           var rowHeight = 8;
           var x = margin;
 
-          doc.setFillColor(43, 55, 115);
-          doc.setTextColor(255, 255, 255);
-          doc.setFont(undefined, 'bold');
-          doc.setFontSize(9.5);
+          doc.setDrawColor(200, 200, 200);
+          doc.setLineWidth(0.2);
+
           ensureSpace(rowHeight);
           x = margin;
           headers.forEach(function (h, i) {
-            doc.rect(x, y - 5.5, colWidths[i], rowHeight, 'F');
-            doc.text(h, x + 3, y);
+            doc.setFillColor(43, 55, 115);
+            doc.setTextColor(255, 255, 255);
+            doc.setFont(FONT, 'bold');
+            doc.setFontSize(10);
+            doc.rect(x, y - 5.5, colWidths[i], rowHeight, 'FD');
+            doc.text(String(h), x + 3, y);
             x += colWidths[i];
           });
           y += rowHeight;
 
-          doc.setFont(undefined, 'normal');
-          doc.setTextColor(40, 40, 40);
           rows.forEach(function (row, rIdx) {
             ensureSpace(rowHeight);
             x = margin;
             if (rIdx % 2 === 0) {
-              doc.setFillColor(238, 238, 238);
+              doc.setFillColor(240, 240, 240);
               var totalW = colWidths.reduce(function (a, b) { return a + b; }, 0);
               doc.rect(margin, y - 5.5, totalW, rowHeight, 'F');
             }
             row.forEach(function (cell, cIdx) {
+              doc.setFont(FONT, 'normal');
+              doc.setFontSize(10);
+              doc.setTextColor(30, 30, 30);
+              doc.rect(x, y - 5.5, colWidths[cIdx], rowHeight);
               doc.text(String(cell), x + 3, y);
               x += colWidths[cIdx];
             });
@@ -940,11 +950,11 @@
 
         doc.setTextColor(255, 255, 255);
         doc.setFontSize(13);
-        doc.setFont(undefined, 'bold');
+        doc.setFont(FONT, 'bold');
         doc.text('G-SPIRIT LOAN SOLUTION', logo ? margin + 22 : margin, 15);
 
         doc.setFontSize(8);
-        doc.setFont(undefined, 'normal');
+        doc.setFont(FONT, 'normal');
         doc.text('+237 620 569 984', pageWidth - margin, 8, { align: 'right' });
         doc.text('hi@gspiritloans.com', pageWidth - margin, 13, { align: 'right' });
         doc.text('Buea', pageWidth - margin, 18, { align: 'right' });
@@ -953,7 +963,7 @@
 
         title('PARTNERSHIP AND INVESTMENT AGREEMENT');
         doc.setFontSize(10);
-        doc.setFont(undefined, 'normal');
+        doc.setFont(FONT, 'normal');
         doc.setTextColor(90, 90, 90);
         doc.text('Business: ' + jvName, pageWidth / 2, y, { align: 'center' });
         y += 5;
@@ -1069,7 +1079,7 @@
 
         ensureSpace(30);
         y += 6;
-        doc.setFont(undefined, 'bold');
+        doc.setFont(FONT, 'bold');
         doc.setFontSize(12);
         doc.setTextColor(43, 55, 115);
         var witnessLines = doc.splitTextToSize('IN WITNESS WHEREOF, the Parties have executed this Agreement as of the date first written above.', maxWidth);
@@ -1078,30 +1088,30 @@
 
         var colWidth = (maxWidth - 10) / 2;
         for (var s = 0; s < allSigners.length; s += 2) {
-          ensureSpace(35);
-          doc.setFont(undefined, 'normal');
+          ensureSpace(24);
+          doc.setFont(FONT, 'normal');
           doc.setFontSize(10.5);
           doc.setTextColor(40, 40, 40);
 
-          doc.setFont(undefined, 'bold');
+          doc.setFont(FONT, 'bold');
           doc.text(allSigners[s].label, margin, y);
           if (allSigners[s + 1]) doc.text(allSigners[s + 1].label, margin + colWidth + 10, y);
-          y += 14;
+          y += 8;
 
           doc.line(margin, y, margin + colWidth, y);
           if (allSigners[s + 1]) doc.line(margin + colWidth + 10, y, margin + colWidth + 10 + colWidth, y);
-          y += 5;
-          doc.setFont(undefined, 'normal');
+          y += 4.5;
+          doc.setFont(FONT, 'normal');
           doc.text('Name & Signature', margin, y);
           if (allSigners[s + 1]) doc.text('Name & Signature', margin + colWidth + 10, y);
-          y += 14;
+          y += 8;
 
           doc.line(margin, y, margin + colWidth, y);
           if (allSigners[s + 1]) doc.line(margin + colWidth + 10, y, margin + colWidth + 10 + colWidth, y);
-          y += 5;
+          y += 4.5;
           doc.text('Date', margin, y);
           if (allSigners[s + 1]) doc.text('Date', margin + colWidth + 10, y);
-          y += 14;
+          y += 9;
         }
 
         // Footer + page numbers + watermark on every page

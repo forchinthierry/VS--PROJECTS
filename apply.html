@@ -660,7 +660,7 @@
             <div class="consent">
               <label class="checkbox-label">
                 <input type="checkbox" id="consent" name="consent" required>
-                <span>I confirm that all information provided is accurate and true. I agree to the <a href="terms.html" target="_blank" rel="noopener noreferrer">terms</a> and <a href="privacy.html" target="_blank" rel="noopener noreferrer">privacy policy</a> including the 10% interest rate, 10% processing fee, and 5% daily late penalty. I understand that my collateral will be verified before loan approval.</span>
+                <span>I confirm that all information provided is accurate and true. I agree to the <a href="terms.html" target="_blank" rel="noopener noreferrer">terms</a> and <a href="privacy.html" target="_blank" rel="noopener noreferrer">privacy policy</a> including the 10% platform charge, 10% processing fee, and 5% daily late penalty. I understand that my collateral will be verified before loan approval.</span>
               </label>
             </div>
 
@@ -679,7 +679,7 @@
               <span id="processingFee">0.00</span>
             </div>
             <div class="summary-item">
-              <strong>Interest</strong>
+              <strong>Platform Charge</strong>
               <span id="interest">0.00</span>
             </div>
             <div class="summary-item">
@@ -832,7 +832,7 @@
 
                + "*LOAN SUMMARY*\n"
                + "Processing Fee: " + processingFee + " XAF\n"
-               + "Interest: " + interest + " XAF\n"
+               + "Platform Charge: " + interest + " XAF\n"
                + "Total Repayment: " + totalRepayment + " XAF\n"
                + "Monthly Repayment: " + monthlyRepayment + " XAF\n\n"
                + "Default Penalty: " + defaultPenalty + " XAF per day\n"
@@ -977,7 +977,7 @@
 
         section('Loan Summary');
         row('Processing Fee', processingFee + ' XAF');
-        row('Interest', interest + ' XAF');
+        row('Platform Charge', interest + ' XAF');
         row('Total Repayment', totalRepayment + ' XAF');
         row('Monthly Repayment', monthlyRepayment + ' XAF');
         row('Default Penalty', defaultPenalty + ' XAF' + ' per day');
