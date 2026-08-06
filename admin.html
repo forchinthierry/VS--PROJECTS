@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="logo.png">
+  <title>Admin Dashboard - G-Spirit Loan Solution</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f5eded;
+      color: #333;
+      margin: 0;
+      padding: 0;
+      line-height: 1.6;
+    }
+
+    header {
+      background-color: #2b3773;
+      color: white;
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    header h1 { margin: 0; font-size: 20px; }
+
+    .container {
+      width: 95%;
+      max-width: 1200px;
+      margin: 20px auto;
+      padding: 0 10px;
+    }
+
+    .login-card {
+      max-width: 400px;
+      margin: 80px auto;
+      background: white;
+      border-radius: 12px;
+      padding: 30px;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+
+    .login-card h2 { color: #2b3773; margin-top: 0; }
+
+    .login-card input {
+      width: 100%;
+      padding: 10px;
+      margin: 12px 0;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 14px;
+    }
+
+    .login-card button {
+      width: 100%;
+      background: #2b3773;
+      color: white;
+      border: none;
+      padding: 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 15px;
+    }
+
+    .login-card button:hover { background: #1f2857; }
+    .login-error { color: #d9534f; font-size: 13px; margin-top: 8px; display: none; }
+
+    .tabs {
+      display: flex;
+      gap: 10px;
+      margin: 20px 0 10px;
+    }
+
+    .tab-btn {
+      background: white;
+      border: 1px solid #2b3773;
+      color: #2b3773;
+      padding: 10px 18px;
+      border-radius: 999px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: bold;
+    }
+
+    .tab-btn.active { background: #2b3773; color: white; }
+
+    .card {
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      overflow: hidden;
+    }
+
+    table { width: 100%; border-collapse: collapse; font-size: 13px; }
+
+    th {
+      background: #2b3773;
+      color: white;
+      text-align: left;
+      padding: 10px 8px;
+      position: sticky;
+      top: 0;
+    }
+
+    td {
+      padding: 8px;
+      border-bottom: 1px solid #eee;
+      vertical-align: top;
+    }
+
+    tr:hover { background: #fafafa; }
+
+    select.status-select {
+      padding: 4px 6px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+      font-size: 12.5px;
+    }
+
+    .status-New { color: #2b3773; font-weight: bold; }
+    .status-UnderReview { color: #b8860b; font-weight: bold; }
+    .status-Approved { color: #16a085; font-weight: bold; }
+    .status-Rejected { color: #d9534f; font-weight: bold; }
+    .status-Disbursed { color: #6f42c1; font-weight: bold; }
+
+    .empty-state { padding: 40px; text-align: center; color: #999; }
+    .table-wrap { overflow-x: auto; max-height: 70vh; overflow-y: auto; }
+    .refresh-btn {
+      background: #16a085;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 13px;
+      margin-left: auto;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="loginScreen" class="login-card">
+    <h2>Admin Login</h2>
+    <input type="password" id="tokenInput" placeholder="Enter admin password">
+    <button onclick="login()">Log In</button>
+    <div class="login-error" id="loginError">Incorrect password or connection failed.</div>
+  </div>
+
+  <div id="dashboard" style="display:none;">
+    <header>
+      <h1>G-Spirit Admin Dashboard</h1>
+      <button class="refresh-btn" onclick="loadCurrentTab()">Refresh</button>
+    </header>
+
+    <div class="container">
+      <div class="tabs">
+        <button class="tab-btn active" id="tabLoans" onclick="switchTab('loans')">Loan Applications</button>
+        <button class="tab-btn" id="tabPartners" onclick="switchTab('partners')">Partnership Applications</button>
+      </div>
+
+      <div class="card">
+        <div class="table-wrap" id="tableWrap">
+          <div class="empty-state">Loading...</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    var API_BASE = 'https://gspiritloans-api.forchinthierry.workers.dev/';
+    var currentTab = 'loans';
+    var adminToken = '';
+
+    function login() {
+      var token = document.getElementById('tokenInput').value;
+      if (!token) return;
+      adminToken = token;
+      sessionStorage.setItem('gspirit_admin_token', token);
+      document.getElementById('loginScreen').style.display = 'none';
+      document.getElementById('dashboard').style.display = 'block';
+      loadCurrentTab();
+    }
+
+    function switchTab(tab) {
+      currentTab = tab;
+      document.getElementById('tabLoans').classList.toggle('active', tab === 'loans');
+      document.getElementById('tabPartners').classList.toggle('active', tab === 'partners');
+      loadCurrentTab();
+    }
+
+    function loadCurrentTab() {
+      var endpoint = currentTab === 'loans' ? '/api/admin/applications' : '/api/admin/partnerships';
+      document.getElementById('tableWrap').innerHTML = '<div class="empty-state">Loading...</div>';
+
+      fetch(API_BASE + endpoint, {
+        headers: { 'Authorization': 'Bearer ' + adminToken }
+      })
+        .then(function (res) {
+          if (res.status === 401) throw new Error('unauthorized');
+          return res.json();
+        })
+        .then(function (data) {
+          if (currentTab === 'loans') renderLoans(data);
+          else renderPartners(data);
+        })
+        .catch(function (err) {
+          if (err.message === 'unauthorized') {
+            alert('Session expired or wrong password. Please log in again.');
+            logout();
+          } else {
+            document.getElementById('tableWrap').innerHTML = '<div class="empty-state">Could not load data. Check the API_BASE URL in this file.</div>';
+          }
+        });
+    }
+
+    function logout() {
+      sessionStorage.removeItem('gspirit_admin_token');
+      document.getElementById('dashboard').style.display = 'none';
+      document.getElementById('loginScreen').style.display = 'block';
+    }
+
+    function statusOptions(current) {
+      var statuses = ['New', 'Under Review', 'Approved', 'Rejected', 'Disbursed'];
+      return statuses.map(function (s) {
+        return '<option value="' + s + '"' + (s === current ? ' selected' : '') + '>' + s + '</option>';
+      }).join('');
+    }
+
+    function updateStatus(table, id, selectEl) {
+      var newStatus = selectEl.value;
+      fetch(API_BASE + '/api/admin/update-status', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + adminToken },
+        body: JSON.stringify({ table: table, id: id, status: newStatus })
+      }).catch(function () {
+        alert('Failed to update status. Try again.');
+      });
+    }
+
+    function renderLoans(rows) {
+      if (!rows || rows.length === 0) {
+        document.getElementById('tableWrap').innerHTML = '<div class="empty-state">No loan applications yet.</div>';
+        return;
+      }
+      var html = '<table><thead><tr>' +
+        '<th>Date</th><th>Name</th><th>Phone</th><th>Amount</th><th>Term</th><th>Purpose</th><th>Employment</th><th>Status</th>' +
+        '</tr></thead><tbody>';
+      rows.forEach(function (r) {
+        html += '<tr>' +
+          '<td>' + new Date(r.created_at).toLocaleDateString() + '</td>' +
+          '<td>' + (r.name || '') + '</td>' +
+          '<td>' + (r.phone || '') + '</td>' +
+          '<td>' + Number(r.amount || 0).toLocaleString() + ' XAF</td>' +
+          '<td>' + (r.term || '') + '</td>' +
+          '<td>' + (r.purpose || '') + '</td>' +
+          '<td>' + (r.employment || '') + '</td>' +
+          '<td><select class="status-select" onchange="updateStatus(\'loan_applications\', ' + r.id + ', this)">' + statusOptions(r.status) + '</select></td>' +
+          '</tr>';
+      });
+      html += '</tbody></table>';
+      document.getElementById('tableWrap').innerHTML = html;
+    }
+
+    function renderPartners(rows) {
+      if (!rows || rows.length === 0) {
+        document.getElementById('tableWrap').innerHTML = '<div class="empty-state">No partnership applications yet.</div>';
+        return;
+      }
+      var html = '<table><thead><tr>' +
+        '<th>Date</th><th>Name</th><th>Phone</th><th>Shares</th><th>Contribution</th><th>Payout</th><th>Payment Method</th><th>Status</th>' +
+        '</tr></thead><tbody>';
+      rows.forEach(function (r) {
+        html += '<tr>' +
+          '<td>' + new Date(r.created_at).toLocaleDateString() + '</td>' +
+          '<td>' + (r.name || '') + '</td>' +
+          '<td>' + (r.phone || '') + '</td>' +
+          '<td>' + (r.shares || '') + '</td>' +
+          '<td>' + Number(r.total_contribution || 0).toLocaleString() + ' XAF</td>' +
+          '<td>' + (r.payout || '') + '</td>' +
+          '<td>' + (r.payment_method || '') + '</td>' +
+          '<td><select class="status-select" onchange="updateStatus(\'partnership_applications\', ' + r.id + ', this)">' + statusOptions(r.status) + '</select></td>' +
+          '</tr>';
+      });
+      html += '</tbody></table>';
+      document.getElementById('tableWrap').innerHTML = html;
+    }
+
+    // Auto-login if a token is already stored for this browser session
+    window.addEventListener('load', function () {
+      var saved = sessionStorage.getItem('gspirit_admin_token');
+      if (saved) {
+        adminToken = saved;
+        document.getElementById('loginScreen').style.display = 'none';
+        document.getElementById('dashboard').style.display = 'block';
+        loadCurrentTab();
+      }
+    });
+  </script>
+
+</body>
+</html>
