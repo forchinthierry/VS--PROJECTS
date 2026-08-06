@@ -354,12 +354,19 @@
       document.getElementById('resultsCount').textContent = countText;
     }
 
-    function toggleSelectAll() {
-      var anyUnselected = currentFiltered.some(function (row) { return !selectedIds[row.id]; });
-      currentFiltered.forEach(function (row) {
-        if (anyUnselected) selectedIds[row.id] = true;
-        else delete selectedIds[row.id];
-      });
+    function toggleSelectAll(checked) {
+      if (typeof checked === 'boolean') {
+        currentFiltered.forEach(function (row) {
+          if (checked) selectedIds[row.id] = true;
+          else delete selectedIds[row.id];
+        });
+      } else {
+        var anyUnselected = currentFiltered.some(function (row) { return !selectedIds[row.id]; });
+        currentFiltered.forEach(function (row) {
+          if (anyUnselected) selectedIds[row.id] = true;
+          else delete selectedIds[row.id];
+        });
+      }
       renderCurrentView();
     }
 
@@ -392,18 +399,24 @@
         body: JSON.stringify({ table: table, ids: ids, all: Boolean(all) })
       })
       .then(function (res) {
-        if (!res.ok) throw new Error('Delete failed');
-        return res.json();
+        return res.json().then(function (data) {
+          if (!res.ok) {
+            throw new Error(data.error || 'Delete failed');
+          }
+          return data;
+        });
       })
       .then(function (data) {
-        if (!data.success) throw new Error('Delete failed');
+        if (!data.success) {
+          throw new Error(data.error || 'Delete failed');
+        }
         selectedIds = {};
         document.getElementById('searchInput').value = '';
         loadCurrentTab();
       })
       .catch(function (err) {
-        alert('Unable to delete applications. Please try again.');
-        console.error(err);
+        alert('Unable to delete applications: ' + err.message);
+        console.error('Delete failed:', err);
       });
     }
 
