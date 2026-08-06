@@ -10,4 +10,12 @@
   "compatibility_flags": [
     "nodejs_compat"
   ]
+  ,
+"d1_databases": [
+  {
+    "binding": "DB",
+    "database_name": "gspiritloans-db",
+    "database_id": "4cad35c3-67be-4b75-a398-a4f56296095c"
+  }
+]
 }
