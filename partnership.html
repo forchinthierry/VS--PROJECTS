@@ -562,7 +562,48 @@
       addTeamRow('', 'Partner');
       addPartnerBlock();
       updateOwnershipPreview();
+      prefillPartnershipAgreement();
     });
+
+    function prefillPartnershipAgreement() {
+      var raw = sessionStorage.getItem('agreementPrefill');
+      if (!raw) return;
+      var data = JSON.parse(raw);
+      if (data.type !== 'partner' || !data.row) return;
+      var row = data.row;
+      sessionStorage.removeItem('agreementPrefill');
+
+      document.getElementById('agreementDate').value = new Date().toISOString().slice(0, 10);
+      if (row.reason) document.getElementById('jvName').value = row.reason;
+      if (row.payment_method) document.getElementById('bankName').value = row.payment_method;
+      if (row.total_contribution) document.getElementById('preMoneyValue').value = row.total_contribution;
+      if (row.shares) document.getElementById('initialTerm').value = 2;
+
+      var firstBlock = document.querySelector('.partner-block');
+      if (!firstBlock) {
+        addPartnerBlock({
+          name: row.name || '',
+          phone: row.phone || '',
+          residence: row.residence || '',
+          occupation: row.occupation || '',
+          employer: '',
+          contribution: row.total_contribution || '',
+          role: row.shares ? 'Active Partner' : 'Passive Investor',
+          nationality: '',
+          id: ''
+        });
+      } else {
+        firstBlock.querySelector('.p-name').value = row.name || '';
+        firstBlock.querySelector('.p-phone').value = row.phone || '';
+        firstBlock.querySelector('.p-residence').value = row.residence || '';
+        firstBlock.querySelector('.p-occupation').value = row.occupation || '';
+        firstBlock.querySelector('.p-employer').value = '';
+        firstBlock.querySelector('.p-contribution').value = row.total_contribution || '';
+        firstBlock.querySelector('.p-role').value = row.shares ? 'Active Partner' : 'Passive Investor';
+      }
+
+      updateOwnershipPreview();
+    }
 
     var ONES = ['', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten',
       'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen'];
@@ -665,6 +706,17 @@
         '<input type="number" class="p-contribution" min="0" required>';
 
       document.getElementById('partnersContainer').appendChild(wrapper);
+      if (prefill) {
+        wrapper.querySelector('.p-name').value = prefill.name || '';
+        wrapper.querySelector('.p-phone').value = prefill.phone || '';
+        wrapper.querySelector('.p-residence').value = prefill.residence || '';
+        wrapper.querySelector('.p-occupation').value = prefill.occupation || '';
+        wrapper.querySelector('.p-employer').value = prefill.employer || '';
+        wrapper.querySelector('.p-contribution').value = prefill.contribution || '';
+        wrapper.querySelector('.p-role').value = prefill.role || 'Passive Investor';
+        wrapper.querySelector('.p-nationality').value = prefill.nationality || '';
+        wrapper.querySelector('.p-id').value = prefill.id || '';
+      }
       wrapper.querySelector('.p-contribution').addEventListener('input', updateOwnershipPreview);
       updateOwnershipPreview();
     }

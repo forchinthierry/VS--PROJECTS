@@ -167,6 +167,22 @@
       background: #1faa53;
     }
 
+    .agreement-btn {
+      background: #2b3773;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      padding: 6px 10px;
+      cursor: pointer;
+      font-size: 12px;
+      white-space: nowrap;
+      margin-right: 6px;
+    }
+
+    .agreement-btn:hover {
+      background: #1f2753;
+    }
+
     .card {
       background: white;
       border-radius: 10px;
@@ -326,7 +342,20 @@
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + adminToken },
         body: JSON.stringify({ table: table, id: id, status: newStatus })
-      }).catch(function () {
+      })
+      .then(function (res) {
+        if (!res.ok) throw new Error('Status update failed');
+        return res.json();
+      })
+      .then(function (data) {
+        if (!data.success) throw new Error(data.error || 'Status update failed');
+        var row = currentData.find(function (item) { return item.id === id; });
+        if (row) {
+          row.status = newStatus;
+        }
+        renderCurrentView();
+      })
+      .catch(function () {
         alert('Failed to update status. Try again.');
       });
     }
@@ -420,6 +449,17 @@
       });
     }
 
+    function openAgreement(type, id) {
+      var row = currentData.find(function (item) { return item.id === id; });
+      if (!row) return;
+      sessionStorage.setItem('agreementPrefill', JSON.stringify({ type: type, row: row }));
+      if (type === 'loan') {
+        window.location.href = 'loanagreement.html';
+      } else {
+        window.location.href = 'partnership.html';
+      }
+    }
+
     function sendStatusWhatsApp(type, id) {
       var row = currentData.find(function (item) { return item.id === id; });
       if (!row) return;
@@ -485,7 +525,7 @@
           '<td>' + (r.employment || '') + '</td>' +
           '<td>' + (r.collateral || '') + '</td>' +
           '<td><select class="status-select" onchange="updateStatus(\'loan_applications\', ' + r.id + ', this)">' + statusOptions(r.status) + '</select></td>' +
-          '<td><button class="whatsapp-btn" onclick="sendStatusWhatsApp(\'loan\', ' + r.id + ')">Send Status</button></td>' +
+          '<td>' + (r.status === 'Approved' ? '<button class="agreement-btn" onclick="openAgreement(\'loan\', ' + r.id + ')">Agreement</button>' : '') + '<button class="whatsapp-btn" onclick="sendStatusWhatsApp(\'loan\', ' + r.id + ')">Send Status</button></td>' +
           '</tr>';
       });
       html += '</tbody></table>';
@@ -521,7 +561,7 @@
           '<td>' + (r.next_of_kin || '') + '</td>' +
           '<td>' + (r.reason || '') + '</td>' +
           '<td><select class="status-select" onchange="updateStatus(\'partnership_applications\', ' + r.id + ', this)">' + statusOptions(r.status) + '</select></td>' +
-          '<td><button class="whatsapp-btn" onclick="sendStatusWhatsApp(\'partner\', ' + r.id + ')">Send Status</button></td>' +
+          '<td>' + (r.status === 'Approved' ? '<button class="agreement-btn" onclick="openAgreement(\'partner\', ' + r.id + ')">Agreement</button>' : '') + '<button class="whatsapp-btn" onclick="sendStatusWhatsApp(\'partner\', ' + r.id + ')">Send Status</button></td>' +
           '</tr>';
       });
       html += '</tbody></table>';

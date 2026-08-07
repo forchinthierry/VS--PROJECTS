@@ -512,7 +512,49 @@
     document.addEventListener('DOMContentLoaded', function () {
       addBorrowerBlock();
       updateLoanSummary();
+      prefillLoanAgreement();
     });
+
+    function prefillLoanAgreement() {
+      var raw = sessionStorage.getItem('agreementPrefill');
+      if (!raw) return;
+      var data = JSON.parse(raw);
+      if (data.type !== 'loan' || !data.row) return;
+      var row = data.row;
+      sessionStorage.removeItem('agreementPrefill');
+
+      if (row.name) {
+        var block = document.querySelector('.borrower-block');
+        if (block) {
+          block.querySelector('.b-name').value = row.name || '';
+          block.querySelector('.b-phone').value = row.phone || '';
+          block.querySelector('.b-residence').value = row.residence || '';
+        }
+      }
+      if (row.amount) {
+        document.getElementById('loanAmount').value = row.amount;
+      }
+      if (row.term) {
+        var termNumber = parseInt(row.term, 10);
+        if (!isNaN(termNumber)) {
+          document.getElementById('loanTermMonths').value = termNumber;
+        }
+      }
+      if (row.purpose) {
+        document.getElementById('remark').value = row.purpose;
+      }
+      if (row.residence) {
+        document.getElementById('lenderAddress').value = row.residence;
+      }
+      if (row.phone) {
+        document.getElementById('lenderPhone').value = row.phone;
+      }
+      var today = new Date().toISOString().slice(0, 10);
+      document.getElementById('agreementDate').value = today;
+      document.getElementById('firstPaymentDate').value = today;
+      document.getElementById('lastPaymentDate').value = today;
+      updateLoanSummary();
+    }
 
     function updateLoanSummary() {
       var amount = parseFloat(document.getElementById('loanAmount').value) || 0;
