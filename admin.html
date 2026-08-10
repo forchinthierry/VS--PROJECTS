@@ -161,10 +161,31 @@
       cursor: pointer;
       font-size: 12px;
       white-space: nowrap;
+      margin-left: 4px;
     }
 
     .whatsapp-btn:hover {
       background: #1faa53;
+    }
+
+    .agreement-btn {
+      background: #007bff;
+      color: white;
+      text-decoration: none;
+      border: 1px solid #007bff;
+      border-radius: 6px;
+      padding: 6px 10px;
+      cursor: pointer;
+      font-size: 12px;
+      white-space: nowrap;
+      margin-top: 6px;
+      display: inline-block;
+      text-align: center;
+    }
+
+    .agreement-btn:hover {
+      background: #0056b3;
+      border-color: #0056b3;
     }
 
     .card {
@@ -326,7 +347,26 @@
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + adminToken },
         body: JSON.stringify({ table: table, id: id, status: newStatus })
-      }).catch(function () {
+      })
+      .then(function (res) {
+        return res.json().then(function (data) {
+          if (!res.ok) {
+            throw new Error(data.error || 'Status update failed');
+          }
+          if (!data.success) {
+            throw new Error(data.error || 'Status update failed');
+          }
+          return data;
+        });
+      })
+      .then(function () {
+        var row = currentData.find(function (item) { return item.id === id; });
+        if (row) {
+          row.status = newStatus;
+        }
+        renderCurrentView();
+      })
+      .catch(function () {
         alert('Failed to update status. Try again.');
       });
     }
@@ -420,30 +460,48 @@
       });
     }
 
+    function normalizeStatus(status) {
+      return (status || '').toString().trim().replace(/\s+/g, ' ').toLowerCase();
+    }
+
+    function getWhatsAppTemplate(type, status, row) {
+      var amountText = Number(row.amount || row.total_contribution || 0).toLocaleString();
+      var name = row.name || 'Customer';
+      var normalizedStatus = normalizeStatus(status);
+
+      var templates = {
+        loan: {
+          'new': 'Hello {{1}}, your loan application has been received and is pending review. We\'ll update you here as soon as a decision is made.',
+          'under review': 'Hello {{1}}, your loan application with G-Spirit Loan Solution is now under review. We\'ll update you here as soon as a decision is made.',
+          'approved': 'Hello {{1}}, good news — your loan application for {{2}} XAF has been approved. Our team will reach out shortly with next steps.',
+          'rejected': 'Hello {{1}}, thank you for applying to G-Spirit Loan Solution. We\'re unable to approve this application at this time. Message us on WhatsApp if you\'d like to know more.',
+          'disbursed': 'Hello {{1}}, your loan of {{2}} XAF has been disbursed. Repayment begins as agreed in your loan agreement. Thank you for choosing G-Spirit Loan Solution.'
+        },
+        partner: {
+          'new': 'Hello {{1}}, your partnership application has been received and is pending review. We\'ll update you here as soon as a decision is made.',
+          'under review': 'Hello {{1}}, thank you for your interest in partnering with G-Spirit Loan Solution. Your application is now under review.',
+          'approved': 'Hello {{1}}, congratulations — your partnership application has been approved. We\'ll be in touch shortly to finalize your Growth Share agreement.',
+          'rejected': 'Hello {{1}}, thank you for your interest in partnering with G-Spirit Loan Solution. We\'re unable to move forward with this application at this time.'
+        }
+      };
+
+      var template = templates[type] && templates[type][normalizedStatus];
+      if (!template) {
+        return 'Hello ' + name + ', your application status is now "' + (normalizedStatus || 'Updated') + '". We will contact you with more details soon.';
+      }
+
+      return template
+        .replace('{{1}}', name)
+        .replace('{{2}}', amountText);
+    }
+
     function sendStatusWhatsApp(type, id) {
       var row = currentData.find(function (item) { return item.id === id; });
       if (!row) return;
-      var divider = "――――――――――――――――";
-      var text = '';
-      if (type === 'loan') {
-        text = '*G-SPIRIT LOAN APPLICATION STATUS*\n' + divider + '\n\n'
-             + 'Name: ' + (row.name || '') + '\n'
-             + 'Phone: ' + (row.phone || '') + '\n'
-             + 'Email: ' + (row.email || '') + '\n'
-             + 'Amount: ' + Number(row.amount || 0).toLocaleString() + ' XAF\n'
-             + 'Status: ' + (row.status || '') + '\n'
-             + 'Term: ' + (row.term || '') + '\n'
-             + 'Purpose: ' + (row.purpose || '') + '\n';
-      } else {
-        text = '*G-SPIRIT PARTNERSHIP APPLICATION STATUS*\n' + divider + '\n\n'
-             + 'Name: ' + (row.name || '') + '\n'
-             + 'Phone: ' + (row.phone || '') + '\n'
-             + 'Email: ' + (row.email || '') + '\n'
-             + 'Shares: ' + (row.shares || 0) + '\n'
-             + 'Contribution: ' + Number(row.total_contribution || 0).toLocaleString() + ' XAF\n'
-             + 'Status: ' + (row.status || '') + '\n'
-             + 'Payout: ' + (row.payout || '') + '\n';
-      }
+      var templateType = type === 'loan' ? 'loan' : 'partner';
+      var status = normalizeStatus(row.status);
+      var text = getWhatsAppTemplate(templateType, status, row);
+
       var phone = (row.phone || '').replace(/[^0-9+]/g, '');
       if (!phone) {
         alert('Applicant phone number is missing.');
@@ -455,6 +513,16 @@
       var cleanPhone = phone.replace(/^\+/, '');
       var url = 'https://wa.me/' + cleanPhone + '?text=' + encodeURIComponent(text);
       window.open(url, '_blank');
+    }
+
+    function openAgreement(type, id) {
+      var row = currentData.find(function (item) { return item.id === id; });
+      if (!row) return;
+
+      sessionStorage.setItem('agreementPrefill', JSON.stringify({ type: type, row: row }));
+
+      var targetPage = type === 'loan' ? 'loanagreement.html' : 'partnership.html';
+      window.open(targetPage, '_blank');
     }
 
     function renderLoans(rows) {
@@ -489,7 +557,7 @@
           '<td>' + (r.surety_relation || '') + '</td>' +
           '<td>' + (r.collateral || '') + '</td>' +
           '<td><select class="status-select" onchange="updateStatus(\'loan_applications\', ' + r.id + ', this)">' + statusOptions(r.status) + '</select></td>' +
-          '<td><button class="whatsapp-btn" onclick="sendStatusWhatsApp(\'loan\', ' + r.id + ')">Send Status</button></td>' +
+          '<td>' + '<button class="whatsapp-btn" onclick="sendStatusWhatsApp(\'loan\', ' + r.id + ')">Send Status</button>' + (normalizeStatus(r.status) === 'approved' ? '<br><a href="#" class="agreement-btn" onclick="openAgreement(\'loan\', ' + r.id + '); return false;">Agreement</a>' : '') + '</td>' +
           '</tr>';
       });
       html += '</tbody></table>';
@@ -525,7 +593,7 @@
           '<td>' + (r.next_of_kin || '') + '</td>' +
           '<td>' + (r.reason || '') + '</td>' +
           '<td><select class="status-select" onchange="updateStatus(\'partnership_applications\', ' + r.id + ', this)">' + statusOptions(r.status) + '</select></td>' +
-          '<td><button class="whatsapp-btn" onclick="sendStatusWhatsApp(\'partner\', ' + r.id + ')">Send Status</button></td>' +
+          '<td>' + '<button class="whatsapp-btn" onclick="sendStatusWhatsApp(\'partner\', ' + r.id + ')">Send Status</button>' + (normalizeStatus(r.status) === 'approved' ? '<br><a href="#" class="agreement-btn" onclick="openAgreement(\'partner\', ' + r.id + '); return false;">Agreement</a>' : '') + '</td>' +
           '</tr>';
       });
       html += '</tbody></table>';
