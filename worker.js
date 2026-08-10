@@ -24,19 +24,81 @@ export default {
       return token === env.ADMIN_TOKEN;
     }
 
+    function normalizePhone(phone) {
+      // Strips spaces, dashes, parentheses, and a leading + so it matches
+      // Meta's expected format (country code + number, digits only).
+      return String(phone || '').replace(/[^\d]/g, '');
+    }
+
+    const TEMPLATE_MAP = {
+      loan_applications: {
+        'Under Review': 'loan_under_review',
+        'Approved': 'loan_approved',
+        'Rejected': 'loan_rejected',
+        'Disbursed': 'loan_disbursed',
+      },
+      partnership_applications: {
+        'Under Review': 'partnership_review',
+        'Approved': 'partnership_approved',
+        'Rejected': 'partnership_rejected',
+      },
+    };
+
+    async function sendWhatsAppTemplate(phone, templateName, params) {
+      if (!env.WHATSAPP_TOKEN || !env.WHATSAPP_PHONE_NUMBER_ID) {
+        console.log('WhatsApp credentials not configured yet, skipping send.');
+        return { skipped: true };
+      }
+
+      const url = 'https://graph.facebook.com/v20.0/' + env.WHATSAPP_PHONE_NUMBER_ID + '/messages';
+      const body = {
+        messaging_product: 'whatsapp',
+        to: normalizePhone(phone),
+        type: 'template',
+        template: {
+          name: templateName,
+          language: { code: 'en' },
+          components: [
+            {
+              type: 'body',
+              parameters: params.map((p) => ({ type: 'text', text: String(p) })),
+            },
+          ],
+        },
+      };
+
+      const res = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Authorization': 'Bearer ' + env.WHATSAPP_TOKEN,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(body),
+      });
+
+      const result = await res.json();
+      if (!res.ok) {
+        console.log('WhatsApp send failed:', JSON.stringify(result));
+      }
+      return result;
+    }
+
     try {
       // --- Public: receive a loan application ---
       if (url.pathname === '/api/apply' && request.method === 'POST') {
         const data = await request.json();
         await env.DB.prepare(
           `INSERT INTO loan_applications
-           (created_at, name, phone, email, dob, residence, amount, term, purpose, income, employment, collateral, status)
-           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'New')`
+           (created_at, name, phone, email, dob, residence, amount, term, purpose, income, employment,
+            surety_name, surety_phone, surety_address, surety_relation, collateral, status)
+           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'New')`
         ).bind(
           new Date().toISOString(),
           data.name || '', data.phone || '', data.email || '', data.dob || '',
           data.residence || '', data.amount || 0, data.term || '', data.purpose || '',
-          data.income || 0, data.employment || '', data.collateral || ''
+          data.income || 0, data.employment || '',
+          data.suretyName || '', data.suretyPhone || '', data.suretyAddress || '', data.suretyRelation || '',
+          data.collateral || ''
         ).run();
         return json({ success: true });
       }
@@ -77,7 +139,27 @@ export default {
         const { table, id, status } = await request.json();
         const validTables = ['loan_applications', 'partnership_applications'];
         if (!validTables.includes(table)) return json({ error: 'Invalid table' }, 400);
+
         await env.DB.prepare(`UPDATE ${table} SET status = ? WHERE id = ?`).bind(status, id).run();
+
+        // Fire off a WhatsApp status update, if a template exists for this status
+        // and WhatsApp credentials are configured. Failure here never blocks the
+        // status update itself from succeeding.
+        const templateName = TEMPLATE_MAP[table] && TEMPLATE_MAP[table][status];
+        if (templateName) {
+          const row = await env.DB.prepare(`SELECT * FROM ${table} WHERE id = ?`).bind(id).first();
+          if (row && row.phone) {
+            const params = table === 'loan_applications'
+              ? [row.name, Number(row.amount || 0).toLocaleString()]
+              : [row.name];
+            try {
+              await sendWhatsAppTemplate(row.phone, templateName, params);
+            } catch (e) {
+              console.log('WhatsApp send error:', e.message);
+            }
+          }
+        }
+
         return json({ success: true });
       }
 

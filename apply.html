@@ -654,6 +654,18 @@
               <option value="retired">Retired</option>
             </select>
 
+            <label for="suretyName">Surety Full Name</label>
+            <input type="text" id="suretyName" name="suretyName" placeholder="Full name of your surety" required>
+
+            <label for="suretyPhone">Surety Phone Number</label>
+            <input type="tel" id="suretyPhone" name="suretyPhone" placeholder="e.g. +237 6 1234 5678" required>
+
+            <label for="suretyAddress">Surety Address</label>
+            <input type="text" id="suretyAddress" name="suretyAddress" placeholder="City, neighborhood, or address" required>
+
+            <label for="suretyRelation">Surety's Relationship to You</label>
+            <input type="text" id="suretyRelation" name="suretyRelation" placeholder="e.g. Spouse, Sibling, Friend, Employer" required>
+
             <label for="collateral">Collateral</label>
             <textarea id="collateral" name="collateral" rows="4" placeholder="Describe collateral, if any"></textarea>
 
@@ -804,6 +816,10 @@
       var purpose = document.getElementById('purpose').value.trim();
       var income = parseFloat(document.getElementById('income').value) || 0;
       var employment = document.getElementById('employment').value;
+      var suretyName = document.getElementById('suretyName').value.trim();
+      var suretyPhone = document.getElementById('suretyPhone').value.trim();
+      var suretyAddress = document.getElementById('suretyAddress').value.trim();
+      var suretyRelation = document.getElementById('suretyRelation').value.trim();
       var collateral = document.getElementById('collateral').value.trim();
       var processingFee = document.getElementById('processingFee').textContent;
       var interest = document.getElementById('interest').textContent;
@@ -822,6 +838,10 @@
         purpose: purpose,
         income: income,
         employment: employment,
+        suretyName: suretyName,
+        suretyPhone: suretyPhone,
+        suretyAddress: suretyAddress,
+        suretyRelation: suretyRelation,
         collateral: collateral
       };
 
@@ -849,6 +869,12 @@
                  + "*EMPLOYMENT*\n"
                  + "Status: " + employment + "\n"
                  + "Monthly Income: " + income + "\n\n"
+
+                 + "*SURETY DETAILS*\n"
+                 + "Name: " + suretyName + "\n"
+                 + "Phone: " + suretyPhone + "\n"
+                 + "Address: " + suretyAddress + "\n"
+                 + "Relationship: " + suretyRelation + "\n\n"
 
                  + "*LOAN REQUEST*\n"
                  + "Amount: " + formatCurrency(amount) + " XAF\n"
@@ -914,12 +940,30 @@
       var purpose = document.getElementById('purpose').value.trim();
       var income = document.getElementById('income').value;
       var employment = document.getElementById('employment').value;
+      var suretyName = document.getElementById('suretyName').value.trim();
+      var suretyPhone = document.getElementById('suretyPhone').value.trim();
+      var suretyAddress = document.getElementById('suretyAddress').value.trim();
+      var suretyRelation = document.getElementById('suretyRelation').value.trim();
       var collateral = document.getElementById('collateral').value.trim();
       var processingFee = document.getElementById('processingFee').textContent;
       var interest = document.getElementById('interest').textContent;
       var totalRepayment = document.getElementById('totalRepayment').textContent;
       var monthlyRepayment = document.getElementById('monthlyRepayment').textContent;
       var defaultPenalty = document.getElementById('defaultPenalty').textContent;
+
+      // Log this submission to the admin dashboard too, same as the WhatsApp button does.
+      fetch(API_BASE + '/api/apply', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: name, phone: phone, email: email, dob: date, residence: residence,
+          amount: amount, term: term, purpose: purpose, income: income, employment: employment,
+          suretyName: suretyName, suretyPhone: suretyPhone, suretyAddress: suretyAddress,
+          suretyRelation: suretyRelation, collateral: collateral
+        })
+      }).catch(function (err) {
+        console.error('Could not save application to dashboard:', err);
+      });
 
       loadImageAsDataURL('logo.png').then(function (logoDataUrl) {
         buildPDF(logoDataUrl);
@@ -997,6 +1041,13 @@
         section('Employment');
         row('Status', employment);
         row('Monthly Income', income);
+        y += 4;
+
+        section('Surety Details');
+        row('Name', suretyName);
+        row('Phone', suretyPhone);
+        row('Address', suretyAddress);
+        row('Relationship', suretyRelation);
         y += 4;
 
         section('Loan Request');
