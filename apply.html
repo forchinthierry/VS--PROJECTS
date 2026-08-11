@@ -451,6 +451,54 @@
       color: white;
     }
 
+    .application-panel-full { width: 100%; }
+
+    .form-progress {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 8px auto 28px;
+      max-width: 680px;
+    }
+
+    .progress-step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 5px;
+      min-width: 78px;
+      color: #999;
+      transition: color 0.25s ease, transform 0.25s ease;
+    }
+
+    .progress-step span {
+      width: 34px; height: 34px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      background: #eee; color: #777; font-weight: bold;
+    }
+
+    .progress-step small { font-size: 11px; white-space: nowrap; }
+    .progress-step.active, .progress-step.completed { color: #16a085; }
+    .progress-step.active span, .progress-step.completed span { background: #16a085; color: #fff; }
+    .progress-line { height: 2px; flex: 1; max-width: 110px; background: #ddd; margin: 0 4px 18px; transition: background 0.25s ease; }
+    .progress-line.completed { background: #16a085; }
+
+    .form-step { display: none; animation: fadeSlideUp 0.35s ease both; }
+    .form-step.active { display: block; }
+
+    .step-heading { margin-bottom: 18px; }
+    .step-heading h3 { color: #2b3773; margin: 0 0 4px; font-size: 19px; }
+    .step-heading p { margin: 0; color: #666; font-size: 13px; }
+    .subsection-title { margin: 20px 0 4px; padding-top: 14px; border-top: 1px solid #eee; color: #16a085; font-weight: 700; }
+
+    .step-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 24px; }
+    .step-actions.single-action { grid-template-columns: 1fr; }
+    .prev-btn { background: #2b3773; }
+    .prev-btn:hover { background: #1f2857; box-shadow: 0 6px 14px rgba(43,55,115,0.25); }
+    .next-btn, .submit-btn { background: #25D366; }
+    .review-note { margin: 18px 0; padding: 12px 14px; background: #f5f7ff; border-left: 4px solid #2b3773; border-radius: 6px; color: #555; font-size: 13px; }
+    .final-summary-panel { margin: 0 0 18px; }
+
     @media (max-width: 600px) {
       header {
         flex-wrap: wrap;
@@ -494,6 +542,13 @@
       .form-grid {
         grid-template-columns: 1fr;
       }
+
+      .form-progress { margin-bottom: 22px; }
+      .progress-step { min-width: 65px; }
+      .progress-step small { font-size: 9px; }
+      .progress-line { max-width: 55px; }
+      .step-actions { grid-template-columns: 1fr; }
+
     }
       
     
@@ -605,108 +660,138 @@
 
     <div class="card">
       <div class="form-grid">
-        <div class="application-panel">
+        <div class="application-panel application-panel-full">
           <h2>Loan Application</h2>
 
-          <form id="loanForm" onsubmit="sendToWhatsApp(); return false;">
-            <label for="name">Full Name</label>
-            <input type="text" id="name" name="name" placeholder="Enter your full name" required>
-
-            <label for="phone">Phone Number</label>
-            <input type="tel" id="phone" name="phone" placeholder="e.g. +237 6 1234 5678" pattern="^[0-9+\s-]{7,20}$" required>
-
-            <label for="email">Email Address</label>
-            <input type="email" id="email" name="email" placeholder="you@example.com" required>
-
-            <label for="date">Date of Birth</label>
-            <input type="date" id="date" name="date" required>
-
-            <label for="residence">Place of Residence</label>
-            <input type="text" id="residence" name="residence" placeholder="City, neighborhood, or address" required>
-
-            <label for="amount">Loan Amount Requested</label>
-            <input type="number" id="amount" name="amount" min="10000" step="5000" placeholder="Min 10,000" required>
-
-            <label for="term">Desired Loan Term</label>
-            <select id="term" name="term" required>
-              <option value="">Select a term</option>
-              <option value="1 month">1 month</option>
-              <option value="2 months">2 months</option>
-              <option value="3 months">3 months</option>
-              <option value="4 months">4 months</option>
-              <option value="5 months">5 months</option>
-              <option value="6 months">6 months</option>
-            </select>
-
-            <label for="purpose">Purpose of Loan</label>
-            <input type="text" id="purpose" name="purpose" placeholder="Personal expenses, business, education, etc." required>
-
-            <label for="income">Monthly Income</label>
-            <input type="number" id="income" name="income" min="0" placeholder="Your monthly net income" required>
-
-            <label for="employment">Employment Status</label>
-            <select id="employment" name="employment" required>
-              <option value="">Select status</option>
-              <option value="employed">Employed</option>
-              <option value="self-employed">Self-employed</option>
-              <option value="student">Student</option>
-              <option value="unemployed">Unemployed</option>
-              <option value="retired">Retired</option>
-            </select>
-
-            <label for="suretyName">Surety Full Name</label>
-            <input type="text" id="suretyName" name="suretyName" placeholder="Full name of your surety" required>
-
-            <label for="suretyPhone">Surety Phone Number</label>
-            <input type="tel" id="suretyPhone" name="suretyPhone" placeholder="e.g. +237 6 1234 5678" required>
-
-            <label for="suretyAddress">Surety Address</label>
-            <input type="text" id="suretyAddress" name="suretyAddress" placeholder="City, neighborhood, or address" required>
-
-            <label for="suretyRelation">Surety's Relationship to You</label>
-            <input type="text" id="suretyRelation" name="suretyRelation" placeholder="e.g. Spouse, Sibling, Friend, Employer" required>
-
-            <label for="collateral">Collateral</label>
-            <textarea id="collateral" name="collateral" rows="4" placeholder="Describe collateral, if any"></textarea>
-
-            <div class="consent">
-              <label class="checkbox-label">
-                <input type="checkbox" id="consent" name="consent" required>
-                <span>I confirm that all information provided is accurate and true. I agree to the <a href="terms.html" target="_blank" rel="noopener noreferrer">terms</a> and <a href="privacy.html" target="_blank" rel="noopener noreferrer">privacy policy</a> including the 10% platform charge, 10% processing fee, and 5% daily late penalty. I understand that my collateral will be verified before loan approval.</span>
-              </label>
-            </div>
-
-            <button type="submit">Submit via WhatsApp</button>
-            <button type="button" class="download-btn" onclick="downloadApplicationPDF()">Download Application (PDF)</button>
-          </form>
-        </div>
-
-        <div class="summary-panel">
-          <div class="summary-badge">✨ Quick Estimate</div>
-          <h3>Loan Summary</h3>
-          <p style="margin-top:8px; color:#5e506f;">A quick snapshot of your repayment plan before you submit.</p>
-          <div class="summary-list">
-            <div class="summary-item">
-              <strong>Processing Fee</strong>
-              <span id="processingFee">0.00</span>
-            </div>
-            <div class="summary-item">
-              <strong>Platform Charge</strong>
-              <span id="interest">0.00</span>
-            </div>
-            <div class="summary-item">
-              <strong>Total Repayment</strong>
-              <span id="totalRepayment">0.00</span>
-            </div>
-            <div class="summary-item">
-              <strong>Monthly Repayment</strong>
-              <span id="monthlyRepayment">0.00</span>
-            </div>
-            <div class="summary-item">
-              <strong>Default Penalty</strong>
-              <span id="defaultPenalty">0.00</span>
-            </div>
+          <div class="form-progress" aria-label="Application progress">
+            <div class="progress-step active" data-step="1"><span>1</span><small>Personal</small></div>
+            <div class="progress-line"></div>
+            <div class="progress-step" data-step="2"><span>2</span><small>Loan Details</small></div>
+            <div class="progress-line"></div>
+            <div class="progress-step" data-step="3"><span>3</span><small>Review & Submit</small></div>
           </div>
+
+          <form id="loanForm" onsubmit="sendToWhatsApp(); return false;">
+            <section class="form-step active" data-step="1">
+              <div class="step-heading">
+                <h3>Personal Information</h3>
+                <p>Please provide your basic contact and residence details.</p>
+              </div>
+
+              <label for="name">Full Name</label>
+              <input type="text" id="name" name="name" placeholder="Enter your full name" required>
+
+              <label for="phone">Phone Number</label>
+              <input type="tel" id="phone" name="phone" placeholder="e.g. +237 6 1234 5678" pattern="^[0-9+\s-]{7,20}$" required>
+
+              <label for="email">Email Address</label>
+              <input type="email" id="email" name="email" placeholder="you@example.com" required>
+
+              <label for="date">Date of Birth</label>
+              <input type="date" id="date" name="date" required>
+
+              <label for="residence">Place of Residence</label>
+              <input type="text" id="residence" name="residence" placeholder="City, neighborhood, or address" required>
+
+              <div class="step-actions single-action">
+                <button type="button" class="next-btn" onclick="nextStep()">Next: Loan Details →</button>
+              </div>
+            </section>
+
+            <section class="form-step" data-step="2">
+              <div class="step-heading">
+                <h3>Loan & Financial Details</h3>
+                <p>Tell us about the loan you are requesting and your financial situation.</p>
+              </div>
+
+              <label for="amount">Loan Amount Requested</label>
+              <input type="number" id="amount" name="amount" min="10000" step="5000" placeholder="Min 10,000" required>
+
+              <label for="term">Desired Loan Term</label>
+              <select id="term" name="term" required>
+                <option value="">Select a term</option>
+                <option value="1 month">1 month</option>
+                <option value="2 months">2 months</option>
+                <option value="3 months">3 months</option>
+                <option value="4 months">4 months</option>
+                <option value="5 months">5 months</option>
+                <option value="6 months">6 months</option>
+              </select>
+
+              <label for="purpose">Purpose of Loan</label>
+              <input type="text" id="purpose" name="purpose" placeholder="Personal expenses, business, education, etc." required>
+
+              <label for="income">Monthly Income</label>
+              <input type="number" id="income" name="income" min="0" placeholder="Your monthly net income" required>
+
+              <label for="employment">Employment Status</label>
+              <select id="employment" name="employment" required>
+                <option value="">Select status</option>
+                <option value="employed">Employed</option>
+                <option value="self-employed">Self-employed</option>
+                <option value="student">Student</option>
+                <option value="unemployed">Unemployed</option>
+                <option value="retired">Retired</option>
+              </select>
+
+              <div class="subsection-title">Surety Details</div>
+
+              <label for="suretyName">Surety Full Name</label>
+              <input type="text" id="suretyName" name="suretyName" placeholder="Full name of your surety" required>
+
+              <label for="suretyPhone">Surety Phone Number</label>
+              <input type="tel" id="suretyPhone" name="suretyPhone" placeholder="e.g. +237 6 1234 5678" required>
+
+              <label for="suretyAddress">Surety Address</label>
+              <input type="text" id="suretyAddress" name="suretyAddress" placeholder="City, neighborhood, or address" required>
+
+              <label for="suretyRelation">Surety's Relationship to You</label>
+              <input type="text" id="suretyRelation" name="suretyRelation" placeholder="e.g. Spouse, Sibling, Friend, Employer" required>
+
+              <label for="collateral">Collateral</label>
+              <textarea id="collateral" name="collateral" rows="4" placeholder="Describe collateral, if any"></textarea>
+
+              <div class="step-actions">
+                <button type="button" class="prev-btn" onclick="prevStep()">← Previous</button>
+                <button type="button" class="next-btn" onclick="nextStep()">Next: Review →</button>
+              </div>
+            </section>
+
+            <section class="form-step" data-step="3">
+              <div class="step-heading">
+                <h3>Review & Submit</h3>
+                <p>Review your loan estimate and confirm the terms before submitting.</p>
+              </div>
+
+              <div class="summary-panel final-summary-panel">
+                <div class="summary-badge">✨ Quick Estimate</div>
+                <h3>Loan Summary</h3>
+                <p style="margin-top:8px; color:#5e506f;">A quick snapshot of your repayment plan before you submit.</p>
+                <div class="summary-list">
+                  <div class="summary-item"><strong>Processing Fee</strong><span id="processingFee">0.00</span></div>
+                  <div class="summary-item"><strong>Platform Charge</strong><span id="interest">0.00</span></div>
+                  <div class="summary-item"><strong>Total Repayment</strong><span id="totalRepayment">0.00</span></div>
+                  <div class="summary-item"><strong>Monthly Repayment</strong><span id="monthlyRepayment">0.00</span></div>
+                  <div class="summary-item"><strong>Default Penalty</strong><span id="defaultPenalty">0.00</span></div>
+                </div>
+              </div>
+
+              <div class="review-note">Please make sure the information you entered on the previous pages is accurate before submitting.</div>
+
+              <div class="consent">
+                <label class="checkbox-label">
+                  <input type="checkbox" id="consent" name="consent" required>
+                  <span>I confirm that all information provided is accurate and true. I agree to the <a href="terms.html" target="_blank" rel="noopener noreferrer">terms</a> and <a href="privacy.html" target="_blank" rel="noopener noreferrer">privacy policy</a> including the 10% platform charge, 10% processing fee, and 5% daily late penalty. I understand that my collateral will be verified before loan approval.</span>
+                </label>
+              </div>
+
+              <div class="step-actions">
+                <button type="button" class="prev-btn" onclick="prevStep()">← Previous</button>
+                <button type="submit" class="submit-btn">Submit via WhatsApp</button>
+              </div>
+              <button type="button" class="download-btn" onclick="downloadApplicationPDF()">Download Application (PDF)</button>
+            </section>
+          </form>
         </div>
       </div>
     </div>
@@ -796,6 +881,47 @@
         void item.offsetWidth;
         item.classList.add('pulse');
       });
+    }
+
+    var currentStep = 1;
+
+    function validateCurrentStep() {
+      var step = document.querySelector('.form-step[data-step="' + currentStep + '"]');
+      if (!step) return true;
+      var fields = step.querySelectorAll('input, select, textarea');
+      for (var i = 0; i < fields.length; i++) {
+        if (!fields[i].checkValidity()) {
+          fields[i].reportValidity();
+          return false;
+        }
+      }
+      return true;
+    }
+
+    function showStep(stepNumber) {
+      currentStep = stepNumber;
+      document.querySelectorAll('.form-step').forEach(function (step) {
+        step.classList.toggle('active', parseInt(step.dataset.step, 10) === stepNumber);
+      });
+      document.querySelectorAll('.progress-step').forEach(function (step) {
+        var n = parseInt(step.dataset.step, 10);
+        step.classList.toggle('active', n === stepNumber);
+        step.classList.toggle('completed', n < stepNumber);
+      });
+      document.querySelectorAll('.progress-line').forEach(function (line, index) {
+        line.classList.toggle('completed', index < stepNumber - 1);
+      });
+      if (stepNumber === 3) updateLoanSummary();
+      window.scrollTo({ top: document.querySelector('.application-panel').offsetTop - 15, behavior: 'smooth' });
+    }
+
+    function nextStep() {
+      if (!validateCurrentStep()) return;
+      if (currentStep < 3) showStep(currentStep + 1);
+    }
+
+    function prevStep() {
+      if (currentStep > 1) showStep(currentStep - 1);
     }
 
     function sendToWhatsApp() {
