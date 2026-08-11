@@ -1009,15 +1009,47 @@
       var email = document.getElementById('pemail').value.trim();
       var residence = document.getElementById('presidence').value.trim();
       var occupation = document.getElementById('poccupation').value.trim();
-      var shares = document.getElementById('pshares').value;
+      var shares = parseInt(document.getElementById('pshares').value, 10) || 0;
       var payout = document.getElementById('ppayout').value;
       var payment = document.getElementById('ppayment').value;
       var reason = document.getElementById('preason').value.trim();
       var nextOfKin = document.getElementById('pnextofkin').value.trim();
-      var total = document.getElementById('totalContribution').textContent;
+      var total = shares * SHARE_VALUE;
 
-      loadImageAsDataURL('logo.png').then(function (logoDataUrl) {
+      var payload = {
+        name: name,
+        phone: phone,
+        email: email,
+        residence: residence,
+        occupation: occupation,
+        shares: shares,
+        totalContribution: total,
+        payout: payout,
+        paymentMethod: payment,
+        reason: reason,
+        nextOfKin: nextOfKin
+      };
+
+      // First persist the application to the API (so admin dashboard can see it), then build the PDF.
+      fetch(API_BASE + '/api/partner', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      })
+      .then(function (res) {
+        if (!res.ok) throw new Error('Failed to save partnership application');
+        return res.json();
+      })
+      .then(function (data) {
+        if (!data.success) throw new Error('Could not save partnership application');
+        return loadImageAsDataURL('logo.png');
+      })
+      .then(function (logoDataUrl) {
         buildPDF(logoDataUrl);
+      })
+      .catch(function (err) {
+        alert('Unable to save partnership application. Please try again later.');
+        console.error(err);
       });
 
       function buildPDF(logo) {
@@ -1092,7 +1124,7 @@
         section('Partnership Request');
         row('Growth Shares', shares);
         row('Value per Share', '100,000 XAF');
-        row('Total Contribution', total + ' XAF');
+        row('Total Contribution', formatCurrency(total) + ' XAF');
         row('Preferred Payout', payout);
         row('Payment Method', payment);
         y += 4;
