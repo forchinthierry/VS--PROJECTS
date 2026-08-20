@@ -772,7 +772,7 @@
                   <div class="summary-item"><strong>Platform Charge</strong><span id="interest">0.00</span></div>
                   <div class="summary-item"><strong>Total Repayment</strong><span id="totalRepayment">0.00</span></div>
                   <div class="summary-item"><strong>Monthly Repayment</strong><span id="monthlyRepayment">0.00</span></div>
-                  <div class="summary-item"><strong>Default Penalty</strong><span id="defaultPenalty">0.00</span></div>
+                  <div class="summary-item"><strong>Late Payment Penalty</strong><span id="latePaymentPenalty">0.00</span></div>
                 </div>
               </div>
 
@@ -867,13 +867,13 @@
       var interest = amountValue * 0.10 * months;
       var totalRepayment = amountValue + interest;
       var monthlyRepayment = months > 0 ? totalRepayment / months : 0;
-      var defaultPenalty = totalRepayment * 0.05;
+      var latePaymentPenalty = totalRepayment * 0.05;
 
       document.getElementById('processingFee').textContent = amountValue > 0 ? formatCurrency(processingFee) : '0.00';
       document.getElementById('interest').textContent = amountValue > 0 && months > 0 ? formatCurrency(interest) : '0.00';
       document.getElementById('totalRepayment').textContent = amountValue > 0 && months > 0 ? formatCurrency(totalRepayment) : '0.00';
       document.getElementById('monthlyRepayment').textContent = amountValue > 0 && months > 0 ? formatCurrency(monthlyRepayment) : '0.00';
-      document.getElementById('defaultPenalty').textContent = amountValue > 0 && months > 0 ? formatCurrency(defaultPenalty) : '0.00';
+      document.getElementById('latePaymentPenalty').textContent = amountValue > 0 && months > 0 ? formatCurrency(latePaymentPenalty) : '0.00';
 
       var summaryItems = document.querySelectorAll('.summary-item');
       summaryItems.forEach(function (item) {
@@ -951,7 +951,7 @@
       var interest = document.getElementById('interest').textContent;
       var totalRepayment = document.getElementById('totalRepayment').textContent;
       var monthlyRepayment = document.getElementById('monthlyRepayment').textContent;
-      var defaultPenalty = document.getElementById('defaultPenalty').textContent;
+      var latePaymentPenalty = document.getElementById('latePaymentPenalty').textContent;
 
       var payload = {
         name: name,
@@ -1013,7 +1013,7 @@
                  + "Platform Charge: " + interest + " XAF\n"
                  + "Total Repayment: " + totalRepayment + " XAF\n"
                  + "Monthly Repayment: " + monthlyRepayment + " XAF\n\n"
-                 + "Default Penalty: " + defaultPenalty + " XAF per day\n"
+                 + "Late Payment Penalty: " + latePaymentPenalty + " XAF per day\n"
 
                  + divider + "\n"
                  + "Terms & Privacy Policy: Accepted ✓\n\n"
@@ -1075,7 +1075,7 @@
       var interest = document.getElementById('interest').textContent;
       var totalRepayment = document.getElementById('totalRepayment').textContent;
       var monthlyRepayment = document.getElementById('monthlyRepayment').textContent;
-      var defaultPenalty = document.getElementById('defaultPenalty').textContent;
+      var latePaymentPenalty = document.getElementById('latePaymentPenalty').textContent;
 
       // Log this submission to the admin dashboard too, same as the WhatsApp button does.
       fetch(API_BASE + '/api/apply', {
@@ -1188,7 +1188,7 @@
         row('Platform Charge', interest + ' XAF');
         row('Total Repayment', totalRepayment + ' XAF');
         row('Monthly Repayment', monthlyRepayment + ' XAF');
-        row('Default Penalty', defaultPenalty + ' XAF' + ' per day');
+        row('Late Payment Penalty', latePaymentPenalty + ' XAF' + ' per day');
         y += 6;
 
         doc.setFontSize(10);
