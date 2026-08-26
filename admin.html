@@ -263,7 +263,7 @@
       </div>
 
       <div class="toolbar">
-        <input id="searchInput" type="text" placeholder="Search by applicant name..." oninput="applySearch()">
+        <input id="searchInput" type="text" placeholder="Search by name, phone, amount or date..." oninput="applySearch()">
         <button class="delete-btn" onclick="toggleSelectAll()">Select Visible</button>
         <button class="delete-btn" onclick="deleteSelected()">Delete Selected</button>
         <button class="delete-btn" onclick="deleteAll()">Delete All</button>
@@ -371,14 +371,40 @@
       });
     }
 
+    function normalizeSearchText(value) {
+      return (value === null || typeof value === 'undefined' ? '' : String(value)).trim().toLowerCase();
+    }
+
+    function rowMatchesSearch(row, searchValue) {
+      if (!searchValue) return true;
+
+      var searchableFields = [
+        row.name,
+        row.phone,
+        row.email,
+        row.amount,
+        row.total_contribution,
+        row.created_at,
+        row.dob,
+        row.surety_name,
+        row.surety_phone,
+        row.residence,
+        row.surety_address
+      ];
+
+      return searchableFields.some(function (field) {
+        return normalizeSearchText(field).indexOf(searchValue) !== -1;
+      });
+    }
+
     function applySearch() {
       renderCurrentView();
     }
 
     function renderCurrentView() {
-      var searchValue = document.getElementById('searchInput').value.trim().toLowerCase();
+      var searchValue = normalizeSearchText(document.getElementById('searchInput').value);
       currentFiltered = currentData.filter(function (row) {
-        return searchValue === '' || (row.name || '').toLowerCase().indexOf(searchValue) !== -1;
+        return rowMatchesSearch(row, searchValue);
       });
       updateResultsCount();
       if (currentTab === 'loans') renderLoans(currentFiltered);
