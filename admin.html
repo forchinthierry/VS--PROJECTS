@@ -306,7 +306,11 @@
     }
 
     function loadCurrentTab() {
-      var endpoint = currentTab === 'loans' ? '/api/admin/applications' : '/api/admin/partnerships';
+      var endpoint = currentTab === 'loans'
+        ? '/api/admin/applications'
+        : currentTab === 'partners'
+          ? '/api/admin/partnerships'
+          : '/api/admin/capital';
       document.getElementById('tableWrap').innerHTML = '<div class="empty-state">Loading...</div>';
 
       fetch(API_BASE + endpoint, {
@@ -469,7 +473,11 @@
     }
 
     function deleteApplications(ids, all) {
-      var table = currentTab === 'loans' ? 'loan_applications' : 'partnership_applications';
+      var table = currentTab === 'loans'
+        ? 'loan_applications'
+        : currentTab === 'partners'
+          ? 'partnership_applications'
+          : 'capital_applications';
       fetch(API_BASE + '/api/admin/delete', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + adminToken },
@@ -543,7 +551,7 @@
     function sendStatusWhatsApp(type, id) {
       var row = currentData.find(function (item) { return item.id === id; });
       if (!row) return;
-      var templateType = type === 'loan' ? 'loan' : 'partner';
+      var templateType = type === 'loan' ? 'loan' : type === 'capital' ? 'capital' : 'partner';
       var status = normalizeStatus(row.status);
       var text = getWhatsAppTemplate(templateType, status, row);
 

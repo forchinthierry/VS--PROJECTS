@@ -31,3 +31,34 @@ CREATE TABLE partnership_applications (
   next_of_kin TEXT,
   status TEXT DEFAULT 'New'
 );
+
+CREATE TABLE capital_applications (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  created_at TEXT NOT NULL,
+  name TEXT,
+  phone TEXT,
+  email TEXT,
+  business_name TEXT,
+  business_stage TEXT,
+  sector TEXT,
+  location TEXT,
+  business_description TEXT,
+  problem_solved TEXT,
+  target_customers TEXT,
+  business_model TEXT,
+  years_operating TEXT,
+  monthly_revenue REAL DEFAULT 0,
+  monthly_expenses REAL DEFAULT 0,
+  capital_requested REAL DEFAULT 0,
+  equity_offered TEXT,
+  capital_use TEXT,
+  assets TEXT,
+  team TEXT,
+  competition TEXT,
+  traction TEXT,
+  website TEXT,
+  registration_status TEXT,
+  investment_reason TEXT,
+  additional_info TEXT,
+  status TEXT DEFAULT 'New'
+);

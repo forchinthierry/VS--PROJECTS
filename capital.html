@@ -116,6 +116,12 @@ h1{font-family:Fredoka;margin:14px 0 10px;font-size:clamp(30px,6vw,46px)}.hero p
 <section class="step" data-step="4"><h2>Review your investment request</h2><p class="step-intro">Check your information before sending it to G-Spirit Loan Solution.</p>
 <div id="review" class="review"></div>
 <div class="notice"><b>Important:</b> Submitting an application does not guarantee funding. G-Spirit Loan Solution may request additional information, conduct due diligence, and negotiate the investment amount, valuation and equity stake before any investment is made.</div>
+<div style="margin-top:15px; background:#f8f3fb; border:1px solid #d9cbe7; border-radius:10px; padding:12px 14px; color:#3a2d4f; font-size:13px; line-height:1.5;">
+  <label style="display:flex; align-items:flex-start; gap:10px; margin:0; cursor:pointer;">
+    <input type="checkbox" name="termsAccepted" required style="margin-top:3px; transform:scale(1.1);">
+    <span>I confirm that all information provided is accurate and true. I agree to the <a href="terms.html" target="_blank" rel="noopener noreferrer" style="color:#2b3773; font-weight:700;">terms</a> and <a href="privacy.html" target="_blank" rel="noopener noreferrer" style="color:#2b3773; font-weight:700;">privacy policy</a>, and understand that any funding decision is subject to review, due diligence, and final agreement terms.</span>
+  </label>
+</div>
 <div class="buttons"><button type="button" class="btn prev" onclick="prevStep()">← Edit</button><span></span></div>
 <div class="output-buttons">
 <button type="button" class="btn whatsapp" onclick="submitAndWhatsApp()">💬 Send via WhatsApp</button>
@@ -180,6 +186,8 @@ async function saveApplication(){
 }
 function validateAll(){
  for(let n=1;n<=3;n++){const current=document.querySelector('.step[data-step="'+n+'"]');for(const el of current.querySelectorAll('input,select,textarea'))if(!el.checkValidity()){showStep(n);el.reportValidity();return false}}
+ const consent=document.querySelector('input[name="termsAccepted"]');
+ if(!consent || !consent.checked){showStep(4);consent.reportValidity();return false;}
  return true;
 }
 function loadImageAsDataURL(url){
@@ -227,7 +235,6 @@ function whatsappText(d){
   divider,
   'Terms & Privacy Policy: Accepted ✓',
   '',
-  'Please send this document on WhatsApp to +237 620 569 864.',
   'Join our channel for updates and reminders:',
   'https://whatsapp.com/channel/0029VbCzmKr0G0XhgxfXbD0o'
  ];
