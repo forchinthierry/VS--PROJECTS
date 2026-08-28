@@ -16,7 +16,7 @@ header img{max-height:48px;width:auto}.logo-btn{border:0;background:none;padding
 .brand strong{font-size:22px;line-height:1.1;letter-spacing:0.04em}
 .tagline{font-size:13px;color:#d0e8ef;font-style:italic;margin-top:2px}
 .header-actions{display:flex;justify-content:flex-end;align-items:center;gap:8px;flex-wrap:wrap}
-.header-actions button{background:none;color:#fff;border:none;padding:6px 8px;font-size:12px;cursor:pointer;white-space:nowrap;border-radius:8px}
+.header-actions button{background:none;color:#fff;border:none;padding:6px 8px;font-size:12px;cursor:pointer;white-space:nowrap;border-radius:8px;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;width:auto}
 .header-actions button:hover{text-decoration:underline;background:transparent}
 .container{width:min(94%,850px);margin:28px auto 60px}.hero,.form-card{background:#ffffffed;border-radius:24px;box-shadow:0 16px 40px #49306b20;border:1px solid #ffffffaa}
 .hero{padding:30px;text-align:center;margin-bottom:20px}.badge{display:inline-block;background:#8e44ad;color:white;padding:7px 14px;border-radius:999px;font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
@@ -29,14 +29,23 @@ h1{font-family:Fredoka;margin:14px 0 10px;font-size:clamp(30px,6vw,46px)}.hero p
 .review{background:#f9f4fa;border-radius:16px;padding:18px}.review-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}.review-item{background:white;border-radius:10px;padding:10px}.review-item small{display:block;color:#81768a}.review-item strong{display:block;margin-top:3px;word-break:break-word}
 .notice{margin-top:15px;padding:13px;border-left:4px solid #8e44ad;background:#f6edf8;font-size:13px;line-height:1.5}
 .output-buttons{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:15px}.whatsapp{background:#25d366;color:white}.pdf{background:#2b3773;color:white}.success{display:none;text-align:center;margin-top:15px;color:#287a54;font-weight:800}
-@media(max-width:650px){.grid,.review-grid,.highlight,.output-buttons{grid-template-columns:1fr}.full{grid-column:auto}.hero,.form-card{padding:20px}.buttons{flex-direction:column-reverse}.btn{width:100%}}
+@media(max-width:650px){
+  header{flex-wrap:wrap;justify-content:flex-start;gap:10px;padding:12px}
+  header img{max-height:44px}
+  .brand{width:auto;min-width:0;align-items:flex-start;text-align:left}
+  .brand strong{font-size:15px}
+  .tagline{font-size:11px}
+  .header-actions{width:100%;min-width:0;justify-content:flex-start;flex-wrap:wrap;gap:6px}
+  .header-actions button{font-size:10px;padding:5px 6px}
+  .grid,.review-grid,.highlight,.output-buttons{grid-template-columns:1fr}.full{grid-column:auto}.hero,.form-card{padding:20px}.buttons{flex-direction:column-reverse}.btn{width:100%}
+}
 </style>
 </head>
 <body>
 <header>
   <button type="button" class="logo-btn" onclick="window.location.href='index.html'" aria-label="Go to homepage"><img src="logo.png" alt="G-Spirit logo"></button>
   <div class="brand">
-    <strong>G-SPIRIT CAPITAL</strong>
+    <strong>G-SPIRIT LOAN SOLUTION</strong>
     <div class="tagline">Powering Dreams</div>
   </div>
   <div class="header-actions">
@@ -51,7 +60,7 @@ h1{font-family:Fredoka;margin:14px 0 10px;font-size:clamp(30px,6vw,46px)}.hero p
 <section class="hero">
 <span class="badge">Business Growth Capital</span>
 <h1>Have the vision. We can help fund the journey.</h1>
-<p>G-Spirit Capital considers promising businesses and business ideas for investment. Instead of a conventional loan, we may provide growth capital in exchange for an agreed stake in the business. Tell us what you are building, what you need, and how you plan to grow.</p>
+<p>G-Spirit Loan Solution considers promising businesses and business ideas for investment. Instead of a conventional loan, we may provide growth capital in exchange for an agreed stake in the business. Tell us what you are building, what you need, and how you plan to grow.</p>
 <div class="highlight"><div><b>Capital for Growth</b>Funding may support launch, expansion or scale.</div><div><b>Equity Partnership</b>Investment is considered for an agreed business stake.</div><div><b>Built Around Potential</b>We assess the idea, market, team and opportunity.</div></div>
 </section>
 
@@ -104,9 +113,9 @@ h1{font-family:Fredoka;margin:14px 0 10px;font-size:clamp(30px,6vw,46px)}.hero p
 </div>
 <div class="buttons"><button type="button" class="btn prev" onclick="prevStep()">← Previous</button><button type="button" class="btn next" onclick="nextStep()">Review Application →</button></div></section>
 
-<section class="step" data-step="4"><h2>Review your investment request</h2><p class="step-intro">Check your information before sending it to G-Spirit Capital.</p>
+<section class="step" data-step="4"><h2>Review your investment request</h2><p class="step-intro">Check your information before sending it to G-Spirit Loan Solution.</p>
 <div id="review" class="review"></div>
-<div class="notice"><b>Important:</b> Submitting an application does not guarantee funding. G-Spirit may request additional information, conduct due diligence, and negotiate the investment amount, valuation and equity stake before any investment is made.</div>
+<div class="notice"><b>Important:</b> Submitting an application does not guarantee funding. G-Spirit Loan Solution may request additional information, conduct due diligence, and negotiate the investment amount, valuation and equity stake before any investment is made.</div>
 <div class="buttons"><button type="button" class="btn prev" onclick="prevStep()">← Edit</button><span></span></div>
 <div class="output-buttons">
 <button type="button" class="btn whatsapp" onclick="submitAndWhatsApp()">💬 Send via WhatsApp</button>
@@ -173,27 +182,97 @@ function validateAll(){
  for(let n=1;n<=3;n++){const current=document.querySelector('.step[data-step="'+n+'"]');for(const el of current.querySelectorAll('input,select,textarea'))if(!el.checkValidity()){showStep(n);el.reportValidity();return false}}
  return true;
 }
+function loadImageAsDataURL(url){
+ return fetch(url)
+  .then(function(res){if(!res.ok)throw new Error('Logo not found');return res.blob();})
+  .then(function(blob){return new Promise(function(resolve,reject){var reader=new FileReader();reader.onloadend=function(){resolve(reader.result)};reader.onerror=reject;reader.readAsDataURL(blob);});})
+  .catch(function(){return null;});
+}
+
 function whatsappText(d){
- return `G-SPIRIT CAPITAL — INVESTMENT CAPITAL APPLICATION\n\nApplicant: ${d.name}\nPhone: ${d.phone}\nEmail: ${d.email}\nLocation: ${d.location}\n\nBUSINESS\nName: ${d.businessName}\nStage: ${d.businessStage}\nSector: ${d.sector}\nDescription: ${d.businessDescription}\n\nINVESTMENT REQUEST\nCapital Requested: ${money(d.capitalRequested)}\nEquity Offered: ${d.equityOffered}\nMonthly Revenue: ${money(d.monthlyRevenue)}\nMonthly Expenses: ${money(d.monthlyExpenses)}\nUse of Capital: ${d.capitalUse}\n\nBusiness Model: ${d.businessModel}\nTarget Customers: ${d.targetCustomers}\nTeam: ${d.team}\nTraction: ${d.traction||'N/A'}\nRegistration: ${d.registrationStatus}\nWebsite: ${d.website||'N/A'}\n\nAdditional Information: ${d.additionalInfo||'N/A'}`;
+ const divider = '――――――――――――――――';
+ const lines = [
+  '*G-SPIRIT CAPITAL APPLICATION*',
+  divider,
+  '*APPLICANT DETAILS*',
+  'Name: ' + (d.name || 'N/A'),
+  'Phone: ' + (d.phone || 'N/A'),
+  'Email: ' + (d.email || 'N/A'),
+  'Location: ' + (d.location || 'N/A'),
+  '',
+  '*BUSINESS PROFILE*',
+  'Business Name: ' + (d.businessName || 'N/A'),
+  'Stage: ' + (d.businessStage || 'N/A'),
+  'Sector: ' + (d.sector || 'N/A'),
+  'Description: ' + (d.businessDescription || 'N/A'),
+  'Problem Solved: ' + (d.problemSolved || 'N/A'),
+  'Target Customers: ' + (d.targetCustomers || 'N/A'),
+  'Business Model: ' + (d.businessModel || 'N/A'),
+  'Website: ' + (d.website || 'N/A'),
+  '',
+  '*INVESTMENT DETAILS*',
+  'Capital Requested: ' + money(d.capitalRequested),
+  'Equity Offered: ' + (d.equityOffered || 'N/A'),
+  'Monthly Revenue: ' + money(d.monthlyRevenue),
+  'Monthly Expenses: ' + money(d.monthlyExpenses),
+  'Use of Capital: ' + (d.capitalUse || 'N/A'),
+  'Assets / Resources: ' + (d.assets || 'N/A'),
+  'Team: ' + (d.team || 'N/A'),
+  'Competition: ' + (d.competition || 'N/A'),
+  'Traction: ' + (d.traction || 'N/A'),
+  'Registration: ' + (d.registrationStatus || 'N/A'),
+  'Why This Investment: ' + (d.investmentReason || 'N/A'),
+  'Additional Information: ' + (d.additionalInfo || 'N/A'),
+  '',
+  divider,
+  'Terms & Privacy Policy: Accepted ✓',
+  '',
+  'Please send this document on WhatsApp to +237 620 569 864.',
+  'Join our channel for updates and reminders:',
+  'https://whatsapp.com/channel/0029VbCzmKr0G0XhgxfXbD0o'
+ ];
+ return lines.join('\n');
 }
+
 async function submitAndWhatsApp(){
- try{if(!(await saveApplication()))return;let p=(savedData.phone||'').replace(/\D/g,'');if(p.startsWith('0'))p='237'+p.slice(1);window.open('https://wa.me/'+p+'?text='+encodeURIComponent(whatsappText(savedData)),'_blank')}catch(e){alert(e.message)}
+ try{if(!(await saveApplication()))return;var adminNumber='237620569864';window.open('https://wa.me/'+adminNumber+'?text='+encodeURIComponent(whatsappText(savedData)),'_blank')}catch(e){alert(e.message)}
 }
+
 async function submitAndPDF(){
- try{if(!(await saveApplication()))return;generatePDF(savedData)}catch(e){alert(e.message)}
+ try{if(!(await saveApplication()))return;loadImageAsDataURL('logo.png').then(function(logo){buildCapitalPDF(logo, savedData);});}catch(e){alert(e.message)}
 }
-function generatePDF(d){
+
+function buildCapitalPDF(logo, d){
  if(!window.jspdf){alert('PDF library is still loading. Please try again.');return}
- const {jsPDF}=window.jspdf,doc=new jsPDF(),margin=16;let y=18;
- doc.setFontSize(18);doc.setTextColor(43,55,115);doc.text('G-SPIRIT CAPITAL',margin,y);y+=9;
- doc.setFontSize(14);doc.setTextColor(80,60,90);doc.text('Investment Capital Application',margin,y);y+=9;
- doc.setFontSize(9);doc.setTextColor(100);doc.text('Submitted: '+new Date().toLocaleString(),margin,y);y+=9;
- const sections=[['APPLICANT',[['Name',d.name],['Phone',d.phone],['Email',d.email],['Location',d.location]]],
- ['BUSINESS',[['Business',d.businessName],['Stage',d.businessStage],['Sector',d.sector],['Description',d.businessDescription],['Problem',d.problemSolved],['Target Customers',d.targetCustomers],['Business Model',d.businessModel],['Website',d.website||'N/A']]],
- ['INVESTMENT',[['Capital Requested',money(d.capitalRequested)],['Equity Offered',d.equityOffered],['Monthly Revenue',money(d.monthlyRevenue)],['Monthly Expenses',money(d.monthlyExpenses)],['Use of Capital',d.capitalUse],['Assets',d.assets||'N/A'],['Team',d.team],['Competition',d.competition||'N/A'],['Traction',d.traction||'N/A'],['Registration',d.registrationStatus],['Investment Reason',d.investmentReason],['Additional Information',d.additionalInfo||'N/A']]]];
- function line(text){const lines=doc.splitTextToSize(String(text||'N/A'),178);if(y+lines.length*4.5>280){doc.addPage();y=18}doc.text(lines,margin,y);y+=lines.length*4.5+2}
- sections.forEach(s=>{doc.setFontSize(11);doc.setTextColor(142,68,173);line(s[0]);doc.setFontSize(9);doc.setTextColor(55);s[1].forEach(pair=>{doc.setFont(undefined,'bold');doc.text(pair[0]+':',margin,y);doc.setFont(undefined,'normal');const lines=doc.splitTextToSize(String(pair[1]||'N/A'),145);doc.text(lines,49,y);y+=lines.length*4.5+2});y+=3});
- doc.save('G-Spirit-Capital-Application-'+(d.businessName||'application').replace(/[^a-z0-9]+/gi,'-')+'.pdf');
+ const {jsPDF}=window.jspdf; const doc=new jsPDF(); const pageWidth=doc.internal.pageSize.getWidth(); const pageHeight=doc.internal.pageSize.getHeight(); let y=20;
+
+doc.setFillColor(43,55,115); doc.rect(0,0,pageWidth,34,'F');
+ if(logo){try{doc.addImage(logo,'PNG',12,6,24,24);}catch(e){}}
+
+doc.setTextColor(255,255,255); doc.setFontSize(16); doc.text('G-SPIRIT LOAN SOLUTION', logo ? 40 : 12, 15); doc.setFontSize(10); doc.text('Powering Dreams', logo ? 40 : 12, 22);
+doc.setFontSize(9); doc.text('+237 620 569 864', pageWidth - 12, 12, {align:'right'}); doc.text('hi@gspiritloans.com', pageWidth - 12, 18, {align:'right'}); doc.text('www.gspiritloans.com', pageWidth - 12, 24, {align:'right'});
+
+ if(logo){try{doc.saveGraphicsState(); doc.setGState(doc.GState({opacity:0.25})); doc.addImage(logo,'PNG',pageWidth/2-70,pageHeight/2-70,140,140); doc.restoreGraphicsState();}catch(e){}}
+
+y=46; doc.setTextColor(43,55,115); doc.setFontSize(14); doc.text('Capital Application', 12, y); y+=10;
+ function section(title){doc.setFontSize(11); doc.setTextColor(22,160,133); doc.text(title,12,y); doc.setDrawColor(22,160,133); doc.line(12,y+1.5,pageWidth-12,y+1.5); y+=8; doc.setTextColor(40,40,40); doc.setFontSize(10);}
+ function row(label, value){
+   const safeValue = String(value ?? 'N/A');
+   doc.setFont(undefined,'bold'); doc.text(label + ':', 12, y); doc.setFont(undefined,'normal');
+   const wrapped = doc.splitTextToSize(safeValue, 132); doc.text(wrapped, 60, y); y += Math.max(7, wrapped.length * 4.2);
+ }
+
+ section('Applicant Details'); row('Name', d.name); row('Phone', d.phone); row('Email', d.email); row('Location', d.location); y+=4;
+ section('Business Profile'); row('Business Name', d.businessName); row('Stage', d.businessStage); row('Sector', d.sector); row('Description', d.businessDescription); row('Problem Solved', d.problemSolved); row('Target Customers', d.targetCustomers); row('Business Model', d.businessModel); row('Website', d.website || 'N/A'); y+=4;
+ section('Investment Details'); row('Capital Requested', money(d.capitalRequested)); row('Equity Offered', d.equityOffered); row('Monthly Revenue', money(d.monthlyRevenue)); row('Monthly Expenses', money(d.monthlyExpenses)); row('Use of Capital', d.capitalUse); row('Assets / Resources', d.assets || 'N/A'); row('Team', d.team); row('Competition', d.competition || 'N/A'); row('Traction', d.traction || 'N/A'); row('Registration', d.registrationStatus); row('Why This Investment', d.investmentReason); row('Additional Information', d.additionalInfo || 'N/A'); y+=8;
+
+ doc.setFontSize(10); doc.setTextColor(120,120,120); doc.text('Terms & Privacy Policy: Accepted', 12, y); y += 10;
+ doc.setFont(undefined,'bolditalic'); doc.setTextColor(22,160,133); doc.text('Please send this document on WhatsApp to +237 620 569 864.', pageWidth / 2, y, { align: 'center' }); y += 10;
+ doc.setFont(undefined,'normal'); doc.setTextColor(120,120,120); doc.text('Generated: ' + new Date().toLocaleString(), 12, y);
+ doc.setDrawColor(220,220,220); doc.line(12, pageHeight - 16, pageWidth - 12, pageHeight - 16); doc.setFontSize(8); doc.setTextColor(140,140,140); doc.text('© 2026 G-Spirit Loan Solution. All rights reserved.', pageWidth / 2, pageHeight - 10, { align: 'center' });
+
+ const filename = 'GSpirit_Capital_Application_' + ((d.businessName || 'applicant').replace(/\s+/g, '_')) + '.pdf';
+ doc.save(filename);
 }
 </script>
 </body>
