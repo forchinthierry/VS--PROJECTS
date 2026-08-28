@@ -230,6 +230,32 @@
       color: #4a2e00;
     }
 
+    .bubble-capital {
+      width: 200px;
+      height: 200px;
+      background: radial-gradient(circle at 35% 30%, #f5b8ff, #9b59b6 62%, #63367a 100%);
+      animation-duration: 6.5s, 0.55s;
+      animation-delay: 0.25s, 0.22s;
+      color: white;
+    }
+
+    .bubble-capital .label {
+      font-size: 17px;
+      line-height: 1.18;
+    }
+
+    .bubble-capital .sub-label {
+      display: block;
+      font-family: 'Nunito', Arial, sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      margin-top: 7px;
+      padding: 5px 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.18);
+      letter-spacing: 0.02em;
+    }
+
     .bubble-apply .label {
       font-size: 18px;
     }
@@ -294,6 +320,21 @@
       .bubble-apply {
         width: 170px;
         height: 170px;
+      }
+
+      .bubble-capital {
+        width: 155px;
+        height: 155px;
+      }
+
+      .bubble-capital .label {
+        font-size: 14px;
+      }
+
+      .bubble-capital .sub-label {
+        font-size: 9px;
+        margin-top: 5px;
+        padding: 4px 7px;
       }
 
       .bubble-partner {
@@ -420,6 +461,12 @@
     <button class="bubble bubble-apply" onclick="window.location.href='apply.html'">
       <span class="icon">💰</span>
       <span class="label">Apply for<br>a Loan</span>
+    </button>
+
+    <button class="bubble bubble-capital" onclick="window.location.href='capital.html'" aria-label="Request for Capital">
+      <span class="icon">🚀</span>
+      <span class="label">Request for<br>Capital</span>
+      <span class="sub-label">Grow • Build • Expand</span>
     </button>
 
     <button class="bubble bubble-partner" onclick="window.location.href='partner.html'">

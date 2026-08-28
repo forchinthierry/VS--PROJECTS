@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/png" href="logo.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Request for Capital - G-Spirit</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+*{box-sizing:border-box} body{margin:0;font-family:Nunito,Arial,sans-serif;color:#2b3773;background:radial-gradient(circle at 20% 10%,#f6e2f8,#e8c7ed 48%,#d9c3e8);min-height:100vh}
+header{background:#2b3773;color:#fff;padding:14px 22px;display:flex;align-items:center;justify-content:space-between;gap:12px;box-shadow:0 4px 14px #2b377322}
+header img{max-height:48px;width:auto}.logo-btn{border:0;background:none;padding:0;cursor:pointer;line-height:0}
+.brand{display:flex;flex-direction:column;align-items:flex-start;justify-content:center;text-align:left;min-width:0;flex:1}
+.brand strong{font-size:22px;line-height:1.1;letter-spacing:0.04em}
+.tagline{font-size:13px;color:#d0e8ef;font-style:italic;margin-top:2px}
+.header-actions{display:flex;justify-content:flex-end;align-items:center;gap:8px;flex-wrap:wrap}
+.header-actions button{background:none;color:#fff;border:none;padding:6px 8px;font-size:12px;cursor:pointer;white-space:nowrap;border-radius:8px}
+.header-actions button:hover{text-decoration:underline;background:transparent}
+.container{width:min(94%,850px);margin:28px auto 60px}.hero,.form-card{background:#ffffffed;border-radius:24px;box-shadow:0 16px 40px #49306b20;border:1px solid #ffffffaa}
+.hero{padding:30px;text-align:center;margin-bottom:20px}.badge{display:inline-block;background:#8e44ad;color:white;padding:7px 14px;border-radius:999px;font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+h1{font-family:Fredoka;margin:14px 0 10px;font-size:clamp(30px,6vw,46px)}.hero p{max-width:690px;margin:auto;line-height:1.65;color:#514866}
+.highlight{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:22px}.highlight div{padding:13px;border-radius:15px;background:#f7eff9;font-size:13px}.highlight b{display:block;color:#7d3c98;margin-bottom:3px}
+.form-card{padding:28px}.progress{display:flex;gap:8px;margin-bottom:25px}.step-dot{flex:1;text-align:center;font-size:12px;font-weight:800;color:#8b8195}.step-dot span{display:block;height:7px;border-radius:99px;background:#e5dbe8;margin-bottom:7px}.step-dot.active{color:#7d3c98}.step-dot.active span{background:#8e44ad}
+.step{display:none}.step.active{display:block}.step h2{font-family:Fredoka;margin:0 0 5px}.step-intro{color:#6d6475;margin-top:0;font-size:14px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:15px}.full{grid-column:1/-1}label{display:block;font-weight:700;font-size:13px;margin-bottom:6px;color:#40375a}input,select,textarea{width:100%;padding:12px;border:1px solid #d8cedc;border-radius:10px;font:inherit;background:#fff;color:#302944}textarea{min-height:105px;resize:vertical}.hint{font-size:11px;color:#7c7184;margin-top:4px}
+.buttons{display:flex;justify-content:space-between;gap:12px;margin-top:24px}.btn{border:0;border-radius:12px;padding:13px 18px;font-weight:800;cursor:pointer;font:inherit}.prev{background:#eee8f0;color:#51465c}.next{background:#8e44ad;color:white}.next:hover{background:#71368d}
+.review{background:#f9f4fa;border-radius:16px;padding:18px}.review-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}.review-item{background:white;border-radius:10px;padding:10px}.review-item small{display:block;color:#81768a}.review-item strong{display:block;margin-top:3px;word-break:break-word}
+.notice{margin-top:15px;padding:13px;border-left:4px solid #8e44ad;background:#f6edf8;font-size:13px;line-height:1.5}
+.output-buttons{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:15px}.whatsapp{background:#25d366;color:white}.pdf{background:#2b3773;color:white}.success{display:none;text-align:center;margin-top:15px;color:#287a54;font-weight:800}
+@media(max-width:650px){.grid,.review-grid,.highlight,.output-buttons{grid-template-columns:1fr}.full{grid-column:auto}.hero,.form-card{padding:20px}.buttons{flex-direction:column-reverse}.btn{width:100%}}
+</style>
+</head>
+<body>
+<header>
+  <button type="button" class="logo-btn" onclick="window.location.href='index.html'" aria-label="Go to homepage"><img src="logo.png" alt="G-Spirit logo"></button>
+  <div class="brand">
+    <strong>G-SPIRIT CAPITAL</strong>
+    <div class="tagline">Powering Dreams</div>
+  </div>
+  <div class="header-actions">
+    <button type="button" onclick="window.location.href='index.html'">Home</button>
+    <button type="button" onclick="window.location.href='terms.html'">Terms</button>
+    <button type="button" onclick="window.location.href='about.html'">About</button>
+    <button type="button" onclick="window.location.href='contact.html'">Contact Us</button>
+  </div>
+</header>
+
+<main class="container">
+<section class="hero">
+<span class="badge">Business Growth Capital</span>
+<h1>Have the vision. We can help fund the journey.</h1>
+<p>G-Spirit Capital considers promising businesses and business ideas for investment. Instead of a conventional loan, we may provide growth capital in exchange for an agreed stake in the business. Tell us what you are building, what you need, and how you plan to grow.</p>
+<div class="highlight"><div><b>Capital for Growth</b>Funding may support launch, expansion or scale.</div><div><b>Equity Partnership</b>Investment is considered for an agreed business stake.</div><div><b>Built Around Potential</b>We assess the idea, market, team and opportunity.</div></div>
+</section>
+
+<section class="form-card">
+<div class="progress">
+<div class="step-dot active" id="dot1"><span></span>About You</div>
+<div class="step-dot" id="dot2"><span></span>Your Business</div>
+<div class="step-dot" id="dot3"><span></span>Investment</div>
+<div class="step-dot" id="dot4"><span></span>Review</div>
+</div>
+
+<form id="capitalForm">
+<section class="step active" data-step="1"><h2>Tell us about you</h2><p class="step-intro">Who is behind the opportunity?</p>
+<div class="grid">
+<div><label>Full Name *</label><input name="name" required></div>
+<div><label>Phone Number *</label><input name="phone" required></div>
+<div><label>Email *</label><input type="email" name="email" required></div>
+<div><label>Location *</label><input name="location" placeholder="City / Region" required></div>
+</div>
+<div class="buttons"><span></span><button type="button" class="btn next" onclick="nextStep()">Continue →</button></div></section>
+
+<section class="step" data-step="2"><h2>Tell us what you're building</h2><p class="step-intro">An existing business or a strong business idea can be considered.</p>
+<div class="grid">
+<div><label>Business / Project Name *</label><input name="businessName" required></div>
+<div><label>Business Stage *</label><select name="businessStage" required><option value="">Select</option><option>Idea / Pre-launch</option><option>Early-stage / Startup</option><option>Operating business</option><option>Growing / Expansion</option><option>Established / Scaling</option></select></div>
+<div><label>Sector / Industry *</label><input name="sector" placeholder="e.g. Agriculture, Tech, Retail" required></div>
+<div><label>Years Operating</label><input name="yearsOperating" placeholder="0 if not launched"></div>
+<div class="full"><label>What does the business do? *</label><textarea name="businessDescription" required placeholder="Explain the product or service in simple terms."></textarea></div>
+<div class="full"><label>What problem are you solving? *</label><textarea name="problemSolved" required></textarea></div>
+<div><label>Who are your target customers? *</label><textarea name="targetCustomers" required></textarea></div>
+<div><label>How does the business make money? *</label><textarea name="businessModel" required></textarea></div>
+<div class="full"><label>Website / Social Page</label><input name="website" placeholder="Optional"></div>
+</div>
+<div class="buttons"><button type="button" class="btn prev" onclick="prevStep()">← Previous</button><button type="button" class="btn next" onclick="nextStep()">Continue →</button></div></section>
+
+<section class="step" data-step="3"><h2>The investment opportunity</h2><p class="step-intro">Give us the numbers and the opportunity as you see it. Final investment terms are subject to due diligence and agreement.</p>
+<div class="grid">
+<div><label>Capital Requested (XAF) *</label><input type="number" name="capitalRequested" min="0" step="1000" required></div>
+<div><label>Equity / Stake Offered *</label><input name="equityOffered" placeholder="e.g. 20%" required></div>
+<div><label>Current Monthly Revenue (XAF)</label><input type="number" name="monthlyRevenue" min="0" step="1000" value="0"></div>
+<div><label>Current Monthly Expenses (XAF)</label><input type="number" name="monthlyExpenses" min="0" step="1000" value="0"></div>
+<div class="full"><label>How will you use the capital? *</label><textarea name="capitalUse" required placeholder="Break down the main uses: equipment, stock, staff, marketing, technology, expansion, etc."></textarea></div>
+<div class="full"><label>Business assets / resources</label><textarea name="assets" placeholder="Equipment, premises, inventory, intellectual property, existing customer base, etc."></textarea></div>
+<div class="full"><label>Team & key people *</label><textarea name="team" required placeholder="Who will execute the plan and what experience do they bring?"></textarea></div>
+<div><label>Competition</label><textarea name="competition"></textarea></div>
+<div><label>Traction / milestones</label><textarea name="traction" placeholder="Customers, sales, partnerships, pilots, growth, etc."></textarea></div>
+<div><label>Business registration</label><select name="registrationStatus"><option>Not registered</option><option>In registration process</option><option>Registered</option><option>Other</option></select></div>
+<div><label>Why are you seeking an investor? *</label><textarea name="investmentReason" required></textarea></div>
+<div class="full"><label>Anything else we should know?</label><textarea name="additionalInfo"></textarea></div>
+</div>
+<div class="buttons"><button type="button" class="btn prev" onclick="prevStep()">← Previous</button><button type="button" class="btn next" onclick="nextStep()">Review Application →</button></div></section>
+
+<section class="step" data-step="4"><h2>Review your investment request</h2><p class="step-intro">Check your information before sending it to G-Spirit Capital.</p>
+<div id="review" class="review"></div>
+<div class="notice"><b>Important:</b> Submitting an application does not guarantee funding. G-Spirit may request additional information, conduct due diligence, and negotiate the investment amount, valuation and equity stake before any investment is made.</div>
+<div class="buttons"><button type="button" class="btn prev" onclick="prevStep()">← Edit</button><span></span></div>
+<div class="output-buttons">
+<button type="button" class="btn whatsapp" onclick="submitAndWhatsApp()">💬 Send via WhatsApp</button>
+<button type="button" class="btn pdf" onclick="submitAndPDF()">📄 Submit & Generate PDF</button>
+</div>
+<div id="success" class="success">✓ Application received successfully.</div>
+</section>
+</form>
+</section>
+</main>
+
+<footer>
+  <div class="footer-links" style="display:flex;justify-content:center;align-items:center;gap:20px;flex-wrap:wrap;padding:18px 20px 26px;text-align:center;font-size:14px;background:rgba(255,255,255,0.2);color:#2b3773;">
+    <a href="privacy.html" target="_self" style="color:#2b3773;text-decoration:none;font-weight:700;">Privacy Policy</a>
+    <span>&copy; 2026 G-Spirit Loan Solution. All rights reserved.</span>
+  </div>
+</footer>
+
+<script>
+const API_BASE='https://gspiritloans-api.forchinthierry.workers.dev';
+let step=1, saved=false, savedData=null;
+const form=document.getElementById('capitalForm');
+function fields(){return Object.fromEntries(new FormData(form).entries())}
+function validateStep(){
+ const current=document.querySelector('.step[data-step="'+step+'"]');
+ const inputs=current.querySelectorAll('input,select,textarea');
+ for(const el of inputs){if(!el.checkValidity()){el.reportValidity();return false}}
+ return true;
+}
+function showStep(n){
+ step=n;
+ document.querySelectorAll('.step').forEach(x=>x.classList.toggle('active',Number(x.dataset.step)===n));
+ for(let i=1;i<=4;i++)document.getElementById('dot'+i).classList.toggle('active',i<=n);
+ if(n===4)buildReview();
+ window.scrollTo({top:0,behavior:'smooth'});
+}
+function nextStep(){if(validateStep())showStep(Math.min(4,step+1))}
+function prevStep(){showStep(Math.max(1,step-1))}
+function esc(v){return String(v??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}
+function money(v){return Number(v||0).toLocaleString()+' XAF'}
+function buildReview(){
+ const d=fields();
+ const items=[
+ ['Applicant',d.name],['Phone',d.phone],['Email',d.email],['Location',d.location],
+ ['Business',d.businessName],['Stage',d.businessStage],['Sector',d.sector],
+ ['Capital Requested',money(d.capitalRequested)],['Equity Offered',d.equityOffered],
+ ['Monthly Revenue',money(d.monthlyRevenue)],['Monthly Expenses',money(d.monthlyExpenses)],
+ ['Registration',d.registrationStatus],['Website',d.website||'—'],
+ ['Use of Capital',d.capitalUse],['Business Model',d.businessModel],['Team',d.team],
+ ['Traction',d.traction||'—']
+ ];
+ document.getElementById('review').innerHTML='<div class="review-grid">'+items.map(x=>'<div class="review-item"><small>'+esc(x[0])+'</small><strong>'+esc(x[1])+'</strong></div>').join('')+'</div>';
+}
+async function saveApplication(){
+ if(saved)return true;
+ if(!validateAll())return false;
+ const d=fields();
+ const res=await fetch(API_BASE+'/api/capital',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(d)});
+ if(!res.ok)throw new Error('Unable to submit application');
+ const result=await res.json(); if(!result.success)throw new Error('Application was not saved');
+ saved=true;savedData=d;document.getElementById('success').style.display='block';return true;
+}
+function validateAll(){
+ for(let n=1;n<=3;n++){const current=document.querySelector('.step[data-step="'+n+'"]');for(const el of current.querySelectorAll('input,select,textarea'))if(!el.checkValidity()){showStep(n);el.reportValidity();return false}}
+ return true;
+}
+function whatsappText(d){
+ return `G-SPIRIT CAPITAL — INVESTMENT CAPITAL APPLICATION\n\nApplicant: ${d.name}\nPhone: ${d.phone}\nEmail: ${d.email}\nLocation: ${d.location}\n\nBUSINESS\nName: ${d.businessName}\nStage: ${d.businessStage}\nSector: ${d.sector}\nDescription: ${d.businessDescription}\n\nINVESTMENT REQUEST\nCapital Requested: ${money(d.capitalRequested)}\nEquity Offered: ${d.equityOffered}\nMonthly Revenue: ${money(d.monthlyRevenue)}\nMonthly Expenses: ${money(d.monthlyExpenses)}\nUse of Capital: ${d.capitalUse}\n\nBusiness Model: ${d.businessModel}\nTarget Customers: ${d.targetCustomers}\nTeam: ${d.team}\nTraction: ${d.traction||'N/A'}\nRegistration: ${d.registrationStatus}\nWebsite: ${d.website||'N/A'}\n\nAdditional Information: ${d.additionalInfo||'N/A'}`;
+}
+async function submitAndWhatsApp(){
+ try{if(!(await saveApplication()))return;let p=(savedData.phone||'').replace(/\D/g,'');if(p.startsWith('0'))p='237'+p.slice(1);window.open('https://wa.me/'+p+'?text='+encodeURIComponent(whatsappText(savedData)),'_blank')}catch(e){alert(e.message)}
+}
+async function submitAndPDF(){
+ try{if(!(await saveApplication()))return;generatePDF(savedData)}catch(e){alert(e.message)}
+}
+function generatePDF(d){
+ if(!window.jspdf){alert('PDF library is still loading. Please try again.');return}
+ const {jsPDF}=window.jspdf,doc=new jsPDF(),margin=16;let y=18;
+ doc.setFontSize(18);doc.setTextColor(43,55,115);doc.text('G-SPIRIT CAPITAL',margin,y);y+=9;
+ doc.setFontSize(14);doc.setTextColor(80,60,90);doc.text('Investment Capital Application',margin,y);y+=9;
+ doc.setFontSize(9);doc.setTextColor(100);doc.text('Submitted: '+new Date().toLocaleString(),margin,y);y+=9;
+ const sections=[['APPLICANT',[['Name',d.name],['Phone',d.phone],['Email',d.email],['Location',d.location]]],
+ ['BUSINESS',[['Business',d.businessName],['Stage',d.businessStage],['Sector',d.sector],['Description',d.businessDescription],['Problem',d.problemSolved],['Target Customers',d.targetCustomers],['Business Model',d.businessModel],['Website',d.website||'N/A']]],
+ ['INVESTMENT',[['Capital Requested',money(d.capitalRequested)],['Equity Offered',d.equityOffered],['Monthly Revenue',money(d.monthlyRevenue)],['Monthly Expenses',money(d.monthlyExpenses)],['Use of Capital',d.capitalUse],['Assets',d.assets||'N/A'],['Team',d.team],['Competition',d.competition||'N/A'],['Traction',d.traction||'N/A'],['Registration',d.registrationStatus],['Investment Reason',d.investmentReason],['Additional Information',d.additionalInfo||'N/A']]]];
+ function line(text){const lines=doc.splitTextToSize(String(text||'N/A'),178);if(y+lines.length*4.5>280){doc.addPage();y=18}doc.text(lines,margin,y);y+=lines.length*4.5+2}
+ sections.forEach(s=>{doc.setFontSize(11);doc.setTextColor(142,68,173);line(s[0]);doc.setFontSize(9);doc.setTextColor(55);s[1].forEach(pair=>{doc.setFont(undefined,'bold');doc.text(pair[0]+':',margin,y);doc.setFont(undefined,'normal');const lines=doc.splitTextToSize(String(pair[1]||'N/A'),145);doc.text(lines,49,y);y+=lines.length*4.5+2});y+=3});
+ doc.save('G-Spirit-Capital-Application-'+(d.businessName||'application').replace(/[^a-z0-9]+/gi,'-')+'.pdf');
+}
+</script>
+</body>
+</html>

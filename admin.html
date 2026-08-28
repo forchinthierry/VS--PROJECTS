@@ -260,6 +260,7 @@
       <div class="tabs">
         <button class="tab-btn active" id="tabLoans" onclick="switchTab('loans')">Loan Applications</button>
         <button class="tab-btn" id="tabPartners" onclick="switchTab('partners')">Partnership Applications</button>
+        <button class="tab-btn capital-tab" id="tabCapital" onclick="switchTab('capital')">Investment Capital Applications</button>
       </div>
 
       <div class="toolbar">
@@ -300,6 +301,7 @@
       currentTab = tab;
       document.getElementById('tabLoans').classList.toggle('active', tab === 'loans');
       document.getElementById('tabPartners').classList.toggle('active', tab === 'partners');
+      document.getElementById('tabCapital').classList.toggle('active', tab === 'capital');
       loadCurrentTab();
     }
 
@@ -389,7 +391,15 @@
         row.surety_name,
         row.surety_phone,
         row.residence,
-        row.surety_address
+        row.surety_address,
+        row.business_name,
+        row.business_stage,
+        row.sector,
+        row.location,
+        row.business_description,
+        row.capital_requested,
+        row.equity_offered,
+        row.registration_status
       ];
 
       return searchableFields.some(function (field) {
@@ -408,7 +418,8 @@
       });
       updateResultsCount();
       if (currentTab === 'loans') renderLoans(currentFiltered);
-      else renderPartners(currentFiltered);
+      else if (currentTab === 'partners') renderPartners(currentFiltered);
+      else renderCapital(currentFiltered);
     }
 
     function updateResultsCount() {
@@ -491,8 +502,9 @@
     }
 
     function getWhatsAppTemplate(type, status, row) {
-      var amountText = Number(row.amount || row.total_contribution || 0).toLocaleString();
+      var amountText = Number(row.amount || row.total_contribution || row.capital_requested || 0).toLocaleString();
       var name = row.name || 'Customer';
+      var businessName = row.business_name || 'your business';
       var normalizedStatus = normalizeStatus(status);
 
       var templates = {
@@ -508,6 +520,12 @@
           'under review': 'Hello {{1}}, thank you for your interest in partnering with G-Spirit Loan Solution. Your application is now under review.',
           'approved': 'Hello {{1}}, congratulations — your partnership application has been approved. We\'ll be in touch shortly to finalize your Growth Share agreement.',
           'rejected': 'Hello {{1}}, thank you for your interest in partnering with G-Spirit Loan Solution. We\'re unable to move forward with this application at this time.'
+        },
+        capital: {
+          'new': 'Hello {{1}}, your investment capital application for {{3}} has been received and is pending review. We will update you as soon as a decision is made.',
+          'under review': 'Hello {{1}}, your investment capital application for {{3}} is now under review. We will contact you with the next steps.',
+          'approved': 'Hello {{1}}, congratulations — your investment capital application for {{3}} has been approved in principle. We will contact you to discuss the investment and equity terms.',
+          'rejected': 'Hello {{1}}, thank you for presenting {{3}} to G-Spirit. We are unable to proceed with this investment application at this time.'
         }
       };
 
@@ -518,7 +536,8 @@
 
       return template
         .replace('{{1}}', name)
-        .replace('{{2}}', amountText);
+        .replace('{{2}}', amountText)
+        .replace('{{3}}', businessName);
     }
 
     function sendStatusWhatsApp(type, id) {
@@ -625,6 +644,53 @@
       html += '</tbody></table>';
       document.getElementById('tableWrap').innerHTML = html;
       document.getElementById('selectAllBox').checked = currentFiltered.length > 0 && currentFiltered.every(function (r) { return selectedIds[r.id]; });
+    }
+
+
+    function renderCapital(rows) {
+      if (!rows || rows.length === 0) {
+        var hasSearch = document.getElementById('searchInput').value.trim() !== '';
+        document.getElementById('tableWrap').innerHTML =
+          '<div class="empty-state">' +
+          (hasSearch ? 'No investment capital applications match that search.' : 'No investment capital applications yet.') +
+          '</div>';
+        return;
+      }
+
+      var html = '<table><thead><tr>' +
+        '<th><input type="checkbox" id="selectAllBox" onclick="toggleSelectAll(this.checked)"></th>' +
+        '<th>#</th><th>Date</th><th>Applicant</th><th>Phone</th><th>Email</th>' +
+        '<th>Business</th><th>Stage</th><th>Sector</th><th>Location</th>' +
+        '<th>Capital Requested</th><th>Equity Offered</th><th>Revenue</th><th>Use of Capital</th>' +
+        '<th>Registration</th><th>Status</th><th>Action</th></tr></thead><tbody>';
+
+      rows.forEach(function (r, index) {
+        var checked = selectedIds[r.id] ? ' checked' : '';
+        html += '<tr>' +
+          '<td><input type="checkbox" class="row-select" onchange="toggleSelection(this, ' + r.id + ')"' + checked + '></td>' +
+          '<td>' + (index + 1) + '</td>' +
+          '<td>' + new Date(r.created_at).toLocaleDateString() + '</td>' +
+          '<td>' + (r.name || '') + '</td>' +
+          '<td>' + (r.phone || '') + '</td>' +
+          '<td>' + (r.email || '') + '</td>' +
+          '<td>' + (r.business_name || '') + '</td>' +
+          '<td>' + (r.business_stage || '') + '</td>' +
+          '<td>' + (r.sector || '') + '</td>' +
+          '<td>' + (r.location || '') + '</td>' +
+          '<td>' + Number(r.capital_requested || 0).toLocaleString() + ' XAF</td>' +
+          '<td>' + (r.equity_offered || '') + '</td>' +
+          '<td>' + Number(r.monthly_revenue || 0).toLocaleString() + ' XAF</td>' +
+          '<td>' + (r.capital_use || '') + '</td>' +
+          '<td>' + (r.registration_status || '') + '</td>' +
+          '<td><select class="status-select" onchange="updateStatus(\'capital_applications\', ' + r.id + ', this)">' + statusOptions(r.status) + '</select></td>' +
+          '<td><button class="whatsapp-btn" onclick="sendStatusWhatsApp(\'capital\', ' + r.id + ')">Send Status</button></td>' +
+          '</tr>';
+      });
+
+      html += '</tbody></table>';
+      document.getElementById('tableWrap').innerHTML = html;
+      document.getElementById('selectAllBox').checked =
+        currentFiltered.length > 0 && currentFiltered.every(function (r) { return selectedIds[r.id]; });
     }
 
     // Auto-login if a token is already stored for this browser session
