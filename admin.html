@@ -574,7 +574,9 @@
 
       sessionStorage.setItem('agreementPrefill', JSON.stringify({ type: type, row: row }));
 
-      var targetPage = type === 'loan' ? 'loanagreement.html' : 'partnership.html';
+      var targetPage = type === 'loan' ? 'loanagreement.html' : 
+                       type === 'capital' ? 'capitalagreement.html' : 
+                       'partnership.html';
       window.open(targetPage, '_blank');
     }
 
@@ -654,7 +656,6 @@
       document.getElementById('selectAllBox').checked = currentFiltered.length > 0 && currentFiltered.every(function (r) { return selectedIds[r.id]; });
     }
 
-
     function renderCapital(rows) {
       if (!rows || rows.length === 0) {
         var hasSearch = document.getElementById('searchInput').value.trim() !== '';
@@ -691,7 +692,10 @@
           '<td>' + (r.capital_use || '') + '</td>' +
           '<td>' + (r.registration_status || '') + '</td>' +
           '<td><select class="status-select" onchange="updateStatus(\'capital_applications\', ' + r.id + ', this)">' + statusOptions(r.status) + '</select></td>' +
-          '<td><button class="whatsapp-btn" onclick="sendStatusWhatsApp(\'capital\', ' + r.id + ')">Send Status</button></td>' +
+          '<td>' + 
+            '<button class="whatsapp-btn" onclick="sendStatusWhatsApp(\'capital\', ' + r.id + ')">Send Status</button>' + 
+            (normalizeStatus(r.status) === 'approved' ? '<br><a href="#" class="agreement-btn" onclick="openAgreement(\'capital\', ' + r.id + '); return false;">Agreement</a>' : '') + 
+          '</td>' +
           '</tr>';
       });
 

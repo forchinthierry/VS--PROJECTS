@@ -1,0 +1,916 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="logo.png">
+  <title>Capital Investment Agreement - G-Spirit</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      font-family: Arial, sans-serif; 
+      background-color: #1ce057;
+      color: #333;
+      margin: 0;
+      padding: 0;
+      line-height: 1.6;
+      opacity: 1;
+      transition: opacity 0.35s cubic-bezier(0.22, 1, 0.36, 1), transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    body.is-exiting { opacity: 0; transform: scale(0.98); }
+    body.is-entering { opacity: 0; transform: scale(0.98); }
+
+    .page-overlay {
+      position: fixed;
+      inset: 0;
+      background: #fff;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.35s ease;
+      z-index: 9999;
+    }
+
+    .page-overlay.is-visible { opacity: 1; }
+
+    header {
+      background-color: #2b3773;
+      color: white;
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    header img { max-height: 80px; width: auto; }
+
+    .logo-btn {
+      background: none;
+      border: none;
+      padding: 0;
+      margin: 0;
+      width: auto;
+      cursor: pointer;
+      display: inline-flex;
+      line-height: 0;
+      transition: transform 0.2s ease, opacity 0.2s ease;
+    }
+
+    .logo-btn:hover { transform: scale(1.05); opacity: 0.92; }
+    .logo-btn:active { transform: scale(0.96); }
+
+    .brand {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      text-align: left;
+      width: auto;
+      min-width: 0;
+      flex-shrink: 0;
+      gap: 4px;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 22px;
+      line-height: 1.1;
+      color: white;
+      white-space: nowrap;
+    }
+
+    .tagline { font-size: 14px; font-style: italic; color: #d0e8ef; margin: 0; }
+
+    .header-actions {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 8px;
+      width: auto;
+      min-width: 0;
+      flex-wrap: wrap;
+    }
+
+    .header-actions button {
+      background: none;
+      color: white;
+      border: none;
+      -webkit-appearance: none;
+      appearance: none;
+      padding: 4px;
+      font-size: 12px;
+      cursor: pointer;
+      white-space: nowrap;
+      width: auto;
+    }
+
+    .header-actions button:hover { text-decoration: underline; background: transparent; }
+
+    .page-banner {
+      text-align: center;
+      padding: 24px 18px;
+      margin: 20px auto 20px;
+      max-width: 800px;
+      background: linear-gradient(135deg, #2b3773, #16a085);
+      color: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    }
+
+    .page-banner h1 { margin: 0; font-size: 28px; font-weight: 700; }
+    .page-banner p { margin: 8px 0 0; font-size: 15px; opacity: 0.9; }
+
+    .container { width: 95%; max-width: 900px; margin: 10px auto; padding: 20px; }
+
+    .card {
+      background: rgb(246, 244, 244);
+      border-radius: 12px;
+      padding: 22px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    }
+
+    h2 {
+      color: #16a085;
+      border-bottom: 2px solid #16a085;
+      padding-bottom: 5px;
+      margin-top: 0;
+    }
+
+    label {
+      display: block;
+      font-weight: bold;
+      font-size: 14px;
+      margin-top: 14px;
+    }
+
+    input, textarea, select {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-family: Arial, sans-serif;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    input:focus, textarea:focus, select:focus {
+      outline: none;
+      border-color: #16a085;
+      box-shadow: 0 0 0 3px rgba(22, 160, 133, 0.15);
+    }
+
+    .hint { font-size: 12.5px; color: #777; margin-top: 4px; }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0 20px;
+    }
+
+    .borrower-block {
+      background: #fff;
+      border: 1px solid rgba(43,55,115,0.12);
+      border-radius: 10px;
+      padding: 16px;
+      margin-top: 14px;
+      position: relative;
+    }
+
+    .borrower-block h4 { margin: 0 0 4px; color: #2b3773; }
+
+    .remove-borrower-btn {
+      width: auto;
+      background: #d9534f;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      padding: 6px 10px;
+      cursor: pointer;
+      font-size: 12px;
+      float: right;
+    }
+
+    .summary-preview {
+      display: flex;
+      gap: 16px;
+      margin-top: 14px;
+      flex-wrap: wrap;
+    }
+
+    .summary-box {
+      flex: 1 1 140px;
+      background: #fff;
+      border-radius: 8px;
+      padding: 12px 14px;
+      border: 1px solid rgba(43,55,115,0.1);
+    }
+
+    .summary-box strong { display: block; color: #2b3773; font-size: 12.5px; }
+    .summary-box span { font-size: 17px; font-weight: bold; color: #16a085; }
+
+    button.submit-btn {
+      background-color: #2b3773;
+      color: white;
+      padding: 13px 20px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 16px;
+      width: 100%;
+      margin-top: 24px;
+      transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.2s ease;
+    }
+
+    button.submit-btn:hover {
+      background-color: #1f2857;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 14px rgba(43, 55, 115, 0.3);
+    }
+
+    button.submit-btn:active { transform: scale(0.98); }
+
+    .disclaimer {
+      font-size: 12.5px;
+      color: #8a6d00;
+      background: #fff8e1;
+      border-left: 4px solid #e2a63b;
+      padding: 12px 16px;
+      border-radius: 4px;
+      margin-bottom: 20px;
+    }
+
+    footer { text-align: center; padding: 20px; color: #999; font-size: 14px; }
+
+    .footer-links {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 6px;
+    }
+
+    .footer-links a {
+      color: #2b3773;
+      text-decoration: none;
+      font-size: 13px;
+      padding: 4px 8px;
+      border: 1px solid #2b3773;
+      border-radius: 999px;
+      background: white;
+    }
+
+    .footer-links a:hover { background: #2b3773; color: white; }
+
+    @media (max-width: 700px) {
+      .two-col { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 600px) {
+      header { flex-wrap: wrap; justify-content: flex-start; gap: 10px; padding: 12px; }
+      header img { max-height: 44px; }
+      .brand { width: auto; min-width: 0; align-items: flex-start; text-align: left; }
+      header h1 { font-size: 15px; }
+      .tagline { font-size: 11px; }
+      .header-actions { width: 100%; min-width: 0; justify-content: flex-start; flex-wrap: wrap; gap: 6px; }
+      .header-actions button { font-size: 10px; padding: 5px 6px; }
+      .page-banner h1 { font-size: 22px; }
+    }
+  </style>
+</head>
+<body class="is-entering">
+
+  <div class="page-overlay"></div>
+
+  <header>
+    <button type="button" class="logo-btn" onclick="navigateWithTransition('index.html')" aria-label="Go to homepage">
+      <img src="logo.png" alt="G-Spirit logo">
+    </button>
+    <div class="brand">
+      <h1>G-SPIRIT LOAN SOLUTION</h1>
+      <div class="tagline">Powering Dreams</div>
+    </div>
+    <div class="header-actions">
+      <button type="button" onclick="navigateWithTransition('index.html')">Home</button>
+      <button type="button" onclick="navigateWithTransition('terms.html')">Terms</button>
+      <button type="button" onclick="navigateWithTransition('about.html')">About</button>
+      <button type="button" onclick="navigateWithTransition('contact.html')">Contact Us</button>
+    </div>
+  </header>
+
+  <div class="page-banner">
+    <h1>Capital Investment Agreement</h1>
+    <p>Fill in the details below to generate an investment agreement for equity partnership</p>
+  </div>
+
+  <div class="container">
+
+    <div class="disclaimer">
+      ⚠️ This tool generates a draft capital investment agreement based on the information you provide. It is not a substitute for legal advice — have the final document reviewed by a legal professional before either party signs.
+    </div>
+
+    <div class="card">
+      <h2>Agreement Details</h2>
+      <label for="agreementDate">Agreement Date</label>
+      <input type="date" id="agreementDate" required>
+
+      <label for="investmentTermMonths">Investment Term (months)</label>
+      <input type="number" id="investmentTermMonths" min="1" value="12" required>
+    </div>
+
+    <div class="card">
+      <h2>Investee (Business / Founder)</h2>
+      <p class="hint">The business or individual receiving the investment.</p>
+      <div id="borrowersContainer"></div>
+      <button type="button" onclick="addBorrowerBlock()" style="width:auto; background:#16a085; color:white; border:none; padding:8px 14px; border-radius:4px; cursor:pointer; font-size:13px; margin-top:10px;">+ Add Founder / Business</button>
+    </div>
+
+    <div class="card">
+      <h2>Investor Details</h2>
+      <label for="lenderName">Investor</label>
+      <input type="text" id="lenderName" value="G-Spirit Loan Solution" required>
+
+      <div class="two-col">
+        <div>
+          <label for="lenderRepName">Authorized Representative Name</label>
+          <input type="text" id="lenderRepName" required>
+
+          <label for="lenderRepId">Representative NIC / Passport No.</label>
+          <input type="text" id="lenderRepId" required>
+        </div>
+        <div>
+          <label for="lenderAddress">Business Address</label>
+          <input type="text" id="lenderAddress" value="Buea, Cameroon" required>
+
+          <label for="lenderPhone">Phone</label>
+          <input type="tel" id="lenderPhone" value="+237 620 569 984" required>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Investment Details</h2>
+      <div class="two-col">
+        <div>
+          <label for="loanAmount">Capital Investment (XAF)</label>
+          <input type="number" id="loanAmount" min="0" required>
+
+          <label for="loanInterest">Equity / Stake Offered (%)</label>
+          <input type="number" id="loanInterest" min="0" max="100" step="0.5" value="10" required>
+        </div>
+        <div>
+          <label for="otherDesc">Additional Terms</label>
+          <input type="text" id="otherDesc" placeholder="e.g. Board seat, profit share">
+
+          <label for="otherAmount">Valuation (XAF) - if known</label>
+          <input type="number" id="otherAmount" min="0" value="0">
+        </div>
+      </div>
+
+      <div class="summary-preview" id="loanSummaryPreview"></div>
+    </div>
+
+    <div class="card">
+      <h2>Business Details</h2>
+      <label for="businessName">Business / Project Name</label>
+      <input type="text" id="businessName" required>
+
+      <label for="businessSector">Sector / Industry</label>
+      <input type="text" id="businessSector" required>
+
+      <label for="businessStage">Business Stage</label>
+      <input type="text" id="businessStage" placeholder="e.g. Early-stage, Growth, Scaling" required>
+
+      <label for="businessDescription">Brief Business Description</label>
+      <textarea id="businessDescription" rows="2" required></textarea>
+    </div>
+
+    <div class="card">
+      <h2>Milestones & Use of Capital</h2>
+      <label for="capitalUse">How will the capital be used?</label>
+      <textarea id="capitalUse" rows="2" required></textarea>
+
+      <label for="milestones">Key Milestones</label>
+      <textarea id="milestones" rows="2" placeholder="e.g. Product launch, hiring, expansion"></textarea>
+    </div>
+
+    <div class="card">
+      <h2>Additional Information</h2>
+      <label for="remark">Remark (optional)</label>
+      <textarea id="remark" rows="2"></textarea>
+
+      <label for="nextOfKinName">Investor's Next of Kin (Name)</label>
+      <input type="text" id="nextOfKinName">
+
+      <label for="nextOfKinPhone">Investor's Next of Kin (Phone)</label>
+      <input type="tel" id="nextOfKinPhone">
+
+      <label for="witnessName">Witness Name (optional)</label>
+      <input type="text" id="witnessName">
+    </div>
+
+    <button type="button" class="submit-btn" onclick="generateCapitalAgreementPDF()">Generate Investment Agreement (PDF)</button>
+
+  </div>
+
+  <footer>
+    <div class="footer-links">
+      <a href="privacy.html" target="_self">Privacy Policy</a>
+      <span>&copy; 2026 G-Spirit Loan Solution. All rights reserved.</span>
+    </div>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+  <script>
+    (function () {
+      var overlay = document.querySelector('.page-overlay');
+      window.navigateWithTransition = function (targetUrl) {
+        if (!targetUrl) return false;
+        document.body.classList.add('is-exiting');
+        overlay.classList.add('is-visible');
+        setTimeout(function () { window.location.href = targetUrl; }, 320);
+        return false;
+      };
+      document.addEventListener('DOMContentLoaded', function () {
+        requestAnimationFrame(function () {
+          document.body.classList.remove('is-entering');
+          overlay.classList.remove('is-visible');
+        });
+      });
+    })();
+
+    function formatCurrency(value) {
+      return parseFloat(value || 0).toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+    }
+
+    var ONES = ['', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten',
+      'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen'];
+    var TENS = ['', '', 'twenty', 'thirty', 'forty', 'fifty', 'sixty', 'seventy', 'eighty', 'ninety'];
+
+    function threeDigitsToWords(n) {
+      var str = '';
+      if (n >= 100) { str += ONES[Math.floor(n / 100)] + ' hundred '; n %= 100; }
+      if (n >= 20) { str += TENS[Math.floor(n / 10)] + ' '; n %= 10; }
+      if (n > 0) { str += ONES[n] + ' '; }
+      return str.trim();
+    }
+
+    function numberToWords(num) {
+      num = Math.round(num);
+      if (num === 0) return 'zero';
+      var units = ['', 'thousand', 'million', 'billion'];
+      var parts = [];
+      var unitIndex = 0;
+      while (num > 0) {
+        var chunk = num % 1000;
+        if (chunk > 0) parts.unshift(threeDigitsToWords(chunk) + (units[unitIndex] ? ' ' + units[unitIndex] : ''));
+        num = Math.floor(num / 1000);
+        unitIndex++;
+      }
+      return parts.join(', ').replace(/\s+/g, ' ').trim();
+    }
+
+    function formatDateDMY(isoDate) {
+      if (!isoDate) return isoDate;
+      var parts = isoDate.split('-');
+      if (parts.length !== 3) return isoDate;
+      return parts[2] + '/' + parts[1] + '/' + parts[0];
+    }
+
+    function amountWithWords(amount) {
+      var words = numberToWords(amount);
+      var capitalized = words.charAt(0).toUpperCase() + words.slice(1);
+      return formatCurrency(amount) + ' XAF (' + capitalized + ' Central African Francs)';
+    }
+
+    var borrowerCount = 0;
+    function addBorrowerBlock() {
+      borrowerCount++;
+      var uid = borrowerCount;
+      var wrapper = document.createElement('div');
+      wrapper.className = 'borrower-block';
+      wrapper.setAttribute('data-uid', uid);
+      wrapper.innerHTML =
+        '<button type="button" class="remove-borrower-btn" onclick="removeBorrowerBlock(' + uid + ')">Remove</button>' +
+        '<h4>Founder / Business #' + uid + '</h4>' +
+        '<div class="two-col">' +
+          '<div>' +
+            '<label>Full Name</label>' +
+            '<input type="text" class="b-name" required>' +
+            '<label>National ID / Passport No.</label>' +
+            '<input type="text" class="b-nic" required>' +
+          '</div>' +
+          '<div>' +
+            '<label>Residence / Business Address</label>' +
+            '<input type="text" class="b-residence" required>' +
+            '<label>Phone</label>' +
+            '<input type="tel" class="b-phone" required>' +
+          '</div>' +
+        '</div>';
+      document.getElementById('borrowersContainer').appendChild(wrapper);
+    }
+
+    function removeBorrowerBlock(uid) {
+      var block = document.querySelector('.borrower-block[data-uid="' + uid + '"]');
+      if (block) block.remove();
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+      addBorrowerBlock();
+      updateLoanSummary();
+      prefillCapitalAgreement();
+    });
+
+    function prefillCapitalAgreement() {
+      var raw = sessionStorage.getItem('agreementPrefill');
+      if (!raw) return;
+      var data = JSON.parse(raw);
+      if (data.type !== 'capital' || !data.row) return;
+      var row = data.row;
+      sessionStorage.removeItem('agreementPrefill');
+
+      // Prefill borrower / founder
+      if (row.name) {
+        var block = document.querySelector('.borrower-block');
+        if (block) {
+          block.querySelector('.b-name').value = row.name || '';
+          block.querySelector('.b-phone').value = row.phone || '';
+          block.querySelector('.b-residence').value = row.location || '';
+        }
+      }
+      // Prefill investment details
+      if (row.capital_requested) {
+        document.getElementById('loanAmount').value = row.capital_requested;
+      }
+      if (row.equity_offered) {
+        var equity = String(row.equity_offered).replace(/[^0-9.]/g, '');
+        if (equity) document.getElementById('loanInterest').value = parseFloat(equity);
+      }
+      // Prefill business details
+      if (row.business_name) {
+        document.getElementById('businessName').value = row.business_name;
+      }
+      if (row.sector) {
+        document.getElementById('businessSector').value = row.sector;
+      }
+      if (row.business_stage) {
+        document.getElementById('businessStage').value = row.business_stage;
+      }
+      if (row.business_description) {
+        document.getElementById('businessDescription').value = row.business_description;
+      }
+      if (row.capital_use) {
+        document.getElementById('capitalUse').value = row.capital_use;
+      }
+      if (row.additionalInfo) {
+        document.getElementById('remark').value = row.additionalInfo;
+      }
+      if (row.monthly_revenue) {
+        document.getElementById('otherAmount').value = row.monthly_revenue;
+      }
+
+      var today = new Date().toISOString().slice(0, 10);
+      document.getElementById('agreementDate').value = today;
+      updateLoanSummary();
+    }
+
+    function updateLoanSummary() {
+      var amount = parseFloat(document.getElementById('loanAmount').value) || 0;
+      var equity = parseFloat(document.getElementById('loanInterest').value) || 0;
+      var valuation = parseFloat(document.getElementById('otherAmount').value) || 0;
+
+      document.getElementById('loanSummaryPreview').innerHTML =
+        '<div class="summary-box"><strong>Capital Investment</strong><span>' + formatCurrency(amount) + ' XAF</span></div>' +
+        '<div class="summary-box"><strong>Equity Offered</strong><span>' + equity + '%</span></div>' +
+        (valuation > 0 ? '<div class="summary-box"><strong>Valuation</strong><span>' + formatCurrency(valuation) + ' XAF</span></div>' : '');
+    }
+
+    ['loanAmount', 'loanInterest', 'otherAmount'].forEach(function (id) {
+      document.getElementById(id).addEventListener('input', updateLoanSummary);
+    });
+
+    function loadImageAsDataURL(url) {
+      return fetch(url)
+        .then(function (res) { if (!res.ok) throw new Error('Logo not found'); return res.blob(); })
+        .then(function (blob) {
+          return new Promise(function (resolve, reject) {
+            var reader = new FileReader();
+            reader.onloadend = function () { resolve(reader.result); };
+            reader.onerror = reject;
+            reader.readAsDataURL(blob);
+          });
+        })
+        .catch(function () { return null; });
+    }
+
+    function generateCapitalAgreementPDF() {
+      var borrowerBlocks = Array.prototype.slice.call(document.querySelectorAll('.borrower-block'));
+      if (borrowerBlocks.length === 0) {
+        alert('Add at least one Founder / Business.');
+        return;
+      }
+
+      var required = ['agreementDate', 'investmentTermMonths', 'lenderRepName', 'lenderRepId', 'lenderAddress',
+                       'lenderPhone', 'loanAmount', 'businessName', 'businessSector', 'businessStage',
+                       'businessDescription', 'capitalUse'];
+      for (var i = 0; i < required.length; i++) {
+        var el = document.getElementById(required[i]);
+        if (!el.value) {
+          el.focus();
+          alert('Please fill in all required fields.');
+          el.style.borderColor = '#d9534f';
+          return;
+        }
+      }
+
+      var borrowers = borrowerBlocks.map(function (b) {
+        return {
+          name: b.querySelector('.b-name').value,
+          nic: b.querySelector('.b-nic').value,
+          residence: b.querySelector('.b-residence').value,
+          phone: b.querySelector('.b-phone').value
+        };
+      });
+
+      var agreementDate = formatDateDMY(document.getElementById('agreementDate').value);
+      var investmentTermMonths = document.getElementById('investmentTermMonths').value;
+      var lenderName = document.getElementById('lenderName').value;
+      var lenderRepName = document.getElementById('lenderRepName').value;
+      var lenderRepId = document.getElementById('lenderRepId').value;
+      var lenderAddress = document.getElementById('lenderAddress').value;
+      var lenderPhone = document.getElementById('lenderPhone').value;
+
+      var amount = parseFloat(document.getElementById('loanAmount').value) || 0;
+      var equity = parseFloat(document.getElementById('loanInterest').value) || 0;
+      var otherDesc = document.getElementById('otherDesc').value || 'N/A';
+      var valuation = parseFloat(document.getElementById('otherAmount').value) || 0;
+
+      var businessName = document.getElementById('businessName').value;
+      var businessSector = document.getElementById('businessSector').value;
+      var businessStage = document.getElementById('businessStage').value;
+      var businessDescription = document.getElementById('businessDescription').value;
+      var capitalUse = document.getElementById('capitalUse').value;
+      var milestones = document.getElementById('milestones').value || 'Not specified';
+
+      var remark = document.getElementById('remark').value || 'None';
+      var nextOfKinName = document.getElementById('nextOfKinName').value || 'N/A';
+      var nextOfKinPhone = document.getElementById('nextOfKinPhone').value || 'N/A';
+      var witnessName = document.getElementById('witnessName').value;
+
+      loadImageAsDataURL('logo.png').then(function (logo) {
+        buildPDF(logo);
+      });
+
+      function buildPDF(logo) {
+        var jsPDFLib = window.jspdf.jsPDF;
+        var doc = new jsPDFLib();
+        var FONT = 'times';
+        doc.setFont(FONT, 'normal');
+        var pageWidth = doc.internal.pageSize.getWidth();
+        var pageHeight = doc.internal.pageSize.getHeight();
+        var margin = 16;
+        var maxWidth = pageWidth - margin * 2;
+        var y = margin;
+
+        function ensureSpace(neededHeight) {
+          if (y + neededHeight > pageHeight - 18) {
+            doc.addPage();
+            y = margin;
+          }
+        }
+
+        function heading(text) {
+          ensureSpace(10);
+          y += 1.5;
+          doc.setFont(FONT, 'bold');
+          doc.setFontSize(11);
+          doc.setTextColor(22, 160, 133);
+          doc.text(text, margin, y);
+          doc.setDrawColor(22, 160, 133);
+          doc.setLineWidth(0.3);
+          doc.line(margin, y + 1.3, pageWidth - margin, y + 1.3);
+          y += 6;
+        }
+
+        function paragraph(text, size) {
+          doc.setFont(FONT, 'normal');
+          doc.setFontSize(size || 10);
+          doc.setTextColor(25, 25, 25);
+          var lines = doc.splitTextToSize(text, maxWidth);
+          lines.forEach(function (line, idx) {
+            ensureSpace(5.2);
+            var isLast = idx === lines.length - 1;
+            doc.text(line, margin, y, isLast ? {} : { align: 'justify', maxWidth: maxWidth });
+            y += 5;
+          });
+          y += 2.5;
+        }
+
+        function richParagraph(segments, size) {
+          doc.setFontSize(size || 10);
+          doc.setTextColor(25, 25, 25);
+          var lineHeight = 5;
+          var x = margin;
+          ensureSpace(lineHeight);
+
+          var tokens = [];
+          segments.forEach(function (seg) {
+            var words = seg.text.trim().split(/\s+/).filter(function (w) { return w.length > 0; });
+            words.forEach(function (word) {
+              var noSpaceBefore = tokens.length === 0 || /^[,.\):;!?]/.test(word);
+              tokens.push({ text: word, underline: seg.underline, bold: seg.bold, noSpaceBefore: noSpaceBefore });
+            });
+          });
+
+          tokens.forEach(function (tok) {
+            doc.setFont(FONT, tok.bold ? 'bold' : 'normal');
+            var spaceW = tok.noSpaceBefore ? 0 : doc.getTextWidth(' ');
+            var wordW = doc.getTextWidth(tok.text);
+
+            if (x + spaceW + wordW > margin + maxWidth) {
+              y += lineHeight;
+              ensureSpace(lineHeight);
+              x = margin;
+              spaceW = 0;
+            }
+
+            x += spaceW;
+            doc.text(tok.text, x, y);
+            if (tok.underline) {
+              doc.setDrawColor(25, 25, 25);
+              doc.setLineWidth(0.15);
+              doc.line(x, y + 0.8, x + wordW, y + 0.8);
+            }
+            x += wordW;
+          });
+
+          y += lineHeight + 2.5;
+        }
+
+        function d(text) { return { text: text, underline: true }; }
+        function t(text) { return { text: text }; }
+
+        // Header banner
+        doc.setFillColor(43, 55, 115);
+        doc.rect(0, 0, pageWidth, 24, 'F');
+        if (logo) {
+          try { doc.addImage(logo, 'PNG', margin, 3, 16, 16); } catch (e) {}
+        }
+        doc.setTextColor(255, 255, 255);
+        doc.setFontSize(12);
+        doc.setFont(FONT, 'bold');
+        doc.text('G-SPIRIT LOAN SOLUTION', logo ? margin + 20 : margin, 13);
+        doc.setFontSize(7.5);
+        doc.setFont(FONT, 'normal');
+        doc.text('+237 620 569 984', pageWidth - margin, 7, { align: 'right' });
+        doc.text('hi@gspiritloans.com', pageWidth - margin, 12, { align: 'right' });
+        doc.text('Douala, Cameroon', pageWidth - margin, 17, { align: 'right' });
+
+        // Faint watermark
+        if (logo) {
+          try {
+            doc.saveGraphicsState();
+            doc.setGState(doc.GState({ opacity: 0.08 }));
+            doc.addImage(logo, 'PNG', pageWidth / 2 - 50, pageHeight / 2 - 50, 100, 100);
+            doc.restoreGraphicsState();
+          } catch (e) {}
+        }
+
+        y = 33;
+        doc.setFont(FONT, 'bold');
+        doc.setFontSize(16);
+        doc.setTextColor(43, 55, 115);
+        doc.text('CAPITAL INVESTMENT AGREEMENT', pageWidth / 2, y, { align: 'center' });
+        y += 3;
+        doc.setDrawColor(43, 55, 115);
+        doc.setLineWidth(0.5);
+        doc.line(pageWidth / 2 - 40, y, pageWidth / 2 + 40, y);
+        y += 8;
+
+        richParagraph([
+          t('This Capital Investment Agreement is made and effective on '), d(agreementDate),
+          t(', between the Founder(s) / Business(es) named below and '), d(lenderName),
+          t(' (hereafter the "Investor").')
+        ]);
+
+        heading('Founder(s) / Business(es)');
+        borrowers.forEach(function (b, idx) {
+          var segs = [];
+          if (borrowers.length > 1) segs.push(t('Founder ' + (idx + 1) + ': '));
+          segs.push(d(b.name), t(', ID/Passport No. '), d(b.nic), t(', resident at '), d(b.residence), t(', telephone '), d(b.phone), t('.'));
+          richParagraph(segs);
+        });
+
+        heading('Investor');
+        richParagraph([
+          d(lenderName), t(', represented by '), d(lenderRepName), t(' (NIC No. '), d(lenderRepId),
+          t('), of '), d(lenderAddress), t(', telephone '), d(lenderPhone), t('.')
+        ]);
+
+        heading('Investment Commitment');
+        richParagraph([
+          t('The Investor agrees to provide a capital investment of '), d(amountWithWords(amount)),
+          t(' to the Founder(s) for the business described below, in exchange for a '), d(equity + '%'),
+          t(' equity stake in the business. The investment term is '), d(investmentTermMonths + ' month(s)'),
+          t(' from the date of this Agreement.'),
+          (valuation > 0 ? t(' The agreed pre-money valuation is ' + formatCurrency(valuation) + ' XAF.') : t(''))
+        ]);
+
+        heading('Business Details');
+        richParagraph([t('Business Name: '), d(businessName)]);
+        richParagraph([t('Sector: '), d(businessSector)]);
+        richParagraph([t('Stage: '), d(businessStage)]);
+        richParagraph([t('Description: '), d(businessDescription)]);
+
+        heading('Use of Capital');
+        richParagraph([d(capitalUse)]);
+
+        if (milestones && milestones !== 'Not specified') {
+          heading('Key Milestones');
+          richParagraph([d(milestones)]);
+        }
+
+        heading('Additional Terms');
+        richParagraph([d(otherDesc)]);
+
+        if (remark && remark !== 'None') {
+          heading('Remark');
+          richParagraph([d(remark)]);
+        }
+
+        heading('Investor\'s Next of Kin');
+        richParagraph([
+          d(nextOfKinName), t(', telephone '), d(nextOfKinPhone), t(', is the Investor\'s designated next of kin for matters relating to this Agreement.')
+        ]);
+
+        heading('Liability & Conditions');
+        paragraph('The Founder(s) acknowledge that this capital investment is made in exchange for equity in the business. The Founder(s) agree to provide regular updates, financial reports, and to operate the business in good faith. The Investor reserves the right to observe or participate in key business decisions as outlined in the Additional Terms.');
+
+        // Signatures
+        var colWidth = (maxWidth - 10) / 2;
+        var signLines = [];
+        borrowers.forEach(function (b, idx) {
+          signLines.push({ label: (borrowers.length > 1 ? 'Founder ' + (idx + 1) : 'Founder') + ' — ' + b.name });
+        });
+        signLines.push({ label: 'Investor — ' + lenderRepName + ' (for ' + lenderName + ')' });
+        if (witnessName) signLines.push({ label: 'Witness — ' + witnessName });
+
+        var sigRowHeight = 16;
+        var sigRows = Math.ceil(signLines.length / 2);
+        var sigBlockHeight = 13 + (sigRows * sigRowHeight);
+        ensureSpace(sigBlockHeight);
+
+        y += 4;
+        doc.setFont(FONT, 'bold');
+        doc.setFontSize(11);
+        doc.setTextColor(43, 55, 115);
+        doc.text('Signatures', margin, y);
+        doc.setDrawColor(43, 55, 115);
+        doc.setLineWidth(0.3);
+        doc.line(margin, y + 1.3, pageWidth - margin, y + 1.3);
+        y += 9;
+
+        for (var s = 0; s < signLines.length; s += 2) {
+          doc.setFont(FONT, 'normal');
+          doc.setFontSize(9.5);
+          doc.setTextColor(40, 40, 40);
+          doc.text(signLines[s].label, margin, y);
+          if (signLines[s + 1]) doc.text(signLines[s + 1].label, margin + colWidth + 10, y);
+          y += 7;
+          doc.setDrawColor(120, 120, 120);
+          doc.setLineWidth(0.2);
+          doc.line(margin, y, margin + colWidth, y);
+          if (signLines[s + 1]) doc.line(margin + colWidth + 10, y, margin + colWidth + 10 + colWidth, y);
+          y += 4;
+          doc.setFontSize(8);
+          doc.setTextColor(120, 120, 120);
+          doc.text('Signature & Date', margin, y);
+          if (signLines[s + 1]) doc.text('Signature & Date', margin + colWidth + 10, y);
+          y += 7;
+        }
+
+        // Footer
+        var totalPages = doc.internal.getNumberOfPages();
+        for (var p = 1; p <= totalPages; p++) {
+          doc.setPage(p);
+          doc.setDrawColor(220, 220, 220);
+          doc.setLineWidth(0.2);
+          doc.line(margin, pageHeight - 13, pageWidth - margin, pageHeight - 13);
+          doc.setFont(FONT, 'normal');
+          doc.setFontSize(7.5);
+          doc.setTextColor(150, 150, 150);
+          doc.text('G-Spirit Loan Solution — Capital Investment Agreement', margin, pageHeight - 8);
+          doc.text('Page ' + p + ' of ' + totalPages, pageWidth - margin, pageHeight - 8, { align: 'right' });
+        }
+
+        var filename = 'Capital_Investment_Agreement_' + (businessName.replace(/\s+/g, '_') || 'investee') + '.pdf';
+        doc.save(filename);
+      }
+    }
+  </script>
+
+</body>
+</html>

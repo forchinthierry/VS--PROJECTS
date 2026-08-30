@@ -5,10 +5,12 @@
   <link rel="icon" type="image/png" href="logo.png">
   <title>G-Spirit Loan Solution</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
     * {
       box-sizing: border-box;
-    }
+    } 
 
     body {
       font-family: Arial, sans-serif;
@@ -621,6 +623,60 @@
     .logo-btn:active {
       transform: scale(0.96);
     }
+
+    body {
+      font-family: Nunito, Arial, sans-serif;
+      color: #2b3773;
+      background: radial-gradient(circle at 20% 10%, #f6e2f8, #e8c7ed 48%, #d9c3e8);
+    }
+
+    header { padding: 14px 22px; box-shadow: 0 4px 14px #2b377322; }
+    header img { max-height: 48px; }
+    .brand { flex: 1; }
+    .brand h1 { font-family: Fredoka, Nunito, sans-serif; font-size: 22px; letter-spacing: .04em; }
+    .container { width: min(94%, 850px); margin: 28px auto 60px; padding: 0; }
+    .hero, .card { background: #ffffffed; border-radius: 24px; box-shadow: 0 16px 40px #49306b20; border: 1px solid #ffffffaa; }
+    .hero { padding: 30px; margin-bottom: 20px; }
+    .hero::before { content: "QUICK LOAN APPLICATION"; display: inline-block; background: #8e44ad; color: white; padding: 7px 14px; border-radius: 999px; font-size: 12px; font-weight: 800; letter-spacing: .08em; }
+    .hero p { max-width: 690px; margin: 14px auto 0; line-height: 1.65; color: #514866; font-size: 16px; }
+    .card { padding: 28px; margin-bottom: 20px; }
+    .card:first-of-type { padding: 20px 28px; }
+    .card:first-of-type h2 { font-family: Fredoka, Nunito, sans-serif; color: #2b3773; border: 0; margin: 0 0 8px; }
+    .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 0; }
+    .steps li { padding: 13px; border: 0; border-radius: 15px; background: #f7eff9; font-size: 13px; }
+    .application-panel { padding: 0; box-shadow: none; border: 0; background: transparent; }
+    .application-panel > h2 { display: none; }
+    .form-progress { margin: 0 0 25px; max-width: none; gap: 8px; }
+    .progress-step { min-width: 0; flex: 1; color: #8b8195; font-weight: 800; }
+    .progress-step span { display: block; width: auto; height: 7px; border-radius: 99px; background: #e5dbe8; color: transparent; }
+    .progress-step.active, .progress-step.completed { color: #7d3c98; }
+    .progress-step.active span, .progress-step.completed span { background: #8e44ad; }
+    .progress-line { display: none; }
+    .step-heading h3 { font-family: Fredoka, Nunito, sans-serif; color: #2b3773; font-size: 24px; }
+    .step-heading p { color: #6d6475; }
+    label { color: #40375a; font-size: 13px; margin-top: 0; }
+    input, textarea, select { padding: 12px; margin: 6px 0 15px; border: 1px solid #d8cedc; border-radius: 10px; color: #302944; font: inherit; }
+    input:focus, textarea:focus, select:focus { border-color: #8e44ad; box-shadow: 0 0 0 3px #8e44ad26; }
+    .step-actions { margin-top: 24px; }
+    .step-actions button, .output-buttons button { border-radius: 12px; padding: 13px 18px; font-weight: 800; font: inherit; }
+    .next-btn, .submit-btn { background: #8e44ad; }
+    .next-btn:hover, .submit-btn:hover { background: #71368d; }
+    .prev-btn { background: #eee8f0; color: #51465c; }
+    .summary-panel { background: linear-gradient(135deg, #fff8eb, #ffe7b0 45%, #fffdf7); border-radius: 16px; padding: 18px; }
+    .summary-panel h3, h2 { color: #7d3c98; border-color: #8e44ad; }
+    .review-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; }
+    .review-item { background: #fff; border-radius: 10px; padding: 10px; border: 1px solid #eee; }
+    .review-item small { display: block; color: #81768a; }
+    .review-item strong { display: block; margin-top: 3px; word-break: break-word; }
+    .review-note { margin-top: 15px; padding: 13px; border-left: 4px solid #8e44ad; background: #f6edf8; border-radius: 0; color: #3a2d4f; line-height: 1.5; }
+    .output-buttons { margin-top: 15px; }
+    .download-btn { margin-top: 0; border-radius: 12px; }
+
+    @media (max-width: 650px) {
+      .steps, .review-grid, .output-buttons { grid-template-columns: 1fr; }
+      .hero, .card { padding: 20px; }
+      .step-actions { grid-template-columns: 1fr; }
+    }
   </style>
 </head>
 <body>
@@ -852,6 +908,39 @@
     }
 
     var API_BASE = 'https://gspiritloans-api.forchinthierry.workers.dev';
+    var form = document.getElementById('loanForm');
+
+    function fields() {
+      return Object.fromEntries(new FormData(form).entries());
+    }
+
+    function money(value) {
+      return Number(value || 0).toLocaleString('en-US', { maximumFractionDigits: 0 }) + ' XAF';
+    }
+
+    function esc(value) {
+      return String(value ?? '').replace(/[&<>"']/g, function (match) {
+        return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' })[match];
+      });
+    }
+
+    function buildReview() {
+      var data = fields();
+      var items = [
+        ['Applicant', data.name], ['Phone', data.phone], ['Email', data.email],
+        ['Date of Birth', data.date], ['Residence', data.residence],
+        ['Loan Amount', money(data.amount)], ['Term', data.term], ['Purpose', data.purpose],
+        ['Monthly Income', money(data.income)], ['Employment', data.employment],
+        ['Surety', data.suretyName], ['Surety Phone', data.suretyPhone],
+        ['Surety Address', data.suretyAddress], ['Relationship', data.suretyRelation],
+        ['Collateral', data.collateral],
+        ['Total Repayment', document.getElementById('totalRepayment').textContent + ' XAF'],
+        ['Monthly Repayment', document.getElementById('monthlyRepayment').textContent + ' XAF']
+      ];
+      document.getElementById('review').innerHTML = '<div class="review-grid">' + items.map(function (item) {
+        return '<div class="review-item"><small>' + esc(item[0]) + '</small><strong>' + esc(item[1]) + '</strong></div>';
+      }).join('') + '</div>';
+    }
 
     function formatCurrency(value) {
       return parseFloat(value).toLocaleString('en-US', {
@@ -912,7 +1001,10 @@
       document.querySelectorAll('.progress-line').forEach(function (line, index) {
         line.classList.toggle('completed', index < stepNumber - 1);
       });
-      if (stepNumber === 3) updateLoanSummary();
+      if (stepNumber === 3) {
+        updateLoanSummary();
+        buildReview();
+      }
       window.scrollTo({ top: document.querySelector('.application-panel').offsetTop - 15, behavior: 'smooth' });
     }
 

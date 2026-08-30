@@ -6,9 +6,7 @@
   <title>Partnership &amp; Investment Agreement - G-Spirit Loan Solution</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     body {
       font-family: Arial, sans-serif;
@@ -450,25 +448,42 @@
     </div>
 
     <div class="card">
-      <h2>Existing Ownership (Before This Agreement)</h2>
-      <p class="hint">Record how the business is owned right now, before any new partner/investor is admitted. This determines how much existing owners are diluted by new capital.</p>
+      <h2>Capital Structure</h2>
+      <p class="hint">The business value is split into two parts: <strong>Fixed Assets</strong> (non-dilutable, always owned by the founder) and a <strong>Monetary Pool</strong> (dilutable, based on cash contributions). The founder must retain at least the Fixed Assets percentage.</p>
 
-      <label for="preMoneyValue">Agreed Value of the Business Right Now (XAF, before new investment)</label>
+      <label for="preMoneyValue">Total Pre-Money Valuation (XAF)</label>
       <input type="number" id="preMoneyValue" min="0" placeholder="e.g. 5000000" required>
 
-      <label for="founderExistingPct">Founder's Current Ownership (%)</label>
-      <input type="number" id="founderExistingPct" min="0" max="100" step="0.1" value="100" required>
+      <div class="party-grid">
+        <div>
+          <label for="fixedPct">Fixed Assets Percentage (non-dilutable)</label>
+          <input type="number" id="fixedPct" min="0" max="100" step="0.5" value="50" required>
+          <div class="hint">This percentage is reserved for the founder and is never diluted.</div>
+        </div>
+        <div>
+          <label for="founderMonetary">Founder's Monetary Contribution (XAF)</label>
+          <input type="number" id="founderMonetary" min="0" placeholder="Cash already invested by founder" required>
+          <div class="hint">This is the cash the founder has put into the business.</div>
+        </div>
+      </div>
 
-      <label style="margin-top:18px;">Other Existing Partners/Investors Already in the Business (if any)</label>
+      <div id="monetaryPoolInfo" style="margin-top:12px; background:#f0f0f0; padding:10px; border-radius:6px;">
+        <strong>Monetary Pool</strong> = (100% – Fixed %) × Valuation = <span id="monetaryPoolValue">0</span> XAF<br>
+        Founder's monetary share = <span id="founderMonetaryPct">0</span>% of the pool.
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Existing Partners (if any)</h2>
+      <p class="hint">List any other partners who have already contributed cash to the business. Their ownership comes from the monetary pool.</p>
       <div id="existingPartnersContainer"></div>
       <button type="button" onclick="addExistingPartnerBlock()" style="width:auto; background:#2b3773; color:white; border:none; padding:8px 14px; border-radius:4px; cursor:pointer; font-size:13px; margin-top:10px;">+ Add Existing Partner</button>
-
-      <p class="hint" id="existingTotalHint" style="margin-top:12px;">Existing ownership total: 100.0% (should add up to 100%)</p>
+      <div id="existingTotalHint" style="margin-top:12px; font-size:13px; color:#777;">Existing monetary contributions total: 0 XAF</div>
     </div>
 
     <div class="card">
       <h2>New Partners &amp; Investors Joining Now</h2>
-      <p class="hint">Add one entry for each new partner or investor being admitted through this agreement, and the fresh capital they're contributing.</p>
+      <p class="hint">Add one entry for each new partner or investor being admitted through this agreement, and the fresh capital they're contributing (in XAF).</p>
       <div id="partnersContainer"></div>
       <button type="button" onclick="addPartnerBlock()" style="width:auto; background:#16a085; color:white; border:none; padding:8px 14px; border-radius:4px; cursor:pointer; font-size:13px; margin-top:10px;">+ Add Partner / Investor</button>
     </div>
@@ -476,7 +491,7 @@
     <div class="card">
       <h2>Ownership Overview (After This Investment)</h2>
       <div class="ownership-preview" id="ownershipPreview"></div>
-      <p class="hint">Calculated automatically: existing owners are diluted based on the business's agreed pre-investment value, while new partners receive ownership based on their fresh contribution.</p>
+      <p class="hint">The founder's total ownership = Fixed Assets % + (founder's monetary share of the monetary pool). The founder cannot go below the Fixed Assets percentage.</p>
     </div>
 
     <div class="card">
@@ -561,7 +576,7 @@
       addTeamRow('', 'Managing Partner (Founder)');
       addTeamRow('', 'Partner');
       addPartnerBlock();
-      updateOwnershipPreview();
+      updateAll();
       prefillPartnershipAgreement();
     });
 
@@ -602,7 +617,7 @@
         firstBlock.querySelector('.p-role').value = row.shares ? 'Active Partner' : 'Passive Investor';
       }
 
-      updateOwnershipPreview();
+      updateAll();
     }
 
     var ONES = ['', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten',
@@ -648,26 +663,25 @@
       return formatCurrency(amount) + ' XAF (' + capitalized + ' Central African Francs)';
     }
 
+    // ---- Existing Partners (monetary contributions) ----
     var existingPartnerCount = 0;
-
     function addExistingPartnerBlock() {
       existingPartnerCount++;
-      var uid = existingPartnerCount;
       var wrapper = document.createElement('div');
       wrapper.className = 'team-row';
-      wrapper.setAttribute('data-existing-uid', uid);
+      wrapper.setAttribute('data-existing-uid', existingPartnerCount);
       wrapper.innerHTML =
         '<input type="text" placeholder="Name" class="ep-name">' +
         '<input type="text" placeholder="Phone" class="ep-phone">' +
-        '<input type="number" placeholder="Current %" class="ep-pct" min="0" max="100" step="0.1" style="max-width:110px;">' +
-        '<button type="button" onclick="this.parentNode.remove(); updateOwnershipPreview();">Remove</button>';
+        '<input type="number" placeholder="Contribution (XAF)" class="ep-contribution" min="0" step="1000" style="max-width:150px;">' +
+        '<button type="button" onclick="this.parentNode.remove(); updateAll();">Remove</button>';
       document.getElementById('existingPartnersContainer').appendChild(wrapper);
-      wrapper.querySelector('.ep-pct').addEventListener('input', updateOwnershipPreview);
-      updateOwnershipPreview();
+      wrapper.querySelector('.ep-contribution').addEventListener('input', updateAll);
+      updateAll();
     }
 
+    // ---- New Partners ----
     var partnerBlockCount = 0;
-
     function addPartnerBlock(prefill) {
       partnerBlockCount++;
       var uid = partnerBlockCount;
@@ -717,67 +731,114 @@
         wrapper.querySelector('.p-nationality').value = prefill.nationality || '';
         wrapper.querySelector('.p-id').value = prefill.id || '';
       }
-      wrapper.querySelector('.p-contribution').addEventListener('input', updateOwnershipPreview);
-      updateOwnershipPreview();
+      wrapper.querySelector('.p-contribution').addEventListener('input', updateAll);
+      updateAll();
     }
 
     function removePartnerBlock(uid) {
       var block = document.querySelector('.partner-block[data-uid="' + uid + '"]');
       if (block) block.remove();
-      updateOwnershipPreview();
+      updateAll();
     }
 
-    function getExistingPartners() {
-      return Array.prototype.slice.call(document.querySelectorAll('#existingPartnersContainer .team-row')).map(function (row) {
-        return {
-          name: row.querySelector('.ep-name').value || 'Existing Partner',
-          phone: row.querySelector('.ep-phone').value || 'N/A',
-          pct: parseFloat(row.querySelector('.ep-pct').value) || 0
-        };
+    // ---- Core calculation ----
+    function updateAll() {
+      // Get inputs
+      var totalPre = parseFloat(document.getElementById('preMoneyValue').value) || 0;
+      var fixedPct = parseFloat(document.getElementById('fixedPct').value) || 0;
+      var founderMonetary = parseFloat(document.getElementById('founderMonetary').value) || 0;
+
+      var fixedValue = totalPre * (fixedPct / 100);
+      var monetaryPool = totalPre - fixedValue;
+
+      // Existing partners
+      var existingRows = document.querySelectorAll('#existingPartnersContainer .team-row');
+      var existingPartners = [];
+      var existingTotal = 0;
+      existingRows.forEach(function (row) {
+        var name = row.querySelector('.ep-name').value || 'Existing Partner';
+        var phone = row.querySelector('.ep-phone').value || '';
+        var contribution = parseFloat(row.querySelector('.ep-contribution').value) || 0;
+        existingTotal += contribution;
+        existingPartners.push({ name: name, phone: phone, contribution: contribution });
       });
-    }
 
-    function updateOwnershipPreview() {
-      var preMoneyValue = parseFloat(document.getElementById('preMoneyValue').value) || 0;
-      var founderExistingPct = parseFloat(document.getElementById('founderExistingPct').value) || 0;
-      var existingPartners = getExistingPartners();
+      // Validate monetary pool: founderMonetary + existingTotal should equal monetaryPool
+      var totalMonetaryContributions = founderMonetary + existingTotal;
+      var diff = totalMonetaryContributions - monetaryPool;
+      if (Math.abs(diff) > 0.01) {
+        // Show warning
+        document.getElementById('monetaryPoolInfo').innerHTML =
+          '<strong>Monetary Pool</strong> = ' + formatCurrency(monetaryPool) + ' XAF<br>' +
+          '<span style="color:#d9534f;">Warning: Founder monetary + existing contributions (' + formatCurrency(totalMonetaryContributions) + ') does not equal the monetary pool value (' + formatCurrency(monetaryPool) + '). Please adjust contributions or valuation.</span>';
+      } else {
+        document.getElementById('monetaryPoolInfo').innerHTML =
+          '<strong>Monetary Pool</strong> = ' + formatCurrency(monetaryPool) + ' XAF<br>' +
+          'Founder\'s monetary share = ' + (monetaryPool > 0 ? (founderMonetary / monetaryPool * 100).toFixed(1) : 0) + '% of the pool.';
+      }
 
-      var existingTotalPct = founderExistingPct + existingPartners.reduce(function (a, p) { return a + p.pct; }, 0);
-      var hint = document.getElementById('existingTotalHint');
-      hint.textContent = 'Existing ownership total: ' + existingTotalPct.toFixed(1) + '% (should add up to 100%)';
-      hint.style.color = Math.abs(existingTotalPct - 100) < 0.05 ? '#777' : '#d9534f';
-
-      var partnerBlocks = Array.prototype.slice.call(document.querySelectorAll('.partner-block'));
-      var newContributions = partnerBlocks.map(function (b) {
-        return parseFloat(b.querySelector('.p-contribution').value) || 0;
+      // New partners
+      var newBlocks = document.querySelectorAll('.partner-block');
+      var newPartners = [];
+      newBlocks.forEach(function (b) {
+        var name = b.querySelector('.p-name').value || 'New Partner';
+        var contribution = parseFloat(b.querySelector('.p-contribution').value) || 0;
+        var role = b.querySelector('.p-role').value;
+        newPartners.push({ name: name, contribution: contribution, role: role });
       });
-      var totalNewCapital = newContributions.reduce(function (a, b) { return a + b; }, 0);
-      var postMoneyValue = preMoneyValue + totalNewCapital;
-      var dilutionFactor = postMoneyValue > 0 ? (preMoneyValue / postMoneyValue) : 1;
 
+      // Compute post-money values
+      var totalNewContrib = newPartners.reduce(function (sum, p) { return sum + p.contribution; }, 0);
+      var postMonetaryPool = monetaryPool + totalNewContrib;
+      var postTotal = fixedValue + postMonetaryPool;
+
+      // Ownership percentages
+      // Founder: fixed + monetary
+      var founderMonetaryPct = monetaryPool > 0 ? (founderMonetary / monetaryPool) : 0; // share of monetary pool before dilution
+      var founderMonetaryValue = founderMonetary; // value remains same in monetary pool, but after dilution its percentage changes
+      var founderMonetaryPostPct = postMonetaryPool > 0 ? (founderMonetary / postMonetaryPool) * 100 : 0;
+      var fixedPctOfPost = (fixedValue / postTotal) * 100;
+      var founderTotalPct = fixedPctOfPost + (founderMonetary / postMonetaryPool) * (100 - fixedPctOfPost) / 100 * 100; // simplified: fixed + monetary percentage of post
+      // Actually easier: founder total ownership = fixedValue/postTotal + founderMonetary/postTotal = (fixedValue + founderMonetary)/postTotal
+      founderTotalPct = ((fixedValue + founderMonetary) / postTotal) * 100;
+
+      // Existing partners post dilution: their contributions remain, but their percentage changes
+      var existingPostPcts = existingPartners.map(function (p) {
+        var pct = postMonetaryPool > 0 ? (p.contribution / postMonetaryPool) * 100 : 0;
+        return { name: p.name, pct: pct };
+      });
+
+      // New partners post
+      var newPostPcts = newPartners.map(function (p) {
+        var pct = postMonetaryPool > 0 ? (p.contribution / postMonetaryPool) * 100 : 0;
+        return { name: p.name, pct: pct };
+      });
+
+      // Update preview
       var preview = document.getElementById('ownershipPreview');
       preview.innerHTML = '';
-
-      var founderNewPct = founderExistingPct * dilutionFactor;
-      preview.innerHTML += '<div class="ownership-box"><strong>Founder</strong><span>' + founderNewPct.toFixed(1) + '%</span></div>';
-
-      existingPartners.forEach(function (p) {
-        var newPct = p.pct * dilutionFactor;
-        preview.innerHTML += '<div class="ownership-box"><strong>' + p.name + '</strong><span>' + newPct.toFixed(1) + '%</span></div>';
+      // Founder
+      preview.innerHTML += '<div class="ownership-box"><strong>Founder (Fixed + Monetary)</strong><span>' + founderTotalPct.toFixed(1) + '%</span></div>';
+      // Existing
+      existingPostPcts.forEach(function (p) {
+        preview.innerHTML += '<div class="ownership-box"><strong>' + p.name + '</strong><span>' + p.pct.toFixed(1) + '%</span></div>';
       });
-
-      partnerBlocks.forEach(function (b, i) {
-        var name = b.querySelector('.p-name').value || ('New Partner ' + (i + 1));
-        var pct = postMoneyValue > 0 ? (newContributions[i] / postMoneyValue * 100) : 0;
-        preview.innerHTML += '<div class="ownership-box"><strong>' + name + '</strong><span>' + pct.toFixed(1) + '%</span></div>';
+      // New
+      newPostPcts.forEach(function (p) {
+        preview.innerHTML += '<div class="ownership-box"><strong>' + p.name + '</strong><span>' + p.pct.toFixed(1) + '%</span></div>';
       });
+      preview.innerHTML += '<div class="ownership-box"><strong>Post-Money Value</strong><span>' + formatCurrency(postTotal) + ' XAF</span></div>';
 
-      preview.innerHTML += '<div class="ownership-box"><strong>Post-Investment Value</strong><span>' + formatCurrency(postMoneyValue) + ' XAF</span></div>';
+      // Update existing total hint
+      document.getElementById('existingTotalHint').textContent = 'Existing monetary contributions total: ' + formatCurrency(existingTotal) + ' XAF';
     }
 
-    document.getElementById('preMoneyValue').addEventListener('input', updateOwnershipPreview);
-    document.getElementById('founderExistingPct').addEventListener('input', updateOwnershipPreview);
+    // Attach event listeners to valuation fields
+    document.getElementById('preMoneyValue').addEventListener('input', updateAll);
+    document.getElementById('fixedPct').addEventListener('input', updateAll);
+    document.getElementById('founderMonetary').addEventListener('input', updateAll);
 
+    // ---- PDF Generation ----
     function loadImageAsDataURL(url) {
       return fetch(url)
         .then(function (res) { if (!res.ok) throw new Error('Logo not found'); return res.blob(); })
@@ -793,23 +854,74 @@
     }
 
     function generateAgreementPDF() {
+      // Validate required fields
       var required = ['founderName','founderId','founderResidence','founderPhone',
-                       'jvName','agreementDate','preMoneyValue','founderExistingPct'];
+                       'jvName','agreementDate','preMoneyValue','founderMonetary'];
       for (var i = 0; i < required.length; i++) {
         var el = document.getElementById(required[i]);
         if (!el.value) {
           el.focus();
-          alert('Please fill in all required fields (marked with a red border once you try to submit).');
+          alert('Please fill in all required fields.');
           el.style.borderColor = '#d9534f';
           return;
         }
       }
 
-      var newPartnerBlocks = Array.prototype.slice.call(document.querySelectorAll('.partner-block'));
-      if (newPartnerBlocks.length === 0) {
-        alert('Add at least one new Partner/Investor joining the business.');
+      // Gather data
+      var totalPre = parseFloat(document.getElementById('preMoneyValue').value) || 0;
+      var fixedPct = parseFloat(document.getElementById('fixedPct').value) || 0;
+      var fixedValue = totalPre * (fixedPct / 100);
+      var monetaryPool = totalPre - fixedValue;
+      var founderMonetary = parseFloat(document.getElementById('founderMonetary').value) || 0;
+
+      var existingRows = document.querySelectorAll('#existingPartnersContainer .team-row');
+      var existingPartners = [];
+      existingRows.forEach(function (row) {
+        var name = row.querySelector('.ep-name').value || 'Existing Partner';
+        var phone = row.querySelector('.ep-phone').value || '';
+        var contribution = parseFloat(row.querySelector('.ep-contribution').value) || 0;
+        if (contribution > 0) existingPartners.push({ name: name, phone: phone, contribution: contribution });
+      });
+
+      var newBlocks = document.querySelectorAll('.partner-block');
+      var newPartners = [];
+      newBlocks.forEach(function (b) {
+        var name = b.querySelector('.p-name').value || 'New Partner';
+        var contribution = parseFloat(b.querySelector('.p-contribution').value) || 0;
+        if (contribution > 0) {
+          newPartners.push({
+            name: name,
+            contribution: contribution,
+            role: b.querySelector('.p-role').value,
+            nationality: b.querySelector('.p-nationality').value || 'N/A',
+            id: b.querySelector('.p-id').value || '',
+            residence: b.querySelector('.p-residence').value || '',
+            occupation: b.querySelector('.p-occupation').value || 'N/A',
+            employer: b.querySelector('.p-employer').value || 'N/A',
+            phone: b.querySelector('.p-phone').value || ''
+          });
+        }
+      });
+
+      if (newPartners.length === 0) {
+        alert('Add at least one new Partner/Investor with a positive contribution.');
         return;
       }
+
+      // Compute post-money
+      var totalNewContrib = newPartners.reduce(function (s, p) { return s + p.contribution; }, 0);
+      var postMonetaryPool = monetaryPool + totalNewContrib;
+      var postTotal = fixedValue + postMonetaryPool;
+      var founderMonetaryPostPct = postMonetaryPool > 0 ? (founderMonetary / postMonetaryPool) * 100 : 0;
+      var fixedPctOfPost = (fixedValue / postTotal) * 100;
+      var founderTotalPct = ((fixedValue + founderMonetary) / postTotal) * 100;
+
+      var existingPostPcts = existingPartners.map(function (p) {
+        return { name: p.name, pct: postMonetaryPool > 0 ? (p.contribution / postMonetaryPool) * 100 : 0 };
+      });
+      var newPostPcts = newPartners.map(function (p) {
+        return { name: p.name, pct: postMonetaryPool > 0 ? (p.contribution / postMonetaryPool) * 100 : 0 };
+      });
 
       var founder = {
         name: document.getElementById('founderName').value,
@@ -820,30 +932,6 @@
         employer: document.getElementById('founderEmployer').value || 'N/A',
         phone: document.getElementById('founderPhone').value
       };
-
-      var existingPartners = getExistingPartners();
-
-      var newPartners = newPartnerBlocks.map(function (b) {
-        return {
-          name: b.querySelector('.p-name').value,
-          nationality: b.querySelector('.p-nationality').value || 'N/A',
-          id: b.querySelector('.p-id').value,
-          residence: b.querySelector('.p-residence').value,
-          occupation: b.querySelector('.p-occupation').value || 'N/A',
-          employer: b.querySelector('.p-employer').value || 'N/A',
-          phone: b.querySelector('.p-phone').value,
-          role: b.querySelector('.p-role').value,
-          contribution: parseFloat(b.querySelector('.p-contribution').value) || 0
-        };
-      });
-
-      var teamMembers = Array.prototype.slice.call(document.querySelectorAll('.team-row')).filter(function (r) {
-        return r.querySelector('.team-name');
-      }).map(function (row) {
-        var name = row.querySelector('.team-name').value.trim();
-        var position = row.querySelector('.team-position').value.trim();
-        return { name: name || '(Name to be confirmed)', position: position || 'Team Member' };
-      });
 
       var jvName = document.getElementById('jvName').value;
       var agreementDate = document.getElementById('agreementDate').value;
@@ -856,25 +944,19 @@
       if (otherPurpose) purposes.push(otherPurpose);
       if (purposes.length === 0) purposes.push('Activities as mutually agreed in writing by the Parties');
 
-      var preMoneyValue = parseFloat(document.getElementById('preMoneyValue').value) || 0;
-      var founderExistingPct = parseFloat(document.getElementById('founderExistingPct').value) || 0;
-      var totalNewCapital = newPartners.reduce(function (sum, p) { return sum + p.contribution; }, 0);
-      var postMoneyValue = preMoneyValue + totalNewCapital;
-      var dilutionFactor = postMoneyValue > 0 ? (preMoneyValue / postMoneyValue) : 1;
-
-      var founderNewPct = founderExistingPct * dilutionFactor;
-      var existingPartnersWithNewPct = existingPartners.map(function (p) {
-        return { name: p.name, phone: p.phone, priorPct: p.pct, newPct: p.pct * dilutionFactor };
-      });
-      var newPartnersWithPct = newPartners.map(function (p) {
-        return Object.assign({}, p, { newPct: postMoneyValue > 0 ? (p.contribution / postMoneyValue * 100) : 0 });
-      });
-
       var profitSplit = document.getElementById('profitSplit').value;
       var managementDesc = document.getElementById('managementDesc').value;
       var founderResp = document.getElementById('founderResponsibilities').value;
       var partnerResp = document.getElementById('partnerResponsibilities').value;
       var buyoutNotice = document.getElementById('buyoutNotice').value || '30';
+
+      var teamMembers = Array.prototype.slice.call(document.querySelectorAll('.team-row')).filter(function (r) {
+        return r.querySelector('.team-name');
+      }).map(function (row) {
+        var name = row.querySelector('.team-name').value.trim();
+        var position = row.querySelector('.team-position').value.trim();
+        return { name: name || '(Name to be confirmed)', position: position || 'Team Member' };
+      });
 
       loadImageAsDataURL('logo.png').then(function (logo) {
         buildPDF(logo);
@@ -927,10 +1009,9 @@
           doc.setFontSize(10.5);
           doc.setTextColor(30, 30, 30);
           var lines = doc.splitTextToSize(text, maxWidth);
-          lines.forEach(function (line, idx) {
+          lines.forEach(function (line) {
             ensureSpace(5.8);
-            var isLast = idx === lines.length - 1;
-            doc.text(line, margin, y, isLast ? {} : { align: 'justify', maxWidth: maxWidth });
+            doc.text(line, margin, y);
             y += 5.6;
           });
           y += 3;
@@ -940,11 +1021,15 @@
           doc.setFont(FONT, 'normal');
           doc.setFontSize(10.5);
           doc.setTextColor(30, 30, 30);
+          var indent = 6;
           items.forEach(function (item) {
-            var lines = doc.splitTextToSize('•  ' + item, maxWidth - 4);
+            // Wrap the text itself at (maxWidth - indent) since every line,
+            // including the first, is drawn starting at margin + indent.
+            var lines = doc.splitTextToSize(item, maxWidth - indent);
             lines.forEach(function (line, idx) {
               ensureSpace(6);
-              doc.text(line, margin + (idx === 0 ? 0 : 6), y);
+              if (idx === 0) doc.text('•', margin, y);
+              doc.text(line, margin + indent, y);
               y += 5.6;
             });
           });
@@ -952,59 +1037,87 @@
         }
 
         function simpleTable(headers, rows, colWidths) {
-          var rowHeight = 8;
-          var x = margin;
+          // Auto-scale so columns always sum to exactly maxWidth, no matter
+          // what raw numbers are passed in — this guarantees the table can
+          // never bleed past the right margin.
+          var rawTotal = colWidths.reduce(function (a, b) { return a + b; }, 0);
+          var scale = maxWidth / rawTotal;
+          var widths = colWidths.map(function (w) { return w * scale; });
+
+          var cellPad = 3;
+          var lineHeight = 5;
+          var minRowHeight = 8;
 
           doc.setDrawColor(200, 200, 200);
           doc.setLineWidth(0.2);
 
-          ensureSpace(rowHeight);
-          x = margin;
+          function cellLines(text, w) {
+            doc.setFont(FONT, 'normal');
+            doc.setFontSize(10);
+            return doc.splitTextToSize(String(text), Math.max(w - cellPad * 2, 5));
+          }
+
+          function rowHeightFor(cells) {
+            var maxLines = 1;
+            cells.forEach(function (c, i) {
+              var n = cellLines(c, widths[i]).length;
+              if (n > maxLines) maxLines = n;
+            });
+            return Math.max(minRowHeight, maxLines * lineHeight + 3);
+          }
+
+          // Header row
+          var headerHeight = rowHeightFor(headers);
+          ensureSpace(headerHeight);
+          var x = margin;
           headers.forEach(function (h, i) {
             doc.setFillColor(43, 55, 115);
             doc.setTextColor(255, 255, 255);
             doc.setFont(FONT, 'bold');
             doc.setFontSize(10);
-            doc.rect(x, y - 5.5, colWidths[i], rowHeight, 'FD');
-            doc.text(String(h), x + 3, y);
-            x += colWidths[i];
+            doc.rect(x, y, widths[i], headerHeight, 'FD');
+            var lines = cellLines(h, widths[i]);
+            lines.forEach(function (line, li) {
+              doc.text(line, x + cellPad, y + 5.5 + li * lineHeight);
+            });
+            x += widths[i];
           });
-          y += rowHeight;
+          y += headerHeight;
 
           rows.forEach(function (row, rIdx) {
-            ensureSpace(rowHeight);
+            var rh = rowHeightFor(row);
+            ensureSpace(rh);
             x = margin;
             if (rIdx % 2 === 0) {
               doc.setFillColor(240, 240, 240);
-              var totalW = colWidths.reduce(function (a, b) { return a + b; }, 0);
-              doc.rect(margin, y - 5.5, totalW, rowHeight, 'F');
+              doc.rect(margin, y, maxWidth, rh, 'F');
             }
             row.forEach(function (cell, cIdx) {
               doc.setFont(FONT, 'normal');
               doc.setFontSize(10);
               doc.setTextColor(30, 30, 30);
-              doc.rect(x, y - 5.5, colWidths[cIdx], rowHeight);
-              doc.text(String(cell), x + 3, y);
-              x += colWidths[cIdx];
+              doc.rect(x, y, widths[cIdx], rh);
+              var lines = cellLines(cell, widths[cIdx]);
+              lines.forEach(function (line, li) {
+                doc.text(line, x + cellPad, y + 5.5 + li * lineHeight);
+              });
+              x += widths[cIdx];
             });
-            y += rowHeight;
+            y += rh;
           });
           y += 4;
         }
 
-        // Header banner
+        // Header
         doc.setFillColor(43, 55, 115);
         doc.rect(0, 0, pageWidth, 26, 'F');
-
         if (logo) {
           try { doc.addImage(logo, 'PNG', margin, 4, 18, 18); } catch (e) {}
         }
-
         doc.setTextColor(255, 255, 255);
         doc.setFontSize(13);
         doc.setFont(FONT, 'bold');
         doc.text('G-SPIRIT LOAN SOLUTION', logo ? margin + 22 : margin, 15);
-
         doc.setFontSize(8);
         doc.setFont(FONT, 'normal');
         doc.text('+237 620 569 984', pageWidth - margin, 8, { align: 'right' });
@@ -1012,13 +1125,15 @@
         doc.text('Buea', pageWidth - margin, 18, { align: 'right' });
 
         y = 36;
-
         title('PARTNERSHIP AND INVESTMENT AGREEMENT');
         doc.setFontSize(10);
         doc.setFont(FONT, 'normal');
         doc.setTextColor(90, 90, 90);
-        doc.text('Business: ' + jvName, pageWidth / 2, y, { align: 'center' });
-        y += 5;
+        var bizLines = doc.splitTextToSize('Business: ' + jvName, maxWidth);
+        bizLines.forEach(function (line) {
+          doc.text(line, pageWidth / 2, y, { align: 'center' });
+          y += 5;
+        });
         doc.text('Date: ' + agreementDate, pageWidth / 2, y, { align: 'center' });
         y += 10;
 
@@ -1026,11 +1141,9 @@
 
         paragraph('FOUNDER: ' + founder.name + ', of ' + founder.nationality + ' nationality, holder of National ID Number ' + founder.id + ', residing at ' + founder.residence + ', occupation ' + founder.occupation + ', working at ' + founder.employer + ', telephone ' + founder.phone + ' (hereinafter the "Founder"), who founded and currently operates the Business.');
 
-        if (existingPartners.length > 0) {
-          existingPartners.forEach(function (p) {
-            paragraph('EXISTING PARTNER: ' + p.name + ', telephone ' + p.phone + ', already holding an ownership interest in the Business prior to this Agreement (hereinafter an "Existing Partner").');
-          });
-        }
+        existingPartners.forEach(function (p) {
+          paragraph('EXISTING PARTNER: ' + p.name + ', telephone ' + p.phone + ', having already contributed ' + amountWithWords(p.contribution) + ' to the Business prior to this Agreement (hereinafter an "Existing Partner").');
+        });
 
         newPartners.forEach(function (p, idx) {
           var label = newPartners.length > 1 ? 'NEW PARTNER ' + (idx + 1) : 'NEW PARTNER';
@@ -1043,29 +1156,51 @@
         paragraph('The Business operates under the name "' + jvName + '"' + (establishedDate ? ', established ' + establishedDate : '') + '. This Agreement does not create a new legal entity separate from the Business as it already exists, unless and until the Parties agree in writing to convert it into a registered company, as described further below. The Business is engaged in the following activities:');
         bulletList(purposes);
 
-        sectionHeading('Existing Ownership and Valuation');
-        paragraph('The Parties agree that, immediately before this Agreement, the Business is worth ' + amountWithWords(preMoneyValue) + ' (the "Pre-Investment Value"), and is owned as follows:');
-        var existingRows = [[founder.name + ' (Founder)', founderExistingPct.toFixed(1) + '%']];
-        existingPartners.forEach(function (p) {
-          existingRows.push([p.name + ' (Existing Partner)', p.pct.toFixed(1) + '%']);
-        });
-        simpleTable(['Existing Owner', 'Ownership % (Before)'], existingRows, [130, 50]);
+        sectionHeading('Capital Structure and Pre-Money Valuation');
+        paragraph('The Parties agree that the total pre-money value of the Business is ' + amountWithWords(totalPre) + '. This value is split into two components:');
+        bulletList([
+          'Fixed Assets (non-dilutable): ' + fixedPct + '% of the pre-money value, equal to ' + amountWithWords(fixedValue) + ', which includes intellectual property, client base, infrastructure, and other non-cash assets. These assets are wholly owned by the Founder and are never diluted by future investments.',
+          'Monetary Pool (dilutable): ' + (100 - fixedPct) + '% of the pre-money value, equal to ' + amountWithWords(monetaryPool) + ', which consists of cash contributions. The Founder has contributed ' + amountWithWords(founderMonetary) + ' of this pool.'
+        ]);
+        if (existingPartners.length > 0) {
+          bulletList(['Existing Partners have contributed a total of ' + amountWithWords(existingPartners.reduce(function(s,p){return s+p.contribution},0)) + ' to the monetary pool.']);
+        }
 
         sectionHeading('New Investment and Updated Ownership');
         newPartners.forEach(function (p) {
           paragraph(p.name + ' shall contribute ' + amountWithWords(p.contribution) + ' in new capital to the Business.');
         });
-        paragraph('Adding this new capital of ' + amountWithWords(totalNewCapital) + ' to the Pre-Investment Value gives a post-investment value of ' + amountWithWords(postMoneyValue) + '. A dedicated account shall be opened at ' + bankName + ' for the Business if one does not already exist, and each New Partner\'s contribution shall be deposited into this account by the date set out above. Ownership of the Business is updated as follows:');
+        paragraph('Adding this new capital of ' + amountWithWords(totalNewContrib) + ' to the monetary pool gives a post-investment monetary pool of ' + amountWithWords(postMonetaryPool) + '. The total post-money value of the Business is ' + amountWithWords(postTotal) + '. Ownership after this investment is as follows:');
 
-        var ledgerRows = [[founder.name, founderExistingPct.toFixed(1) + '%', '—', founderNewPct.toFixed(1) + '%']];
-        existingPartnersWithNewPct.forEach(function (p) {
-          ledgerRows.push([p.name, p.priorPct.toFixed(1) + '%', '—', p.newPct.toFixed(1) + '%']);
+        var ledgerRows = [];
+        // Founder row
+        ledgerRows.push([
+          founder.name + ' (Founder)',
+          'Fixed: ' + fixedPct + '%',
+          formatCurrency(founderMonetary),
+          founderTotalPct.toFixed(1) + '%'
+        ]);
+        // Existing partners
+        existingPostPcts.forEach(function (p) {
+          var contrib = existingPartners.find(function(e){return e.name===p.name}).contribution;
+          ledgerRows.push([
+            p.name,
+            '—',
+            formatCurrency(contrib),
+            p.pct.toFixed(1) + '%'
+          ]);
         });
-        newPartnersWithPct.forEach(function (p) {
-          ledgerRows.push([p.name, '—', formatCurrency(p.contribution), p.newPct.toFixed(1) + '%']);
+        // New partners
+        newPostPcts.forEach(function (p, idx) {
+          var contrib = newPartners[idx].contribution;
+          ledgerRows.push([
+            p.name + ' (New)',
+            '—',
+            formatCurrency(contrib),
+            p.pct.toFixed(1) + '%'
+          ]);
         });
-        simpleTable(['Party', 'Prior %', 'New Capital (XAF)', 'New %'], ledgerRows, [65, 30, 50, 35]);
-        paragraph('This Ownership Ledger governs each Party\'s share of profits, losses, voting weight in major decisions, and any proceeds upon dissolution or buyout, and shall be updated again whenever further capital is admitted, as described in Section 8.');
+        simpleTable(['Party', 'Component', 'Monetary Contribution', 'Final %'], ledgerRows, [55, 35, 50, 40]);
 
         sectionHeading('Profit and Loss Sharing');
         paragraph('All net income and losses of the Business shall be distributed to the Parties as follows: ' + profitSplit + '. Distributions shall be calculated and paid out at intervals agreed by the Parties, and every Party shall have the right to review the Business\'s financial records upon reasonable request.');
@@ -1122,7 +1257,7 @@
         sectionHeading('Severability and Counterparts');
         paragraph('If any provision of this Agreement is found unenforceable, the remainder shall continue in full force and effect. This Agreement may be signed in counterparts, including electronically, each of which shall be considered an original.');
 
-        // Signatures — one block per party: Founder, Existing Partners, New Partners
+        // Signatures
         var allSigners = [{ label: 'FOUNDER', name: founder.name }];
         existingPartners.forEach(function (p) { allSigners.push({ label: 'EXISTING PARTNER', name: p.name }); });
         newPartners.forEach(function (p, idx) {
@@ -1166,11 +1301,9 @@
           y += 9;
         }
 
-        // Footer + page numbers + watermark on every page
         var totalPages = doc.internal.getNumberOfPages();
         for (var p = 1; p <= totalPages; p++) {
           doc.setPage(p);
-
           if (logo) {
             try {
               doc.saveGraphicsState();
@@ -1179,7 +1312,6 @@
               doc.restoreGraphicsState();
             } catch (e) {}
           }
-
           doc.setFontSize(8);
           doc.setTextColor(150, 150, 150);
           doc.text('G-Spirit Loan Solution — Partnership & Investment Agreement', margin, pageHeight - 10);
