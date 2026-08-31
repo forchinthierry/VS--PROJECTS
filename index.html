@@ -432,59 +432,171 @@
     .logo-btn:active {
       transform: scale(0.96);
     }
+
+    :root {
+      --navy: #182b56;
+      --blue: #2b3773;
+      --teal: #167d78;
+      --gold: #d99532;
+      --ink: #1e2941;
+      --muted: #647087;
+      --line: #dfe5ee;
+      --paper: #ffffff;
+    }
+
+    body {
+      font-family: 'Nunito', Arial, sans-serif;
+      color: var(--ink);
+      background: #f6f8fb;
+    }
+
+    header {
+      justify-content: space-between;
+      padding: 15px max(24px, 5vw);
+      background: var(--navy);
+      box-shadow: 0 5px 20px rgba(24,43,86,.16);
+    }
+
+    .site-brand { display: flex; align-items: center; gap: 12px; text-decoration: none; color: white; }
+    .site-brand img { max-height: 48px; width: auto; }
+    .site-brand strong { display: block; font-size: 15px; letter-spacing: .08em; }
+    .site-brand small { display: block; color: #b9d9df; font-size: 11px; margin-top: 2px; }
+    .desktop-nav { display: flex; align-items: center; gap: 24px; }
+    .desktop-nav a { color: #fff; font-size: 13px; text-decoration: none; }
+    .desktop-nav a:hover { color: #ffd98d; }
+    .nav-cta { padding: 10px 15px; border-radius: 8px; background: var(--gold); color: #fff !important; font-weight: 800; }
+
+    .company-main { position: relative; z-index: 2; }
+    .company-hero { background: var(--navy); color: #fff; padding: 76px max(24px, 8vw) 88px; position: relative; overflow: hidden; }
+    .company-hero::after { content: ''; position: absolute; width: 540px; height: 540px; border: 1px solid rgba(217,149,50,.35); border-radius: 50%; right: -180px; top: -250px; box-shadow: 0 0 0 34px rgba(217,149,50,.08), 0 0 0 68px rgba(217,149,50,.045); }
+    .hero-inner { max-width: 1120px; margin: 0 auto; display: grid; grid-template-columns: 1.08fr .92fr; gap: 70px; align-items: center; position: relative; z-index: 1; }
+    .eyebrow { color: #f0bd69; font-size: 12px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; }
+    .company-hero h1 { font-family: 'Fredoka', sans-serif; font-size: clamp(38px, 6vw, 68px); line-height: 1.04; margin: 14px 0 20px; max-width: 680px; }
+    .company-hero p { color: #d5dfef; font-size: 18px; line-height: 1.7; max-width: 590px; margin: 0; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
+    .primary-link, .secondary-link { display: inline-flex; align-items: center; justify-content: center; border-radius: 8px; padding: 13px 19px; text-decoration: none; font-weight: 800; font-size: 14px; }
+    .primary-link { background: var(--gold); color: #fff; }
+    .secondary-link { border: 1px solid rgba(255,255,255,.35); color: #fff; }
+    .primary-link:hover { background: #bd7921; }
+    .secondary-link:hover { background: rgba(255,255,255,.1); }
+    .hero-panel { background: #fff; color: var(--ink); padding: 24px; border-radius: 14px; box-shadow: 0 24px 45px rgba(0,0,0,.2); }
+    .hero-panel h2 { font-family: 'Fredoka', sans-serif; margin: 0 0 18px; color: var(--blue); font-size: 25px; }
+    .hero-panel-row { display: flex; align-items: center; gap: 13px; padding: 14px 0; border-top: 1px solid var(--line); }
+    .hero-panel-row b { display: block; color: var(--blue); font-size: 14px; }
+    .hero-panel-row span { display: block; color: var(--muted); font-size: 12px; margin-top: 2px; }
+    .hero-icon { width: 38px; height: 38px; display: grid; place-items: center; border-radius: 9px; background: #edf7f5; font-size: 20px; flex: 0 0 auto; }
+
+    .section { max-width: 1120px; margin: 0 auto; padding: 76px 24px; }
+    .section-heading { max-width: 650px; margin-bottom: 30px; }
+    .section-heading .eyebrow { color: var(--teal); }
+    .section-heading h2 { font-family: 'Fredoka', sans-serif; color: var(--blue); font-size: clamp(30px, 4vw, 44px); line-height: 1.1; margin: 10px 0 12px; }
+    .section-heading p { color: var(--muted); line-height: 1.7; margin: 0; }
+    .service-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .service-card { background: var(--paper); border: 1px solid var(--line); border-radius: 12px; padding: 24px; min-height: 220px; box-shadow: 0 10px 28px rgba(24,43,86,.06); transition: transform .25s ease, box-shadow .25s ease; }
+    .service-card:hover { transform: translateY(-5px); box-shadow: 0 16px 32px rgba(24,43,86,.12); }
+    .service-card .service-icon { font-size: 27px; }
+    .service-card h3 { color: var(--blue); margin: 18px 0 8px; font-size: 20px; }
+    .service-card p { color: var(--muted); line-height: 1.65; font-size: 14px; margin: 0; }
+    .service-card a { display: inline-block; margin-top: 18px; color: var(--teal); font-size: 13px; font-weight: 800; text-decoration: none; }
+
+    .process-band { background: #eef5f5; border-top: 1px solid #d9e8e7; border-bottom: 1px solid #d9e8e7; }
+    .process-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 34px; }
+    .process-step { position: relative; padding-left: 54px; }
+    .process-step .number { position: absolute; left: 0; top: 0; width: 38px; height: 38px; display: grid; place-items: center; border-radius: 50%; background: var(--teal); color: #fff; font-weight: 800; }
+    .process-step h3 { color: var(--blue); margin: 0 0 7px; font-size: 17px; }
+    .process-step p { color: var(--muted); font-size: 14px; line-height: 1.6; margin: 0; }
+    .stats-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); }
+    .stat { background: #fff; padding: 24px; text-align: center; }
+    .stat strong { display: block; color: var(--blue); font-family: 'Fredoka', sans-serif; font-size: 31px; }
+    .stat span { color: var(--muted); font-size: 13px; }
+    .contact-band { background: var(--blue); color: #fff; }
+    .contact-inner { display: flex; align-items: center; justify-content: space-between; gap: 28px; }
+    .contact-inner h2 { font-family: 'Fredoka', sans-serif; margin: 0 0 8px; font-size: 32px; }
+    .contact-inner p { color: #d8dfef; margin: 0; line-height: 1.6; }
+    .contact-band .primary-link { white-space: nowrap; }
+    .company-footer { background: #101d3c; color: #aebbd4; padding: 26px 24px; font-size: 13px; }
+    .footer-inner { max-width: 1120px; margin: 0 auto; display: flex; justify-content: space-between; gap: 20px; }
+    .footer-inner a { color: #fff; text-decoration: none; margin-left: 18px; }
+
+    @media (max-width: 760px) {
+      .desktop-nav { gap: 11px; }
+      .desktop-nav a:not(.nav-cta) { display: none; }
+      .company-hero { padding: 56px 20px 64px; }
+      .hero-inner, .service-grid, .process-grid { grid-template-columns: 1fr; }
+      .hero-inner { gap: 38px; }
+      .section { padding: 56px 20px; }
+      .stats-strip { grid-template-columns: 1fr; }
+      .contact-inner, .footer-inner { align-items: flex-start; flex-direction: column; }
+      .footer-inner a { margin: 0 18px 0 0; }
+    }
   </style>
 </head>
 <body class="is-entering">
 
   <div class="page-overlay"></div>
 
-  <div class="ambient a1"></div>
-  <div class="ambient a2"></div>
-  <div class="ambient a3"></div>
-  <div class="ambient a4"></div>
-  <div class="ambient a5"></div>
-
   <header>
-    <button type="button" class="logo-btn" onclick="navigateWithTransition('index.html')" aria-label="Go to homepage"><img src="logo.png" alt="G-Spirit logo"></button>
-    <h1>G-SPIRIT LOAN SOLUTION</h1>
+    <a class="site-brand" href="index.html" aria-label="G-Spirit Loan Solution home">
+      <img src="logo.png" alt="G-Spirit logo">
+      <span><strong>G-SPIRIT LOAN SOLUTION</strong><small>Powering Dreams</small></span>
+    </a>
+    <nav class="desktop-nav" aria-label="Primary navigation">
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+      <a href="terms.html">Terms</a>
+      <a class="nav-cta" href="apply.html">Apply Now</a>
+    </nav>
   </header>
 
-  <div class="hero">
-    <div class="hero-card">
-      <div class="hero-badge">Welcome</div>
-      <h2>Let’s make your next step feel easy.</h2>
-      <p>Quick, honest loans and a community that grows together. Pick a bubble below to get started.</p>
-    </div>
-  </div>
+  <main class="company-main">
+    <section class="company-hero">
+      <div class="hero-inner">
+        <div>
+          <div class="eyebrow">Finance that moves with you</div>
+          <h1>Practical support for the plans you are ready to build.</h1>
+          <p>G-Spirit Loan Solution provides straightforward short-term lending, growth capital, and partnership opportunities for people and businesses with ambition.</p>
+          <div class="hero-actions">
+            <a class="primary-link" href="apply.html">Apply for a loan</a>
+            <a class="secondary-link" href="capital.html">Explore growth capital</a>
+          </div>
+        </div>
+        <div class="hero-panel">
+          <h2>One place for your next move</h2>
+          <div class="hero-panel-row"><div class="hero-icon">💰</div><div><b>Short-term loans</b><span>Apply online and receive a response on WhatsApp.</span></div></div>
+          <div class="hero-panel-row"><div class="hero-icon">🚀</div><div><b>Business growth capital</b><span>Share your opportunity and explore investment support.</span></div></div>
+          <div class="hero-panel-row"><div class="hero-icon">🤝</div><div><b>Growth partnerships</b><span>Put capital to work alongside a growing lending business.</span></div></div>
+        </div>
+      </div>
+    </section>
 
-  <div class="bubble-field">
-    <button class="bubble bubble-apply" onclick="window.location.href='apply.html'">
-      <span class="icon">💰</span>
-      <span class="label">Apply for<br>a Loan</span>
-    </button>
+    <section class="section" aria-labelledby="services-title">
+      <div class="section-heading"><div class="eyebrow">What we do</div><h2 id="services-title">Clear options for different kinds of progress.</h2><p>Choose the path that fits your current goal. Every application is reviewed with care and subject to the relevant terms and checks.</p></div>
+      <div class="service-grid reveal-stagger">
+        <article class="service-card"><div class="service-icon">💰</div><h3>Loan Solutions</h3><p>Flexible short-term finance for personal needs, education, business expenses, and practical next steps.</p><a href="apply.html">Start an application →</a></article>
+        <article class="service-card"><div class="service-icon">📈</div><h3>Growth Capital</h3><p>For promising businesses and ideas seeking capital to launch, expand, or reach their next stage.</p><a href="capital.html">Request capital →</a></article>
+        <article class="service-card"><div class="service-icon">🤝</div><h3>Partnership</h3><p>Join a growing financial ecosystem through a structured contribution and agreed partnership terms.</p><a href="partner.html">Become a partner →</a></article>
+      </div>
+    </section>
 
-    <button class="bubble bubble-capital" onclick="window.location.href='capital.html'" aria-label="Request for Capital">
-      <span class="icon">🚀</span>
-      <span class="label">Request for<br>Capital</span>
-      <span class="sub-label">Grow • Build • Expand</span>
-    </button>
+    <section class="process-band">
+      <div class="section">
+        <div class="section-heading"><div class="eyebrow">How it works</div><h2>A simple process, handled directly.</h2></div>
+        <div class="process-grid reveal-stagger">
+          <div class="process-step"><span class="number">1</span><h3>Tell us what you need</h3><p>Complete the focused online form with the details relevant to your request.</p></div>
+          <div class="process-step"><span class="number">2</span><h3>We review the details</h3><p>Our team assesses the request, supporting information, and applicable requirements.</p></div>
+          <div class="process-step"><span class="number">3</span><h3>Move forward together</h3><p>We respond directly with the next steps, questions, or available terms.</p></div>
+        </div>
+      </div>
+    </section>
 
-    <button class="bubble bubble-partner" onclick="window.location.href='partner.html'">
-      <span class="icon">🤝</span>
-      <span class="label">Become a<br>Partner</span>
-    </button>
+    <section class="section">
+      <div class="stats-strip reveal-stagger"><div class="stat"><strong>3</strong><span>ways to grow with G-Spirit</span></div><div class="stat"><strong>24/7</strong><span>online application access</span></div><div class="stat"><strong>1:1</strong><span>direct communication</span></div></div>
+    </section>
 
-    <button class="bubble bubble-about" onclick="navigateWithTransition('about.html')">
-      <span class="icon">✨</span>
-      <span class="label">About Us</span>
-    </button>
-  </div>
+    <section class="contact-band"><div class="section contact-inner"><div><h2>Ready to take the next step?</h2><p>Start with the option that matches your goal. We will take it from there.</p></div><a class="primary-link" href="contact.html">Talk to G-Spirit</a></div></section>
+  </main>
 
-
-
-  <footer>
-    &copy; 2026 G-Spirit Loan Solution. All rights reserved.
-  </footer>
+  <footer class="company-footer"><div class="footer-inner"><span>© 2026 G-Spirit Loan Solution. All rights reserved.</span><span><a href="privacy.html">Privacy Policy</a><a href="terms.html">Terms</a></span></div></footer>
 
   <script>
     (function () {

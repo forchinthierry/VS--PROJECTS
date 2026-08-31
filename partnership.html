@@ -430,6 +430,15 @@
       .terms-grid, .form-grid { grid-template-columns: 1fr; }
       .page-banner, .hero, .card { padding: 22px 20px; }
     }
+    .page-banner { margin: 0 auto 26px; padding: 62px 24px; border-radius: 0; background: #182b56; box-shadow: none; }
+    .page-banner h1 { font-family: 'DM Serif Display', Georgia, serif; font-size: clamp(38px, 6vw, 58px); }
+    .container { width: min(94%, 960px); margin: 0 auto 70px; }
+    .card { padding: clamp(24px, 4vw, 36px); }
+    label { font-weight: 800; }
+    input, textarea, select { min-height: 48px; }
+    input:focus-visible, textarea:focus-visible, select:focus-visible, button:focus-visible { outline: 3px solid #b9e1d8; outline-offset: 2px; }
+    .footer-links a { border-color: #fff; color: #fff; background: transparent; }
+    .footer-links a:hover { background: #fff; color: #183f48; }
   </style>
 </head>
 <body class="is-entering">
@@ -1057,7 +1066,7 @@
       function buildPDF(logo) {
         var jsPDFLib = window.jspdf.jsPDF;
         var doc = new jsPDFLib();
-        var FONT = 'times';
+        var FONT = 'helvetica';
         doc.setFont(FONT, 'normal');
         var pageWidth = doc.internal.pageSize.getWidth();
         var pageHeight = doc.internal.pageSize.getHeight();
@@ -1088,9 +1097,9 @@
           y += 1.5;
           doc.setFont(FONT, 'bold');
           doc.setFontSize(12.5);
-          doc.setTextColor(22, 160, 133);
+          doc.setTextColor(22, 125, 120);
           doc.text(sectionCount + '. ' + text, margin, y);
-          doc.setDrawColor(22, 160, 133);
+          doc.setDrawColor(22, 125, 120);
           doc.setLineWidth(0.3);
           doc.line(margin, y + 1.5, pageWidth - margin, y + 1.5);
           y += 7.5;
@@ -1163,7 +1172,7 @@
           ensureSpace(headerHeight);
           var x = margin;
           headers.forEach(function (h, i) {
-            doc.setFillColor(43, 55, 115);
+            doc.setFillColor(24, 43, 86);
             doc.setTextColor(255, 255, 255);
             doc.setFont(FONT, 'bold');
             doc.setFontSize(10);
@@ -1201,7 +1210,7 @@
         }
 
         // Header
-        doc.setFillColor(43, 55, 115);
+        doc.setFillColor(24, 43, 86);
         doc.rect(0, 0, pageWidth, 26, 'F');
         if (logo) {
           try { doc.addImage(logo, 'PNG', margin, 4, 18, 18); } catch (e) {}
@@ -1212,9 +1221,9 @@
         doc.text('G-SPIRIT LOAN SOLUTION', logo ? margin + 22 : margin, 15);
         doc.setFontSize(8);
         doc.setFont(FONT, 'normal');
-        doc.text('+237 620 569 984', pageWidth - margin, 8, { align: 'right' });
+        doc.text('+237 620 569 864', pageWidth - margin, 8, { align: 'right' });
         doc.text('hi@gspiritloans.com', pageWidth - margin, 13, { align: 'right' });
-        doc.text('Buea', pageWidth - margin, 18, { align: 'right' });
+        doc.text('Douala, Cameroon', pageWidth - margin, 18, { align: 'right' });
 
         y = 36;
         title('PARTNERSHIP AND INVESTMENT AGREEMENT');

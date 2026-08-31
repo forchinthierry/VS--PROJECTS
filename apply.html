@@ -677,6 +677,15 @@
       .hero, .card { padding: 20px; }
       .step-actions { grid-template-columns: 1fr; }
     }
+    form { max-width: 760px; margin: 0 auto; }
+    label { display: block; margin-top: 16px; font-weight: 800; color: #40375a; }
+    input, select, textarea { min-height: 48px; transition: border-color .2s ease, box-shadow .2s ease, background .2s ease; }
+    input:hover, select:hover, textarea:hover { border-color: #b69ac0; }
+    input:focus-visible, select:focus-visible, textarea:focus-visible, button:focus-visible { outline: 3px solid #d9bde5; outline-offset: 2px; }
+    input:invalid:not(:placeholder-shown), select:invalid, textarea:invalid:not(:placeholder-shown) { border-color: #c65f72; }
+    .step-actions button, .output-buttons button { min-height: 48px; }
+    .progress-step { transition: color .2s ease, transform .2s ease; }
+    .progress-step.active { transform: translateY(-2px); }
   </style>
 </head>
 <body>
@@ -735,19 +744,19 @@
               </div>
 
               <label for="name">Full Name</label>
-              <input type="text" id="name" name="name" placeholder="Enter your full name" required>
+              <input type="text" id="name" name="name" autocomplete="name" placeholder="Enter your full name" required>
 
               <label for="phone">Phone Number</label>
-              <input type="tel" id="phone" name="phone" placeholder="e.g. +237 6 1234 5678" pattern="^[0-9+\s-]{7,20}$" required>
+              <input type="tel" id="phone" name="phone" autocomplete="tel" inputmode="tel" placeholder="Include country code, e.g. +237 6 1234 5678" required>
 
               <label for="email">Email Address</label>
-              <input type="email" id="email" name="email" placeholder="you@example.com" required>
+              <input type="email" id="email" name="email" autocomplete="email" placeholder="you@example.com" required>
 
               <label for="date">Date of Birth</label>
-              <input type="date" id="date" name="date" required>
+              <input type="date" id="date" name="date" autocomplete="bday" required>
 
               <label for="residence">Place of Residence</label>
-              <input type="text" id="residence" name="residence" placeholder="City, neighborhood, or address" required>
+              <input type="text" id="residence" name="residence" autocomplete="street-address" placeholder="City, neighborhood, or address" required>
 
               <div class="step-actions single-action">
                 <button type="button" class="next-btn" onclick="nextStep()">Next: Loan Details →</button>
@@ -796,7 +805,7 @@
               <input type="text" id="suretyName" name="suretyName" placeholder="Full name of your surety" required>
 
               <label for="suretyPhone">Surety Phone Number</label>
-              <input type="tel" id="suretyPhone" name="suretyPhone" placeholder="e.g. +237 6 1234 5678" required>
+              <input type="tel" id="suretyPhone" name="suretyPhone" autocomplete="tel" inputmode="tel" placeholder="Include country code" required>
 
               <label for="suretyAddress">Surety Address</label>
               <input type="text" id="suretyAddress" name="suretyAddress" placeholder="City, neighborhood, or address" required>
@@ -804,7 +813,6 @@
               <label for="suretyRelation">Surety's Relationship to You</label>
               <input type="text" id="suretyRelation" name="suretyRelation" placeholder="e.g. Spouse, Sibling, Friend, Employer" required>
 
-              <label for="collateral">Collateral</label>
               <label for="collateral">Collateral <span style="font-weight:normal; font-size:13px; color:#666;">(required)</span></label>
               <textarea id="collateral" name="collateral" rows="4" placeholder="Describe collateral" required aria-required="true"></textarea>
 

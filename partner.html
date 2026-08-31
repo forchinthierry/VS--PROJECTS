@@ -781,6 +781,15 @@
       .page-banner, .hero, .card { padding: 22px 20px; }
       .share-highlight { align-items: flex-start; flex-direction: column; }
     }
+    form { max-width: 760px; margin: 0 auto; }
+    label { display: block; margin-top: 16px; font-weight: 800; color: #304c55; }
+    input, select, textarea { min-height: 48px; transition: border-color .2s ease, box-shadow .2s ease, background .2s ease; }
+    input:hover, select:hover, textarea:hover { border-color: #92bdb6; }
+    input:focus-visible, select:focus-visible, textarea:focus-visible, button:focus-visible { outline: 3px solid #b9e1d8; outline-offset: 2px; }
+    input:invalid:not(:placeholder-shown), select:invalid, textarea:invalid:not(:placeholder-shown) { border-color: #c65f72; }
+    .step-actions button, .application-panel form > button { min-height: 48px; }
+    .progress-step { transition: color .2s ease, transform .2s ease; }
+    .progress-step.active { transform: translateY(-2px); }
   </style>
 </head>
 <body class="is-entering">
@@ -872,19 +881,19 @@
             <section class="form-step active" data-step="1">
               <div class="step-heading"><h3>Tell us about you</h3><p>Start with your contact and personal details.</p></div>
             <label for="pname">Full Name</label>
-            <input type="text" id="pname" name="pname" placeholder="Enter your full name" required>
+            <input type="text" id="pname" name="pname" autocomplete="name" placeholder="Enter your full name" required>
 
             <label for="pphone">Phone Number</label>
-            <input type="tel" id="pphone" name="pphone" placeholder="e.g. +237 6 1234 5678" pattern="^[0-9+\s-]{7,20}$" required>
+            <input type="tel" id="pphone" name="pphone" autocomplete="tel" inputmode="tel" placeholder="Include country code, e.g. +237 6 1234 5678" required>
 
             <label for="pemail">Email Address</label>
-            <input type="email" id="pemail" name="pemail" placeholder="you@example.com" required>
+            <input type="email" id="pemail" name="pemail" autocomplete="email" placeholder="you@example.com" required>
 
             <label for="pdob">Date of Birth</label>
-            <input type="date" id="pdob" name="pdob" required>
+            <input type="date" id="pdob" name="pdob" autocomplete="bday" required>
 
             <label for="presidence">Place of Residence</label>
-            <input type="text" id="presidence" name="presidence" placeholder="City, neighborhood, or address" required>
+            <input type="text" id="presidence" name="presidence" autocomplete="street-address" placeholder="City, neighborhood, or address" required>
 
             <label for="poccupation">Occupation / Business</label>
             <input type="text" id="poccupation" name="poccupation" placeholder="Your profession or business" required>
