@@ -444,6 +444,12 @@
 
         <label for="founderPhone">Phone</label>
         <input type="tel" id="founderPhone" required>
+
+        <label for="founderEmail">Email</label>
+        <input type="email" id="founderEmail" required>
+
+        <label for="founderDob">Date of Birth</label>
+        <input type="date" id="founderDob" required>
       </div>
     </div>
 
@@ -598,6 +604,8 @@
       if (!firstBlock) {
         addPartnerBlock({
           name: row.name || '',
+          email: row.email || '',
+          dob: row.dob || '',
           phone: row.phone || '',
           residence: row.residence || '',
           occupation: row.occupation || '',
@@ -609,6 +617,8 @@
         });
       } else {
         firstBlock.querySelector('.p-name').value = row.name || '';
+        firstBlock.querySelector('.p-email').value = row.email || '';
+        firstBlock.querySelector('.p-dob').value = row.dob || '';
         firstBlock.querySelector('.p-phone').value = row.phone || '';
         firstBlock.querySelector('.p-residence').value = row.residence || '';
         firstBlock.querySelector('.p-occupation').value = row.occupation || '';
@@ -695,6 +705,10 @@
           '<div>' +
             '<label>Full Name</label>' +
             '<input type="text" class="p-name" required>' +
+            '<label>Email</label>' +
+            '<input type="email" class="p-email" required>' +
+            '<label>Date of Birth</label>' +
+            '<input type="date" class="p-dob" required>' +
             '<label>Nationality</label>' +
             '<input type="text" class="p-nationality" placeholder="e.g. Cameroonian" required>' +
             '<label>National ID Number</label>' +
@@ -722,6 +736,8 @@
       document.getElementById('partnersContainer').appendChild(wrapper);
       if (prefill) {
         wrapper.querySelector('.p-name').value = prefill.name || '';
+        wrapper.querySelector('.p-email').value = prefill.email || '';
+        wrapper.querySelector('.p-dob').value = prefill.dob || '';
         wrapper.querySelector('.p-phone').value = prefill.phone || '';
         wrapper.querySelector('.p-residence').value = prefill.residence || '';
         wrapper.querySelector('.p-occupation').value = prefill.occupation || '';
@@ -855,7 +871,7 @@
 
     function generateAgreementPDF() {
       // Validate required fields
-      var required = ['founderName','founderId','founderResidence','founderPhone',
+      var required = ['founderName','founderId','founderResidence','founderPhone','founderEmail','founderDob',
                        'jvName','agreementDate','preMoneyValue','founderMonetary'];
       for (var i = 0; i < required.length; i++) {
         var el = document.getElementById(required[i]);
@@ -891,6 +907,8 @@
         if (contribution > 0) {
           newPartners.push({
             name: name,
+            email: b.querySelector('.p-email').value || '',
+            dob: b.querySelector('.p-dob').value || '',
             contribution: contribution,
             role: b.querySelector('.p-role').value,
             nationality: b.querySelector('.p-nationality').value || 'N/A',
@@ -930,7 +948,9 @@
         residence: document.getElementById('founderResidence').value,
         occupation: document.getElementById('founderOccupation').value || 'N/A',
         employer: document.getElementById('founderEmployer').value || 'N/A',
-        phone: document.getElementById('founderPhone').value
+        phone: document.getElementById('founderPhone').value,
+        email: document.getElementById('founderEmail').value,
+        dob: document.getElementById('founderDob').value
       };
 
       var jvName = document.getElementById('jvName').value;
@@ -1139,7 +1159,7 @@
 
         paragraph('This Partnership and Investment Agreement (the "Agreement") is made and entered into on ' + agreementDate + ', in respect of the existing business known as "' + jvName + '" (the "Business")' + (establishedDate ? ', operating since ' + establishedDate : '') + ', by and between the following parties (together, the "Parties"):');
 
-        paragraph('FOUNDER: ' + founder.name + ', of ' + founder.nationality + ' nationality, holder of National ID Number ' + founder.id + ', residing at ' + founder.residence + ', occupation ' + founder.occupation + ', working at ' + founder.employer + ', telephone ' + founder.phone + ' (hereinafter the "Founder"), who founded and currently operates the Business.');
+        paragraph('FOUNDER: ' + founder.name + ', born ' + founder.dob + ', of ' + founder.nationality + ' nationality, holder of National ID Number ' + founder.id + ', residing at ' + founder.residence + ', occupation ' + founder.occupation + ', working at ' + founder.employer + ', telephone ' + founder.phone + ', email ' + founder.email + ' (hereinafter the "Founder"), who founded and currently operates the Business.');
 
         existingPartners.forEach(function (p) {
           paragraph('EXISTING PARTNER: ' + p.name + ', telephone ' + p.phone + ', having already contributed ' + amountWithWords(p.contribution) + ' to the Business prior to this Agreement (hereinafter an "Existing Partner").');
@@ -1147,7 +1167,7 @@
 
         newPartners.forEach(function (p, idx) {
           var label = newPartners.length > 1 ? 'NEW PARTNER ' + (idx + 1) : 'NEW PARTNER';
-          paragraph(label + ': ' + p.name + ', of ' + p.nationality + ' nationality, holder of National ID Number ' + p.id + ', residing at ' + p.residence + ', occupation ' + p.occupation + ', working at ' + p.employer + ', telephone ' + p.phone + ', joining the Business as ' + (p.role === 'Passive Investor' ? 'a Passive Investor, contributing capital without a day-to-day management role' : 'an Active Partner, sharing in the management of the Business') + ' (hereinafter a "New Partner").');
+          paragraph(label + ': ' + p.name + ', born ' + p.dob + ', of ' + p.nationality + ' nationality, holder of National ID Number ' + p.id + ', residing at ' + p.residence + ', occupation ' + p.occupation + ', working at ' + p.employer + ', telephone ' + p.phone + ', email ' + p.email + ', joining the Business as ' + (p.role === 'Passive Investor' ? 'a Passive Investor, contributing capital without a day-to-day management role' : 'an Active Partner, sharing in the management of the Business') + ' (hereinafter a "New Partner").');
         });
 
         paragraph('The Business already exists and is operated by the Founder' + (existingPartners.length > 0 ? ' together with the Existing Partner(s) named above' : '') + '. This Agreement records the admission of the New Partner(s)/Investor(s) named above, their capital contribution, and the resulting updated ownership of the Business, in consideration of the mutual commitments set out below.');

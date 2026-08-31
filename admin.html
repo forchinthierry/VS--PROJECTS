@@ -628,7 +628,7 @@
       }
       var html = '<table><thead><tr>' +
         '<th><input type="checkbox" id="selectAllBox" onclick="toggleSelectAll(this.checked)"></th>' +
-        '<th>#</th><th>Date</th><th>Name</th><th>Phone</th><th>Email</th><th>Residence</th><th>Occupation</th><th>Shares</th><th>Contribution</th><th>Payout</th><th>Payment Method</th><th>Next of Kin</th><th>Reason</th><th>Status</th><th>Action</th>' +
+        '<th>#</th><th>Date</th><th>Name</th><th>Phone</th><th>Email</th><th>DOB</th><th>Residence</th><th>Occupation</th><th>Shares</th><th>Contribution</th><th>Payout</th><th>Payment Method</th><th>Next of Kin</th><th>Reason</th><th>Status</th><th>Action</th>' +
         '</tr></thead><tbody>';
       rows.forEach(function (r, index) {
         var checked = selectedIds[r.id] ? ' checked' : '';
@@ -639,6 +639,7 @@
           '<td>' + (r.name || '') + '</td>' +
           '<td>' + (r.phone || '') + '</td>' +
           '<td>' + (r.email || '') + '</td>' +
+          '<td>' + (r.dob || '') + '</td>' +
           '<td>' + (r.residence || '') + '</td>' +
           '<td>' + (r.occupation || '') + '</td>' +
           '<td>' + (r.shares || '') + '</td>' +

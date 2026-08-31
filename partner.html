@@ -765,6 +765,9 @@
             <label for="pemail">Email Address</label>
             <input type="email" id="pemail" name="pemail" placeholder="you@example.com" required>
 
+            <label for="pdob">Date of Birth</label>
+            <input type="date" id="pdob" name="pdob" required>
+
             <label for="presidence">Place of Residence</label>
             <input type="text" id="presidence" name="presidence" placeholder="City, neighborhood, or address" required>
 
@@ -908,6 +911,7 @@
       var name = document.getElementById('pname').value.trim();
       var phone = document.getElementById('pphone').value.trim();
       var email = document.getElementById('pemail').value.trim();
+      var dob = document.getElementById('pdob').value;
       var residence = document.getElementById('presidence').value.trim();
       var occupation = document.getElementById('poccupation').value.trim();
       var shares = parseInt(document.getElementById('pshares').value, 10) || 0;
@@ -921,6 +925,7 @@
         name: name,
         phone: phone,
         email: email,
+        dob: dob,
         residence: residence,
         occupation: occupation,
         shares: shares,
@@ -949,6 +954,7 @@
                  + "Name: " + name + "\n"
                  + "Phone: " + phone + "\n"
                  + "Email: " + email + "\n"
+                 + "Date of Birth: " + dob + "\n"
                  + "Residence: " + residence + "\n"
                  + "Occupation/Business: " + occupation + "\n\n"
 
@@ -1007,6 +1013,7 @@
       var name = document.getElementById('pname').value.trim();
       var phone = document.getElementById('pphone').value.trim();
       var email = document.getElementById('pemail').value.trim();
+      var dob = document.getElementById('pdob').value;
       var residence = document.getElementById('presidence').value.trim();
       var occupation = document.getElementById('poccupation').value.trim();
       var shares = parseInt(document.getElementById('pshares').value, 10) || 0;
@@ -1020,6 +1027,7 @@
         name: name,
         phone: phone,
         email: email,
+        dob: dob,
         residence: residence,
         occupation: occupation,
         shares: shares,
@@ -1117,6 +1125,7 @@
         row('Name', name);
         row('Phone', phone);
         row('Email', email);
+        row('Date of Birth', dob);
         row('Residence', residence);
         row('Occupation/Business', occupation);
         y += 4;

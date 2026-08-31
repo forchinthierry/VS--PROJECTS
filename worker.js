@@ -326,6 +326,7 @@ export default {
             name,
             phone,
             email,
+            dob,
             residence,
             occupation,
             shares,
@@ -337,7 +338,7 @@ export default {
             status
           )
           VALUES (
-            ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'New'
+            ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'New'
           )
         `).bind(
           new Date().toISOString(),
@@ -345,6 +346,7 @@ export default {
           data.name || '',
           data.phone || '',
           data.email || '',
+          data.dob || '',
           data.residence || '',
           data.occupation || '',
 
