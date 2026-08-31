@@ -847,6 +847,7 @@
                 <button type="submit" class="submit-btn">Submit via WhatsApp</button>
               </div>
               <button type="button" class="download-btn" onclick="downloadApplicationPDF()">Download Application (PDF)</button>
+              <div id="success" class="success" role="status" aria-live="polite" style="display:none;">✓ Application received successfully.</div>
             </section>
           </form>
         </div>
@@ -1075,6 +1076,7 @@
       })
       .then(function (data) {
         if (!data.success) throw new Error('Could not save application');
+        document.getElementById('success').style.display = 'block';
 
         var divider = "――――――――――――――――";
         var text = "*G-SPIRIT LOAN APPLICATION*\n" + divider + "\n\n"

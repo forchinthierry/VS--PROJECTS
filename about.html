@@ -12,7 +12,7 @@
  
     body {
       font-family: Arial, sans-serif;
-      background-color: #e7ebdf;
+      background: radial-gradient(circle at 15% 12%, #eef9f4 0%, #e2eee8 42%, #ddd8ee 100%);
       color: #333;
       margin: 0;
       padding: 0;
@@ -284,6 +284,38 @@
       font-size: 16px;
     }
 
+
+    /* Capital-inspired visual touch */
+    .capital-accent {
+      position: fixed;
+      right: 20px;
+      bottom: 82px;
+      z-index: 60;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 18px;
+      border: 0;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #8e44ad, #6c3483 68%, #b67ad0);
+      color: #fff;
+      font-weight: 700;
+      font-size: 14px;
+      cursor: pointer;
+      box-shadow: 0 12px 26px rgba(110, 52, 131, .30);
+      transition: transform .25s ease, box-shadow .25s ease, filter .25s ease;
+    }
+    .capital-accent:hover {
+      transform: translateY(-3px) scale(1.03);
+      box-shadow: 0 16px 30px rgba(110, 52, 131, .36);
+      filter: saturate(1.08);
+    }
+    .capital-accent:active { transform: scale(.97); }
+    .capital-accent .icon { font-size: 16px; }
+    @media (max-width: 600px) {
+      .capital-accent { right: 12px; bottom: 76px; padding: 10px 14px; font-size: 12px; }
+    }
+
     @keyframes floatPulse {
       0%, 100% { transform: translateY(0); }
       50% { transform: translateY(-4px); }
@@ -408,9 +440,36 @@
 .agreement-buttons{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin:30px 0 10px;}
 .agreement-btn{background:#2b3773;color:white;border:none;border-radius:999px;padding:14px 22px;cursor:pointer;font-weight:700;box-shadow:0 8px 18px rgba(43,55,115,.2);}
 .agreement-btn:hover{transform:translateY(-2px);}
-</style>
+
+    .capital-glow {
+      position: fixed;
+      width: 280px; height: 280px;
+      right: -90px; top: 110px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 30%, rgba(255,255,255,.45), rgba(142,68,173,.16) 52%, transparent 72%);
+      pointer-events: none;
+      z-index: 0;
+      animation: capitalDrift 10s ease-in-out infinite;
+    }
+    .capital-glow-left {
+      position: fixed;
+      width: 190px; height: 190px;
+      left: -70px; bottom: 120px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 60% 40%, rgba(255,255,255,.30), rgba(22,160,133,.10) 55%, transparent 75%);
+      pointer-events: none;
+      z-index: 0;
+      animation: capitalDrift 13s ease-in-out infinite reverse;
+    }
+    @keyframes capitalDrift {
+      0%,100% { transform: translate3d(0,0,0) scale(1); }
+      50% { transform: translate3d(-14px,18px,0) scale(1.05); }
+    }
+
+  </style>
 </head>
 <body class="is-entering">
+  <div class="capital-glow"></div><div class="capital-glow-left"></div>
 
   <div class="page-overlay"></div>
 
@@ -499,6 +558,11 @@
   <button class="floating-apply-btn" type="button" onclick="navigateWithTransition('apply.html')">
     <span class="icon">💰</span>
     <span>Apply for Loan</span>
+  </button>
+
+  <button class="capital-accent" type="button" onclick="navigateWithTransition('capital.html')" aria-label="Request for Capital">
+    <span class="icon">🚀</span>
+    <span>Request for Capital</span>
   </button>
 
   <footer>

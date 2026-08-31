@@ -5,6 +5,8 @@
   <link rel="icon" type="image/png" href="logo.png">
   <title>Partnership &amp; Investment Agreement - G-Spirit Loan Solution</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
   <style>
     * { box-sizing: border-box; }
 
@@ -357,6 +359,76 @@
       .header-actions { width: 100%; min-width: 0; justify-content: flex-start; flex-wrap: wrap; gap: 6px; }
       .header-actions button { font-size: 10px; padding: 5px 6px; }
       .page-banner h1 { font-size: 22px; }
+    }
+
+    body {
+      font-family: Nunito, Arial, sans-serif;
+      background: radial-gradient(circle at 12% 8%, #e1f4ef 0%, #c8e5df 38%, #a7c5c5 100%);
+      color: #263d46;
+    }
+
+    header { padding: 14px 22px; box-shadow: 0 5px 18px rgba(21,57,63,.22); }
+    header img { max-height: 48px; }
+    .brand { flex: 1; }
+    .brand h1 { font-family: Nunito, Arial, sans-serif; font-size: 22px; letter-spacing: .04em; }
+    .page-banner {
+      max-width: 900px;
+      margin: 28px auto 20px;
+      padding: 34px 30px;
+      background: #183f48;
+      border: 1px solid rgba(255,255,255,.35);
+      border-radius: 24px;
+      box-shadow: 0 16px 40px rgba(21,57,63,.22);
+      position: relative;
+      overflow: hidden;
+    }
+    .page-banner::after {
+      content: "";
+      position: absolute;
+      width: 180px;
+      height: 180px;
+      right: -55px;
+      top: -75px;
+      border: 1px solid rgba(244,177,118,.55);
+      border-radius: 50%;
+      box-shadow: 0 0 0 22px rgba(244,177,118,.08), 0 0 0 44px rgba(244,177,118,.05);
+    }
+    .page-banner h1 { font-family: 'DM Serif Display', Georgia, serif; font-size: clamp(34px,6vw,54px); color: #fff; position: relative; z-index: 1; }
+    .page-banner p { color: #d9f0eb; position: relative; z-index: 1; }
+    .container { width: min(94%, 900px); max-width: none; margin: 28px auto 60px; padding: 0; }
+    .hero, .card { background: rgba(255,255,255,.92); border: 1px solid rgba(255,255,255,.7); border-radius: 22px; box-shadow: 0 16px 40px rgba(21,57,63,.16); }
+    .hero { padding: 28px 30px; margin-bottom: 20px; }
+    .hero p { color: #49616a; line-height: 1.75; font-size: 16px; max-width: 720px; }
+    .card { padding: 28px; }
+    h2 { font-family: 'DM Serif Display', Georgia, serif; color: #1d6970; border-color: #e8a875; font-size: 28px; }
+    h3 { color: #1d6970; }
+    .share-highlight { background: linear-gradient(135deg,#fff4e8,#fbd3b2 60%,#fffdf8); border-color: #edb184; border-radius: 16px; padding: 20px; }
+    .share-highlight .num { font-family: 'DM Serif Display', Georgia, serif; color: #183f48; }
+    .terms-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 12px; }
+    .term-box { background: #eef8f5; border: 1px solid #cce6df; border-radius: 14px; padding: 16px; }
+    .term-box strong { display: block; color: #1d6970; margin-bottom: 5px; }
+    .term-box span { color: #4c6268; font-size: 13px; line-height: 1.55; }
+    .disclaimer { background: #fff4e8; border-left-color: #e8a875; color: #5c4a42; border-radius: 0 12px 12px 0; line-height: 1.6; }
+    .form-grid { grid-template-columns: 1.12fr .88fr; gap: 22px; }
+    .application-panel, .summary-panel { border-radius: 18px; padding: 22px; box-shadow: 0 10px 28px rgba(21,57,63,.1); border: 1px solid #dcece8; }
+    .application-panel { background: #fff; }
+    .summary-panel { background: linear-gradient(145deg,#fff4e8,#f9d8bc 48%,#fffdf8); }
+    .summary-panel h3 { border-color: #e8a875; }
+    label { color: #304c55; }
+    input, textarea, select { padding: 12px; border: 1px solid #cbdedb; border-radius: 10px; font: inherit; color: #263d46; background: #fff; }
+    input:focus, textarea:focus, select:focus { border-color: #1d8a83; box-shadow: 0 0 0 3px rgba(29,138,131,.15); }
+    button { border-radius: 12px; font-weight: 800; }
+    .application-panel form > button[type="submit"] { background: #1d8a83; }
+    .application-panel form > button[type="submit"]:hover { background: #146c68; }
+    .download-btn { background: #183f48; border-radius: 12px; }
+    .download-btn:hover { background: #102e35; }
+    .success { display: none; margin-top: 15px; padding: 12px 14px; border-radius: 12px; background: #e5f6ed; color: #21754c; font-weight: 800; text-align: center; }
+    .footer-links a { border-color: #1d6970; color: #1d6970; }
+    .footer-links a:hover { background: #1d6970; color: #fff; }
+
+    @media (max-width: 700px) {
+      .terms-grid, .form-grid { grid-template-columns: 1fr; }
+      .page-banner, .hero, .card { padding: 22px 20px; }
     }
   </style>
 </head>
