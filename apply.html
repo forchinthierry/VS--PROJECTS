@@ -14,7 +14,7 @@
 
     body {
       font-family: Arial, sans-serif;
-      background: radial-gradient(circle at 15% 10%, #fdf3f3 0%, #f5eded 50%, #ecd9df 100%);
+      background: radial-gradient(circle at 15% 10%, #edf7ff 0%, #eef3fa 35%, #e8edf8 100%);
       color: #333;
       margin: 0;
       padding: 0;
@@ -218,7 +218,7 @@
     }
 
     .summary-panel {
-      background: linear-gradient(135deg, #fff8eb 0%, #ffe7b0 45%, #fffdf7 100%);
+      background: linear-gradient(135deg, #edf9ff 0%, #dceefe 42%, #f7fbff 100%);
       position: relative;
       overflow: hidden;
     }
@@ -227,14 +227,14 @@
       content: "";
       position: absolute;
       inset: 0;
-      background: radial-gradient(circle at top left, rgba(255,255,255,0.8), transparent 44%);
+      background: radial-gradient(circle at top left, rgba(255,255,255,0.8), transparent 42%);
       pointer-events: none;
     }
 
     .summary-panel h3,
     h2 {
-      color: #16a085;
-      border-bottom: 2px solid #16a085;
+      color: #0f5f9a;
+      border-bottom: 2px solid #0f5f9a;
       padding-bottom: 5px;
       margin-top: 0;
     }
@@ -246,8 +246,8 @@
       padding: 6px 10px;
       margin-bottom: 12px;
       border-radius: 999px;
-      background: rgba(22, 160, 133, 0.15);
-      color: #0f6d5d;
+      background: rgba(15, 95, 154, 0.12);
+      color: #0d4a7f;
       font-size: 12px;
       font-weight: 700;
       letter-spacing: 0.04em;
@@ -322,8 +322,8 @@
     textarea:focus,
     select:focus {
       outline: none;
-      border-color: #16a085;
-      box-shadow: 0 0 0 3px rgba(22, 160, 133, 0.15);
+      border-color: #1d6fc7;
+      box-shadow: 0 0 0 3px rgba(29, 111, 199, 0.12);
     }
 
     .consent {
@@ -349,7 +349,7 @@
     }
 
     button {
-      background-color: #25D366;
+      background: linear-gradient(135deg, #1d6fc7 0%, #2c8ee6 100%);
       color: white;
       padding: 12px 20px;
       border: none;
@@ -361,9 +361,9 @@
     }
 
     button:hover {
-      background-color: #1ebe5d;
+      background: linear-gradient(135deg, #195ea7 0%, #2176d2 100%);
       transform: translateY(-2px);
-      box-shadow: 0 6px 14px rgba(37, 211, 102, 0.35);
+      box-shadow: 0 6px 14px rgba(29, 111, 199, 0.28);
     }
 
     button:active {
@@ -480,18 +480,18 @@
     }
 
     .progress-step small { font-size: 11px; white-space: nowrap; }
-    .progress-step.active, .progress-step.completed { color: #16a085; }
-    .progress-step.active span, .progress-step.completed span { background: #16a085; color: #fff; }
-    .progress-line { height: 2px; flex: 1; max-width: 110px; background: #ddd; margin: 0 4px 18px; transition: background 0.25s ease; }
-    .progress-line.completed { background: #16a085; }
+    .progress-step.active, .progress-step.completed { color: #0f5f9a; }
+    .progress-step.active span, .progress-step.completed span { background: linear-gradient(135deg, #0f5f9a, #2d8ee7); color: #fff; }
+    .progress-line { height: 2px; flex: 1; max-width: 110px; background: #dfeaf7; margin: 0 4px 18px; transition: background 0.25s ease; }
+    .progress-line.completed { background: #0f5f9a; }
 
     .form-step { display: none; animation: fadeSlideUp 0.35s ease both; }
     .form-step.active { display: block; }
 
     .step-heading { margin-bottom: 18px; }
-    .step-heading h3 { color: #2b3773; margin: 0 0 4px; font-size: 19px; }
-    .step-heading p { margin: 0; color: #666; font-size: 13px; }
-    .subsection-title { margin: 20px 0 4px; padding-top: 14px; border-top: 1px solid #eee; color: #16a085; font-weight: 700; }
+    .step-heading h3 { color: #1f4f82; margin: 0 0 4px; font-size: 19px; }
+    .step-heading p { margin: 0; color: #61718a; font-size: 13px; }
+    .subsection-title { margin: 20px 0 4px; padding-top: 14px; border-top: 1px solid #eee; color: #0e5e99; font-weight: 700; }
 
     .step-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 24px; }
     .step-actions.single-action { grid-template-columns: 1fr; }
@@ -997,6 +997,13 @@
       return true;
     }
 
+    function scrollToFormTop() {
+      var formPanel = document.querySelector('.application-panel') || document.querySelector('.form-card') || document.querySelector('form');
+      if (!formPanel) return;
+      var top = formPanel.getBoundingClientRect().top + window.scrollY - 18;
+      window.scrollTo({ top: top, behavior: 'smooth' });
+    }
+
     function showStep(stepNumber) {
       currentStep = stepNumber;
       document.querySelectorAll('.form-step').forEach(function (step) {
@@ -1014,7 +1021,7 @@
         updateLoanSummary();
         buildReview();
       }
-      window.scrollTo({ top: document.querySelector('.application-panel').offsetTop - 15, behavior: 'smooth' });
+      scrollToFormTop();
     }
 
     function nextStep() {

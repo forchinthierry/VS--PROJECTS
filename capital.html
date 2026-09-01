@@ -152,12 +152,18 @@ function validateStep(){
  for(const el of inputs){if(!el.checkValidity()){el.reportValidity();return false}}
  return true;
 }
+function scrollToFormTop(){
+ const formPanel=document.querySelector('.form-card') || document.querySelector('form');
+ if(!formPanel)return;
+ const top=formPanel.getBoundingClientRect().top + window.scrollY - 18;
+ window.scrollTo({top:top,behavior:'smooth'});
+}
 function showStep(n){
  step=n;
  document.querySelectorAll('.step').forEach(x=>x.classList.toggle('active',Number(x.dataset.step)===n));
  for(let i=1;i<=4;i++)document.getElementById('dot'+i).classList.toggle('active',i<=n);
  if(n===4)buildReview();
- window.scrollTo({top:0,behavior:'smooth'});
+ scrollToFormTop();
 }
 function nextStep(){if(validateStep())showStep(Math.min(4,step+1))}
 function prevStep(){showStep(Math.max(1,step-1))}

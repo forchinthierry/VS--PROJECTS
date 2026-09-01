@@ -1046,6 +1046,13 @@
       return true;
     }
 
+    function scrollToFormTop() {
+      var formPanel = document.querySelector('.application-panel') || document.querySelector('.form-card') || document.querySelector('form');
+      if (!formPanel) return;
+      var top = formPanel.getBoundingClientRect().top + window.scrollY - 18;
+      window.scrollTo({ top: top, behavior: 'smooth' });
+    }
+
     function showStep(stepNumber) {
       currentStep = stepNumber;
       document.querySelectorAll('.form-step').forEach(function (formStep) {
@@ -1057,7 +1064,7 @@
         progressStep.classList.toggle('completed', number < stepNumber);
       });
       if (stepNumber === 3) buildReview();
-      window.scrollTo({ top: document.querySelector('.application-panel').offsetTop - 15, behavior: 'smooth' });
+      scrollToFormTop();
     }
 
     function nextStep() {
