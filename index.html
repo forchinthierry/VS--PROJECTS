@@ -492,12 +492,23 @@
     .section-heading h2 { font-family: 'Fredoka', sans-serif; color: var(--blue); font-size: clamp(30px, 4vw, 44px); line-height: 1.1; margin: 10px 0 12px; }
     .section-heading p { color: var(--muted); line-height: 1.7; margin: 0; }
     .service-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
-    .service-card { background: var(--paper); border: 1px solid var(--line); border-radius: 12px; padding: 24px; min-height: 220px; box-shadow: 0 10px 28px rgba(24,43,86,.06); transition: transform .25s ease, box-shadow .25s ease; }
+    .service-card { background: var(--paper); border: 1px solid var(--line); border-radius: 12px; padding: 24px; min-height: 220px; box-shadow: 0 10px 28px rgba(24,43,86,.06); transition: transform .25s ease, box-shadow .25s ease; position: relative; overflow: hidden; }
+    .service-card::before { content: ""; position: absolute; inset: 0 auto auto 0; width: 100%; height: 4px; opacity: 0; transition: opacity .25s ease; }
     .service-card:hover { transform: translateY(-5px); box-shadow: 0 16px 32px rgba(24,43,86,.12); }
+    .service-card.loan-card { border-color: rgba(11, 136, 164, 0.25); background: linear-gradient(180deg, rgba(11,136,164,0.04), rgba(255,255,255,1)); }
+    .service-card.loan-card::before { background: linear-gradient(90deg, #0b88a4, #3bc3d4); opacity: 1; }
+    .service-card.capital-card { border-color: rgba(214, 140, 0, 0.28); background: linear-gradient(180deg, rgba(240,180,72,0.08), rgba(255,255,255,1)); }
+    .service-card.capital-card::before { background: linear-gradient(90deg, #d48a00, #f4b83a); opacity: 1; }
+    .service-card.partner-card { border-color: rgba(31, 96, 169, 0.25); background: linear-gradient(180deg, rgba(31,96,169,0.05), rgba(255,255,255,1)); }
+    .service-card.partner-card::before { background: linear-gradient(90deg, #1f60a9, #4d8ae0); opacity: 1; }
     .service-card .service-icon { font-size: 27px; }
     .service-card h3 { color: var(--blue); margin: 18px 0 8px; font-size: 20px; }
     .service-card p { color: var(--muted); line-height: 1.65; font-size: 14px; margin: 0; }
-    .service-card a { display: inline-block; margin-top: 18px; color: var(--teal); font-size: 13px; font-weight: 800; text-decoration: none; }
+    .service-card a { display: inline-flex; align-items: center; gap: 8px; margin-top: 18px; padding: 10px 14px; border-radius: 999px; color: #fff; font-size: 13px; font-weight: 800; text-decoration: none; box-shadow: 0 10px 18px rgba(24,43,86,.12); transition: transform .2s ease, box-shadow .2s ease; }
+    .service-card.loan-card a { background: linear-gradient(135deg, #0b88a4, #18a9be); }
+    .service-card.capital-card a { background: linear-gradient(135deg, #d48a00, #f1b63d); }
+    .service-card.partner-card a { background: linear-gradient(135deg, #1f60a9, #4075d4); }
+    .service-card a:hover { transform: translateY(-1px); box-shadow: 0 14px 22px rgba(24,43,86,.18); }
 
     .process-band { background: #eef5f5; border-top: 1px solid #d9e8e7; border-bottom: 1px solid #d9e8e7; }
     .process-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 34px; }
@@ -572,9 +583,9 @@
     <section class="section" aria-labelledby="services-title">
       <div class="section-heading"><div class="eyebrow">What we do</div><h2 id="services-title">Clear options for different kinds of progress.</h2><p>Choose the path that fits your current goal. Every application is reviewed with care and subject to the relevant terms and checks.</p></div>
       <div class="service-grid reveal-stagger">
-        <article class="service-card"><div class="service-icon">💰</div><h3>Loan Solutions</h3><p>Flexible short-term finance for personal needs, education, business expenses, and practical next steps.</p><a href="apply.html">Start an application →</a></article>
-        <article class="service-card"><div class="service-icon">📈</div><h3>Growth Capital</h3><p>For promising businesses and ideas seeking capital to launch, expand, or reach their next stage.</p><a href="capital.html">Request capital →</a></article>
-        <article class="service-card"><div class="service-icon">🤝</div><h3>Partnership</h3><p>Join a growing financial ecosystem through a structured contribution and agreed partnership terms.</p><a href="partner.html">Become a partner →</a></article>
+        <article class="service-card loan-card"><div class="service-icon">💰</div><h3>Loan Solutions</h3><p>Flexible short-term finance for personal needs, education, business expenses, and practical next steps.</p><a href="apply.html">Start an application →</a></article>
+        <article class="service-card capital-card"><div class="service-icon">📈</div><h3>Growth Capital</h3><p>For promising businesses and ideas seeking capital to launch, expand, or reach their next stage.</p><a href="capital.html">Request capital →</a></article>
+        <article class="service-card partner-card"><div class="service-icon">🤝</div><h3>Partnership</h3><p>Join a growing financial ecosystem through a structured contribution and agreed partnership terms.</p><a href="partner.html">Become a partner →</a></article>
       </div>
     </section>
 

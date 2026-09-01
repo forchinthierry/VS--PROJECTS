@@ -6,70 +6,214 @@
   <title>Admin Dashboard - G-Spirit Loan Solution</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
+    :root {
+      --navy: #1f2b5d;
+      --navy-deep: #18274d;
+      --teal: #0b88a4;
+      --teal-soft: #e8f7fb;
+      --gold: #d48a00;
+      --gold-soft: #fff4dc;
+      --ink: #1d2433;
+      --muted: #5d697c;
+      --line: #e6ebf3;
+      --paper: #ffffff;
+      --page: #f7f9fc;
+      --danger: #d64545;
+      --success: #1b9c73;
+      --shadow: 0 16px 38px rgba(23, 43, 79, 0.10);
+    }
+
     * { box-sizing: border-box; }
 
     body {
       font-family: Arial, sans-serif;
-      background-color: #f5eded;
-      color: #333;
+      background: linear-gradient(180deg, #f6f8fc 0%, #eef3f9 100%);
+      color: var(--ink);
       margin: 0;
       padding: 0;
       line-height: 1.6;
     }
 
     header {
-      background-color: #2b3773;
+      background: linear-gradient(135deg, var(--navy-deep), var(--navy));
       color: white;
-      padding: 16px 24px;
+      padding: 18px 24px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 10px;
+      gap: 12px;
+      box-shadow: 0 10px 22px rgba(24, 39, 77, 0.15);
+      position: sticky;
+      top: 0;
+      z-index: 10;
     }
 
-    header h1 { margin: 0; font-size: 20px; }
+    header h1 {
+      margin: 0;
+      font-size: 1.2rem;
+      letter-spacing: 0.02em;
+    }
+
+    .brand-lockup {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+
+    .brand-mark {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, rgba(11,136,164,0.2), rgba(212,138,0,0.25));
+      border: 1px solid rgba(255,255,255,0.25);
+      font-size: 18px;
+    }
 
     .container {
-      width: 95%;
-      max-width: 1200px;
-      margin: 20px auto;
+      width: min(1280px, 96%);
+      margin: 24px auto 40px;
       padding: 0 10px;
     }
 
-    .login-card {
-      max-width: 400px;
-      margin: 80px auto;
-      background: white;
-      border-radius: 12px;
-      padding: 30px;
-      box-shadow: 0 4px 14px rgba(0,0,0,0.1);
-      text-align: center;
+    .login-shell {
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 32px 20px;
+      background:
+        radial-gradient(circle at top left, rgba(11,136,164,0.10), transparent 28%),
+        radial-gradient(circle at bottom right, rgba(212,138,0,0.12), transparent 25%),
+        var(--page);
     }
 
-    .login-card h2 { color: #2b3773; margin-top: 0; }
+    .login-card {
+      width: min(440px, 100%);
+      background: rgba(255,255,255,0.98);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 28px 26px 24px;
+      box-shadow: var(--shadow);
+      text-align: left;
+    }
+
+    .login-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+      color: var(--navy-deep);
+    }
+
+    .login-brand .brand-mark {
+      width: 44px;
+      height: 44px;
+      background: linear-gradient(135deg, var(--teal), #4bb4cd);
+      border: none;
+      color: white;
+      font-size: 20px;
+    }
+
+    .login-brand strong {
+      display: block;
+      font-size: 1.05rem;
+      letter-spacing: 0.04em;
+    }
+
+    .login-brand small {
+      display: block;
+      color: var(--muted);
+      font-size: 0.72rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .login-card h2 {
+      margin: 0 0 8px;
+      color: var(--navy-deep);
+      font-size: 2rem;
+      line-height: 1.2;
+    }
+
+    .login-subtitle {
+      margin: 0 0 20px;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .field-group {
+      margin-bottom: 14px;
+    }
+
+    .field-group label {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 700;
+      margin-bottom: 7px;
+      color: var(--navy-deep);
+    }
 
     .login-card input {
       width: 100%;
-      padding: 10px;
-      margin: 12px 0;
-      border: 1px solid #ccc;
-      border-radius: 6px;
+      padding: 12px 14px;
+      border: 1px solid #ccd5e3;
+      border-radius: 10px;
       font-size: 14px;
+      background: #fbfcff;
+      color: var(--ink);
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .login-card input:focus {
+      border-color: rgba(11, 136, 164, 0.8);
+      box-shadow: 0 0 0 4px rgba(11,136,164,0.10);
+      outline: none;
+    }
+
+    .login-card button,
+    .toolbar button,
+    .nav-btn,
+    .refresh-btn,
+    .tab-btn,
+    .whatsapp-btn,
+    .agreement-btn {
+      transition: transform 0.18s ease, box-shadow 0.18s ease, opacity 0.18s ease;
     }
 
     .login-card button {
       width: 100%;
-      background: #2b3773;
+      background: linear-gradient(135deg, var(--teal), #1eaac0);
       color: white;
       border: none;
-      padding: 12px;
-      border-radius: 6px;
+      padding: 13px 16px;
+      border-radius: 10px;
       cursor: pointer;
       font-size: 15px;
+      font-weight: 700;
+      box-shadow: 0 12px 22px rgba(11, 136, 164, 0.18);
     }
 
-    .login-card button:hover { background: #1f2857; }
-    .login-error { color: #d9534f; font-size: 13px; margin-top: 8px; display: none; }
+    .login-card button:hover,
+    .toolbar button:hover,
+    .nav-btn:hover,
+    .refresh-btn:hover,
+    .tab-btn:hover,
+    .whatsapp-btn:hover,
+    .agreement-btn:hover {
+      transform: translateY(-1px);
+    }
+
+    .login-error {
+      color: var(--danger);
+      font-size: 0.82rem;
+      margin-top: 12px;
+      min-height: 18px;
+      display: none;
+    }
 
     .header-actions {
       display: flex;
@@ -78,182 +222,238 @@
       margin-left: auto;
     }
 
-    .nav-btn {
-      background: #4d79ff;
-      color: white;
+    .nav-btn,
+    .refresh-btn {
       border: none;
-      padding: 8px 16px;
-      border-radius: 6px;
+      color: white;
+      background: linear-gradient(135deg, #2f7fe8, #4d8ae0);
+      padding: 9px 14px;
+      border-radius: 10px;
       cursor: pointer;
       font-size: 13px;
+      font-weight: 700;
+      box-shadow: 0 12px 22px rgba(47, 127, 232, 0.18);
     }
 
-    .nav-btn:hover {
-      background: #3a5dd6;
+    .card {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      box-shadow: 0 8px 24px rgba(23, 43, 79, 0.05);
+      overflow: hidden;
     }
 
     .tabs {
       display: flex;
-      gap: 10px;
-      margin: 20px 0 10px;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin: 18px 0 18px;
     }
 
     .tab-btn {
-      background: white;
-      border: 1px solid #2b3773;
-      color: #2b3773;
+      background: rgba(255,255,255,0.7);
+      border: 1px solid rgba(31,43,93,0.18);
+      color: var(--navy-deep);
       padding: 10px 18px;
       border-radius: 999px;
       cursor: pointer;
-      font-size: 14px;
-      font-weight: bold;
+      font-size: 0.86rem;
+      font-weight: 700;
     }
 
-    .tab-btn.active { background: #2b3773; color: white; }
+    .tab-btn.active {
+      background: linear-gradient(135deg, var(--navy), var(--navy-deep));
+      color: white;
+      border-color: transparent;
+      box-shadow: 0 12px 24px rgba(31,43,93,0.18);
+    }
 
     .toolbar {
       display: flex;
       flex-wrap: wrap;
       gap: 10px;
       align-items: center;
-      margin-bottom: 14px;
+      margin-bottom: 16px;
     }
 
     .toolbar input {
       flex: 1;
       min-width: 220px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
+      border: 1px solid #ccd5e3;
+      border-radius: 10px;
       padding: 10px 14px;
       font-size: 14px;
+      background: #fbfcff;
+      color: var(--ink);
     }
 
     .toolbar button {
       border: none;
-      border-radius: 8px;
+      border-radius: 10px;
       padding: 10px 14px;
       font-size: 13px;
       cursor: pointer;
-      min-width: 130px;
+      min-width: 126px;
+      font-weight: 700;
     }
 
     .delete-btn {
-      background: #e74c3c;
+      background: linear-gradient(135deg, #eb5d5d, #d24444);
       color: white;
-    }
-
-    .delete-btn:hover {
-      background: #c0392b;
     }
 
     .results-count {
-      color: #555;
+      color: var(--muted);
       font-size: 13px;
+      font-weight: 700;
       margin-left: auto;
     }
 
-    .whatsapp-btn {
-      background: #25d366;
-      color: white;
-      border: none;
-      border-radius: 6px;
-      padding: 6px 10px;
-      cursor: pointer;
-      font-size: 12px;
-      white-space: nowrap;
-      margin-left: 4px;
+    .table-wrap { overflow-x: auto; max-height: 70vh; overflow-y: auto; }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12.7px;
+      min-width: 1100px;
     }
 
-    .whatsapp-btn:hover {
-      background: #1faa53;
+    th {
+      background: linear-gradient(135deg, var(--navy), var(--navy-deep));
+      color: white;
+      text-align: left;
+      padding: 12px 10px;
+      position: sticky;
+      top: 0;
+      z-index: 1;
+      font-size: 12px;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+    }
+
+    td {
+      padding: 10px 8px;
+      border-bottom: 1px solid var(--line);
+      vertical-align: top;
+      color: var(--ink);
+      background: white;
+    }
+
+    tr:hover td {
+      background: #fafcff;
+    }
+
+    select.status-select {
+      padding: 7px 8px;
+      border: 1px solid #d2dceb;
+      border-radius: 8px;
+      background: #f9fbfe;
+      color: var(--ink);
+      font-size: 12.5px;
+      font-weight: 600;
+      min-width: 108px;
+    }
+
+    .status-New { color: var(--navy); font-weight: 700; }
+    .status-UnderReview { color: #b57c00; font-weight: 700; }
+    .status-Approved { color: var(--success); font-weight: 700; }
+    .status-Rejected { color: var(--danger); font-weight: 700; }
+    .status-Disbursed { color: #6a47c7; font-weight: 700; }
+
+    .whatsapp-btn {
+      background: linear-gradient(135deg, #22c767, #1da859);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 7px 10px;
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 700;
+      white-space: nowrap;
+      margin-left: 4px;
+      box-shadow: 0 8px 18px rgba(34,199,103,0.18);
     }
 
     .agreement-btn {
-      background: #007bff;
+      background: linear-gradient(135deg, #2576ef, #3d79d7);
       color: white;
       text-decoration: none;
-      border: 1px solid #007bff;
-      border-radius: 6px;
-      padding: 6px 10px;
+      border: none;
+      border-radius: 8px;
+      padding: 7px 10px;
       cursor: pointer;
       font-size: 12px;
       white-space: nowrap;
       margin-top: 6px;
       display: inline-block;
       text-align: center;
+      font-weight: 700;
+      box-shadow: 0 8px 18px rgba(37,118,239,0.18);
     }
 
-    .agreement-btn:hover {
-      background: #0056b3;
-      border-color: #0056b3;
+    .empty-state {
+      padding: 52px 24px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.98rem;
+      background: linear-gradient(180deg, #ffffff 0%, #f7fbff 100%);
     }
 
-    .card {
-      background: white;
-      border-radius: 10px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-      overflow: hidden;
-    }
+    @media (max-width: 640px) {
+      header {
+        padding: 16px 18px;
+      }
 
-    table { width: 100%; border-collapse: collapse; font-size: 13px; }
+      header h1 {
+        font-size: 1rem;
+      }
 
-    th {
-      background: #2b3773;
-      color: white;
-      text-align: left;
-      padding: 10px 8px;
-      position: sticky;
-      top: 0;
-    }
+      .login-card {
+        padding: 22px 18px 20px;
+      }
 
-    td {
-      padding: 8px;
-      border-bottom: 1px solid #eee;
-      vertical-align: top;
-    }
+      .toolbar {
+        align-items: stretch;
+      }
 
-    tr:hover { background: #fafafa; }
-
-    select.status-select {
-      padding: 4px 6px;
-      border-radius: 4px;
-      border: 1px solid #ccc;
-      font-size: 12.5px;
-    }
-
-    .status-New { color: #2b3773; font-weight: bold; }
-    .status-UnderReview { color: #b8860b; font-weight: bold; }
-    .status-Approved { color: #16a085; font-weight: bold; }
-    .status-Rejected { color: #d9534f; font-weight: bold; }
-    .status-Disbursed { color: #6f42c1; font-weight: bold; }
-
-    .empty-state { padding: 40px; text-align: center; color: #999; }
-    .table-wrap { overflow-x: auto; max-height: 70vh; overflow-y: auto; }
-    .refresh-btn {
-      background: #16a085;
-      color: white;
-      border: none;
-      padding: 8px 16px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-size: 13px;
-      margin-left: auto;
+      .results-count {
+        width: 100%;
+        margin-left: 0;
+      }
     }
   </style>
 </head>
 <body>
 
-  <div id="loginScreen" class="login-card">
-    <h2>Admin Login</h2>
-    <input type="password" id="tokenInput" placeholder="Enter admin password">
-    <button onclick="login()">Log In</button>
-    <div class="login-error" id="loginError">Incorrect password or connection failed.</div>
+  <div id="loginScreen" class="login-shell">
+    <div class="login-card">
+      <div class="login-brand">
+        <div class="brand-mark">G</div>
+        <div>
+          <strong>G-SPIRIT</strong>
+          <small>Admin access</small>
+        </div>
+      </div>
+      <h2>Admin Login</h2>
+      <p class="login-subtitle">Enter the secure admin password to access application records.</p>
+      <div class="field-group">
+        <label for="tokenInput">Password</label>
+        <input type="password" id="tokenInput" placeholder="Enter admin password">
+      </div>
+      <button onclick="login()">Log In</button>
+      <div class="login-error" id="loginError">Incorrect password or connection failed.</div>
+    </div>
   </div>
 
   <div id="dashboard" style="display:none;">
     <header>
-      <h1>G-Spirit Admin Dashboard</h1>
-      <button class="refresh-btn" onclick="loadCurrentTab()">Refresh</button>
+      <div class="brand-lockup">
+        <div class="brand-mark">G</div>
+        <span>G-Spirit Admin Dashboard</span>
+      </div>
+      <div class="header-actions">
+        <button class="refresh-btn" onclick="loadCurrentTab()">Refresh</button>
+      </div>
     </header>
 
     <div class="container">
