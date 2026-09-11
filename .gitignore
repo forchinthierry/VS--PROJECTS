@@ -13,6 +13,7 @@ node_modules/
 # Environment/secret files
 .env
 .env.local
+ADMIN_CREDENTIALS.txt
 
 # Logs
 *.log

@@ -22,88 +22,10 @@ export default {
       });
     }
 
-    // ------------------------------------------------------------
-    // AUTH HELPERS
-    // ------------------------------------------------------------
-
-    function base64UrlEncode(value) {
-      return btoa(value)
-        .replace(/\+/g, '-')
-        .replace(/\//g, '_')
-        .replace(/=+$/g, '');
-    }
-
-    function base64UrlDecode(value) {
-      const padded = value.replace(/-/g, '+').replace(/_/g, '/') +
-        '='.repeat((4 - (value.length % 4)) % 4);
-      return atob(padded);
-    }
-
-    async function hashPassword(password, salt) {
-      const enc = new TextEncoder();
-      const key = await crypto.subtle.importKey('raw', enc.encode(password), 'PBKDF2', false, ['deriveBits']);
-      const bits = await crypto.subtle.deriveBits(
-        { name: 'PBKDF2', salt: enc.encode(salt), iterations: 100000, hash: 'SHA-256' },
-        key,
-        256
-      );
-      return [...new Uint8Array(bits)].map((b) => b.toString(16).padStart(2, '0')).join('');
-    }
-
-    async function createJWT(payload, secret) {
-      const header = base64UrlEncode(JSON.stringify({ alg: 'HS256', typ: 'JWT' }));
-      const body = base64UrlEncode(JSON.stringify({
-        ...payload,
-        iat: Math.floor(Date.now() / 1000),
-        exp: Math.floor(Date.now() / 1000) + 60 * 60 * 24 * 7
-      }));
-      const data = `${header}.${body}`;
-      const key = await crypto.subtle.importKey(
-        'raw', new TextEncoder().encode(secret),
-        { name: 'HMAC', hash: 'SHA-256' }, false, ['sign']
-      );
-      const sig = await crypto.subtle.sign('HMAC', key, new TextEncoder().encode(data));
-      return `${data}.${base64UrlEncode(String.fromCharCode(...new Uint8Array(sig)))}`;
-    }
-
-    async function verifyJWT(token, secret) {
-      try {
-        if (!token || !secret) return false;
-        const parts = token.split('.');
-        if (parts.length !== 3) return false;
-
-        const [encodedHeader, encodedPayload, encodedSignature] = parts;
-        const header = JSON.parse(base64UrlDecode(encodedHeader));
-        const payload = JSON.parse(base64UrlDecode(encodedPayload));
-
-        if (header.alg !== 'HS256' || header.typ !== 'JWT') return false;
-        if (!payload.exp || Number(payload.exp) < Math.floor(Date.now() / 1000)) return false;
-
-        const key = await crypto.subtle.importKey(
-          'raw', new TextEncoder().encode(secret),
-          { name: 'HMAC', hash: 'SHA-256' }, false, ['verify']
-        );
-        const signature = Uint8Array.from(base64UrlDecode(encodedSignature), (c) => c.charCodeAt(0));
-        return await crypto.subtle.verify(
-          'HMAC', key, signature,
-          new TextEncoder().encode(`${encodedHeader}.${encodedPayload}`)
-        );
-      } catch (error) {
-        console.log('JWT verification failed:', error.message);
-        return false;
-      }
-    }
-
-    async function isAuthorized(request) {
+    function isAuthorized(request) {
       const authHeader = request.headers.get('Authorization') || '';
-      if (!authHeader.toLowerCase().startsWith('bearer ')) return false;
-      const token = authHeader.slice(7).trim();
-      if (!token) return false;
-
-      // Backward compatibility for the current admin page.
-      if (env.ADMIN_TOKEN && token === env.ADMIN_TOKEN) return true;
-
-      return await verifyJWT(token, env.ADMIN_JWT_SECRET);
+      const token = authHeader.replace('Bearer ', '');
+      return token === env.ADMIN_TOKEN;
     }
 
     function normalizePhone(phone) {
@@ -185,37 +107,6 @@ export default {
     }
 
     try {
-      /*
-       * ============================================================
-       * ADMIN: LOGIN
-       * ============================================================
-       */
-
-      if (url.pathname === '/api/admin/login' && request.method === 'POST') {
-        const data = await request.json();
-        const password = String(data.password || '');
-
-        if (!env.ADMIN_PASSWORD_HASH || !env.ADMIN_PASSWORD_SALT || !env.ADMIN_JWT_SECRET) {
-          return json({ error: 'Admin authentication is not configured on the Worker.' }, 500);
-        }
-
-        if (!password) {
-          return json({ error: 'Password is required.' }, 400);
-        }
-
-        const suppliedHash = await hashPassword(password, env.ADMIN_PASSWORD_SALT);
-        if (suppliedHash !== env.ADMIN_PASSWORD_HASH) {
-          return json({ error: 'Invalid password.' }, 401);
-        }
-
-        const token = await createJWT(
-          { sub: 'admin', role: 'administrator' },
-          env.ADMIN_JWT_SECRET
-        );
-
-        return json({ success: true, token, expiresIn: 604800 });
-      }
-
       /*
        * ============================================================
        * CAPITAL APPLICATION TABLE
@@ -484,7 +375,7 @@ export default {
         url.pathname === '/api/admin/applications' &&
         request.method === 'GET'
       ) {
-        if (!(await isAuthorized(request))) {
+        if (!isAuthorized(request)) {
           return json(
             { error: 'Unauthorized' },
             401
@@ -510,7 +401,7 @@ export default {
         url.pathname === '/api/admin/partnerships' &&
         request.method === 'GET'
       ) {
-        if (!(await isAuthorized(request))) {
+        if (!isAuthorized(request)) {
           return json(
             { error: 'Unauthorized' },
             401
@@ -536,7 +427,7 @@ export default {
         url.pathname === '/api/admin/capital' &&
         request.method === 'GET'
       ) {
-        if (!(await isAuthorized(request))) {
+        if (!isAuthorized(request)) {
           return json(
             { error: 'Unauthorized' },
             401
@@ -562,7 +453,7 @@ export default {
         url.pathname === '/api/admin/update-status' &&
         request.method === 'POST'
       ) {
-        if (!(await isAuthorized(request))) {
+        if (!isAuthorized(request)) {
           return json(
             { error: 'Unauthorized' },
             401
@@ -661,7 +552,7 @@ export default {
         url.pathname === '/api/admin/delete' &&
         request.method === 'POST'
       ) {
-        if (!(await isAuthorized(request))) {
+        if (!isAuthorized(request)) {
           return json(
             { error: 'Unauthorized' },
             401

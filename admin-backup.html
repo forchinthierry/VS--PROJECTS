@@ -207,13 +207,6 @@
       transform: translateY(-1px);
     }
 
-
-    .login-card button:disabled {
-      opacity: 0.7;
-      cursor: wait;
-      transform: none;
-    }
-
     .login-error {
       color: var(--danger);
       font-size: 0.82rem;
@@ -445,7 +438,7 @@
       <p class="login-subtitle">Enter the secure admin password to access application records.</p>
       <div class="field-group">
         <label for="tokenInput">Password</label>
-        <input type="password" id="tokenInput" placeholder="Enter admin password" autocomplete="current-password">
+        <input type="password" id="tokenInput" placeholder="Enter admin password">
       </div>
       <button onclick="login()">Log In</button>
       <div class="login-error" id="loginError">Incorrect password or connection failed.</div>
@@ -460,7 +453,6 @@
       </div>
       <div class="header-actions">
         <button class="refresh-btn" onclick="loadCurrentTab()">Refresh</button>
-        <button class="nav-btn" onclick="logout()">Log Out</button>
       </div>
     </header>
 
@@ -495,53 +487,14 @@
     var currentFiltered = [];
     var selectedIds = {};
 
-    async function login() {
-      var password = document.getElementById('tokenInput').value.trim();
-      var errorEl = document.getElementById('loginError');
-      var button = document.querySelector('#loginScreen .login-card button');
-
-      if (!password) {
-        errorEl.textContent = 'Please enter your admin password.';
-        errorEl.style.display = 'block';
-        return;
-      }
-
-      errorEl.style.display = 'none';
-      if (button) {
-        button.disabled = true;
-        button.textContent = 'Logging in...';
-      }
-
-      try {
-        var res = await fetch(API_BASE + '/api/admin/login', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ password: password })
-        });
-
-        var data = await res.json();
-
-        if (!res.ok || !data.success || !data.token) {
-          throw new Error(data.error || 'Login failed.');
-        }
-
-        adminToken = data.token;
-        sessionStorage.setItem('gspirit_admin_token', data.token);
-
-        document.getElementById('tokenInput').value = '';
-        document.getElementById('loginScreen').style.display = 'none';
-        document.getElementById('dashboard').style.display = 'block';
-        loadCurrentTab();
-      } catch (err) {
-        errorEl.textContent =
-          err && err.message ? err.message : 'Incorrect password or connection failed.';
-        errorEl.style.display = 'block';
-      } finally {
-        if (button) {
-          button.disabled = false;
-          button.textContent = 'Log In';
-        }
-      }
+    function login() {
+      var token = document.getElementById('tokenInput').value;
+      if (!token) return;
+      adminToken = token;
+      sessionStorage.setItem('gspirit_admin_token', token);
+      document.getElementById('loginScreen').style.display = 'none';
+      document.getElementById('dashboard').style.display = 'block';
+      loadCurrentTab();
     }
 
     function switchTab(tab) {
@@ -582,13 +535,9 @@
     }
 
     function logout() {
-      adminToken = '';
       sessionStorage.removeItem('gspirit_admin_token');
-      document.getElementById('tokenInput').value = '';
-      document.getElementById('loginError').style.display = 'none';
       document.getElementById('dashboard').style.display = 'none';
-      document.getElementById('loginScreen').style.display = 'grid';
-      document.getElementById('tokenInput').focus();
+      document.getElementById('loginScreen').style.display = 'block';
     }
 
     function statusOptions(current) {
@@ -957,12 +906,7 @@
         currentFiltered.length > 0 && currentFiltered.every(function (r) { return selectedIds[r.id]; });
     }
 
-    // Press Enter in the password field to log in.
-    document.getElementById('tokenInput').addEventListener('keydown', function (event) {
-      if (event.key === 'Enter') login();
-    });
-
-    // Auto-login if a JWT is already stored for this browser session
+    // Auto-login if a token is already stored for this browser session
     window.addEventListener('load', function () {
       var saved = sessionStorage.getItem('gspirit_admin_token');
       if (saved) {
