@@ -359,6 +359,43 @@
       font-size: 12.5px;
       font-weight: 600;
       min-width: 108px;
+      transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+    }
+
+    select.status-select.status-new {
+      background: #f9fbfe;
+      color: var(--ink);
+      border-color: #d2dceb;
+    }
+
+    select.status-select.status-under-review {
+      background: #fff4e0;
+      color: #8a5a00;
+      border-color: #f0b955;
+    }
+
+    select.status-select.status-approved {
+      background: #e3f8ee;
+      color: #0f6d3f;
+      border-color: #4cc890;
+    }
+
+    select.status-select.status-rejected {
+      background: #fdeaea;
+      color: #a52020;
+      border-color: #e87e7e;
+    }
+
+    select.status-select.status-disbursed {
+      background: #e6efff;
+      color: #1c3fa0;
+      border-color: #7ca0f0;
+    }
+
+    /* option text always stays plain/dark so the dropdown list itself remains readable */
+    select.status-select option {
+      background: #fff;
+      color: #222;
     }
 
     .status-New { background-color: #e8f0ff; color: var(--navy); font-weight: 700; padding: 6px 10px; border-radius: 6px; display: inline-block; }
@@ -596,6 +633,12 @@
       return statuses.map(function (s) {
         return '<option value="' + s + '"' + (s === current ? ' selected' : '') + '>' + s + '</option>';
       }).join('');
+    }
+
+    function statusClass(status) {
+      var slug = (status || 'New').toString().trim().toLowerCase().replace(/\s+/g, '-');
+      var known = ['new', 'under-review', 'approved', 'rejected', 'disbursed'];
+      return 'status-' + (known.indexOf(slug) !== -1 ? slug : 'new');
     }
 
     function updateStatus(table, id, selectEl) {
@@ -862,7 +905,7 @@
           '<td>' + (r.surety_address || '') + '</td>' +
           '<td>' + (r.surety_relation || '') + '</td>' +
           '<td>' + (r.collateral || '') + '</td>' +
-          '<td><select class="status-select" onchange="updateStatus(\'loan_applications\', ' + r.id + ', this)">' + statusOptions(r.status) + '</select></td>' +
+          '<td><select class="status-select ' + statusClass(r.status) + '" onchange="updateStatus(\'loan_applications\', ' + r.id + ', this)">' + statusOptions(r.status) + '</select></td>' +
           '<td>' + '<button class="whatsapp-btn" onclick="sendStatusWhatsApp(\'loan\', ' + r.id + ')">Send Status</button>' + (normalizeStatus(r.status) === 'approved' ? '<br><a href="#" class="agreement-btn" onclick="openAgreement(\'loan\', ' + r.id + '); return false;">Agreement</a>' : '') + '</td>' +
           '</tr>';
       });
@@ -899,7 +942,7 @@
           '<td>' + (r.payment_method || '') + '</td>' +
           '<td>' + (r.next_of_kin || '') + '</td>' +
           '<td>' + (r.reason || '') + '</td>' +
-          '<td><select class="status-select" onchange="updateStatus(\'partnership_applications\', ' + r.id + ', this)">' + statusOptions(r.status) + '</select></td>' +
+          '<td><select class="status-select ' + statusClass(r.status) + '" onchange="updateStatus(\'partnership_applications\', ' + r.id + ', this)">' + statusOptions(r.status) + '</select></td>' +
           '<td>' + '<button class="whatsapp-btn" onclick="sendStatusWhatsApp(\'partner\', ' + r.id + ')">Send Status</button>' + (normalizeStatus(r.status) === 'approved' ? '<br><a href="#" class="agreement-btn" onclick="openAgreement(\'partner\', ' + r.id + '); return false;">Agreement</a>' : '') + '</td>' +
           '</tr>';
       });
@@ -943,7 +986,7 @@
           '<td>' + Number(r.monthly_revenue || 0).toLocaleString() + ' XAF</td>' +
           '<td>' + (r.capital_use || '') + '</td>' +
           '<td>' + (r.registration_status || '') + '</td>' +
-          '<td><select class="status-select" onchange="updateStatus(\'capital_applications\', ' + r.id + ', this)">' + statusOptions(r.status) + '</select></td>' +
+          '<td><select class="status-select ' + statusClass(r.status) + '" onchange="updateStatus(\'capital_applications\', ' + r.id + ', this)">' + statusOptions(r.status) + '</select></td>' +
           '<td>' + 
             '<button class="whatsapp-btn" onclick="sendStatusWhatsApp(\'capital\', ' + r.id + ')">Send Status</button>' + 
             (normalizeStatus(r.status) === 'approved' ? '<br><a href="#" class="agreement-btn" onclick="openAgreement(\'capital\', ' + r.id + '); return false;">Agreement</a>' : '') + 
