@@ -871,13 +871,16 @@
           ['Other (' + otherDesc + ')', formatCurrency(otherAmount) + ' XAF'],
           ['Total of Payments', formatCurrency(total) + ' XAF']
         ];
-        var rowH = 7.5;
         var tblCol1W = 85;
         var tblCol2W = maxWidth - tblCol1W;
-        ensureSpace(rowH * tableRows.length + 2);
+        var cellPad = 3;
         doc.setDrawColor(200, 200, 200);
         doc.setLineWidth(0.2);
         tableRows.forEach(function (row, idx) {
+          doc.setFontSize(9.5);
+          var labelLines = doc.splitTextToSize(row[0], tblCol1W - cellPad * 2);
+          var rowH = Math.max(7.5, labelLines.length * 5 + 2.5);
+
           ensureSpace(rowH);
           if (idx % 2 === 0) {
             doc.setFillColor(243, 243, 243);
@@ -885,16 +888,20 @@
           }
           doc.rect(margin, y - 5, tblCol1W, rowH);
           doc.rect(margin + tblCol1W, y - 5, tblCol2W, rowH);
+
           doc.setFont(FONT, 'bold');
-          doc.setFontSize(9.5);
           doc.setTextColor(43, 55, 115);
-          doc.text(row[0], margin + 3, y);
+          labelLines.forEach(function (line, i) {
+            doc.text(line, margin + cellPad, y + i * 5);
+          });
+
           doc.setFont(FONT, 'normal');
           doc.setTextColor(25, 25, 25);
           var valWidth = doc.getTextWidth(row[1]);
-          doc.text(row[1], margin + tblCol1W + 3, y);
+          doc.text(row[1], margin + tblCol1W + cellPad, y);
           doc.setLineWidth(0.15);
-          doc.line(margin + tblCol1W + 3, y + 0.8, margin + tblCol1W + 3 + valWidth, y + 0.8);
+          doc.line(margin + tblCol1W + cellPad, y + 0.8, margin + tblCol1W + cellPad + valWidth, y + 0.8);
+
           y += rowH;
         });
         y += 4;
@@ -925,9 +932,15 @@
         signLines.push({ label: 'Lender — ' + lenderRepName + ' (for ' + lenderName + ')' });
         if (witnessName) signLines.push({ label: 'Witness — ' + witnessName });
 
-        var sigRowHeight = 16;
-        var sigRows = Math.ceil(signLines.length / 2);
-        var sigBlockHeight = 13 + (sigRows * sigRowHeight);
+        doc.setFontSize(9.5);
+        var precomputedRows = [];
+        for (var pr = 0; pr < signLines.length; pr += 2) {
+          var lLines = doc.splitTextToSize(signLines[pr].label, colWidth);
+          var rLines = signLines[pr + 1] ? doc.splitTextToSize(signLines[pr + 1].label, colWidth) : [];
+          var lineCount = Math.max(lLines.length, rLines.length, 1);
+          precomputedRows.push({ lLines: lLines, rLines: rLines, lineCount: lineCount });
+        }
+        var sigBlockHeight = 13 + precomputedRows.reduce(function (sum, r) { return sum + (r.lineCount * 4.5 + 15); }, 0);
         ensureSpace(sigBlockHeight);
 
         y += 4;
@@ -940,24 +953,27 @@
         doc.line(margin, y + 1.3, pageWidth - margin, y + 1.3);
         y += 9;
 
-        for (var s = 0; s < signLines.length; s += 2) {
+        precomputedRows.forEach(function (rowData) {
+          ensureSpace(rowData.lineCount * 4.5 + 15);
+
           doc.setFont(FONT, 'normal');
           doc.setFontSize(9.5);
           doc.setTextColor(40, 40, 40);
-          doc.text(signLines[s].label, margin, y);
-          if (signLines[s + 1]) doc.text(signLines[s + 1].label, margin + colWidth + 10, y);
-          y += 7;
+          rowData.lLines.forEach(function (line, i) { doc.text(line, margin, y + i * 4.5); });
+          rowData.rLines.forEach(function (line, i) { doc.text(line, margin + colWidth + 10, y + i * 4.5); });
+          y += rowData.lineCount * 4.5 + 3;
+
           doc.setDrawColor(120, 120, 120);
           doc.setLineWidth(0.2);
           doc.line(margin, y, margin + colWidth, y);
-          if (signLines[s + 1]) doc.line(margin + colWidth + 10, y, margin + colWidth + 10 + colWidth, y);
+          if (rowData.rLines.length) doc.line(margin + colWidth + 10, y, margin + colWidth + 10 + colWidth, y);
           y += 4;
           doc.setFontSize(8);
           doc.setTextColor(120, 120, 120);
           doc.text('Signature & Date', margin, y);
-          if (signLines[s + 1]) doc.text('Signature & Date', margin + colWidth + 10, y);
+          if (rowData.rLines.length) doc.text('Signature & Date', margin + colWidth + 10, y);
           y += 7;
-        }
+        });
 
         // Footer
         var totalPages = doc.internal.getNumberOfPages();

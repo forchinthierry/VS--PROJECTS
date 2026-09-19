@@ -290,5 +290,40 @@ y=46; doc.setTextColor(43,55,115); doc.setFontSize(14); doc.text('Capital Applic
  doc.save(filename);
 }
 </script>
+
+<script>
+  (function () {
+    var overlay = document.createElement('div');
+    overlay.className = 'page-overlay';
+    overlay.style.position = 'fixed';
+    overlay.style.inset = '0';
+    overlay.style.background = '#fff';
+    overlay.style.opacity = '0';
+    overlay.style.pointerEvents = 'none';
+    overlay.style.transition = 'opacity 0.35s cubic-bezier(0.22, 1, 0.36, 1)';
+    overlay.style.zIndex = '9999';
+    document.body.appendChild(overlay);
+
+    function goToTarget(targetUrl) {
+      if (!targetUrl) return false;
+      document.body.classList.add('is-exiting');
+      overlay.classList.add('is-visible');
+      setTimeout(function () {
+        window.location.href = targetUrl;
+      }, 320);
+      return false;
+    }
+
+    window.navigateWithTransition = function (targetUrl) {
+      return goToTarget(targetUrl);
+    };
+
+    window.addEventListener('pageshow', function () {
+      document.body.classList.remove('is-exiting');
+      overlay.classList.remove('is-visible');
+    });
+  })();
+</script>
+
 </body>
 </html>
