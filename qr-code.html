@@ -15,6 +15,32 @@
       margin: 0;
       padding: 0;
       line-height: 1.6;
+      opacity: 1;
+      transition: opacity 0.35s cubic-bezier(0.22, 1, 0.36, 1), transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    body.is-exiting {
+      opacity: 0;
+      transform: scale(0.98);
+    }
+
+    body.is-entering {
+      opacity: 0;
+      transform: scale(0.98);
+    }
+
+    .page-overlay {
+      position: fixed;
+      inset: 0;
+      background: #fff;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.35s cubic-bezier(0.22, 1, 0.36, 1), transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+      z-index: 9999;
+    }
+
+    .page-overlay.is-visible {
+      opacity: 1;
     }
 
     header {
@@ -131,8 +157,10 @@
 </head>
 <body>
 
+  <div class="page-overlay"></div>
+
   <header>
-    <button type="button" class="logo-btn" onclick="window.location.href='index.html'" aria-label="Go to homepage">
+    <button type="button" class="logo-btn" onclick="navigateWithTransition('index.html')" aria-label="Go to homepage">
       <img src="logo.png" alt="G-Spirit logo">
     </button>
     <div class="brand">
@@ -214,6 +242,55 @@
     }
 
     window.addEventListener('load', drawQRWithLogo);
+
+    (function () {
+      var overlay = document.querySelector('.page-overlay') || document.createElement('div');
+      if (!document.querySelector('.page-overlay')) {
+        overlay.className = 'page-overlay';
+        document.body.appendChild(overlay);
+      }
+
+      function goToTarget(targetUrl) {
+        if (!targetUrl || targetUrl.startsWith('mailto:') || targetUrl.startsWith('tel:')) {
+          return false;
+        }
+
+        document.body.classList.add('is-exiting');
+        overlay.classList.add('is-visible');
+
+        setTimeout(function () {
+          window.location.href = targetUrl;
+        }, 320);
+
+        return false;
+      }
+
+      window.navigateWithTransition = function (targetUrl) {
+        return goToTarget(targetUrl);
+      };
+
+      document.addEventListener('click', function (event) {
+        var anchor = event.target && event.target.closest ? event.target.closest('a[href]') : null;
+        if (!anchor) return;
+
+        var href = anchor.getAttribute('href');
+        if (!href || href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('tel:')) return;
+        if (anchor.target === '_blank' || /^https?:\/\//i.test(href)) return;
+
+        event.preventDefault();
+        goToTarget(href);
+      });
+
+      window.addEventListener('pageshow', function () {
+        document.body.classList.remove('is-exiting');
+        document.body.classList.add('is-entering');
+        overlay.classList.remove('is-visible');
+
+        requestAnimationFrame(function () {
+          document.body.classList.remove('is-entering');
+        });
+      });
+    })();
   </script>
 
 </body>

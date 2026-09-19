@@ -445,18 +445,50 @@
 
   <script>
     (function () {
-      var overlay = document.querySelector('.page-overlay');
-      window.navigateWithTransition = function (targetUrl) {
-        if (!targetUrl) return false;
+      var overlay = document.querySelector('.page-overlay') || document.createElement('div');
+      if (!document.querySelector('.page-overlay')) {
+        overlay.className = 'page-overlay';
+        document.body.appendChild(overlay);
+      }
+
+      function goToTarget(targetUrl) {
+        if (!targetUrl || targetUrl.startsWith('mailto:') || targetUrl.startsWith('tel:')) {
+          return false;
+        }
+
         document.body.classList.add('is-exiting');
         overlay.classList.add('is-visible');
-        setTimeout(function () { window.location.href = targetUrl; }, 320);
+
+        setTimeout(function () {
+          window.location.href = targetUrl;
+        }, 320);
+
         return false;
+      }
+
+      window.navigateWithTransition = function (targetUrl) {
+        return goToTarget(targetUrl);
       };
-      document.addEventListener('DOMContentLoaded', function () {
+
+      document.addEventListener('click', function (event) {
+        var anchor = event.target && event.target.closest ? event.target.closest('a[href]') : null;
+        if (!anchor) return;
+
+        var href = anchor.getAttribute('href');
+        if (!href || href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('tel:')) return;
+        if (anchor.target === '_blank' || /^https?:\/\//i.test(href)) return;
+
+        event.preventDefault();
+        goToTarget(href);
+      });
+
+      window.addEventListener('pageshow', function () {
+        document.body.classList.remove('is-exiting');
+        document.body.classList.add('is-entering');
+        overlay.classList.remove('is-visible');
+
         requestAnimationFrame(function () {
           document.body.classList.remove('is-entering');
-          overlay.classList.remove('is-visible');
         });
       });
     })();

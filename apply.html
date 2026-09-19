@@ -637,7 +637,7 @@
     .container { width: min(94%, 850px); margin: 28px auto 60px; padding: 0; }
     .hero, .card { background: #ffffffed; border-radius: 24px; box-shadow: 0 16px 40px #49306b20; border: 1px solid #ffffffaa; }
     .hero { padding: 30px; margin-bottom: 20px; }
-    .hero::before { content: "QUICK LOAN APPLICATION"; display: inline-block; background: #8e44ad; color: white; padding: 7px 14px; border-radius: 999px; font-size: 12px; font-weight: 800; letter-spacing: .08em; }
+    .hero::before { content: "QUICK LOAN APPLICATION"; display: inline-block; background: linear-gradient(135deg, #1f3c88, #0b88a4); color: white; padding: 7px 14px; border-radius: 999px; font-size: 12px; font-weight: 800; letter-spacing: .08em; }
     .hero p { max-width: 690px; margin: 14px auto 0; line-height: 1.65; color: #514866; font-size: 16px; }
     .card { padding: 28px; margin-bottom: 20px; }
     .card:first-of-type { padding: 20px 28px; }
@@ -686,6 +686,254 @@
     .step-actions button, .output-buttons button { min-height: 48px; }
     .progress-step { transition: color .2s ease, transform .2s ease; }
     .progress-step.active { transform: translateY(-2px); }
+  
+    /* Loan application redesign: standard financial-services theme */
+    :root {
+      --loan-navy:#12355b;
+      --loan-blue:#1d6fc7;
+      --loan-teal:#0b7285;
+      --loan-gold:#d9a441;
+      --loan-ink:#213047;
+      --loan-muted:#63738a;
+      --loan-line:#dfe7f0;
+      --loan-bg:#eef3f8;
+    }
+    body{
+      font-family:Nunito,Arial,sans-serif;
+      color:var(--loan-ink);
+      background:
+        radial-gradient(circle at 8% 5%,rgba(29,111,199,.10),transparent 26%),
+        radial-gradient(circle at 92% 15%,rgba(11,114,133,.08),transparent 24%),
+        linear-gradient(180deg,#f8fafc 0%,var(--loan-bg) 100%);
+    }
+    header{
+      background:linear-gradient(135deg,#0f2f52 0%,var(--loan-navy) 58%,#174d76 100%);
+      padding:14px 22px;
+      box-shadow:0 6px 20px rgba(18,53,91,.18);
+    }
+    header img{max-height:48px}
+    .brand{flex:1}
+    .brand h1{font-family:Fredoka,Nunito,sans-serif;font-size:22px;letter-spacing:.04em}
+    .container{
+      width:min(94%,1180px);
+      max-width:1180px;
+      margin:28px auto 60px;
+      padding:0;
+      box-sizing:border-box;
+    }
+    .hero,.card{
+      background:rgba(255,255,255,.97);
+      border:1px solid rgba(18,53,91,.08);
+      border-radius:22px;
+      box-shadow:0 18px 46px rgba(18,53,91,.09);
+    }
+    .hero{padding:30px 34px 28px;margin-bottom:20px;overflow:hidden;position:relative}
+    .hero::after{
+      content:"";position:absolute;width:220px;height:220px;border-radius:50%;
+      right:-80px;top:-105px;
+      background:radial-gradient(circle,rgba(217,164,65,.20),rgba(217,164,65,0));
+      pointer-events:none
+    }
+    .hero h2{
+      border:0;margin:12px 0 8px;color:var(--loan-navy);
+      font-family:Fredoka,Nunito,sans-serif;font-size:clamp(28px,4vw,40px);line-height:1.1;
+    }
+    .hero-badge{
+      display:inline-flex;background:rgba(29,111,199,.10);color:var(--loan-blue);
+      border:1px solid rgba(29,111,199,.18);padding:7px 12px;border-radius:999px;
+      font-size:11px;font-weight:900;letter-spacing:.08em
+    }
+    .hero p{max-width:760px;margin:0;color:#5c6b7d;font-size:16px}
+    .hero-points{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
+    .hero-points span{
+      background:#f7fafc;border:1px solid var(--loan-line);color:#42546b;
+      padding:7px 11px;border-radius:999px;font-size:12px;font-weight:800
+    }
+    .card{padding:28px;width:100%}
+    .card > .form-grid{width:100%;margin:0}
+    .card:first-of-type{padding:22px 28px}
+    .card:first-of-type h2{
+      font-family:Fredoka,Nunito,sans-serif;color:var(--loan-navy);border:0;margin:0 0 10px
+    }
+    .steps{grid-template-columns:repeat(3,1fr);gap:12px}
+    .steps li{
+      padding:14px;border:1px solid var(--loan-line);border-radius:14px;
+      background:linear-gradient(180deg,#fbfdff,#f3f7fb);font-size:13px;color:#415269
+    }
+    .form-grid{
+      display:block;
+      width:100%;
+    }
+    .application-panel,
+    .application-panel-full{
+      width:100%;
+      max-width:none;
+      padding:0;
+      margin:0;
+      box-shadow:none;
+      border:0;
+      background:transparent;
+    }
+    form{
+      width:100%;
+      max-width:none;
+      margin:0;
+    }
+    .application-panel>h2{display:none}
+    .form-progress{margin:0 0 28px;max-width:none;gap:7px;align-items:flex-start}
+    .progress-step{min-width:0;flex:1;color:#8a98aa;font-weight:900}
+    .progress-step span{
+      display:block;width:auto;height:7px;border-radius:99px;background:#dce4ed;color:transparent
+    }
+    .progress-step.active,.progress-step.completed{color:var(--loan-blue)}
+    .progress-step.active span,.progress-step.completed span{background:linear-gradient(90deg,var(--loan-blue),var(--loan-teal))}
+    .progress-line{
+      height:3px;flex:0 0 18px;max-width:18px;background:#dce4ed;margin:1px 0 19px
+    }
+    .progress-line.completed{background:var(--loan-teal)}
+    .progress-step small{font-size:10px;letter-spacing:.02em}
+    .step-heading{margin-bottom:22px;padding-bottom:18px;border-bottom:1px solid var(--loan-line)}
+    .step-kicker{
+      display:inline-block;margin-bottom:6px;color:var(--loan-teal);
+      font-size:10px;font-weight:900;letter-spacing:.12em
+    }
+    .step-heading h3{
+      font-family:Fredoka,Nunito,sans-serif;color:var(--loan-navy);
+      font-size:26px;margin:0 0 5px
+    }
+    .step-heading p{color:var(--loan-muted);margin:0;max-width:760px;font-size:13.5px}
+    .field-grid{
+      width:100%;
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:0 20px;
+      align-items:start;
+    }
+    .field-card{
+      background:#fbfcfe;border:1px solid var(--loan-line);border-radius:14px;
+      padding:13px 14px 3px;margin-bottom:16px;
+      box-shadow:0 7px 18px rgba(18,53,91,.04)
+    }
+    .field-card.featured-field{
+      background:linear-gradient(180deg,#eef6fd,#f9fbfe);border-color:rgba(29,111,199,.20)
+    }
+    .field-wide{grid-column:1/-1}
+    label{display:block;margin:0 0 7px;font-weight:900;font-size:12.5px;color:#32465f}
+    .required-note{color:#c24b4b;font-size:11px;font-weight:800}
+    input,select,textarea{
+      width:100%;min-height:48px;padding:12px 13px;margin:0 0 10px;
+      border:1px solid #ccd8e5;border-radius:10px;background:#fff;color:#25364d;font:inherit;
+      transition:border-color .2s ease,box-shadow .2s ease,background .2s ease
+    }
+    textarea{resize:vertical;min-height:96px}
+    input:hover,select:hover,textarea:hover{border-color:#9fb1c7;background:#fff}
+    input:focus,select:focus,textarea:focus{
+      outline:none;border-color:var(--loan-blue);box-shadow:0 0 0 4px rgba(29,111,199,.10);background:#fff
+    }
+    .field-card small{display:block;color:#738197;font-size:11px;margin:0 0 9px;line-height:1.45}
+    .section-label{
+      margin:6px 0 12px;color:var(--loan-navy);font-size:13px;font-weight:900;letter-spacing:.03em;
+      display:flex;align-items:center;gap:9px
+    }
+    .section-label::after{content:"";flex:1;height:1px;background:var(--loan-line)}
+    .step-tip,.loan-callout{
+      border:1px solid var(--loan-line);border-radius:14px;background:#edf5fc;color:#51647b;
+      padding:13px 14px;margin:2px 0 18px;font-size:12.5px
+    }
+    .step-tip strong{color:var(--loan-navy)}
+    .loan-callout{
+      display:flex;align-items:center;gap:12px;background:#eef9f8;border-color:rgba(11,114,133,.12)
+    }
+    .loan-callout-icon{
+      width:38px;height:38px;flex:0 0 38px;display:grid;place-items:center;border-radius:11px;
+      background:var(--loan-teal);color:#fff;font-weight:900;font-size:18px
+    }
+    .loan-callout strong{display:block;color:var(--loan-navy);margin-bottom:2px}
+    .loan-callout span{display:block;color:#617287;font-size:11.5px}
+    .financial-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:2px 0 4px}
+    .financial-strip>div{
+      padding:14px;border-radius:14px;background:linear-gradient(180deg,#fff,#f7fafc);
+      border:1px solid var(--loan-line)
+    }
+    .financial-strip span,.financial-strip strong{display:block}
+    .financial-strip span{
+      font-size:10px;color:#78869a;text-transform:uppercase;letter-spacing:.05em;font-weight:900
+    }
+    .financial-strip strong{color:var(--loan-navy);font-size:15px;margin-top:4px}
+    .summary-layout{display:grid;grid-template-columns:.9fr 1.1fr;gap:18px;margin-top:20px;align-items:start}
+    .summary-panel,.review-card{
+      border-radius:16px;padding:18px;border:1px solid var(--loan-line);
+      box-shadow:0 10px 24px rgba(18,53,91,.05)
+    }
+    .summary-panel{background:linear-gradient(135deg,#eef5fb,#f9fcff);position:relative;overflow:hidden}
+    .summary-panel::before{
+      content:"";position:absolute;width:130px;height:130px;border-radius:50%;
+      right:-55px;top:-55px;background:rgba(217,164,65,.12)
+    }
+    .summary-panel h3,.review-card h3{
+      color:var(--loan-navy);border:0;margin:0 0 12px;font-family:Fredoka,Nunito,sans-serif
+    }
+    .summary-badge{
+      display:inline-flex;padding:6px 10px;margin-bottom:9px;border-radius:999px;
+      background:rgba(29,111,199,.10);color:var(--loan-blue);font-size:10px;font-weight:900;
+      letter-spacing:.08em;text-transform:uppercase
+    }
+    .summary-badge.neutral{background:#f2f5f8;color:#53657c}
+    .summary-list{display:grid;gap:9px;margin-top:9px}
+    .summary-item{
+      display:flex;justify-content:space-between;gap:12px;align-items:center;padding:10px 11px;
+      background:rgba(255,255,255,.88);border:1px solid rgba(18,53,91,.07);border-radius:10px
+    }
+    .summary-item strong{color:#3b4c62;font-size:11.5px}
+    .summary-item span{color:var(--loan-navy);font-weight:900;font-size:13px;text-align:right}
+    .summary-item.highlight{border-color:rgba(217,164,65,.35);background:#fffaf0}
+    .review-card{background:#fff}
+    .review-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+    .review-item{background:#f8fafc;border-radius:10px;padding:10px;border:1px solid #e5ebf2}
+    .review-item small{display:block;color:#7a899d;font-size:9.5px;text-transform:uppercase;letter-spacing:.04em}
+    .review-item strong{display:block;color:#2d4059;margin-top:3px;font-size:12px;line-height:1.35;word-break:break-word}
+    .review-note{
+      margin-top:16px;padding:13px 14px;border-left:4px solid var(--loan-gold);
+      background:#fffbf3;color:#566579;border-radius:0 10px 10px 0;font-size:12.5px
+    }
+    .consent{margin-top:16px;padding:13px 14px;background:#f8fafc;border:1px solid var(--loan-line);border-radius:12px}
+    .checkbox-label{display:flex;align-items:flex-start;gap:10px;font-size:12px;line-height:1.55;color:#526276}
+    .checkbox-label input[type=checkbox]{margin-top:3px;width:auto;min-height:auto;flex:0 0 auto}
+    .step-actions{margin-top:22px;gap:12px}
+    .step-actions button,.download-btn{border-radius:11px;padding:13px 18px;min-height:48px;font-weight:900;font:inherit}
+    .next-btn,.submit-btn{background:linear-gradient(135deg,var(--loan-blue),#2582d8);color:#fff}
+    .next-btn:hover,.submit-btn:hover{background:linear-gradient(135deg,#155da8,#1e70bc)}
+    .prev-btn{background:#eaf0f5;color:var(--loan-navy)}
+    .prev-btn:hover{background:#dde7ef;box-shadow:0 6px 14px rgba(18,53,91,.12)}
+    .download-btn{margin-top:11px;background:#fff;color:var(--loan-navy);border:1px solid #cfd9e5}
+    .download-btn:hover{background:#f7fafc;box-shadow:0 6px 14px rgba(18,53,91,.10)}
+    .success{margin-top:12px;padding:11px 13px;border-radius:9px;background:#eaf8f2;color:#1d7758;font-weight:800;font-size:12px}
+
+    @media (min-width:1200px){
+      .container{width:min(92%,1180px);margin-left:auto;margin-right:auto}
+      .hero,.card{width:100%}
+      .application-panel{width:100%}
+    }
+
+    @media (max-width:900px){
+      .field-grid,.summary-layout{grid-template-columns:1fr}
+      .field-wide{grid-column:auto}
+      .financial-strip,.review-grid{grid-template-columns:1fr}
+    }
+    @media (max-width:650px){
+      .hero,.card{padding:20px}
+      .hero h2{font-size:30px}
+      .progress-line{flex-basis:8px;max-width:8px}
+      .progress-step small{font-size:8.5px}
+    }
+
+    /* Final loan badge treatment */
+    .hero::before{
+      background:linear-gradient(135deg,#1f3c88 0%,#0b88a4 100%) !important;
+      color:#fff;
+      box-shadow:0 8px 18px rgba(31,60,136,.18);
+      border:1px solid rgba(255,255,255,.22);
+    }
   </style>
 </head>
 <body>
@@ -701,17 +949,24 @@
       <div class="tagline">Powering Dreams</div>
     </div>
     <div class="header-actions">
-      <button type="button" onclick="window.location.href='index.html'">Home</button>
-      <button type="button" onclick="window.location.href='terms.html'">Terms</button>
+      <button type="button" onclick="navigateWithTransition('index.html')">Home</button>
+      <button type="button" onclick="navigateWithTransition('terms.html')">Terms</button>
       <button type="button" onclick="navigateWithTransition('about.html')">About</button>
-      <button type="button" onclick="window.location.href='contact.html'">Contact Us</button>
+      <button type="button" onclick="navigateWithTransition('contact.html')">Contact Us</button>
     </div>
   </header>
 
   <div class="container">
 
     <div class="hero">
-      <p>Quick, short-term loans — apply in seconds, get a response on WhatsApp.</p>
+      <div class="hero-badge">FAST & SIMPLE LOAN APPLICATION</div>
+      <h2>Apply for a Loan</h2>
+      <p>Tell us what you need, how you plan to repay, and provide your security details. We’ll review your application and contact you on WhatsApp.</p>
+      <div class="hero-points">
+        <span>✓ Simple application</span>
+        <span>✓ Clear repayment estimate</span>
+        <span>✓ WhatsApp response</span>
+      </div>
     </div>
 
     <div class="card">
@@ -731,117 +986,181 @@
           <div class="form-progress" aria-label="Application progress">
             <div class="progress-step active" data-step="1"><span>1</span><small>Personal</small></div>
             <div class="progress-line"></div>
-            <div class="progress-step" data-step="2"><span>2</span><small>Loan Details</small></div>
+            <div class="progress-step" data-step="2"><span>2</span><small>Loan</small></div>
             <div class="progress-line"></div>
-            <div class="progress-step" data-step="3"><span>3</span><small>Review & Submit</small></div>
+            <div class="progress-step" data-step="3"><span>3</span><small>Repayment</small></div>
+            <div class="progress-line"></div>
+            <div class="progress-step" data-step="4"><span>4</span><small>Security & Review</small></div>
           </div>
 
           <form id="loanForm" onsubmit="sendToWhatsApp(); return false;">
             <section class="form-step active" data-step="1">
               <div class="step-heading">
-                <h3>Personal Information</h3>
-                <p>Please provide your basic contact and residence details.</p>
+                <div class="step-kicker">STEP 1 OF 4</div>
+                <h3>Your Personal Details</h3>
+                <p>We need a few basic details so we can contact and identify you correctly.</p>
               </div>
-
-              <label for="name">Full Name</label>
-              <input type="text" id="name" name="name" autocomplete="name" placeholder="Enter your full name" required>
-
-              <label for="phone">Phone Number</label>
-              <input type="tel" id="phone" name="phone" autocomplete="tel" inputmode="tel" placeholder="Include country code, e.g. +237 6 1234 5678" required>
-
-              <label for="email">Email Address</label>
-              <input type="email" id="email" name="email" autocomplete="email" placeholder="you@example.com" required>
-
-              <label for="date">Date of Birth</label>
-              <input type="date" id="date" name="date" autocomplete="bday" required>
-
-              <label for="residence">Place of Residence</label>
-              <input type="text" id="residence" name="residence" autocomplete="street-address" placeholder="City, neighborhood, or address" required>
-
+              <div class="field-grid">
+                <div class="field-card">
+                  <label for="name">Full Name</label>
+                  <input type="text" id="name" name="name" autocomplete="name" placeholder="Enter your full name" required>
+                </div>
+                <div class="field-card">
+                  <label for="phone">Phone Number</label>
+                  <input type="tel" id="phone" name="phone" autocomplete="tel" inputmode="tel" placeholder="+237 6 1234 5678" required>
+                </div>
+                <div class="field-card">
+                  <label for="email">Email Address</label>
+                  <input type="email" id="email" name="email" autocomplete="email" placeholder="you@example.com" required>
+                </div>
+                <div class="field-card">
+                  <label for="date">Date of Birth</label>
+                  <input type="date" id="date" name="date" autocomplete="bday" required>
+                </div>
+                <div class="field-card field-wide">
+                  <label for="residence">Place of Residence</label>
+                  <input type="text" id="residence" name="residence" autocomplete="street-address" placeholder="City, neighborhood, or address" required>
+                </div>
+              </div>
+              <div class="step-tip"><strong>Privacy note:</strong> Your information is used to process your application and communicate with you about your loan.</div>
               <div class="step-actions single-action">
-                <button type="button" class="next-btn" onclick="nextStep()">Next: Loan Details →</button>
+                <button type="button" class="next-btn" onclick="nextStep()">Continue to Loan Details →</button>
               </div>
             </section>
 
             <section class="form-step" data-step="2">
               <div class="step-heading">
-                <h3>Loan & Financial Details</h3>
-                <p>Tell us about the loan you are requesting and your financial situation.</p>
+                <div class="step-kicker">STEP 2 OF 4</div>
+                <h3>Loan Request</h3>
+                <p>Tell us how much you need, the purpose of the loan, and the term you prefer.</p>
               </div>
-
-              <label for="amount">Loan Amount Requested</label>
-              <input type="number" id="amount" name="amount" min="10000" step="5000" placeholder="Min 10,000" required>
-
-              <label for="term">Desired Loan Term</label>
-              <select id="term" name="term" required>
-                <option value="">Select a term</option>
-                <option value="1 month">1 month</option>
-                <option value="2 months">2 months</option>
-                <option value="3 months">3 months</option>
-                <option value="4 months">4 months</option>
-                <option value="5 months">5 months</option>
-                <option value="6 months">6 months</option>
-              </select>
-
-              <label for="purpose">Purpose of Loan</label>
-              <input type="text" id="purpose" name="purpose" placeholder="Personal expenses, business, education, etc." required>
-
-              <label for="income">Monthly Income</label>
-              <input type="number" id="income" name="income" min="0" placeholder="Your monthly net income" required>
-
-              <label for="employment">Employment Status</label>
-              <select id="employment" name="employment" required>
-                <option value="">Select status</option>
-                <option value="employed">Employed</option>
-                <option value="self-employed">Self-employed</option>
-                <option value="student">Student</option>
-                <option value="unemployed">Unemployed</option>
-                <option value="retired">Retired</option>
-              </select>
-
-              <div class="subsection-title">Surety Details</div>
-
-              <label for="suretyName">Surety Full Name</label>
-              <input type="text" id="suretyName" name="suretyName" placeholder="Full name of your surety" required>
-
-              <label for="suretyPhone">Surety Phone Number</label>
-              <input type="tel" id="suretyPhone" name="suretyPhone" autocomplete="tel" inputmode="tel" placeholder="Include country code" required>
-
-              <label for="suretyAddress">Surety Address</label>
-              <input type="text" id="suretyAddress" name="suretyAddress" placeholder="City, neighborhood, or address" required>
-
-              <label for="suretyRelation">Surety's Relationship to You</label>
-              <input type="text" id="suretyRelation" name="suretyRelation" placeholder="e.g. Spouse, Sibling, Friend, Employer" required>
-
-              <label for="collateral">Collateral <span style="font-weight:normal; font-size:13px; color:#666;">(required)</span></label>
-              <textarea id="collateral" name="collateral" rows="4" placeholder="Describe collateral" required aria-required="true"></textarea>
-
+              <div class="field-grid">
+                <div class="field-card featured-field">
+                  <label for="amount">Loan Amount Requested</label>
+                  <input type="number" id="amount" name="amount" min="10000" step="5000" placeholder="Min 10,000 XAF" required>
+                  <small>Enter the amount you would like to borrow.</small>
+                </div>
+                <div class="field-card">
+                  <label for="term">Desired Loan Term</label>
+                  <select id="term" name="term" required>
+                    <option value="">Select a term</option>
+                    <option value="1 month">1 month</option>
+                    <option value="2 months">2 months</option>
+                    <option value="3 months">3 months</option>
+                    <option value="4 months">4 months</option>
+                    <option value="5 months">5 months</option>
+                    <option value="6 months">6 months</option>
+                  </select>
+                </div>
+                <div class="field-card field-wide">
+                  <label for="purpose">Loan Purpose</label>
+                  <textarea id="purpose" name="purpose" rows="3" placeholder="Explain what the loan will be used for — business working capital, school fees, medical expenses, household needs, stock purchase..." required></textarea>
+                </div>
+              </div>
+              <div class="loan-callout">
+                <div class="loan-callout-icon">₣</div>
+                <div>
+                  <strong>Transparent estimate</strong>
+                  <span>Your application will show the estimated charges and repayment amount before you submit.</span>
+                </div>
+              </div>
               <div class="step-actions">
                 <button type="button" class="prev-btn" onclick="prevStep()">← Previous</button>
-                <button type="button" class="next-btn" onclick="nextStep()">Next: Review →</button>
+                <button type="button" class="next-btn" onclick="nextStep()">Continue to Financial Details →</button>
               </div>
             </section>
 
             <section class="form-step" data-step="3">
               <div class="step-heading">
-                <h3>Review & Submit</h3>
-                <p>Review your loan estimate and confirm the terms before submitting.</p>
+                <div class="step-kicker">STEP 3 OF 4</div>
+                <h3>Income & Repayment Plan</h3>
+                <p>These details help us understand your repayment capacity and the source of your repayment funds.</p>
               </div>
+              <div class="section-label">Your income</div>
+              <div class="field-grid">
+                <div class="field-card">
+                  <label for="income">Monthly Income</label>
+                  <input type="number" id="income" name="income" min="0" placeholder="Your monthly net income" required>
+                </div>
+                <div class="field-card">
+                  <label for="employment">Employment Status</label>
+                  <select id="employment" name="employment" required>
+                    <option value="">Select status</option>
+                    <option value="employed">Employed</option>
+                    <option value="self-employed">Self-employed</option>
+                    <option value="student">Student</option>
+                    <option value="unemployed">Unemployed</option>
+                    <option value="retired">Retired</option>
+                  </select>
+                </div>
+                <div class="field-card field-wide">
+                  <label for="repaymentSource">Source of Funds for Repayment</label>
+                  <textarea id="repaymentSource" name="repaymentSource" rows="3" placeholder="e.g. salary, business income, business profits, rental income, contract payment, family support..." required></textarea>
+                  <small>Please state the main source you expect to use to repay this loan.</small>
+                </div>
+              </div>
+              <div class="financial-strip">
+                <div><span>Loan amount</span><strong id="miniLoanAmount">0 XAF</strong></div>
+                <div><span>Estimated total</span><strong id="miniTotalRepayment">0 XAF</strong></div>
+                <div><span>Monthly repayment</span><strong id="miniMonthlyRepayment">0 XAF</strong></div>
+              </div>
+              <div class="step-actions">
+                <button type="button" class="prev-btn" onclick="prevStep()">← Previous</button>
+                <button type="button" class="next-btn" onclick="nextStep()">Continue to Security Details →</button>
+              </div>
+            </section>
 
-              <div class="summary-panel final-summary-panel">
-                <div class="summary-badge">✨ Quick Estimate</div>
-                <h3>Loan Summary</h3>
-                <p style="margin-top:8px; color:#5e506f;">A quick snapshot of your repayment plan before you submit.</p>
-                <div class="summary-list">
-                  <div class="summary-item"><strong>Processing Fee</strong><span id="processingFee">0.00</span></div>
-                  <div class="summary-item"><strong>Platform Charge</strong><span id="interest">0.00</span></div>
-                  <div class="summary-item"><strong>Total Repayment</strong><span id="totalRepayment">0.00</span></div>
-                  <div class="summary-item"><strong>Monthly Repayment</strong><span id="monthlyRepayment">0.00</span></div>
-                  <div class="summary-item"><strong>Late Payment Penalty</strong><span id="latePaymentPenalty">0.00</span></div>
+            <section class="form-step" data-step="4">
+              <div class="step-heading">
+                <div class="step-kicker">STEP 4 OF 4</div>
+                <h3>Security & Final Review</h3>
+                <p>Provide the required surety and collateral information, then review your application before submitting.</p>
+              </div>
+              <div class="section-label">Surety details</div>
+              <div class="field-grid">
+                <div class="field-card">
+                  <label for="suretyName">Surety Full Name</label>
+                  <input type="text" id="suretyName" name="suretyName" placeholder="Full name of your surety" required>
+                </div>
+                <div class="field-card">
+                  <label for="suretyPhone">Surety Phone Number</label>
+                  <input type="tel" id="suretyPhone" name="suretyPhone" autocomplete="tel" inputmode="tel" placeholder="+237 6 1234 5678" required>
+                </div>
+                <div class="field-card">
+                  <label for="suretyAddress">Surety Address</label>
+                  <input type="text" id="suretyAddress" name="suretyAddress" placeholder="City, neighborhood, or address" required>
+                </div>
+                <div class="field-card">
+                  <label for="suretyRelation">Surety's Relationship to You</label>
+                  <input type="text" id="suretyRelation" name="suretyRelation" placeholder="Spouse, sibling, friend, employer..." required>
+                </div>
+                <div class="field-card field-wide">
+                  <label for="collateral">Collateral <span class="required-note">(required)</span></label>
+                  <textarea id="collateral" name="collateral" rows="4" placeholder="Describe the collateral you can provide, including type, condition, and location." required aria-required="true"></textarea>
                 </div>
               </div>
 
-              <div class="review-note">Please make sure the information you entered on the previous pages is accurate before submitting.</div>
+              <div class="summary-layout">
+                <div class="summary-panel final-summary-panel">
+                  <div class="summary-badge">Loan Estimate</div>
+                  <h3>Repayment Summary</h3>
+                  <div class="summary-list">
+                    <div class="summary-item"><strong>Loan Amount</strong><span id="reviewLoanAmount">0.00</span></div>
+                    <div class="summary-item"><strong>Processing Fee</strong><span id="processingFee">0.00</span></div>
+                    <div class="summary-item"><strong>Platform Charge</strong><span id="interest">0.00</span></div>
+                    <div class="summary-item"><strong>Total Repayment</strong><span id="totalRepayment">0.00</span></div>
+                    <div class="summary-item highlight"><strong>Monthly Repayment</strong><span id="monthlyRepayment">0.00</span></div>
+                    <div class="summary-item"><strong>Late Payment Penalty</strong><span id="latePaymentPenalty">0.00</span></div>
+                  </div>
+                </div>
+
+                <div class="review-card">
+                  <div class="summary-badge neutral">Application Review</div>
+                  <div id="review" class="review-grid"></div>
+                </div>
+              </div>
+
+              <div class="review-note">Please make sure the information entered is accurate before submitting. Your application will be saved for review and the same information will be prepared for WhatsApp.</div>
 
               <div class="consent">
                 <label class="checkbox-label">
@@ -887,24 +1206,50 @@
 
   <script>
     (function () {
-      var overlay = document.createElement('div');
-      overlay.className = 'page-overlay';
-      document.body.appendChild(overlay);
+      var overlay = document.querySelector('.page-overlay') || document.createElement('div');
+      if (!document.querySelector('.page-overlay')) {
+        overlay.className = 'page-overlay';
+        document.body.appendChild(overlay);
+      }
 
-      window.navigateWithTransition = function (targetUrl) {
-        if (!targetUrl) return false;
+      function goToTarget(targetUrl) {
+        if (!targetUrl || targetUrl.startsWith('mailto:') || targetUrl.startsWith('tel:')) {
+          return false;
+        }
+
         document.body.classList.add('is-exiting');
         overlay.classList.add('is-visible');
+
         setTimeout(function () {
           window.location.href = targetUrl;
         }, 320);
+
         return false;
+      }
+
+      window.navigateWithTransition = function (targetUrl) {
+        return goToTarget(targetUrl);
       };
 
-      document.addEventListener('DOMContentLoaded', function () {
+      document.addEventListener('click', function (event) {
+        var anchor = event.target && event.target.closest ? event.target.closest('a[href]') : null;
+        if (!anchor) return;
+
+        var href = anchor.getAttribute('href');
+        if (!href || href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('tel:')) return;
+        if (anchor.target === '_blank' || /^https?:\/\//i.test(href)) return;
+
+        event.preventDefault();
+        goToTarget(href);
+      });
+
+      window.addEventListener('pageshow', function () {
+        document.body.classList.remove('is-exiting');
+        document.body.classList.add('is-entering');
+        overlay.classList.remove('is-visible');
+
         requestAnimationFrame(function () {
           document.body.classList.remove('is-entering');
-          overlay.classList.remove('is-visible');
         });
       });
     })();
@@ -936,19 +1281,25 @@
     function buildReview() {
       var data = fields();
       var items = [
-        ['Applicant', data.name], ['Phone', data.phone], ['Email', data.email],
-        ['Date of Birth', data.date], ['Residence', data.residence],
-        ['Loan Amount', money(data.amount)], ['Term', data.term], ['Purpose', data.purpose],
-        ['Monthly Income', money(data.income)], ['Employment', data.employment],
-        ['Surety', data.suretyName], ['Surety Phone', data.suretyPhone],
-        ['Surety Address', data.suretyAddress], ['Relationship', data.suretyRelation],
-        ['Collateral', data.collateral],
-        ['Total Repayment', document.getElementById('totalRepayment').textContent + ' XAF'],
-        ['Monthly Repayment', document.getElementById('monthlyRepayment').textContent + ' XAF']
+        ['Applicant', data.name],
+        ['Phone', data.phone],
+        ['Email', data.email],
+        ['Residence', data.residence],
+        ['Loan Amount', money(data.amount)],
+        ['Term', data.term],
+        ['Loan Purpose', data.purpose],
+        ['Monthly Income', money(data.income)],
+        ['Employment', data.employment],
+        ['Repayment Funds', data.repaymentSource],
+        ['Surety', data.suretyName],
+        ['Surety Phone', data.suretyPhone],
+        ['Relationship', data.suretyRelation],
+        ['Collateral', data.collateral]
       ];
-      document.getElementById('review').innerHTML = '<div class="review-grid">' + items.map(function (item) {
+      document.getElementById('review').innerHTML = items.map(function (item) {
         return '<div class="review-item"><small>' + esc(item[0]) + '</small><strong>' + esc(item[1]) + '</strong></div>';
-      }).join('') + '</div>';
+      }).join('');
+      document.getElementById('reviewLoanAmount').textContent = money(data.amount);
     }
 
     function formatCurrency(value) {
@@ -973,6 +1324,12 @@
       document.getElementById('totalRepayment').textContent = amountValue > 0 && months > 0 ? formatCurrency(totalRepayment) : '0.00';
       document.getElementById('monthlyRepayment').textContent = amountValue > 0 && months > 0 ? formatCurrency(monthlyRepayment) : '0.00';
       document.getElementById('latePaymentPenalty').textContent = amountValue > 0 && months > 0 ? formatCurrency(latePaymentPenalty) : '0.00';
+      var miniLoanAmount = document.getElementById('miniLoanAmount');
+      var miniTotalRepayment = document.getElementById('miniTotalRepayment');
+      var miniMonthlyRepayment = document.getElementById('miniMonthlyRepayment');
+      if (miniLoanAmount) miniLoanAmount.textContent = money(amountValue);
+      if (miniTotalRepayment) miniTotalRepayment.textContent = money(totalRepayment);
+      if (miniMonthlyRepayment) miniMonthlyRepayment.textContent = money(monthlyRepayment);
 
       var summaryItems = document.querySelectorAll('.summary-item');
       summaryItems.forEach(function (item) {
@@ -1017,7 +1374,7 @@
       document.querySelectorAll('.progress-line').forEach(function (line, index) {
         line.classList.toggle('completed', index < stepNumber - 1);
       });
-      if (stepNumber === 3) {
+      if (stepNumber === 4) {
         updateLoanSummary();
         buildReview();
       }
@@ -1026,7 +1383,7 @@
 
     function nextStep() {
       if (!validateCurrentStep()) return;
-      if (currentStep < 3) showStep(currentStep + 1);
+      if (currentStep < 4) showStep(currentStep + 1);
     }
 
     function prevStep() {
@@ -1051,6 +1408,7 @@
       var purpose = document.getElementById('purpose').value.trim();
       var income = parseFloat(document.getElementById('income').value) || 0;
       var employment = document.getElementById('employment').value;
+      var repaymentSource = document.getElementById('repaymentSource').value.trim();
       var suretyName = document.getElementById('suretyName').value.trim();
       var suretyPhone = document.getElementById('suretyPhone').value.trim();
       var suretyAddress = document.getElementById('suretyAddress').value.trim();
@@ -1073,6 +1431,7 @@
         purpose: purpose,
         income: income,
         employment: employment,
+        repaymentSource: repaymentSource,
         suretyName: suretyName,
         suretyPhone: suretyPhone,
         suretyAddress: suretyAddress,
@@ -1104,7 +1463,8 @@
 
                  + "*EMPLOYMENT*\n"
                  + "*Status:* _" + employment + "_\n"
-                 + "*Monthly Income:* _" + income + "_\n\n"
+                 + "*Monthly Income:* _" + income + "_\n"
+                 + "*Source of Funds for Repayment:* _" + repaymentSource + "_\n\n"
 
                  + "*SURETY DETAILS*\n"
                  + "*Name:* _" + suretyName + "_\n"
@@ -1115,7 +1475,7 @@
                  + "*LOAN REQUEST*\n"
                  + "*Amount:* _" + formatCurrency(amount) + " XAF_\n"
                  + "*Term:* _" + term + "_\n"
-                 + "*Purpose:* _" + purpose + "_\n"
+                 + "*Loan Purpose:* _" + purpose + "_\n"
                  + "*Collateral:* _" + (collateral || "N/A") + "_\n\n"
 
                  + "*LOAN SUMMARY*\n"
@@ -1176,6 +1536,7 @@
       var purpose = document.getElementById('purpose').value.trim();
       var income = document.getElementById('income').value;
       var employment = document.getElementById('employment').value;
+      var repaymentSource = document.getElementById('repaymentSource').value.trim();
       var suretyName = document.getElementById('suretyName').value.trim();
       var suretyPhone = document.getElementById('suretyPhone').value.trim();
       var suretyAddress = document.getElementById('suretyAddress').value.trim();
@@ -1193,7 +1554,7 @@
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           name: name, phone: phone, email: email, dob: date, residence: residence,
-          amount: amount, term: term, purpose: purpose, income: income, employment: employment,
+          amount: amount, term: term, purpose: purpose, income: income, employment: employment, repaymentSource: repaymentSource,
           suretyName: suretyName, suretyPhone: suretyPhone, suretyAddress: suretyAddress,
           suretyRelation: suretyRelation, collateral: collateral
         })
@@ -1289,7 +1650,8 @@
         section('Loan Request');
         row('Amount', formatCurrency(amount) + ' XAF');
         row('Term', term);
-        row('Purpose', purpose);
+        row('Loan Purpose', purpose);
+        row('Source of Funds for Repayment', repaymentSource);
         row('Collateral', collateral);
         y += 4;
 
