@@ -229,6 +229,18 @@
       margin-left: auto;
     }
 
+    .sidebar-toggle {
+      border: 1px solid rgba(255,255,255,0.2);
+      color: white;
+      background: rgba(255,255,255,0.08);
+      padding: 9px 12px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 16px;
+      line-height: 1;
+      font-weight: 700;
+    }
+
     .nav-btn,
     .refresh-btn {
       border: none;
@@ -250,29 +262,134 @@
       overflow: hidden;
     }
 
-    .tabs {
+    .dashboard-shell {
       display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin: 18px 0 18px;
+      gap: 20px;
+      align-items: flex-start;
+      margin-top: 18px;
     }
 
-    .tab-btn {
-      background: rgba(255,255,255,0.7);
-      border: 1px solid rgba(31,43,93,0.18);
-      color: var(--navy-deep);
-      padding: 10px 18px;
-      border-radius: 999px;
-      cursor: pointer;
-      font-size: 0.86rem;
+    .sidebar {
+      width: 260px;
+      flex-shrink: 0;
+      background: linear-gradient(180deg, #ffffff 0%, #f7f9ff 100%);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      box-shadow: 0 12px 28px rgba(23, 43, 79, 0.06);
+      padding: 16px 12px;
+      position: sticky;
+      top: 88px;
+      transition: width 0.22s ease, opacity 0.18s ease, padding 0.22s ease, border 0.22s ease, transform 0.22s ease;
+      overflow: hidden;
+      opacity: 1;
+    }
+
+    .sidebar.collapsed {
+      width: 0;
+      min-width: 0;
+      padding: 0;
+      border-width: 0;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateX(-12px);
+    }
+
+    .sidebar-title {
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
       font-weight: 700;
+      margin: 4px 10px 12px;
     }
 
-    .tab-btn.active {
+    .nav-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .nav-item {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border: 1px solid rgba(31,43,93,0.08);
+      background: rgba(255,255,255,0.7);
+      color: var(--navy-deep);
+      border-radius: 12px;
+      padding: 10px 12px;
+      cursor: pointer;
+      text-align: left;
+      font-size: 0.8rem;
+      font-weight: 700;
+      transition: background 0.18s ease, border-color 0.18s ease, transform 0.18s ease, box-shadow 0.18s ease;
+    }
+
+    .nav-item:hover {
+      transform: translateY(-1px);
+    }
+
+    .nav-item.active {
       background: linear-gradient(135deg, var(--navy), var(--navy-deep));
       color: white;
       border-color: transparent;
-      box-shadow: 0 12px 24px rgba(31,43,93,0.18);
+      box-shadow: 0 10px 18px rgba(31,43,93,0.14);
+    }
+
+    .nav-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(11,136,164,0.10);
+      font-size: 0.9rem;
+      flex-shrink: 0;
+    }
+
+    .nav-item.active .nav-icon {
+      background: rgba(255,255,255,0.12);
+    }
+
+    .nav-copy {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .nav-label {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .nav-count {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 26px;
+      height: 22px;
+      padding: 0 8px;
+      border-radius: 999px;
+      background: rgba(11,136,164,0.12);
+      color: var(--navy-deep);
+      font-size: 0.72rem;
+      font-weight: 800;
+    }
+
+    .nav-item.active .nav-count {
+      background: rgba(255,255,255,0.15);
+      color: white;
+    }
+
+    .main-panel {
+      flex: 1;
+      min-width: 0;
     }
 
     .toolbar {
@@ -496,30 +613,59 @@
         <span>G-Spirit Admin Dashboard</span>
       </div>
       <div class="header-actions">
+        <button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle menu" aria-expanded="true" onclick="toggleSidebar()">☰</button>
         <button class="refresh-btn" onclick="loadCurrentTab()">Refresh</button>
         <button class="nav-btn" onclick="logout()">Log Out</button>
       </div>
     </header>
 
     <div class="container">
-      <div class="tabs">
-        <button class="tab-btn active" id="tabLoans" onclick="switchTab('loans')">Loan Applications</button>
-        <button class="tab-btn" id="tabPartners" onclick="switchTab('partners')">Partnership Applications</button>
-        <button class="tab-btn capital-tab" id="tabCapital" onclick="switchTab('capital')">Investment Capital Applications</button>
-      </div>
+      <div class="dashboard-shell">
+        <aside class="sidebar" id="sidebarMenu">
+          <div class="sidebar-title">Application Center</div>
 
-      <div class="toolbar">
-        <input id="searchInput" type="text" placeholder="Search by name, phone, amount or date..." oninput="applySearch()">
-        <button class="delete-btn" onclick="toggleSelectAll()">Select Visible</button>
-        <button class="delete-btn" onclick="deleteSelected()">Delete Selected</button>
-        <button class="delete-btn" onclick="deleteAll()">Delete All</button>
-        <div id="resultsCount" class="results-count">0 results</div>
-      </div>
+          <div class="nav-list">
+            <button class="nav-item active" data-tab="loans">
+              <span class="nav-icon">💰</span>
+              <span class="nav-copy">
+                <span class="nav-label">Loan Apps</span>
+                <span class="nav-count" id="count-loans">0</span>
+              </span>
+            </button>
 
-      <div class="card">
-        <div class="table-wrap" id="tableWrap">
-          <div class="empty-state">Loading...</div>
-        </div>
+            <button class="nav-item" data-tab="partners">
+              <span class="nav-icon">🤝</span>
+              <span class="nav-copy">
+                <span class="nav-label">Partnership</span>
+                <span class="nav-count" id="count-partners">0</span>
+              </span>
+            </button>
+
+            <button class="nav-item" data-tab="capital">
+              <span class="nav-icon">📈</span>
+              <span class="nav-copy">
+                <span class="nav-label">Capital</span>
+                <span class="nav-count" id="count-capital">0</span>
+              </span>
+            </button>
+          </div>
+        </aside>
+
+        <main class="main-panel">
+          <div class="toolbar">
+            <input id="searchInput" type="text" placeholder="Search by name, phone, amount or date..." oninput="applySearch()">
+            <button class="delete-btn" onclick="toggleSelectAll()">Select Visible</button>
+            <button class="delete-btn" onclick="deleteSelected()">Delete Selected</button>
+            <button class="delete-btn" onclick="deleteAll()">Delete All</button>
+            <div id="resultsCount" class="results-count">0 results</div>
+          </div>
+
+          <div class="card">
+            <div class="table-wrap" id="tableWrap">
+              <div class="empty-state">Loading...</div>
+            </div>
+          </div>
+        </main>
       </div>
     </div>
   </div>
@@ -581,12 +727,92 @@
       }
     }
 
+    function syncSidebarState() {
+      document.querySelectorAll('.nav-item').forEach(function (item) {
+        item.classList.toggle('active', item.dataset.tab === currentTab);
+      });
+    }
+
+    function updateSidebarCounts(counts) {
+      var countMap = counts || { loans: 0, partners: 0, capital: 0 };
+      var ids = {
+        loans: 'count-loans',
+        partners: 'count-partners',
+        capital: 'count-capital'
+      };
+
+      Object.keys(ids).forEach(function (key) {
+        var el = document.getElementById(ids[key]);
+        if (el) {
+          el.textContent = countMap[key] || 0;
+        }
+      });
+    }
+
+    function fetchTabCount(endpoint) {
+      return fetch(API_BASE + endpoint, {
+        headers: { 'Authorization': 'Bearer ' + adminToken }
+      })
+        .then(function (res) {
+          if (res.status === 401) throw new Error('unauthorized');
+          return res.json();
+        })
+        .then(function (data) {
+          return Array.isArray(data) ? data.length : 0;
+        });
+    }
+
+    async function loadSidebarCounts() {
+      if (!adminToken) {
+        updateSidebarCounts({ loans: 0, partners: 0, capital: 0 });
+        return;
+      }
+
+      try {
+        var counts = await Promise.all([
+          fetchTabCount('/api/admin/applications'),
+          fetchTabCount('/api/admin/partnerships'),
+          fetchTabCount('/api/admin/capital')
+        ]);
+
+        updateSidebarCounts({
+          loans: counts[0],
+          partners: counts[1],
+          capital: counts[2]
+        });
+      } catch (err) {
+        if (err && err.message === 'unauthorized') {
+          updateSidebarCounts({ loans: 0, partners: 0, capital: 0 });
+          return;
+        }
+        console.error('Failed to load sidebar counts:', err);
+      }
+    }
+
+    function toggleSidebar(forceOpen) {
+      var sidebar = document.querySelector('.sidebar');
+      var toggle = document.getElementById('sidebarToggle');
+      if (!sidebar || !toggle) return;
+
+      var shouldOpen = typeof forceOpen === 'boolean' ? forceOpen : sidebar.classList.contains('collapsed');
+      sidebar.classList.toggle('collapsed', !shouldOpen);
+      toggle.setAttribute('aria-expanded', String(shouldOpen));
+      toggle.textContent = '☰';
+    }
+
     function switchTab(tab) {
       currentTab = tab;
-      document.getElementById('tabLoans').classList.toggle('active', tab === 'loans');
-      document.getElementById('tabPartners').classList.toggle('active', tab === 'partners');
-      document.getElementById('tabCapital').classList.toggle('active', tab === 'capital');
+      syncSidebarState();
+      toggleSidebar(false);
       loadCurrentTab();
+    }
+
+    function attachSidebarListeners() {
+      document.querySelectorAll('.nav-item').forEach(function (item) {
+        item.addEventListener('click', function () {
+          switchTab(item.dataset.tab);
+        });
+      });
     }
 
     function loadCurrentTab() {
@@ -607,6 +833,7 @@
         .then(function (data) {
           currentData = data || [];
           renderCurrentView();
+          loadSidebarCounts();
         })
         .catch(function (err) {
           if (err.message === 'unauthorized') {
@@ -620,6 +847,7 @@
 
     function logout() {
       adminToken = '';
+      updateSidebarCounts({ loans: 0, partners: 0, capital: 0 });
       sessionStorage.removeItem('gspirit_admin_token');
       document.getElementById('tokenInput').value = '';
       document.getElementById('loginError').style.display = 'none';
@@ -1000,6 +1228,11 @@
         currentFiltered.length > 0 && currentFiltered.every(function (r) { return selectedIds[r.id]; });
     }
 
+    attachSidebarListeners();
+    syncSidebarState();
+    updateSidebarCounts({ loans: 0, partners: 0, capital: 0 });
+    toggleSidebar(false);
+
     // Press Enter in the password field to log in.
     document.getElementById('tokenInput').addEventListener('keydown', function (event) {
       if (event.key === 'Enter') login();
@@ -1012,6 +1245,8 @@
         adminToken = saved;
         document.getElementById('loginScreen').style.display = 'none';
         document.getElementById('dashboard').style.display = 'block';
+        syncSidebarState();
+        loadSidebarCounts();
         loadCurrentTab();
       }
     });
