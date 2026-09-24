@@ -5,6 +5,8 @@
   <link rel="icon" type="image/png" href="logo.png">
   <title>Admin Dashboard - G-Spirit Loan Solution</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
       --navy: #1f2b5d;
@@ -392,6 +394,96 @@
       min-width: 0;
     }
 
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(110px, 1fr));
+      gap: 8px;
+      margin: 0 0 12px;
+    }
+
+    .summary-card {
+      background: linear-gradient(180deg, #ffffff 0%, #f7fbff 100%);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 10px 10px 12px;
+      box-shadow: 0 8px 20px rgba(23, 43, 79, 0.04);
+      cursor: pointer;
+      transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .summary-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 28px rgba(23, 43, 79, 0.08);
+      border-color: rgba(31,43,93,0.18);
+    }
+
+    .summary-card.active {
+      border-color: rgba(11,136,164,0.35);
+      background: linear-gradient(135deg, rgba(11,136,164,0.08), rgba(255,255,255,1));
+    }
+
+    .summary-card::before {
+      content: "";
+      position: absolute;
+      inset: 0 auto 0 0;
+      width: 4px;
+      background: currentColor;
+      opacity: 0.9;
+    }
+
+    .summary-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
+      margin-bottom: 6px;
+      color: var(--muted);
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .summary-icon {
+      width: 26px;
+      height: 26px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+      background: rgba(31,43,93,0.06);
+      font-size: 0.82rem;
+    }
+
+    .summary-value {
+      font-size: clamp(1.15rem, 1.8vw, 1.5rem);
+      line-height: 1;
+      font-weight: 800;
+      color: var(--navy-deep);
+      margin: 0;
+    }
+
+    .summary-total {
+      display: block;
+      margin-top: 6px;
+      font-size: 0.68rem;
+      line-height: 1.2;
+      color: rgba(28, 39, 63, 0.72);
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+
+    .summary-card.active .summary-value {
+      color: var(--navy-deep);
+    }
+
+    .summary-card[data-kind="active"] { color: #0b88a4; }
+    .summary-card[data-kind="under-review"] { color: #d48a00; }
+    .summary-card[data-kind="approved"] { color: #1b9c73; }
+    .summary-card[data-kind="disbursed"] { color: #2a68d9; }
+
     .toolbar {
       display: flex;
       flex-wrap: wrap;
@@ -582,6 +674,79 @@
         margin-left: 0;
       }
     }
+  
+/* CORPORATE DASHBOARD THEME */
+:root{
+  --navy:#10213f;--navy-deep:#0a1730;--navy-mid:#18345e;
+  --teal:#0b7d8f;--gold:#c28a22;--ink:#182235;--muted:#667085;
+  --line:#e2e7ee;--paper:#fff;--page:#f4f6f9;
+  --danger:#bd3c44;--success:#18794e;
+}
+body{font-family:Inter,Arial,sans-serif;background:
+radial-gradient(circle at 0 0,rgba(11,125,143,.055),transparent 26%),
+radial-gradient(circle at 100% 8%,rgba(194,138,34,.045),transparent 22%),#f4f6f9;color:var(--ink)}
+header{background:linear-gradient(135deg,#0a1730,#10213f 58%,#18345e);min-height:72px;padding:15px 24px;border-bottom:1px solid rgba(255,255,255,.08);box-shadow:0 8px 24px rgba(10,23,48,.16)}
+.brand-lockup{gap:13px}
+.brand-mark{width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,#0b7d8f,#16466f);border:1px solid rgba(255,255,255,.18);font-weight:800;box-shadow:inset 0 1px 0 rgba(255,255,255,.12)}
+header .brand-lockup::after{content:"OPERATIONS • SECURE ADMIN";margin-left:2px;color:rgba(255,255,255,.5);font-size:9px;letter-spacing:.14em;font-weight:600;white-space:nowrap}
+.header-actions{gap:8px}
+.sidebar-toggle,.refresh-btn,.nav-btn{border:1px solid rgba(255,255,255,.13);background:rgba(255,255,255,.07);box-shadow:none;border-radius:9px;padding:8px 12px}
+.sidebar-toggle:hover,.refresh-btn:hover,.nav-btn:hover{background:rgba(255,255,255,.13);box-shadow:none}
+.container{width:min(1440px,96%);margin:22px auto 42px;padding:0 4px}
+.dashboard-shell{gap:18px;margin-top:0}
+.sidebar{width:238px;background:#fff;border:1px solid var(--line);border-radius:15px;box-shadow:0 12px 30px rgba(16,33,63,.055);padding:15px 11px;top:88px}
+.sidebar-title{margin:5px 10px 12px;color:#8a95a6;letter-spacing:.14em;font-size:10px}
+.nav-list{gap:6px}
+.nav-item{border:1px solid transparent;background:transparent;color:#435066;border-radius:10px;padding:11px 10px;font-size:12.5px;font-weight:600}
+.nav-item:hover{transform:none;background:#f7f9fc;border-color:#eef1f5}
+.nav-item.active{background:linear-gradient(135deg,#112746,#183a64);border-color:transparent;box-shadow:0 9px 18px rgba(16,33,63,.15)}
+.nav-icon{width:30px;height:30px;border-radius:8px;background:#f1f5f8;color:#35506f;font-size:10px;font-weight:800;letter-spacing:.04em}
+.nav-item.active .nav-icon{background:rgba(255,255,255,.12);color:#fff}
+.nav-count{background:#eef3f7;color:#32435b;min-width:24px;height:21px;font-size:10px}
+.nav-item.active .nav-count{background:rgba(255,255,255,.13);color:#fff}
+.workspace-heading{display:flex;align-items:flex-end;justify-content:space-between;gap:18px;margin:0 0 14px}
+.workspace-heading h2{margin:0;color:var(--navy);font-size:22px;line-height:1.2;letter-spacing:-.025em}
+.workspace-heading p{margin:5px 0 0;color:#7b8798;font-size:12.5px}
+.workspace-meta{text-align:right;color:#8a95a6;font-size:11px;line-height:1.5;white-space:nowrap}
+.workspace-meta strong{display:block;color:#41506a;font-size:12px}
+.dashboard-kpis{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-bottom:14px}
+.kpi{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px 16px;box-shadow:0 8px 22px rgba(16,33,63,.04);position:relative;overflow:hidden}
+.kpi::after{content:"";position:absolute;inset:0 0 0 auto;width:4px;background:#0b7d8f}
+.kpi:nth-child(2)::after{background:#c28a22}.kpi:nth-child(3)::after{background:#466fa8}
+.kpi-label{display:block;color:#7a8698;text-transform:uppercase;letter-spacing:.09em;font-size:9.5px;font-weight:700}
+.kpi-value{display:block;margin-top:3px;color:var(--navy);font-size:22px;font-weight:800;letter-spacing:-.03em}
+.kpi-note{display:block;margin-top:1px;color:#929baa;font-size:10.5px}
+.toolbar{background:#fff;border:1px solid var(--line);border-radius:12px;padding:10px;box-shadow:0 8px 22px rgba(16,33,63,.04);margin-bottom:13px}
+.toolbar input{background:#f8fafc;border:1px solid #dbe2ea;border-radius:9px;min-height:40px;padding:9px 13px;font-size:12.5px}
+.toolbar input:focus{outline:none;border-color:#7caeb8;box-shadow:0 0 0 3px rgba(11,125,143,.08);background:#fff}
+.toolbar button{min-width:auto;min-height:40px;border-radius:9px;padding:9px 13px;font-size:11.5px}
+.delete-btn{background:#fff;color:#a53b40;border:1px solid #edcfd1!important}
+.delete-btn:hover{background:#fff7f7;color:#8e2d32;box-shadow:none}
+.results-count{margin-left:auto;padding:0 6px;color:#748094;font-size:11.5px;font-weight:600}
+.card{border-radius:14px;border:1px solid var(--line);box-shadow:0 10px 28px rgba(16,33,63,.055)}
+.table-wrap{max-height:69vh}
+table{font-size:11.5px;min-width:1180px}
+th{background:#eef2f6;color:#46556c;border-bottom:1px solid #dce3eb;padding:11px 9px;font-size:9.5px;letter-spacing:.075em;font-weight:800}
+td{padding:10px 9px;border-bottom:1px solid #edf0f4;color:#263248;background:#fff}
+tr:hover td{background:#fbfcfe}
+select.status-select{min-width:112px;border-radius:7px;padding:6px 8px;font-size:11px}
+.whatsapp-btn,.agreement-btn{border-radius:7px;padding:6px 9px;font-size:10.5px;box-shadow:none}
+.empty-state{padding:72px 24px;background:linear-gradient(180deg,#fff,#f9fbfd);color:#8a95a6;font-size:12.5px}
+.login-shell{background:radial-gradient(circle at 15% 15%,rgba(11,125,143,.12),transparent 23%),radial-gradient(circle at 88% 82%,rgba(194,138,34,.11),transparent 22%),#f3f6f9}
+.login-card{border-radius:16px;border:1px solid #e0e5ec;box-shadow:0 24px 55px rgba(16,33,63,.12)}
+.login-brand .brand-mark{background:linear-gradient(135deg,#10213f,#0b7d8f)}
+.login-card button{background:linear-gradient(135deg,#10213f,#1c426f);box-shadow:0 12px 22px rgba(16,33,63,.18)}
+.login-card button:hover{background:linear-gradient(135deg,#0c1931,#18385d);box-shadow:0 14px 24px rgba(16,33,63,.22)}
+@media(max-width:900px){
+  header .brand-lockup::after{display:none}.dashboard-kpis{grid-template-columns:1fr}
+  .workspace-heading{align-items:flex-start;flex-direction:column;gap:7px}.workspace-meta{text-align:left}
+}
+@media(max-width:640px){
+  .container{width:96%;padding:0}.workspace-heading h2{font-size:18px}.toolbar{padding:9px}
+  .toolbar input{min-width:100%;width:100%}.results-count{width:auto;margin-left:0;padding-left:2px}
+  .dashboard-kpis{gap:9px}.kpi{padding:12px 14px}
+}
+
   </style>
 </head>
 <body>
@@ -620,13 +785,15 @@
     </header>
 
     <div class="container">
+      <div class="summary-grid" id="summaryGrid"></div>
+
       <div class="dashboard-shell">
         <aside class="sidebar" id="sidebarMenu">
           <div class="sidebar-title">Application Center</div>
 
           <div class="nav-list">
             <button class="nav-item active" data-tab="loans">
-              <span class="nav-icon">💰</span>
+              <span class="nav-icon">LN</span>
               <span class="nav-copy">
                 <span class="nav-label">Loan Apps</span>
                 <span class="nav-count" id="count-loans">0</span>
@@ -634,7 +801,7 @@
             </button>
 
             <button class="nav-item" data-tab="partners">
-              <span class="nav-icon">🤝</span>
+              <span class="nav-icon">PT</span>
               <span class="nav-copy">
                 <span class="nav-label">Partnership</span>
                 <span class="nav-count" id="count-partners">0</span>
@@ -642,7 +809,7 @@
             </button>
 
             <button class="nav-item" data-tab="capital">
-              <span class="nav-icon">📈</span>
+              <span class="nav-icon">CP</span>
               <span class="nav-copy">
                 <span class="nav-label">Capital</span>
                 <span class="nav-count" id="count-capital">0</span>
@@ -652,6 +819,19 @@
         </aside>
 
         <main class="main-panel">
+          <div class="workspace-heading">
+            <div>
+              <h2 id="workspaceTitle">Loan Applications</h2>
+              <p id="workspaceSubtitle">Review, process and manage customer loan requests.</p>
+            </div>
+            <div class="workspace-meta"><strong>G-SPIRIT OPERATIONS</strong>Secure application workspace</div>
+          </div>
+          <div class="dashboard-kpis">
+            <div class="kpi"><span class="kpi-label">Active View</span><span class="kpi-value" id="kpiActive">0</span><span class="kpi-note">records in current workspace</span></div>
+            <div class="kpi"><span class="kpi-label">Under Review</span><span class="kpi-value" id="kpiReview">0</span><span class="kpi-note">applications requiring attention</span></div>
+            <div class="kpi"><span class="kpi-label">Approved</span><span class="kpi-value" id="kpiApproved">0</span><span class="kpi-note">approved records in current view</span></div>
+            <div class="kpi"><span class="kpi-label">Disbursed</span><span class="kpi-value" id="kpiDisbursed">0</span><span class="kpi-note">fully settled records</span></div>
+          </div>
           <div class="toolbar">
             <input id="searchInput" type="text" placeholder="Search by name, phone, amount or date..." oninput="applySearch()">
             <button class="delete-btn" onclick="toggleSelectAll()">Select Visible</button>
@@ -677,6 +857,7 @@
     var currentData = [];
     var currentFiltered = [];
     var selectedIds = {};
+    var currentStatusFilter = null;
 
     async function login() {
       var password = document.getElementById('tokenInput').value.trim();
@@ -731,6 +912,31 @@
       document.querySelectorAll('.nav-item').forEach(function (item) {
         item.classList.toggle('active', item.dataset.tab === currentTab);
       });
+    }
+
+    function updateWorkspaceUI() {
+      var meta = {
+        loans: ['Loan Applications','Review, process and manage customer loan requests.'],
+        partners: ['Partnership Applications','Review participation, contribution and partnership requests.'],
+        capital: ['Investment Capital','Review business funding requests and proposed equity participation.']
+      }[currentTab] || ['Applications','Review and manage application records.'];
+
+      document.getElementById('workspaceTitle').textContent = meta[0];
+      document.getElementById('workspaceSubtitle').textContent = meta[1];
+
+      var total = currentData.length;
+      var active = currentData.filter(function(r){
+        var status = normalizeStatus(r.status);
+        return status === 'new' || status === 'under review';
+      }).length;
+      var review = currentData.filter(function(r){ return normalizeStatus(r.status) === 'under review'; }).length;
+      var approved = currentData.filter(function(r){ return normalizeStatus(r.status) === 'approved'; }).length;
+      var disbursed = currentData.filter(function(r){ return normalizeStatus(r.status) === 'disbursed'; }).length;
+
+      document.getElementById('kpiActive').textContent = active.toLocaleString();
+      document.getElementById('kpiReview').textContent = review.toLocaleString();
+      document.getElementById('kpiApproved').textContent = approved.toLocaleString();
+      document.getElementById('kpiDisbursed').textContent = disbursed.toLocaleString();
     }
 
     function updateSidebarCounts(counts) {
@@ -802,7 +1008,10 @@
 
     function switchTab(tab) {
       currentTab = tab;
+      currentStatusFilter = null;
       syncSidebarState();
+      renderSummaryPanels();
+      updateWorkspaceUI();
       toggleSidebar(false);
       loadCurrentTab();
     }
@@ -832,7 +1041,9 @@
         })
         .then(function (data) {
           currentData = data || [];
+          renderSummaryPanels();
           renderCurrentView();
+          updateWorkspaceUI();
           loadSidebarCounts();
         })
         .catch(function (err) {
@@ -892,10 +1103,123 @@
         if (row) {
           row.status = newStatus;
         }
+        renderSummaryPanels();
         renderCurrentView();
+        updateWorkspaceUI();
       })
       .catch(function () {
         alert('Failed to update status. Try again.');
+      });
+    }
+
+    function normalizeStatus(status) {
+      return (status || '').toString().trim().replace(/\s+/g, ' ').toLowerCase();
+    }
+
+    function matchStatusBucket(status, bucket) {
+      var normalized = normalizeStatus(status);
+      if (bucket === 'active') {
+        return normalized === 'new' || normalized === 'under review';
+      }
+      if (bucket === 'under-review') {
+        return normalized === 'under review';
+      }
+      if (bucket === 'approved') {
+        return normalized === 'approved';
+      }
+      if (bucket === 'disbursed') {
+        return normalized === 'disbursed';
+      }
+      return true;
+    }
+
+    function getRowAmount(row) {
+      if (!row) return 0;
+      var candidates = [row.amount, row.total_contribution, row.capital_requested, row.capitalAmount, row.contribution, row.loan_amount];
+      for (var i = 0; i < candidates.length; i++) {
+        var value = candidates[i];
+        if (value === null || typeof value === 'undefined' || value === '') continue;
+        var num = Number(String(value).replace(/[^0-9.-]/g, ''));
+        if (!isNaN(num)) return num;
+      }
+      return 0;
+    }
+
+    function formatCompactMoney(value) {
+      var num = Number(value) || 0;
+      if (num >= 1000000) {
+        var inMillions = num / 1000000;
+        return 'XAF ' + (inMillions >= 10 ? inMillions.toFixed(0) : inMillions.toFixed(1).replace(/\.0$/, '')) + 'M';
+      }
+      if (num >= 1000) {
+        var inThousands = num / 1000;
+        return 'XAF ' + (inThousands >= 10 ? inThousands.toFixed(0) : inThousands.toFixed(1).replace(/\.0$/, '')) + 'K';
+      }
+      return 'XAF ' + num.toLocaleString();
+    }
+
+    function getStatusSummaryCounts(rows) {
+      var counts = { active: 0, 'under-review': 0, approved: 0, disbursed: 0 };
+      var totals = { active: 0, 'under-review': 0, approved: 0, disbursed: 0 };
+      if (!rows) return { counts: counts, totals: totals };
+
+      rows.forEach(function (row) {
+        var status = normalizeStatus(row.status);
+        var amount = getRowAmount(row);
+        if (status === 'new' || status === 'under review') {
+          counts.active += 1;
+          totals.active += amount;
+        }
+        if (status === 'under review') {
+          counts['under-review'] += 1;
+          totals['under-review'] += amount;
+        }
+        if (status === 'approved') {
+          counts.approved += 1;
+          totals.approved += amount;
+        }
+        if (status === 'disbursed') {
+          counts.disbursed += 1;
+          totals.disbursed += amount;
+        }
+      });
+
+      return { counts: counts, totals: totals };
+    }
+
+    function renderSummaryPanels() {
+      var summaryGrid = document.getElementById('summaryGrid');
+      if (!summaryGrid) return;
+
+      var summary = getStatusSummaryCounts(currentData);
+      var cards = [
+        { key: 'active', label: 'Active', icon: '⚡' },
+        { key: 'under-review', label: 'Under Review', icon: '🕵️' },
+        { key: 'approved', label: 'Approved', icon: '✅' },
+        { key: 'disbursed', label: 'Disbursed', icon: '💸' }
+      ];
+
+      summaryGrid.innerHTML = cards.map(function (card) {
+        var isActive = currentStatusFilter === card.key;
+        var count = summary.counts[card.key] || 0;
+        var total = summary.totals[card.key] || 0;
+        return '<button class="summary-card ' + (isActive ? 'active' : '') + '" type="button" data-kind="' + card.key + '" aria-pressed="' + (isActive ? 'true' : 'false') + '">' +
+          '<div class="summary-meta">' +
+          '<span>' + card.label + '</span>' +
+          '<span class="summary-icon">' + card.icon + '</span>' +
+          '</div>' +
+          '<p class="summary-value">' + count + '</p>' +
+          '<span class="summary-total">' + formatCompactMoney(total) + '</span>' +
+          '</button>';
+      }).join('');
+
+      summaryGrid.querySelectorAll('.summary-card').forEach(function (card) {
+        card.addEventListener('click', function () {
+          var nextFilter = currentStatusFilter === card.dataset.kind ? null : card.dataset.kind;
+          currentStatusFilter = nextFilter;
+          renderSummaryPanels();
+          renderCurrentView();
+        });
       });
     }
 
@@ -940,7 +1264,7 @@
     function renderCurrentView() {
       var searchValue = normalizeSearchText(document.getElementById('searchInput').value);
       currentFiltered = currentData.filter(function (row) {
-        return rowMatchesSearch(row, searchValue);
+        return matchStatusBucket(row.status, currentStatusFilter) && rowMatchesSearch(row, searchValue);
       });
       updateResultsCount();
       if (currentTab === 'loans') renderLoans(currentFiltered);
@@ -1090,6 +1414,14 @@
       window.open(url, '_blank');
     }
 
+    function openSubmittedApplication(id) {
+      var row = currentData.find(function (item) { return item.id === id; });
+      if (!row) return;
+
+      sessionStorage.setItem('loanApplicationPrefill', JSON.stringify({ row: row }));
+      window.open('apply.html?source=admin', '_blank');
+    }
+
     function openAgreement(type, id) {
       var row = currentData.find(function (item) { return item.id === id; });
       if (!row) return;
@@ -1114,6 +1446,11 @@
         '</tr></thead><tbody>';
       rows.forEach(function (r, index) {
         var checked = selectedIds[r.id] ? ' checked' : '';
+        var canGenerateAgreement = normalizeStatus(r.status) === 'approved' || normalizeStatus(r.status) === 'disbursed';
+        var loanActionLabel = canGenerateAgreement ? 'Generate Agreement' : 'Open Application';
+        var loanActionHandler = canGenerateAgreement
+          ? "openAgreement('loan', " + r.id + ")"
+          : "openSubmittedApplication(" + r.id + ")";
         html += '<tr>' +
           '<td><input type="checkbox" class="row-select" onchange="toggleSelection(this, ' + r.id + ')"' + checked + '></td>' +
           '<td>' + (index + 1) + '</td>' +
@@ -1134,7 +1471,8 @@
           '<td>' + (r.surety_relation || '') + '</td>' +
           '<td>' + (r.collateral || '') + '</td>' +
           '<td><select class="status-select ' + statusClass(r.status) + '" onchange="updateStatus(\'loan_applications\', ' + r.id + ', this)">' + statusOptions(r.status) + '</select></td>' +
-          '<td>' + '<button class="whatsapp-btn" onclick="sendStatusWhatsApp(\'loan\', ' + r.id + ')">Send Status</button>' + (normalizeStatus(r.status) === 'approved' ? '<br><a href="#" class="agreement-btn" onclick="openAgreement(\'loan\', ' + r.id + '); return false;">Agreement</a>' : '') + '</td>' +
+          '<td>' + '<button class="whatsapp-btn" onclick="sendStatusWhatsApp(\'loan\', ' + r.id + ')">Send Status</button>' +
+          '<br><a href="#" class="agreement-btn" onclick="' + loanActionHandler + '; return false;">' + loanActionLabel + '</a>' + '</td>' +
           '</tr>';
       });
       html += '</tbody></table>';
@@ -1230,6 +1568,8 @@
 
     attachSidebarListeners();
     syncSidebarState();
+    renderSummaryPanels();
+    updateWorkspaceUI();
     updateSidebarCounts({ loans: 0, partners: 0, capital: 0 });
     toggleSidebar(false);
 

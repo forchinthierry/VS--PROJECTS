@@ -218,9 +218,52 @@ export default {
 
       /*
        * ============================================================
-       * CAPITAL APPLICATION TABLE
+       * LOAN / PARTNERSHIP / CAPITAL TABLES
        * ============================================================
        */
+
+      await env.DB.prepare(`
+        CREATE TABLE IF NOT EXISTS loan_applications (
+          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          created_at TEXT NOT NULL,
+          name TEXT,
+          phone TEXT,
+          email TEXT,
+          dob TEXT,
+          residence TEXT,
+          amount REAL,
+          term TEXT,
+          purpose TEXT,
+          income REAL,
+          employment TEXT,
+          surety_name TEXT,
+          surety_phone TEXT,
+          surety_address TEXT,
+          surety_relation TEXT,
+          collateral TEXT,
+          status TEXT DEFAULT 'New'
+        )
+      `).run();
+
+      await env.DB.prepare(`
+        CREATE TABLE IF NOT EXISTS partnership_applications (
+          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          created_at TEXT NOT NULL,
+          name TEXT,
+          phone TEXT,
+          email TEXT,
+          dob TEXT,
+          residence TEXT,
+          occupation TEXT,
+          shares INTEGER,
+          total_contribution REAL,
+          payout TEXT,
+          payment_method TEXT,
+          reason TEXT,
+          next_of_kin TEXT,
+          status TEXT DEFAULT 'New'
+        )
+      `).run();
 
       await env.DB.prepare(`
         CREATE TABLE IF NOT EXISTS capital_applications (

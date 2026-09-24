@@ -1695,6 +1695,42 @@
       var termField = document.getElementById('term');
       amountField.addEventListener('input', updateLoanSummary);
       termField.addEventListener('change', updateLoanSummary);
+
+      var prefillRaw = sessionStorage.getItem('loanApplicationPrefill');
+      if (prefillRaw) {
+        try {
+          var prefill = JSON.parse(prefillRaw);
+          var row = prefill && prefill.row ? prefill.row : null;
+          sessionStorage.removeItem('loanApplicationPrefill');
+          if (row) {
+            document.getElementById('name').value = row.name || '';
+            document.getElementById('phone').value = row.phone || '';
+            document.getElementById('email').value = row.email || '';
+            document.getElementById('date').value = row.dob || '';
+            document.getElementById('residence').value = row.residence || '';
+            document.getElementById('amount').value = row.amount || '';
+            document.getElementById('term').value = row.term || '';
+            document.getElementById('purpose').value = row.purpose || '';
+            document.getElementById('income').value = row.income || '';
+            document.getElementById('employment').value = row.employment || '';
+            document.getElementById('repaymentSource').value = row.repaymentSource || '';
+            document.getElementById('suretyName').value = row.surety_name || '';
+            document.getElementById('suretyPhone').value = row.surety_phone || '';
+            document.getElementById('suretyAddress').value = row.surety_address || '';
+            document.getElementById('suretyRelation').value = row.surety_relation || '';
+            document.getElementById('collateral').value = row.collateral || '';
+            updateLoanSummary();
+            setTimeout(function () {
+              if (typeof window.downloadApplicationPDF === 'function') {
+                window.downloadApplicationPDF();
+              }
+            }, 200);
+          }
+        } catch (err) {
+          console.error('Could not prefill loan application from admin:', err);
+        }
+      }
+
       updateLoanSummary();
     });
   </script>
