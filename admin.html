@@ -71,9 +71,17 @@
       width: 36px;
       height: 36px;
       border-radius: 10px;
+      overflow: hidden;
       background: linear-gradient(135deg, rgba(11,136,164,0.2), rgba(212,138,0,0.25));
       border: 1px solid rgba(255,255,255,0.25);
       font-size: 18px;
+    }
+
+    .brand-mark img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
     }
 
     .container {
@@ -118,6 +126,7 @@
       border: none;
       color: white;
       font-size: 20px;
+      padding: 0;
     }
 
     .login-brand strong {
@@ -754,7 +763,7 @@ select.status-select{min-width:112px;border-radius:7px;padding:6px 8px;font-size
   <div id="loginScreen" class="login-shell">
     <div class="login-card">
       <div class="login-brand">
-        <div class="brand-mark">G</div>
+        <div class="brand-mark"><img src="logo.png" alt="G-Spirit logo"></div>
         <div>
           <strong>G-SPIRIT</strong>
           <small>Admin access</small>
@@ -774,7 +783,7 @@ select.status-select{min-width:112px;border-radius:7px;padding:6px 8px;font-size
   <div id="dashboard" style="display:none;">
     <header>
       <div class="brand-lockup">
-        <div class="brand-mark">G</div>
+        <div class="brand-mark"><img src="logo.png" alt="G-Spirit logo"></div>
         <span>G-Spirit Admin Dashboard</span>
       </div>
       <div class="header-actions">
@@ -825,12 +834,6 @@ select.status-select{min-width:112px;border-radius:7px;padding:6px 8px;font-size
               <p id="workspaceSubtitle">Review, process and manage customer loan requests.</p>
             </div>
             <div class="workspace-meta"><strong>G-SPIRIT OPERATIONS</strong>Secure application workspace</div>
-          </div>
-          <div class="dashboard-kpis">
-            <div class="kpi"><span class="kpi-label">Active View</span><span class="kpi-value" id="kpiActive">0</span><span class="kpi-note">records in current workspace</span></div>
-            <div class="kpi"><span class="kpi-label">Under Review</span><span class="kpi-value" id="kpiReview">0</span><span class="kpi-note">applications requiring attention</span></div>
-            <div class="kpi"><span class="kpi-label">Approved</span><span class="kpi-value" id="kpiApproved">0</span><span class="kpi-note">approved records in current view</span></div>
-            <div class="kpi"><span class="kpi-label">Disbursed</span><span class="kpi-value" id="kpiDisbursed">0</span><span class="kpi-note">fully settled records</span></div>
           </div>
           <div class="toolbar">
             <input id="searchInput" type="text" placeholder="Search by name, phone, amount or date..." oninput="applySearch()">
@@ -933,10 +936,15 @@ select.status-select{min-width:112px;border-radius:7px;padding:6px 8px;font-size
       var approved = currentData.filter(function(r){ return normalizeStatus(r.status) === 'approved'; }).length;
       var disbursed = currentData.filter(function(r){ return normalizeStatus(r.status) === 'disbursed'; }).length;
 
-      document.getElementById('kpiActive').textContent = active.toLocaleString();
-      document.getElementById('kpiReview').textContent = review.toLocaleString();
-      document.getElementById('kpiApproved').textContent = approved.toLocaleString();
-      document.getElementById('kpiDisbursed').textContent = disbursed.toLocaleString();
+      var kpiActive = document.getElementById('kpiActive');
+      var kpiReview = document.getElementById('kpiReview');
+      var kpiApproved = document.getElementById('kpiApproved');
+      var kpiDisbursed = document.getElementById('kpiDisbursed');
+
+      if (kpiActive) kpiActive.textContent = active.toLocaleString();
+      if (kpiReview) kpiReview.textContent = review.toLocaleString();
+      if (kpiApproved) kpiApproved.textContent = approved.toLocaleString();
+      if (kpiDisbursed) kpiDisbursed.textContent = disbursed.toLocaleString();
     }
 
     function updateSidebarCounts(counts) {
