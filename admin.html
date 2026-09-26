@@ -23,6 +23,12 @@
       --danger: #d64545;
       --success: #1b9c73;
       --shadow: 0 16px 38px rgba(23, 43, 79, 0.10);
+      --theme-primary: #18345e;
+      --theme-secondary: #0b88a4;
+      --theme-accent: #f4b942;
+      --theme-glow: rgba(11, 136, 164, 0.12);
+      --theme-soft: #eaf7fb;
+      --theme-strong: #0d2a49;
     }
 
     * { box-sizing: border-box; }
@@ -34,6 +40,39 @@
       margin: 0;
       padding: 0;
       line-height: 1.6;
+      --theme-primary: #18345e;
+      --theme-secondary: #0b88a4;
+      --theme-accent: #f4b942;
+      --theme-glow: rgba(11, 136, 164, 0.12);
+      --theme-soft: #eaf7fb;
+      --theme-strong: #0d2a49;
+    }
+
+    body[data-section-theme="loans"] {
+      --theme-primary: #173b74;
+      --theme-secondary: #0b8ec4;
+      --theme-accent: #ffb648;
+      --theme-glow: rgba(17, 104, 176, 0.12);
+      --theme-soft: #edf7ff;
+      --theme-strong: #102c52;
+    }
+
+    body[data-section-theme="partners"] {
+      --theme-primary: #0d6a56;
+      --theme-secondary: #37a98d;
+      --theme-accent: #f4b740;
+      --theme-glow: rgba(15, 128, 102, 0.12);
+      --theme-soft: #edfdf7;
+      --theme-strong: #0d4138;
+    }
+
+    body[data-section-theme="capital"] {
+      --theme-primary: #8b4c1d;
+      --theme-secondary: #e28c34;
+      --theme-accent: #f6d365;
+      --theme-glow: rgba(180, 88, 21, 0.12);
+      --theme-soft: #fff8ef;
+      --theme-strong: #5c2d12;
     }
 
     header {
@@ -661,6 +700,81 @@
       background: linear-gradient(180deg, #ffffff 0%, #f7fbff 100%);
     }
 
+    body[data-section-theme="loans"] header {
+      background: linear-gradient(135deg, #0f2348 0%, #183c76 58%, #0a6f9a 100%);
+    }
+
+    body[data-section-theme="partners"] header {
+      background: linear-gradient(135deg, #0d4138 0%, #0f765d 56%, #1a9a7c 100%);
+    }
+
+    body[data-section-theme="capital"] header {
+      background: linear-gradient(135deg, #502411 0%, #8b4c1d 58%, #d57a2a 100%);
+    }
+
+    body[data-section-theme="loans"] .nav-item.active,
+    body[data-section-theme="loans"] .login-card button,
+    body[data-section-theme="loans"] .summary-card.active {
+      background: linear-gradient(135deg, var(--theme-primary), var(--theme-secondary));
+    }
+
+    body[data-section-theme="partners"] .nav-item.active,
+    body[data-section-theme="partners"] .login-card button,
+    body[data-section-theme="partners"] .summary-card.active {
+      background: linear-gradient(135deg, var(--theme-primary), var(--theme-secondary));
+    }
+
+    body[data-section-theme="capital"] .nav-item.active,
+    body[data-section-theme="capital"] .login-card button,
+    body[data-section-theme="capital"] .summary-card.active {
+      background: linear-gradient(135deg, var(--theme-primary), var(--theme-secondary));
+    }
+
+    body[data-section-theme="loans"] .nav-icon,
+    body[data-section-theme="loans"] .summary-card[data-kind="active"] {
+      color: #0f5ea8;
+    }
+
+    body[data-section-theme="partners"] .nav-icon,
+    body[data-section-theme="partners"] .summary-card[data-kind="active"] {
+      color: #0f705d;
+    }
+
+    body[data-section-theme="capital"] .nav-icon,
+    body[data-section-theme="capital"] .summary-card[data-kind="active"] {
+      color: #b55a1c;
+    }
+
+    body[data-section-theme="loans"] th {
+      background: linear-gradient(135deg, #152d59 0%, #1c4d7a 100%);
+    }
+
+    body[data-section-theme="partners"] th {
+      background: linear-gradient(135deg, #0c4f44 0%, #0d7d63 100%);
+    }
+
+    body[data-section-theme="capital"] th {
+      background: linear-gradient(135deg, #5d2d10 0%, #a75b20 100%);
+    }
+
+    body[data-section-theme="loans"] .summary-card[data-kind="active"]::before,
+    body[data-section-theme="loans"] .nav-count,
+    body[data-section-theme="loans"] .brand-mark {
+      background: var(--theme-glow);
+    }
+
+    body[data-section-theme="partners"] .summary-card[data-kind="active"]::before,
+    body[data-section-theme="partners"] .nav-count,
+    body[data-section-theme="partners"] .brand-mark {
+      background: var(--theme-glow);
+    }
+
+    body[data-section-theme="capital"] .summary-card[data-kind="active"]::before,
+    body[data-section-theme="capital"] .nav-count,
+    body[data-section-theme="capital"] .brand-mark {
+      background: var(--theme-glow);
+    }
+
     @media (max-width: 640px) {
       header {
         padding: 16px 18px;
@@ -755,6 +869,55 @@ select.status-select{min-width:112px;border-radius:7px;padding:6px 8px;font-size
   .toolbar input{min-width:100%;width:100%}.results-count{width:auto;margin-left:0;padding-left:2px}
   .dashboard-kpis{gap:9px}.kpi{padding:12px 14px}
 }
+
+body[data-section-theme="loans"] header {
+  background: linear-gradient(135deg, #0f2348 0%, #183c76 58%, #0a6f9a 100%);
+}
+body[data-section-theme="partners"] header {
+  background: linear-gradient(135deg, #0d4138 0%, #0f765d 56%, #1a9a7c 100%);
+}
+body[data-section-theme="capital"] header {
+  background: linear-gradient(135deg, #502411 0%, #8b4c1d 58%, #d57a2a 100%);
+}
+body[data-section-theme="loans"] .nav-item.active,
+body[data-section-theme="loans"] .login-card button,
+body[data-section-theme="loans"] .summary-card.active,
+body[data-section-theme="loans"] .nav-item.active .nav-icon,
+body[data-section-theme="loans"] .whatsapp-btn,
+body[data-section-theme="loans"] .agreement-btn {
+  background: linear-gradient(135deg, #173b74, #0b8ec4);
+}
+body[data-section-theme="partners"] .nav-item.active,
+body[data-section-theme="partners"] .login-card button,
+body[data-section-theme="partners"] .summary-card.active,
+body[data-section-theme="partners"] .nav-item.active .nav-icon,
+body[data-section-theme="partners"] .whatsapp-btn,
+body[data-section-theme="partners"] .agreement-btn {
+  background: linear-gradient(135deg, #0d6a56, #37a98d);
+}
+body[data-section-theme="capital"] .nav-item.active,
+body[data-section-theme="capital"] .login-card button,
+body[data-section-theme="capital"] .summary-card.active,
+body[data-section-theme="capital"] .nav-item.active .nav-icon,
+body[data-section-theme="capital"] .whatsapp-btn,
+body[data-section-theme="capital"] .agreement-btn {
+  background: linear-gradient(135deg, #8b4c1d, #e28c34);
+}
+body[data-section-theme="loans"] .nav-count { background: rgba(17, 104, 176, 0.12); color: #153d73; }
+body[data-section-theme="partners"] .nav-count { background: rgba(15, 128, 102, 0.12); color: #0d5448; }
+body[data-section-theme="capital"] .nav-count { background: rgba(180, 88, 21, 0.12); color: #7d3f11; }
+body[data-section-theme="loans"] .summary-card[data-kind="active"] { border-color: rgba(17,104,176,.35); }
+body[data-section-theme="partners"] .summary-card[data-kind="active"] { border-color: rgba(15,128,102,.35); }
+body[data-section-theme="capital"] .summary-card[data-kind="active"] { border-color: rgba(180,88,21,.35); }
+body[data-section-theme="loans"] th { background: linear-gradient(135deg, #152d59 0%, #1c4d7a 100%); }
+body[data-section-theme="partners"] th { background: linear-gradient(135deg, #0c4f44 0%, #0d7d63 100%); }
+body[data-section-theme="capital"] th { background: linear-gradient(135deg, #5d2d10 0%, #a75b20 100%); }
+body[data-section-theme="loans"] .summary-card[data-kind="active"]::before { background: #0b8ec4; }
+body[data-section-theme="partners"] .summary-card[data-kind="active"]::before { background: #37a98d; }
+body[data-section-theme="capital"] .summary-card[data-kind="active"]::before { background: #e28c34; }
+body[data-section-theme="loans"] .brand-mark { background: linear-gradient(135deg, #0b8ec4, #163d77); }
+body[data-section-theme="partners"] .brand-mark { background: linear-gradient(135deg, #37a98d, #0d523f); }
+body[data-section-theme="capital"] .brand-mark { background: linear-gradient(135deg, #e28c34, #8b4c1d); }
 
   </style>
 </head>
@@ -915,6 +1078,11 @@ select.status-select{min-width:112px;border-radius:7px;padding:6px 8px;font-size
       document.querySelectorAll('.nav-item').forEach(function (item) {
         item.classList.toggle('active', item.dataset.tab === currentTab);
       });
+      applySectionTheme();
+    }
+
+    function applySectionTheme() {
+      document.body.dataset.sectionTheme = currentTab;
     }
 
     function updateWorkspaceUI() {
@@ -1588,6 +1756,7 @@ select.status-select{min-width:112px;border-radius:7px;padding:6px 8px;font-size
 
     // Auto-login if a JWT is already stored for this browser session
     window.addEventListener('load', function () {
+      applySectionTheme();
       var saved = sessionStorage.getItem('gspirit_admin_token');
       if (saved) {
         adminToken = saved;
