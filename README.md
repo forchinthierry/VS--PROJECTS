@@ -1,1 +1,2 @@
-# G-SPIRIT-Loan-Solution
+﻿# G-SPIRIT-Ventures
+

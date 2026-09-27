@@ -1,4 +1,4 @@
-WHATSAPP MESSAGE TEMPLATES — G-SPIRIT LOAN SOLUTION
+﻿WHATSAPP MESSAGE TEMPLATES — G-SPIRIT VENTURES
 =====================================================
 Submit these in Meta's WhatsApp Manager under "Message Templates."
 Category: UTILITY (these are status updates about an existing request,
@@ -14,7 +14,7 @@ LOAN APPLICATIONS
 
 Template name: loan_under_review
 Body:
-Hello {{1}}, your loan application with G-Spirit Loan Solution is now
+Hello {{1}}, your loan application with G-Spirit Ventures is now
 under review. We'll update you here as soon as a decision is made.
 
 Template name: loan_approved
@@ -24,7 +24,7 @@ approved. Our team will reach out shortly with next steps.
 
 Template name: loan_rejected
 Body:
-Hello {{1}}, thank you for applying to G-Spirit Loan Solution. We're
+Hello {{1}}, thank you for applying to G-Spirit Ventures. We're
 unable to approve this application at this time. Message us on
 WhatsApp if you'd like to know more.
 
@@ -32,7 +32,7 @@ Template name: loan_disbursed
 Body:
 Hello {{1}}, your loan of {{2}} XAF has been disbursed. Repayment
 begins as agreed in your loan agreement. Thank you for choosing
-G-Spirit Loan Solution.
+G-Spirit Ventures.
 
 
 PARTNERSHIP / INVESTMENT APPLICATIONS
@@ -64,3 +64,4 @@ NOTES
   instant WhatsApp message when they submit through your site.
 - Once approved, tell me the exact template names Meta gives you back
   (should match above) and I'll wire the Worker code to use them.
+

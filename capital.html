@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -46,7 +46,7 @@ form{max-width:760px;margin:0 auto}label{display:block;margin-top:16px;font-weig
 <header>
   <button type="button" class="logo-btn" onclick="navigateWithTransition('index.html')" aria-label="Go to homepage"><img src="logo.png" alt="G-Spirit logo"></button>
   <div class="brand">
-    <strong>G-SPIRIT LOAN SOLUTION</strong>
+    <strong>G-SPIRIT VENTURES</strong>
     <div class="tagline">Powering Dreams</div>
   </div>
   <div class="header-actions">
@@ -61,7 +61,7 @@ form{max-width:760px;margin:0 auto}label{display:block;margin-top:16px;font-weig
 <section class="hero">
 <span class="badge">Business Growth Capital</span>
 <h1>Have the vision. We can help fund the journey.</h1>
-<p>G-Spirit Loan Solution considers promising businesses and business ideas for investment. Instead of a conventional loan, we may provide growth capital in exchange for an agreed stake in the business. Tell us what you are building, what you need, and how you plan to grow.</p>
+<p>G-Spirit Ventures considers promising businesses and business ideas for investment. Instead of a conventional loan, we may provide growth capital in exchange for an agreed stake in the business. Tell us what you are building, what you need, and how you plan to grow.</p>
 <div class="highlight"><div><b>Capital for Growth</b>Funding may support launch, expansion or scale.</div><div><b>Equity Partnership</b>Investment is considered for an agreed business stake.</div><div><b>Built Around Potential</b>We assess the idea, market, team and opportunity.</div></div>
 </section>
 
@@ -114,9 +114,9 @@ form{max-width:760px;margin:0 auto}label{display:block;margin-top:16px;font-weig
 </div>
 <div class="buttons"><button type="button" class="btn prev" onclick="prevStep()">← Previous</button><button type="button" class="btn next" onclick="nextStep()">Review Application →</button></div></section>
 
-<section class="step" data-step="4"><h2>Review your investment request</h2><p class="step-intro">Check your information before sending it to G-Spirit Loan Solution.</p>
+<section class="step" data-step="4"><h2>Review your investment request</h2><p class="step-intro">Check your information before sending it to G-Spirit Ventures.</p>
 <div id="review" class="review"></div>
-<div class="notice"><b>Important:</b> Submitting an application does not guarantee funding. G-Spirit Loan Solution may request additional information, conduct due diligence, and negotiate the investment amount, valuation and equity stake before any investment is made.</div>
+<div class="notice"><b>Important:</b> Submitting an application does not guarantee funding. G-Spirit Ventures may request additional information, conduct due diligence, and negotiate the investment amount, valuation and equity stake before any investment is made.</div>
 <div style="margin-top:15px; background:#f8f3fb; border:1px solid #d9cbe7; border-radius:10px; padding:12px 14px; color:#3a2d4f; font-size:13px; line-height:1.5;">
   <label style="display:flex; align-items:flex-start; gap:10px; margin:0; cursor:pointer;">
     <input type="checkbox" name="termsAccepted" required style="margin-top:3px; transform:scale(1.1);">
@@ -137,7 +137,7 @@ form{max-width:760px;margin:0 auto}label{display:block;margin-top:16px;font-weig
 <footer>
   <div class="footer-links" style="display:flex;justify-content:center;align-items:center;gap:20px;flex-wrap:wrap;padding:18px 20px 26px;text-align:center;font-size:14px;background:rgba(255,255,255,0.2);color:#2b3773;">
     <a href="privacy.html" target="_self" style="color:#2b3773;text-decoration:none;font-weight:700;">Privacy Policy</a>
-    <span>&copy; 2026 G-Spirit Loan Solution. All rights reserved.</span>
+    <span>&copy; 2026 G-Spirit Ventures. All rights reserved.</span>
   </div>
 </footer>
 
@@ -264,7 +264,7 @@ function buildCapitalPDF(logo, d){
 doc.setFillColor(43,55,115); doc.rect(0,0,pageWidth,34,'F');
  if(logo){try{doc.addImage(logo,'PNG',12,6,24,24);}catch(e){}}
 
-doc.setTextColor(255,255,255); doc.setFontSize(16); doc.text('G-SPIRIT LOAN SOLUTION', logo ? 40 : 12, 15); doc.setFontSize(10); doc.text('Powering Dreams', logo ? 40 : 12, 22);
+doc.setTextColor(255,255,255); doc.setFontSize(16); doc.text('G-SPIRIT VENTURES', logo ? 40 : 12, 15); doc.setFontSize(10); doc.text('Powering Dreams', logo ? 40 : 12, 22);
 doc.setFontSize(9); doc.text('+237 620 569 864', pageWidth - 12, 12, {align:'right'}); doc.text('hi@gspiritloans.com', pageWidth - 12, 18, {align:'right'}); doc.text('www.gspiritloans.com', pageWidth - 12, 24, {align:'right'});
 
  if(logo){try{doc.saveGraphicsState(); doc.setGState(doc.GState({opacity:0.25})); doc.addImage(logo,'PNG',pageWidth/2-70,pageHeight/2-70,140,140); doc.restoreGraphicsState();}catch(e){}}
@@ -284,7 +284,7 @@ y=46; doc.setTextColor(43,55,115); doc.setFontSize(14); doc.text('Capital Applic
  doc.setFontSize(10); doc.setTextColor(120,120,120); doc.text('Terms & Privacy Policy: Accepted', 12, y); y += 10;
  doc.setFont(undefined,'bolditalic'); doc.setTextColor(22,160,133); doc.text('Please send this document on WhatsApp to +237 620 569 864.', pageWidth / 2, y, { align: 'center' }); y += 10;
  doc.setFont(undefined,'normal'); doc.setTextColor(120,120,120); doc.text('Generated: ' + new Date().toLocaleString(), 12, y);
- doc.setDrawColor(220,220,220); doc.line(12, pageHeight - 16, pageWidth - 12, pageHeight - 16); doc.setFontSize(8); doc.setTextColor(140,140,140); doc.text('© 2026 G-Spirit Loan Solution. All rights reserved.', pageWidth / 2, pageHeight - 10, { align: 'center' });
+ doc.setDrawColor(220,220,220); doc.line(12, pageHeight - 16, pageWidth - 12, pageHeight - 16); doc.setFontSize(8); doc.setTextColor(140,140,140); doc.text('© 2026 G-Spirit Ventures. All rights reserved.', pageWidth / 2, pageHeight - 10, { align: 'center' });
 
  const filename = 'GSpirit_Capital_Application_' + ((d.businessName || 'applicant').replace(/\s+/g, '_')) + '.pdf';
  doc.save(filename);
@@ -327,3 +327,4 @@ y=46; doc.setTextColor(43,55,115); doc.setFontSize(14); doc.text('Capital Applic
 
 </body>
 </html>
+
