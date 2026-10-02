@@ -506,7 +506,8 @@
     .section-heading h2 { font-family: 'Fredoka', sans-serif; color: var(--blue); font-size: clamp(30px, 4vw, 44px); line-height: 1.1; margin: 10px 0 12px; }
     .section-heading p { color: var(--muted); line-height: 1.7; margin: 0; }
     .service-grid { display: grid; grid-template-columns: repeat(5, minmax(180px, 1fr)); gap: 18px; }
-    .service-card { background: var(--paper); border: 1px solid var(--line); border-radius: 16px; padding: 24px; min-height: 245px; box-shadow: 0 10px 28px rgba(24,43,86,.06); transition: transform .25s ease, box-shadow .25s ease; position: relative; overflow: hidden; display: flex; flex-direction: column; }
+    .service-card { background: var(--paper); border: 1px solid var(--line); border-radius: 16px; padding: 24px; min-height: 245px; box-shadow: 0 10px 28px rgba(24,43,86,.06); opacity: 0; transform: translateY(28px) scale(0.97); transition: transform .7s cubic-bezier(0.22, 1, 0.36, 1), box-shadow .25s ease, opacity .7s cubic-bezier(0.22, 1, 0.36, 1); position: relative; overflow: hidden; display: flex; flex-direction: column; }
+    .service-card.is-visible { opacity: 1; transform: translateY(0) scale(1); }
     .service-card::before { content: ""; position: absolute; inset: 0 auto auto 0; width: 100%; height: 5px; opacity: 0; transition: opacity .25s ease; }
     .service-card:hover { transform: translateY(-5px); box-shadow: 0 16px 32px rgba(24,43,86,.12); }
     .service-card.loan-card { border-color: rgba(11, 136, 164, 0.25); background: linear-gradient(180deg, rgba(11,136,164,0.06), rgba(255,255,255,1)); }
@@ -647,7 +648,7 @@
     </section>
 
     <section class="section">
-      <div class="stats-strip reveal-stagger"><div class="stat"><strong>3</strong><span>ways to grow with G-Spirit</span></div><div class="stat"><strong>24/7</strong><span>online application access</span></div><div class="stat"><strong>1:1</strong><span>direct communication</span></div></div>
+      <div class="stats-strip reveal-stagger"><div class="stat"><strong>5</strong><span>ways to grow with G-Spirit</span></div><div class="stat"><strong>24/7</strong><span>online application access</span></div><div class="stat"><strong>1:1</strong><span>direct communication</span></div></div>
     </section>
 
     <section class="contact-band"><div class="section contact-inner"><div><h2>Ready to take the next step?</h2><p>Start with the option that matches your goal. We will take it from there.</p></div><a class="primary-link" href="contact.html">Talk to G-Spirit</a></div></section>
@@ -711,17 +712,42 @@
       var revealEls = document.querySelectorAll('.reveal, .reveal-stagger');
       if (!('IntersectionObserver' in window) || revealEls.length === 0) {
         revealEls.forEach(function (el) { el.classList.add('is-visible'); });
-        return;
+      } else {
+        var observer = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('is-visible');
+              observer.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.12, rootMargin: '0px 0px -30px 0px' });
+        revealEls.forEach(function (el) { observer.observe(el); });
       }
-      var observer = new IntersectionObserver(function (entries) {
-        entries.forEach(function (entry) {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('is-visible');
-            observer.unobserve(entry.target);
-          }
+
+      var serviceCards = document.querySelectorAll('.service-card');
+      if (serviceCards.length) {
+        if (!('IntersectionObserver' in window)) {
+          serviceCards.forEach(function (card, index) {
+            card.style.transitionDelay = (index * 120) + 'ms';
+            card.classList.add('is-visible');
+          });
+          return;
+        }
+
+        serviceCards.forEach(function (card, index) {
+          var cardObserver = new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
+              if (!entry.isIntersecting) return;
+              setTimeout(function () {
+                card.classList.add('is-visible');
+              }, index * 120);
+              cardObserver.unobserve(entry.target);
+            });
+          }, { threshold: 0.18, rootMargin: '0px 0px -20px 0px' });
+
+          cardObserver.observe(card);
         });
-      }, { threshold: 0.12, rootMargin: '0px 0px -30px 0px' });
-      revealEls.forEach(function (el) { observer.observe(el); });
+      }
     })();
   </script>
 
