@@ -218,7 +218,7 @@ export default {
 
       /*
        * ============================================================
-       * LOAN / PARTNERSHIP / CAPITAL TABLES
+      * APPLICATION TABLES
        * ============================================================
        */
 
@@ -301,6 +301,62 @@ export default {
           investment_reason TEXT,
           additional_info TEXT,
 
+          status TEXT DEFAULT 'New'
+        )
+      `).run();
+
+      await env.DB.prepare(`
+        CREATE TABLE IF NOT EXISTS job_applications (
+          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          created_at TEXT NOT NULL,
+          full_name TEXT,
+          date_of_birth TEXT,
+          gender TEXT,
+          nationality TEXT,
+          phone TEXT,
+          whatsapp TEXT,
+          email TEXT,
+          city TEXT,
+          region TEXT,
+          address TEXT,
+          highest_qualification TEXT,
+          field_of_study TEXT,
+          institution TEXT,
+          graduation_year TEXT,
+          certifications TEXT,
+          languages TEXT,
+          digital_skills TEXT,
+          employment_status TEXT,
+          experience_level TEXT,
+          years_experience TEXT,
+          current_job TEXT,
+          current_employer TEXT,
+          experience_summary TEXT,
+          preferred_role TEXT,
+          job_category TEXT,
+          preferred_location TEXT,
+          work_mode TEXT,
+          availability TEXT,
+          salary_expectation REAL DEFAULT 0,
+          skills TEXT,
+          cv_link TEXT,
+          reference TEXT,
+          status TEXT DEFAULT 'New'
+        )
+      `).run();
+
+      await env.DB.prepare(`
+        CREATE TABLE IF NOT EXISTS travel_applications (
+          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          created_at TEXT NOT NULL,
+          name TEXT,
+          phone TEXT,
+          email TEXT,
+          origin TEXT,
+          destination TEXT,
+          travel_type TEXT,
+          departure_date TEXT,
+          details TEXT,
           status TEXT DEFAULT 'New'
         )
       `).run();
@@ -519,6 +575,104 @@ export default {
 
       /*
        * ============================================================
+       * PUBLIC: JOB APPLICATION
+       * ============================================================
+       */
+
+      if (
+        url.pathname === '/api/jobs' &&
+        request.method === 'POST'
+      ) {
+        const data = await request.json();
+
+        await env.DB.prepare(`
+          INSERT INTO job_applications (
+            created_at, full_name, date_of_birth, gender, nationality,
+            phone, whatsapp, email, city, region, address,
+            highest_qualification, field_of_study, institution, graduation_year,
+            certifications, languages, digital_skills, employment_status,
+            experience_level, years_experience, current_job, current_employer,
+            experience_summary, preferred_role, job_category, preferred_location,
+            work_mode, availability, salary_expectation, skills, cv_link, reference,
+            status
+          ) VALUES (
+            ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,
+            ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,
+            ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'New'
+          )
+        `).bind(
+          new Date().toISOString(),
+          data.fullName || '',
+          data.dateOfBirth || '',
+          data.gender || '',
+          data.nationality || '',
+          data.phone || '',
+          data.whatsapp || '',
+          data.email || '',
+          data.city || '',
+          data.region || '',
+          data.address || '',
+          data.highestQualification || '',
+          data.fieldOfStudy || '',
+          data.institution || '',
+          data.graduationYear || '',
+          data.certifications || '',
+          data.languages || '',
+          data.digitalSkills || '',
+          data.employmentStatus || '',
+          data.experienceLevel || '',
+          data.yearsExperience || '',
+          data.currentJob || '',
+          data.currentEmployer || '',
+          data.experienceSummary || '',
+          data.preferredRole || '',
+          data.jobCategory || '',
+          data.preferredLocation || '',
+          data.workMode || '',
+          data.availability || '',
+          Number(data.salaryExpectation || 0),
+          data.skills || '',
+          data.cvLink || '',
+          data.reference || ''
+        ).run();
+
+        return json({ success: true, message: 'Job application received successfully' });
+      }
+
+      /*
+       * ============================================================
+       * PUBLIC: TRAVEL ENQUIRY
+       * ============================================================
+       */
+
+      if (
+        url.pathname === '/api/travel' &&
+        request.method === 'POST'
+      ) {
+        const data = await request.json();
+
+        await env.DB.prepare(`
+          INSERT INTO travel_applications (
+            created_at, name, phone, email, origin, destination,
+            travel_type, departure_date, details, status
+          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 'New')
+        `).bind(
+          new Date().toISOString(),
+          data.name || '',
+          data.phone || '',
+          data.email || '',
+          data.origin || '',
+          data.destination || '',
+          data.travelType || '',
+          data.departureDate || '',
+          data.details || ''
+        ).run();
+
+        return json({ success: true, message: 'Travel enquiry received successfully' });
+      }
+
+      /*
+       * ============================================================
        * ADMIN: LIST LOAN APPLICATIONS
        * ============================================================
        */
@@ -595,6 +749,36 @@ export default {
         return json(results);
       }
 
+      if (
+        url.pathname === '/api/admin/jobs' &&
+        request.method === 'GET'
+      ) {
+        if (!(await isAuthorized(request))) {
+          return json({ error: 'Unauthorized' }, 401);
+        }
+
+        const { results } = await env.DB
+          .prepare('SELECT * FROM job_applications ORDER BY id DESC')
+          .all();
+
+        return json(results);
+      }
+
+      if (
+        url.pathname === '/api/admin/travel' &&
+        request.method === 'GET'
+      ) {
+        if (!(await isAuthorized(request))) {
+          return json({ error: 'Unauthorized' }, 401);
+        }
+
+        const { results } = await env.DB
+          .prepare('SELECT * FROM travel_applications ORDER BY id DESC')
+          .all();
+
+        return json(results);
+      }
+
       /*
        * ============================================================
        * ADMIN: UPDATE APPLICATION STATUS
@@ -622,6 +806,8 @@ export default {
           'loan_applications',
           'partnership_applications',
           'capital_applications',
+          'job_applications',
+          'travel_applications',
         ];
 
         if (!validTables.includes(table)) {
@@ -721,6 +907,8 @@ export default {
           'loan_applications',
           'partnership_applications',
           'capital_applications',
+          'job_applications',
+          'travel_applications',
         ];
 
         if (!validTables.includes(table)) {

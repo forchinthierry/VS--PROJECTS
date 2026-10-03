@@ -75,6 +75,24 @@
       --theme-strong: #5c2d12;
     }
 
+    body[data-section-theme="jobs"] {
+      --theme-primary: #60409a;
+      --theme-secondary: #9b67da;
+      --theme-accent: #e8c95c;
+      --theme-glow: rgba(112, 72, 174, 0.12);
+      --theme-soft: #f6f1fc;
+      --theme-strong: #39245f;
+    }
+
+    body[data-section-theme="travel"] {
+      --theme-primary: #126b61;
+      --theme-secondary: #32a995;
+      --theme-accent: #e8b84e;
+      --theme-glow: rgba(22, 139, 119, 0.12);
+      --theme-soft: #eefaf7;
+      --theme-strong: #0c453f;
+    }
+
     header {
       background: linear-gradient(135deg, var(--navy-deep), var(--navy));
       color: white;
@@ -649,6 +667,18 @@
       border-color: #7ca0f0;
     }
 
+    select.status-select.status-contacted {
+      background: #e8f5ff;
+      color: #145b86;
+      border-color: #83bddf;
+    }
+
+    select.status-select.status-closed {
+      background: #eef1f5;
+      color: #4d596b;
+      border-color: #c8d0da;
+    }
+
     /* option text always stays plain/dark so the dropdown list itself remains readable */
     select.status-select option {
       background: #fff;
@@ -747,14 +777,17 @@
 
     body[data-section-theme="loans"] th {
       background: linear-gradient(135deg, #152d59 0%, #1c4d7a 100%);
+      color: #fff;
     }
 
     body[data-section-theme="partners"] th {
       background: linear-gradient(135deg, #0c4f44 0%, #0d7d63 100%);
+      color: #fff;
     }
 
     body[data-section-theme="capital"] th {
       background: linear-gradient(135deg, #5d2d10 0%, #a75b20 100%);
+      color: #fff;
     }
 
     body[data-section-theme="loans"] .summary-card[data-kind="active"]::before,
@@ -909,15 +942,37 @@ body[data-section-theme="capital"] .nav-count { background: rgba(180, 88, 21, 0.
 body[data-section-theme="loans"] .summary-card[data-kind="active"] { border-color: rgba(17,104,176,.35); }
 body[data-section-theme="partners"] .summary-card[data-kind="active"] { border-color: rgba(15,128,102,.35); }
 body[data-section-theme="capital"] .summary-card[data-kind="active"] { border-color: rgba(180,88,21,.35); }
-body[data-section-theme="loans"] th { background: linear-gradient(135deg, #152d59 0%, #1c4d7a 100%); }
-body[data-section-theme="partners"] th { background: linear-gradient(135deg, #0c4f44 0%, #0d7d63 100%); }
-body[data-section-theme="capital"] th { background: linear-gradient(135deg, #5d2d10 0%, #a75b20 100%); }
+body[data-section-theme="loans"] th { background: linear-gradient(135deg, #152d59 0%, #1c4d7a 100%); color: #fff; }
+body[data-section-theme="partners"] th { background: linear-gradient(135deg, #0c4f44 0%, #0d7d63 100%); color: #fff; }
+body[data-section-theme="capital"] th { background: linear-gradient(135deg, #5d2d10 0%, #a75b20 100%); color: #fff; }
 body[data-section-theme="loans"] .summary-card[data-kind="active"]::before { background: #0b8ec4; }
 body[data-section-theme="partners"] .summary-card[data-kind="active"]::before { background: #37a98d; }
 body[data-section-theme="capital"] .summary-card[data-kind="active"]::before { background: #e28c34; }
 body[data-section-theme="loans"] .brand-mark { background: linear-gradient(135deg, #0b8ec4, #163d77); }
 body[data-section-theme="partners"] .brand-mark { background: linear-gradient(135deg, #37a98d, #0d523f); }
 body[data-section-theme="capital"] .brand-mark { background: linear-gradient(135deg, #e28c34, #8b4c1d); }
+body[data-section-theme="jobs"] header { background: linear-gradient(135deg, #30204f 0%, #60409a 58%, #8a5ec4 100%); }
+body[data-section-theme="travel"] header { background: linear-gradient(135deg, #0b3935 0%, #126b61 58%, #258e7e 100%); }
+body[data-section-theme="jobs"] .nav-item.active,
+body[data-section-theme="jobs"] .login-card button,
+body[data-section-theme="jobs"] .summary-card.active,
+body[data-section-theme="jobs"] .nav-item.active .nav-icon,
+body[data-section-theme="jobs"] .whatsapp-btn,
+body[data-section-theme="jobs"] .agreement-btn { background: linear-gradient(135deg, #60409a, #9b67da); }
+body[data-section-theme="travel"] .nav-item.active,
+body[data-section-theme="travel"] .login-card button,
+body[data-section-theme="travel"] .summary-card.active,
+body[data-section-theme="travel"] .nav-item.active .nav-icon,
+body[data-section-theme="travel"] .whatsapp-btn,
+body[data-section-theme="travel"] .agreement-btn { background: linear-gradient(135deg, #126b61, #32a995); }
+body[data-section-theme="jobs"] .summary-card[data-kind="active"] { color: #7048ae; }
+body[data-section-theme="travel"] .summary-card[data-kind="active"] { color: #168b77; }
+body[data-section-theme="jobs"] .summary-card[data-kind="active"]::before { background: #9b67da; }
+body[data-section-theme="travel"] .summary-card[data-kind="active"]::before { background: #32a995; }
+body[data-section-theme="jobs"] .nav-count { background: rgba(112,72,174,.12); color: #39245f; }
+body[data-section-theme="travel"] .nav-count { background: rgba(22,139,119,.12); color: #0c453f; }
+body[data-section-theme="jobs"] th { background: linear-gradient(135deg, #39245f 0%, #7048ae 100%); color: #fff; }
+body[data-section-theme="travel"] th { background: linear-gradient(135deg, #0c453f 0%, #168b77 100%); color: #fff; }
 
   </style>
 </head>
@@ -985,6 +1040,22 @@ body[data-section-theme="capital"] .brand-mark { background: linear-gradient(135
               <span class="nav-copy">
                 <span class="nav-label">Capital</span>
                 <span class="nav-count" id="count-capital">0</span>
+              </span>
+            </button>
+
+            <button class="nav-item" data-tab="jobs">
+              <span class="nav-icon">JB</span>
+              <span class="nav-copy">
+                <span class="nav-label">Jobs</span>
+                <span class="nav-count" id="count-jobs">0</span>
+              </span>
+            </button>
+
+            <button class="nav-item" data-tab="travel">
+              <span class="nav-icon">TR</span>
+              <span class="nav-copy">
+                <span class="nav-label">Travel</span>
+                <span class="nav-count" id="count-travel">0</span>
               </span>
             </button>
           </div>
@@ -1089,11 +1160,18 @@ body[data-section-theme="capital"] .brand-mark { background: linear-gradient(135
       var meta = {
         loans: ['Loan Applications','Review, process and manage customer loan requests.'],
         partners: ['Partnership Applications','Review participation, contribution and partnership requests.'],
-        capital: ['Investment Capital','Review business funding requests and proposed equity participation.']
+        capital: ['Investment Capital','Review business funding requests and proposed equity participation.'],
+        jobs: ['Job Applications','Review candidate profiles and recruitment enquiries.'],
+        travel: ['Travel Enquiries','Review travel plans and follow-up requests.']
       }[currentTab] || ['Applications','Review and manage application records.'];
 
       document.getElementById('workspaceTitle').textContent = meta[0];
       document.getElementById('workspaceSubtitle').textContent = meta[1];
+      document.getElementById('searchInput').placeholder = currentTab === 'jobs'
+        ? 'Search by applicant, role, location, phone or date...'
+        : currentTab === 'travel'
+          ? 'Search by traveller, destination, purpose, phone or date...'
+          : 'Search by name, phone, amount or date...';
 
       var total = currentData.length;
       var active = currentData.filter(function(r){
@@ -1116,11 +1194,13 @@ body[data-section-theme="capital"] .brand-mark { background: linear-gradient(135
     }
 
     function updateSidebarCounts(counts) {
-      var countMap = counts || { loans: 0, partners: 0, capital: 0 };
+      var countMap = counts || { loans: 0, partners: 0, capital: 0, jobs: 0, travel: 0 };
       var ids = {
         loans: 'count-loans',
         partners: 'count-partners',
-        capital: 'count-capital'
+        capital: 'count-capital',
+        jobs: 'count-jobs',
+        travel: 'count-travel'
       };
 
       Object.keys(ids).forEach(function (key) {
@@ -1146,7 +1226,7 @@ body[data-section-theme="capital"] .brand-mark { background: linear-gradient(135
 
     async function loadSidebarCounts() {
       if (!adminToken) {
-        updateSidebarCounts({ loans: 0, partners: 0, capital: 0 });
+        updateSidebarCounts({ loans: 0, partners: 0, capital: 0, jobs: 0, travel: 0 });
         return;
       }
 
@@ -1154,17 +1234,21 @@ body[data-section-theme="capital"] .brand-mark { background: linear-gradient(135
         var counts = await Promise.all([
           fetchTabCount('/api/admin/applications'),
           fetchTabCount('/api/admin/partnerships'),
-          fetchTabCount('/api/admin/capital')
+          fetchTabCount('/api/admin/capital'),
+          fetchTabCount('/api/admin/jobs'),
+          fetchTabCount('/api/admin/travel')
         ]);
 
         updateSidebarCounts({
           loans: counts[0],
           partners: counts[1],
-          capital: counts[2]
+          capital: counts[2],
+          jobs: counts[3],
+          travel: counts[4]
         });
       } catch (err) {
         if (err && err.message === 'unauthorized') {
-          updateSidebarCounts({ loans: 0, partners: 0, capital: 0 });
+            updateSidebarCounts({ loans: 0, partners: 0, capital: 0, jobs: 0, travel: 0 });
           return;
         }
         console.error('Failed to load sidebar counts:', err);
@@ -1185,6 +1269,10 @@ body[data-section-theme="capital"] .brand-mark { background: linear-gradient(135
     function switchTab(tab) {
       currentTab = tab;
       currentStatusFilter = null;
+      currentData = [];
+      currentFiltered = [];
+      selectedIds = {};
+      document.getElementById('searchInput').value = '';
       syncSidebarState();
       renderSummaryPanels();
       updateWorkspaceUI();
@@ -1201,11 +1289,14 @@ body[data-section-theme="capital"] .brand-mark { background: linear-gradient(135
     }
 
     function loadCurrentTab() {
-      var endpoint = currentTab === 'loans'
-        ? '/api/admin/applications'
-        : currentTab === 'partners'
-          ? '/api/admin/partnerships'
-          : '/api/admin/capital';
+      var endpoints = {
+        loans: '/api/admin/applications',
+        partners: '/api/admin/partnerships',
+        capital: '/api/admin/capital',
+        jobs: '/api/admin/jobs',
+        travel: '/api/admin/travel'
+      };
+      var endpoint = endpoints[currentTab] || endpoints.loans;
       document.getElementById('tableWrap').innerHTML = '<div class="empty-state">Loading...</div>';
 
       fetch(API_BASE + endpoint, {
@@ -1234,7 +1325,7 @@ body[data-section-theme="capital"] .brand-mark { background: linear-gradient(135
 
     function logout() {
       adminToken = '';
-      updateSidebarCounts({ loans: 0, partners: 0, capital: 0 });
+      updateSidebarCounts({ loans: 0, partners: 0, capital: 0, jobs: 0, travel: 0 });
       sessionStorage.removeItem('gspirit_admin_token');
       document.getElementById('tokenInput').value = '';
       document.getElementById('loginError').style.display = 'none';
@@ -1244,7 +1335,11 @@ body[data-section-theme="capital"] .brand-mark { background: linear-gradient(135
     }
 
     function statusOptions(current) {
-      var statuses = ['New', 'Under Review', 'Approved', 'Rejected', 'Disbursed'];
+      var statuses = currentTab === 'jobs' || currentTab === 'travel'
+        ? ['New', 'Under Review', 'Contacted', 'Approved', 'Rejected', 'Closed']
+        : currentTab === 'loans'
+          ? ['New', 'Under Review', 'Approved', 'Rejected', 'Disbursed']
+          : ['New', 'Under Review', 'Approved', 'Rejected'];
       return statuses.map(function (s) {
         return '<option value="' + s + '"' + (s === current ? ' selected' : '') + '>' + s + '</option>';
       }).join('');
@@ -1252,7 +1347,7 @@ body[data-section-theme="capital"] .brand-mark { background: linear-gradient(135
 
     function statusClass(status) {
       var slug = (status || 'New').toString().trim().toLowerCase().replace(/\s+/g, '-');
-      var known = ['new', 'under-review', 'approved', 'rejected', 'disbursed'];
+      var known = ['new', 'under-review', 'contacted', 'approved', 'rejected', 'disbursed', 'closed'];
       return 'status-' + (known.indexOf(slug) !== -1 ? slug : 'new');
     }
 
@@ -1306,6 +1401,9 @@ body[data-section-theme="capital"] .brand-mark { background: linear-gradient(135
       if (bucket === 'disbursed') {
         return normalized === 'disbursed';
       }
+      if (bucket === 'closed') {
+        return normalized === 'closed';
+      }
       return true;
     }
 
@@ -1335,8 +1433,8 @@ body[data-section-theme="capital"] .brand-mark { background: linear-gradient(135
     }
 
     function getStatusSummaryCounts(rows) {
-      var counts = { active: 0, 'under-review': 0, approved: 0, disbursed: 0 };
-      var totals = { active: 0, 'under-review': 0, approved: 0, disbursed: 0 };
+      var counts = { active: 0, 'under-review': 0, approved: 0, disbursed: 0, closed: 0 };
+      var totals = { active: 0, 'under-review': 0, approved: 0, disbursed: 0, closed: 0 };
       if (!rows) return { counts: counts, totals: totals };
 
       rows.forEach(function (row) {
@@ -1358,6 +1456,10 @@ body[data-section-theme="capital"] .brand-mark { background: linear-gradient(135
           counts.disbursed += 1;
           totals.disbursed += amount;
         }
+        if (status === 'closed') {
+          counts.closed += 1;
+          totals.closed += amount;
+        }
       });
 
       return { counts: counts, totals: totals };
@@ -1368,11 +1470,14 @@ body[data-section-theme="capital"] .brand-mark { background: linear-gradient(135
       if (!summaryGrid) return;
 
       var summary = getStatusSummaryCounts(currentData);
+      var isWorkEnquiry = currentTab === 'jobs' || currentTab === 'travel';
       var cards = [
         { key: 'active', label: 'Active', icon: '⚡' },
         { key: 'under-review', label: 'Under Review', icon: '🕵️' },
         { key: 'approved', label: 'Approved', icon: '✅' },
-        { key: 'disbursed', label: 'Disbursed', icon: '💸' }
+        isWorkEnquiry
+          ? { key: 'closed', label: 'Closed', icon: '📁' }
+          : { key: 'disbursed', label: 'Disbursed', icon: '💸' }
       ];
 
       summaryGrid.innerHTML = cards.map(function (card) {
@@ -1385,7 +1490,7 @@ body[data-section-theme="capital"] .brand-mark { background: linear-gradient(135
           '<span class="summary-icon">' + card.icon + '</span>' +
           '</div>' +
           '<p class="summary-value">' + count + '</p>' +
-          '<span class="summary-total">' + formatCompactMoney(total) + '</span>' +
+          (isWorkEnquiry ? '' : '<span class="summary-total">' + formatCompactMoney(total) + '</span>') +
           '</button>';
       }).join('');
 
@@ -1425,7 +1530,20 @@ body[data-section-theme="capital"] .brand-mark { background: linear-gradient(135
         row.business_description,
         row.capital_requested,
         row.equity_offered,
-        row.registration_status
+        row.registration_status,
+        row.full_name,
+        row.preferred_role,
+        row.job_category,
+        row.preferred_location,
+        row.experience_level,
+        row.highest_qualification,
+        row.employment_status,
+        row.availability,
+        row.origin,
+        row.destination,
+        row.travel_type,
+        row.departure_date,
+        row.details
       ];
 
       return searchableFields.some(function (field) {
@@ -1445,7 +1563,9 @@ body[data-section-theme="capital"] .brand-mark { background: linear-gradient(135
       updateResultsCount();
       if (currentTab === 'loans') renderLoans(currentFiltered);
       else if (currentTab === 'partners') renderPartners(currentFiltered);
-      else renderCapital(currentFiltered);
+      else if (currentTab === 'capital') renderCapital(currentFiltered);
+      else if (currentTab === 'jobs') renderJobs(currentFiltered);
+      else renderTravel(currentFiltered);
     }
 
     function updateResultsCount() {
@@ -1499,7 +1619,11 @@ body[data-section-theme="capital"] .brand-mark { background: linear-gradient(135
         ? 'loan_applications'
         : currentTab === 'partners'
           ? 'partnership_applications'
-          : 'capital_applications';
+          : currentTab === 'capital'
+            ? 'capital_applications'
+            : currentTab === 'jobs'
+              ? 'job_applications'
+              : 'travel_applications';
       fetch(API_BASE + '/api/admin/delete', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + adminToken },
@@ -1533,7 +1657,7 @@ body[data-section-theme="capital"] .brand-mark { background: linear-gradient(135
 
     function getWhatsAppTemplate(type, status, row) {
       var amountText = Number(row.amount || row.total_contribution || row.capital_requested || 0).toLocaleString();
-      var name = row.name || 'Customer';
+      var name = row.name || row.full_name || 'Applicant';
       var businessName = row.business_name || 'your business';
       var normalizedStatus = normalizeStatus(status);
 
@@ -1556,6 +1680,22 @@ body[data-section-theme="capital"] .brand-mark { background: linear-gradient(135
           'under review': 'Hello {{1}}, your investment capital application for {{3}} is now under review. We will contact you with the next steps.',
           'approved': 'Hello {{1}}, congratulations — your investment capital application for {{3}} has been approved in principle. We will contact you to discuss the investment and equity terms.',
           'rejected': 'Hello {{1}}, thank you for presenting {{3}} to G-Spirit. We are unable to proceed with this investment application at this time.'
+        },
+        job: {
+          'new': 'Hello {{1}}, we received your job application and will review your candidate profile for relevant opportunities.',
+          'under review': 'Hello {{1}}, your job application is under review. We will contact you if a suitable opportunity becomes available.',
+          'contacted': 'Hello {{1}}, our team would like to follow up about your job application. Please reply so we can discuss next steps.',
+          'approved': 'Hello {{1}}, your candidate profile has been shortlisted for further discussion. We will contact you with next steps.',
+          'rejected': 'Hello {{1}}, thank you for sharing your profile with G-Spirit Ventures. We do not have a suitable opportunity to progress at this time.',
+          'closed': 'Hello {{1}}, your job application has been closed. Thank you for your interest in G-Spirit Ventures.'
+        },
+        travel: {
+          'new': 'Hello {{1}}, we received your travel enquiry and will review your destination and support request.',
+          'under review': 'Hello {{1}}, your travel enquiry is under review. We will contact you to discuss practical next steps.',
+          'contacted': 'Hello {{1}}, our team is following up about your travel enquiry. Please reply so we can discuss your plans.',
+          'approved': 'Hello {{1}}, we are ready to discuss the next steps for your travel enquiry. Our team will follow up with you.',
+          'rejected': 'Hello {{1}}, thank you for your travel enquiry. We are unable to proceed with the requested support at this time.',
+          'closed': 'Hello {{1}}, your travel enquiry has been closed. Contact us if you need further assistance.'
         }
       };
 
@@ -1573,11 +1713,11 @@ body[data-section-theme="capital"] .brand-mark { background: linear-gradient(135
     function sendStatusWhatsApp(type, id) {
       var row = currentData.find(function (item) { return item.id === id; });
       if (!row) return;
-      var templateType = type === 'loan' ? 'loan' : type === 'capital' ? 'capital' : 'partner';
+      var templateType = type;
       var status = normalizeStatus(row.status);
       var text = getWhatsAppTemplate(templateType, status, row);
 
-      var phone = (row.phone || '').replace(/[^0-9+]/g, '');
+      var phone = (row.phone || row.whatsapp || '').replace(/[^0-9+]/g, '');
       if (!phone) {
         alert('Applicant phone number is missing.');
         return;
@@ -1742,11 +1882,112 @@ body[data-section-theme="capital"] .brand-mark { background: linear-gradient(135
         currentFiltered.length > 0 && currentFiltered.every(function (r) { return selectedIds[r.id]; });
     }
 
+    function escapeTableValue(value) {
+      return String(value === null || typeof value === 'undefined' ? '' : value)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
+    function formatTableDate(value) {
+      var date = value ? new Date(value) : null;
+      return date && !isNaN(date.getTime())
+        ? date.toLocaleDateString()
+        : escapeTableValue(value);
+    }
+
+    function renderJobs(rows) {
+      if (!rows || rows.length === 0) {
+        var hasSearch = document.getElementById('searchInput').value.trim() !== '';
+        document.getElementById('tableWrap').innerHTML = '<div class="empty-state">' +
+          (hasSearch ? 'No job applications match that search.' : 'No job applications yet.') + '</div>';
+        return;
+      }
+
+      var html = '<table><thead><tr>' +
+        '<th><input type="checkbox" id="selectAllBox" onclick="toggleSelectAll(this.checked)"></th>' +
+        '<th>#</th><th>Date</th><th>Applicant</th><th>Phone</th><th>Email</th>' +
+        '<th>Preferred Role</th><th>Work Area</th><th>Location</th><th>Experience</th>' +
+        '<th>Qualification</th><th>Availability</th><th>Salary Expectation</th><th>CV / Resume</th>' +
+        '<th>Status</th><th>Action</th></tr></thead><tbody>';
+
+      rows.forEach(function (row, index) {
+        var checked = selectedIds[row.id] ? ' checked' : '';
+        var cvLink = /^https?:\/\//i.test(row.cv_link || '')
+          ? '<a href="' + escapeTableValue(row.cv_link) + '" target="_blank" rel="noopener noreferrer">Open CV</a>'
+          : '';
+        html += '<tr>' +
+          '<td><input type="checkbox" class="row-select" onchange="toggleSelection(this, ' + row.id + ')"' + checked + '></td>' +
+          '<td>' + (index + 1) + '</td>' +
+          '<td>' + formatTableDate(row.created_at) + '</td>' +
+          '<td>' + escapeTableValue(row.full_name) + '</td>' +
+          '<td>' + escapeTableValue(row.phone) + '</td>' +
+          '<td>' + escapeTableValue(row.email) + '</td>' +
+          '<td>' + escapeTableValue(row.preferred_role) + '</td>' +
+          '<td>' + escapeTableValue(row.job_category) + '</td>' +
+          '<td>' + escapeTableValue(row.preferred_location || row.city) + '</td>' +
+          '<td>' + escapeTableValue(row.experience_level) + '</td>' +
+          '<td>' + escapeTableValue(row.highest_qualification) + '</td>' +
+          '<td>' + escapeTableValue(row.availability) + '</td>' +
+          '<td>' + (Number(row.salary_expectation || 0).toLocaleString()) + ' XAF</td>' +
+          '<td>' + cvLink + '</td>' +
+          '<td><select class="status-select ' + statusClass(row.status) + '" onchange="updateStatus(\'job_applications\', ' + row.id + ', this)">' + statusOptions(row.status) + '</select></td>' +
+          '<td><button class="whatsapp-btn" onclick="sendStatusWhatsApp(\'job\', ' + row.id + ')">Send Status</button></td>' +
+          '</tr>';
+      });
+
+      html += '</tbody></table>';
+      document.getElementById('tableWrap').innerHTML = html;
+      document.getElementById('selectAllBox').checked =
+        currentFiltered.length > 0 && currentFiltered.every(function (row) { return selectedIds[row.id]; });
+    }
+
+    function renderTravel(rows) {
+      if (!rows || rows.length === 0) {
+        var hasSearch = document.getElementById('searchInput').value.trim() !== '';
+        document.getElementById('tableWrap').innerHTML = '<div class="empty-state">' +
+          (hasSearch ? 'No travel enquiries match that search.' : 'No travel enquiries yet.') + '</div>';
+        return;
+      }
+
+      var html = '<table><thead><tr>' +
+        '<th><input type="checkbox" id="selectAllBox" onclick="toggleSelectAll(this.checked)"></th>' +
+        '<th>#</th><th>Received</th><th>Name</th><th>Phone</th><th>Email</th>' +
+        '<th>Origin</th><th>Destination</th><th>Purpose</th><th>Departure Date</th>' +
+        '<th>Support Requested</th><th>Status</th><th>Action</th></tr></thead><tbody>';
+
+      rows.forEach(function (row, index) {
+        var checked = selectedIds[row.id] ? ' checked' : '';
+        html += '<tr>' +
+          '<td><input type="checkbox" class="row-select" onchange="toggleSelection(this, ' + row.id + ')"' + checked + '></td>' +
+          '<td>' + (index + 1) + '</td>' +
+          '<td>' + formatTableDate(row.created_at) + '</td>' +
+          '<td>' + escapeTableValue(row.name) + '</td>' +
+          '<td>' + escapeTableValue(row.phone) + '</td>' +
+          '<td>' + escapeTableValue(row.email) + '</td>' +
+          '<td>' + escapeTableValue(row.origin) + '</td>' +
+          '<td>' + escapeTableValue(row.destination) + '</td>' +
+          '<td>' + escapeTableValue(row.travel_type) + '</td>' +
+          '<td>' + escapeTableValue(row.departure_date) + '</td>' +
+          '<td>' + escapeTableValue(row.details) + '</td>' +
+          '<td><select class="status-select ' + statusClass(row.status) + '" onchange="updateStatus(\'travel_applications\', ' + row.id + ', this)">' + statusOptions(row.status) + '</select></td>' +
+          '<td><button class="whatsapp-btn" onclick="sendStatusWhatsApp(\'travel\', ' + row.id + ')">Send Status</button></td>' +
+          '</tr>';
+      });
+
+      html += '</tbody></table>';
+      document.getElementById('tableWrap').innerHTML = html;
+      document.getElementById('selectAllBox').checked =
+        currentFiltered.length > 0 && currentFiltered.every(function (row) { return selectedIds[row.id]; });
+    }
+
     attachSidebarListeners();
     syncSidebarState();
     renderSummaryPanels();
     updateWorkspaceUI();
-    updateSidebarCounts({ loans: 0, partners: 0, capital: 0 });
+    updateSidebarCounts({ loans: 0, partners: 0, capital: 0, jobs: 0, travel: 0 });
     toggleSidebar(false);
 
     // Press Enter in the password field to log in.

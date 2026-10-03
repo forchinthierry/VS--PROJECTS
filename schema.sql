@@ -64,3 +64,55 @@ CREATE TABLE capital_applications (
   additional_info TEXT,
   status TEXT DEFAULT 'New'
 );
+
+CREATE TABLE job_applications (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  created_at TEXT NOT NULL,
+  full_name TEXT,
+  date_of_birth TEXT,
+  gender TEXT,
+  nationality TEXT,
+  phone TEXT,
+  whatsapp TEXT,
+  email TEXT,
+  city TEXT,
+  region TEXT,
+  address TEXT,
+  highest_qualification TEXT,
+  field_of_study TEXT,
+  institution TEXT,
+  graduation_year TEXT,
+  certifications TEXT,
+  languages TEXT,
+  digital_skills TEXT,
+  employment_status TEXT,
+  experience_level TEXT,
+  years_experience TEXT,
+  current_job TEXT,
+  current_employer TEXT,
+  experience_summary TEXT,
+  preferred_role TEXT,
+  job_category TEXT,
+  preferred_location TEXT,
+  work_mode TEXT,
+  availability TEXT,
+  salary_expectation REAL DEFAULT 0,
+  skills TEXT,
+  cv_link TEXT,
+  reference TEXT,
+  status TEXT DEFAULT 'New'
+);
+
+CREATE TABLE travel_applications (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  created_at TEXT NOT NULL,
+  name TEXT,
+  phone TEXT,
+  email TEXT,
+  origin TEXT,
+  destination TEXT,
+  travel_type TEXT,
+  departure_date TEXT,
+  details TEXT,
+  status TEXT DEFAULT 'New'
+);

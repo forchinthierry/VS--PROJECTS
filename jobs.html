@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<title>Job Application - G-Spirit Ventures</title>
+<style>
+*{box-sizing:border-box}
+:root{--navy:#182b56;--deep:#101d3c;--teal:#167d78;--gold:#d99532;--ink:#1e2941;--muted:#657187;--line:#dfe5ee;--soft:#f4f7fa}
+body{margin:0;font-family:Nunito,Arial,sans-serif;color:var(--ink);background:radial-gradient(circle at 8% 4%,rgba(22,125,120,.08),transparent 24%),radial-gradient(circle at 95% 16%,rgba(217,149,50,.07),transparent 22%),var(--soft);line-height:1.6;overflow-x:hidden}
+a{text-decoration:none}
+header{background:linear-gradient(135deg,var(--deep),var(--navy) 62%,#1d4771);color:#fff;padding:14px max(24px,5vw);display:flex;align-items:center;justify-content:space-between;gap:20px;position:sticky;top:0;z-index:10;box-shadow:0 7px 22px rgba(16,29,60,.16)}
+.brand{display:flex;align-items:center;gap:12px;color:#fff}.brand img{max-height:48px;width:auto}.brand strong{display:block;font-size:15px;letter-spacing:.08em}.brand small{display:block;color:#b9d9df;font-size:11px}
+nav{display:flex;gap:20px;align-items:center}nav a{color:#fff;font-size:13px;font-weight:800}nav a:hover{color:#ffd98d}.nav-cta{padding:9px 14px;border-radius:8px;background:var(--gold)}
+.container{width:min(1180px,94%);margin:28px auto 55px}
+.hero,.form-card{background:rgba(255,255,255,.97);border:1px solid var(--line);border-radius:20px;box-shadow:0 16px 38px rgba(24,43,86,.07)}
+.hero{padding:32px 34px;margin-bottom:20px}.badge{display:inline-flex;padding:7px 13px;border-radius:999px;background:#edf7f5;color:var(--teal);border:1px solid #cce8e4;font-size:11px;font-weight:900;letter-spacing:.08em;text-transform:uppercase}
+h1,h2,h3{font-family:Fredoka,sans-serif;color:var(--navy)}.hero h1{font-size:clamp(32px,5vw,48px);line-height:1.08;margin:13px 0 9px}.hero p{max-width:820px;color:#5e6d82;margin:0;font-size:16px}
+.hero-layout{display:grid;grid-template-columns:1.25fr .75fr;align-items:center;gap:30px}.hero-actions{display:flex;gap:11px;flex-wrap:wrap;margin-top:20px}.hero-actions a{display:inline-flex;align-items:center;justify-content:center;min-height:45px;padding:0 17px;border-radius:9px;background:linear-gradient(135deg,var(--navy),#31598a);color:#fff;font-weight:900;font-size:13px}.hero-actions a.secondary{background:#edf1f5;color:#43516a}.hero-aside{padding:19px 21px;border:1px solid #d9e8e8;border-radius:15px;background:linear-gradient(145deg,#edf7f5,#fff7e7)}.hero-aside strong{display:block;color:var(--navy);font:600 19px Fredoka,sans-serif;margin-bottom:8px}.hero-aside ul{list-style:none;padding:0;margin:0;color:#586b7b;font-size:13px}.hero-aside li{padding:5px 0}.hero-aside li::before{content:'✓';color:var(--teal);font-weight:900;margin-right:9px}
+.info-section{margin:31px 0}.kicker{color:var(--teal);font-size:11px;font-weight:900;letter-spacing:.12em;text-transform:uppercase}.info-section h2{font-size:clamp(25px,3.4vw,34px);margin:6px 0}.info-section>p{max-width:740px;color:#647287;margin:0 0 19px}.insight-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}.insight-card{background:#fff;border:1px solid var(--line);border-radius:15px;padding:19px;box-shadow:0 10px 26px rgba(24,43,86,.05)}.insight-card .icon{font-size:23px}.insight-card h3{font-size:19px;margin:8px 0 5px}.insight-card p{font-size:13px;color:#68768a;margin:0;line-height:1.6}.notice{margin-top:16px;border:1px solid #f0dfb8;background:#fff9eb;color:#735d2c;border-radius:11px;padding:13px 16px;font-size:12px;line-height:1.6}.form-intro{margin-bottom:22px}.form-intro h2{font-size:27px;margin:4px 0}.form-intro p{margin:0;color:#647287;font-size:14px}
+.form-card{padding:28px 32px}
+.progress{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin-bottom:28px}.progress-step{font-size:11px;font-weight:900;color:#8b95a4}.progress-step span{display:block;height:7px;border-radius:99px;background:#e2e7ed;margin-bottom:6px}.progress-step.active,.progress-step.done{color:var(--teal)}.progress-step.active span,.progress-step.done span{background:linear-gradient(90deg,var(--teal),#43b6a8)}
+.step{display:none!important}.step.active{display:block!important;animation:show .3s ease}@keyframes show{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.heading{padding-bottom:15px;border-bottom:1px solid var(--line);margin-bottom:20px}.heading h2{font-size:25px;margin:0 0 4px}.heading p{font-size:13px;color:var(--muted);margin:0}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 18px}.wide{grid-column:1/-1}.section-label{grid-column:1/-1;color:var(--teal);font-size:11px;font-weight:900;letter-spacing:.1em;text-transform:uppercase;margin:3px 0 3px}
+.field{background:#f9fbfc;border:1px solid #e6ebf1;border-radius:12px;padding:13px;margin-bottom:13px}label{display:block;color:var(--navy);font-size:12px;font-weight:900;margin-bottom:6px}.hint{display:block;color:#8691a3;font-size:10.5px;margin-top:-2px;margin-bottom:7px}
+input,select,textarea{width:100%;min-height:47px;padding:11px 12px;border:1px solid #ccd6e2;border-radius:9px;background:#fff;color:#27334a;font:inherit;font-size:13px}textarea{min-height:105px;resize:vertical}input:focus,select:focus,textarea:focus{outline:none;border-color:#69aaa7;box-shadow:0 0 0 3px rgba(22,125,120,.1)}
+.actions{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:24px}.actions.single{grid-template-columns:1fr}.actions.first-step{grid-template-columns:1fr}.actions.first-step .back{display:none}
+button{min-height:48px;border:0;border-radius:10px;font:inherit;font-weight:900;cursor:pointer;transition:transform .18s ease,box-shadow .18s ease}.next,.submit{background:linear-gradient(135deg,var(--navy),#31598a);color:#fff;box-shadow:0 10px 20px rgba(24,43,86,.15)}.back{background:#edf1f5;color:#43516a}.pdf{width:100%;margin-top:11px;background:linear-gradient(135deg,var(--gold),#e9b552);color:#fff}
+button:hover{transform:translateY(-1px)}button:disabled{opacity:.7;cursor:wait;transform:none}
+.consent{margin-top:18px;background:#f7fafb;border:1px solid #e1e7ed;border-radius:10px;padding:13px}.check{display:flex;align-items:flex-start;gap:10px;font-size:12px;color:#5a687b}.check input{width:auto;min-height:auto;margin-top:4px}
+.review-layout{display:grid;grid-template-columns:1.25fr .75fr;gap:18px}.review-card,.summary{background:#fbfcfd;border:1px solid var(--line);border-radius:13px;padding:16px}.review-card h3,.summary h3{margin:0 0 13px;font-size:20px}.review-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.review-item{background:#fff;border:1px solid #e7ebf0;border-radius:9px;padding:10px 12px}.review-item small{display:block;color:#8390a2;font-size:9.5px;font-weight:900;text-transform:uppercase;letter-spacing:.06em}.review-item strong{display:block;color:#2c3950;font-size:12.5px;margin-top:3px;word-break:break-word}.summary{background:linear-gradient(145deg,#edf7f5,#fff7e7)}.summary-line{display:flex;justify-content:space-between;gap:12px;padding:9px 0;border-bottom:1px solid rgba(30,41,65,.08);font-size:12px}.summary-line:last-child{border:0}.summary-line span{color:#69768a}.summary-line strong{text-align:right;color:var(--navy)}
+.success,.error{display:none;margin-top:13px;padding:11px 13px;border-radius:9px;font-size:12px;font-weight:800}.success{background:#e8f7ef;color:#176b4b;border:1px solid #bfe7d1}.error{background:#fff0f1;color:#a52f39;border:1px solid #f0c5c8}
+footer{text-align:center;padding:25px 20px;color:#778296;font-size:13px}footer a{color:var(--navy);margin:0 8px}
+@media(max-width:850px){.review-layout,.hero-layout{grid-template-columns:1fr}.insight-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:700px){header{padding:12px 18px}.brand small{display:none}nav a:not(.nav-cta){display:none}.hero,.form-card{padding:20px}.grid,.review-grid,.actions,.insight-grid{grid-template-columns:1fr}.wide{grid-column:auto}.progress{gap:5px}.progress-step{font-size:9.5px}}
+</style>
+</head>
+<body>
+<header>
+  <a class="brand" href="index.html"><img src="logo.png" alt="G-Spirit logo"><span><strong>G-SPIRIT VENTURES</strong><small>Powering Dreams</small></span></a>
+  <nav aria-label="Primary navigation"><a href="index.html">Home</a><a href="about.html">About</a><a href="travels.html">Travel</a><a href="contact.html">Contact</a><a class="nav-cta" href="#application">Apply</a></nav>
+</header>
+
+<div class="container">
+  <section class="hero">
+    <div class="hero-layout"><div><span class="badge">Careers · G-Spirit Ventures</span>
+    <h1>Find work that moves you forward.</h1>
+    <p>Share the kind of opportunity you’re looking for and the experience you bring. Our team can review your profile for relevant openings and contact you about possible next steps.</p>
+    <div class="hero-actions"><a href="#application">Start your application ↓</a><a class="secondary" href="#prepare">How applications work</a></div></div>
+    <aside class="hero-aside"><strong>A clear, considered application</strong><ul><li>Tell us your role and work preferences</li><li>Review your details before submitting</li><li>Choose WhatsApp submission or save a PDF</li></ul></aside></div>
+  </section>
+
+  <section class="info-section" id="prepare"><span class="kicker">Before you apply</span><h2>Make your experience easy to understand</h2><p>You can prepare a few details in advance. You don’t need a perfect CV to tell us what you’re good at and where you’d like to go next.</p>
+    <div class="insight-grid"><article class="insight-card"><div class="icon">🎯</div><h3>Choose a direction</h3><p>Think about the roles, work areas and locations that fit your interests and experience.</p></article><article class="insight-card"><div class="icon">📚</div><h3>Bring your experience to life</h3><p>Include relevant training, practical skills and examples of work you’ve done or results you’ve contributed to.</p></article><article class="insight-card"><div class="icon">🕒</div><h3>Set expectations</h3><p>Share when you could start and any work arrangement or salary expectations you want the team to understand.</p></article></div>
+    <div class="notice"><strong>Good to know:</strong> Sending an application does not guarantee a role or interview. G-Spirit Ventures will discuss an opportunity and its terms with you directly. Never pay a person who promises a job or asks for your account password or verification code.</div>
+  </section>
+
+  <main id="application" class="form-card">
+    <div class="form-intro"><span class="kicker">Your application</span><h2>Build your candidate profile</h2><p>Complete the steps that apply to you. You’ll review everything before submitting.</p></div>
+    <div class="progress">
+      <div class="progress-step active" data-step="1"><span></span>1. Career goals</div>
+      <div class="progress-step" data-step="2"><span></span>2. Education</div>
+      <div class="progress-step" data-step="3"><span></span>3. Your details</div>
+      <div class="progress-step" data-step="4"><span></span>4. Review</div>
+    </div>
+
+    <form id="jobForm" onsubmit="submitApplication(event)">
+      <section class="step active" data-step="1">
+        <div class="heading"><h2>Career Goals & Preferences</h2><p>Help us understand your experience and the type of role you are looking for.</p></div>
+        <div class="grid">
+          <div class="section-label">Employment background</div>
+          <div class="field"><label for="employmentStatus">Current Employment Status *</label><select id="employmentStatus" required><option value="">Select status</option><option>Employed</option><option>Self-employed</option><option>Unemployed</option><option>Student / Final-year Student</option><option>Recent Graduate</option><option>Other</option></select></div>
+          <div class="field"><label for="experienceLevel">Experience Level *</label><select id="experienceLevel" required><option value="">Select level</option><option>Entry Level / Graduate</option><option>1–2 Years</option><option>3–5 Years</option><option>6–10 Years</option><option>10+ Years</option></select></div>
+          <div class="field"><label for="yearsExperience">Total Years of Experience</label><input id="yearsExperience" type="number" min="0" max="60" placeholder="e.g. 4"></div>
+          <div class="field"><label for="currentJob">Current / Most Recent Job</label><input id="currentJob" placeholder="Job title / occupation"></div>
+          <div class="field"><label for="currentEmployer">Current / Most Recent Employer</label><input id="currentEmployer" placeholder="Company / organisation"></div>
+          <div class="field wide"><label for="experienceSummary">Employment & Experience Summary *</label><textarea id="experienceSummary" required placeholder="Describe your main responsibilities, achievements, and relevant experience."></textarea></div>
+          <div class="section-label">Target opportunity</div>
+          <div class="field"><label for="preferredRole">Preferred Role / Position *</label><input id="preferredRole" required placeholder="Position you are seeking"></div>
+          <div class="field"><label for="jobCategory">Preferred Work Area *</label><select id="jobCategory" required><option value="">Select area</option><option>Finance & Accounting</option><option>Administration & Operations</option><option>Sales & Business Development</option><option>Customer Service</option><option>Marketing & Communications</option><option>Information Technology / Digital</option><option>Human Resources</option><option>Logistics / Procurement</option><option>Education / Training</option><option>Other</option></select></div>
+          <div class="field"><label for="preferredLocation">Preferred Work Location *</label><input id="preferredLocation" required placeholder="City, region or Cameroon-wide"></div>
+          <div class="field"><label for="workMode">Preferred Work Arrangement</label><select id="workMode"><option value="">Select preference</option><option>On-site</option><option>Hybrid</option><option>Remote</option><option>Open to any</option></select></div>
+          <div class="field"><label for="availability">Availability to Start *</label><select id="availability" required><option value="">Select availability</option><option>Immediately</option><option>Within 2 weeks</option><option>Within 1 month</option><option>1–3 months</option><option>More than 3 months</option></select></div>
+          <div class="field"><label for="salaryExpectation">Expected Monthly Salary (XAF)</label><input id="salaryExpectation" type="number" min="0" step="1000" placeholder="Optional"></div>
+          <div class="field wide"><label for="skills">Key Skills & Strengths *</label><textarea id="skills" required placeholder="List your strongest skills and capabilities relevant to the type of work you want."></textarea></div>
+          <div class="section-label">Application support</div>
+          <div class="field"><label for="cvLink">CV / Resume Link</label><input id="cvLink" type="url" placeholder="Google Drive, OneDrive, LinkedIn, etc."><span class="hint">Optional. Use a link accessible to the recruitment team.</span></div>
+          <div class="field"><label for="reference">Professional Reference</label><input id="reference" placeholder="Name, organisation and contact"></div>
+        </div>
+        <div class="consent"><label class="check"><input id="consent" type="checkbox" required><span>I confirm that the information provided is accurate to the best of my knowledge and authorize G-Spirit Ventures to use these details for recruitment and opportunity matching. Submission does not guarantee employment.</span></label></div>
+        <div class="actions first-step"><button type="button" class="back" onclick="prevStep()">← Back</button><button type="button" class="next" onclick="nextStep()">Continue to qualifications →</button></div>
+      </section>
+
+      <section class="step" data-step="2">
+        <div class="heading"><h2>Education & Qualifications</h2><p>Tell us about your highest level of education and relevant professional development.</p></div>
+        <div class="grid">
+          <div class="section-label">Academic background</div>
+          <div class="field"><label for="highestQualification">Highest Qualification *</label><select id="highestQualification" required><option value="">Select qualification</option><option>GCE O-Level / equivalent</option><option>GCE A-Level / equivalent</option><option>HND</option><option>Bachelor's Degree / Licence</option><option>Master's Degree</option><option>PhD / Doctorate</option><option>Professional Qualification</option><option>Vocational / Technical Training</option><option>Other</option></select></div>
+          <div class="field"><label for="fieldOfStudy">Field of Study *</label><input id="fieldOfStudy" required placeholder="Accounting, Engineering, Computer Science..."></div>
+          <div class="field"><label for="institution">Institution</label><input id="institution" placeholder="School, university or training institution"></div>
+          <div class="field"><label for="graduationYear">Completion Year</label><input id="graduationYear" type="number" min="1950" max="2100" placeholder="e.g. 2024"></div>
+          <div class="section-label">Additional qualifications</div>
+          <div class="field wide"><label for="certifications">Certifications / Training</label><textarea id="certifications" placeholder="Professional certifications, licences, short courses, vocational training, etc."></textarea></div>
+          <div class="field"><label for="languages">Languages</label><input id="languages" placeholder="English, French, Pidgin English..."></div>
+          <div class="field"><label for="digitalSkills">Digital / Computer Skills</label><input id="digitalSkills" placeholder="Excel, Word, Google Workspace, software, programming..."></div>
+        </div>
+        <div class="actions"><button type="button" class="back" onclick="prevStep()">← Back</button><button type="button" class="next" onclick="nextStep()">Continue to your details →</button></div>
+      </section>
+
+      <section class="step" data-step="3">
+        <div class="heading"><h2>Personal & Contact Information</h2><p>Provide the information we need to identify and contact you.</p></div>
+        <div class="grid">
+          <div class="section-label">Personal details</div>
+          <div class="field"><label for="fullName">Full Name *</label><input id="fullName" required autocomplete="name" placeholder="Full name"></div>
+          <div class="field"><label for="dateOfBirth">Date of Birth *</label><input id="dateOfBirth" type="date" required></div>
+          <div class="field"><label for="gender">Gender *</label><select id="gender" required><option value="">Select gender</option><option>Male</option><option>Female</option><option>Prefer not to say</option></select></div>
+          <div class="field"><label for="nationality">Nationality *</label><select id="nationality" required><option value="">Select nationality</option><option selected>Cameroonian</option><option>Other</option></select></div>
+          <div class="section-label">Contact & residence</div>
+          <div class="field"><label for="phone">Phone Number *</label><input id="phone" type="tel" inputmode="tel" required placeholder="+237 6xx xxx xxx"></div>
+          <div class="field"><label for="whatsapp">WhatsApp Number</label><input id="whatsapp" type="tel" inputmode="tel" placeholder="If different from phone"></div>
+          <div class="field"><label for="email">Email Address *</label><input id="email" type="email" required autocomplete="email" placeholder="name@example.com"></div>
+          <div class="field"><label for="city">Current City / Town *</label><input id="city" required placeholder="Douala, Yaoundé, Buea, Bamenda..."></div>
+          <div class="field"><label for="region">Region of Residence *</label><select id="region" required><option value="">Select region</option><option>Adamawa</option><option>Centre</option><option>East</option><option>Far North</option><option>Littoral</option><option>North</option><option>North-West</option><option>South</option><option>South-West</option><option>West</option></select></div>
+          <div class="field"><label for="address">Residential Address</label><input id="address" autocomplete="street-address" placeholder="Neighbourhood, town/city, region"></div>
+        </div>
+        <div class="actions single"><button type="button" class="next" onclick="nextStep()">Review Application →</button></div>
+      </section>
+
+      <section class="step" data-step="4">
+        <div class="heading"><h2>Review & Submit</h2><p>Check your information carefully. Your application is saved first, then WhatsApp opens with the details for direct submission.</p></div>
+        <div class="review-layout">
+          <div class="review-card"><h3>Application Details</h3><div id="reviewGrid" class="review-grid"></div></div>
+          <aside class="summary"><h3>Application Summary</h3>
+            <div class="summary-line"><span>Applicant</span><strong id="sumName">—</strong></div>
+            <div class="summary-line"><span>Target Role</span><strong id="sumRole">—</strong></div>
+            <div class="summary-line"><span>Experience</span><strong id="sumExp">—</strong></div>
+            <div class="summary-line"><span>Location</span><strong id="sumLocation">—</strong></div>
+            <div class="summary-line"><span>Availability</span><strong id="sumAvailability">—</strong></div>
+          </aside>
+        </div>
+        <div id="success" class="success">✓ Application saved successfully. WhatsApp is opening with your application details.</div>
+        <div id="errorBox" class="error"></div>
+        <div class="actions"><button type="button" class="back" onclick="prevStep()">← Edit Application</button><button type="submit" id="submitBtn" class="submit">Submit via WhatsApp</button></div>
+        <button type="button" class="pdf" onclick="downloadApplicationPDF()">Download Application (PDF)</button>
+      </section>
+    </form>
+  </main>
+</div>
+
+<footer>© 2026 G-Spirit Ventures. All rights reserved.<div style="margin-top:7px"><a href="privacy.html">Privacy Policy</a><a href="terms.html">Terms</a><a href="index.html">Home</a></div></footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script>
+const API_BASE='https://gspiritloans-api.forchinthierry.workers.dev';
+const WHATSAPP_NUMBER='237620569864';
+const form=document.getElementById('jobForm');
+let currentStep=1;
+let saveAttempted=false;
+
+function fields(){return Object.fromEntries(new FormData(form).entries())}
+function esc(v){return String(v??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'})[m])}
+function validStep(){
+  const step=document.querySelector('.step[data-step="'+currentStep+'"]');
+  if(!step)return true;
+  for(const el of step.querySelectorAll('input,select,textarea')){
+    if(!el.checkValidity()){el.reportValidity();return false}
+  }
+  return true;
+}
+function showStep(n){
+  n=Math.max(1,Math.min(4,n));
+  currentStep=n;
+  document.querySelectorAll('#jobForm .step').forEach(s=>{
+    const active=+s.dataset.step===n;
+    s.classList.toggle('active',active);
+    s.setAttribute('aria-hidden',String(!active));
+  });
+  document.querySelectorAll('.progress-step').forEach(s=>{const x=+s.dataset.step;s.classList.toggle('active',x===n);s.classList.toggle('done',x<n)});
+  if(n===4)buildReview();
+  window.scrollTo({top:document.getElementById('application').offsetTop-15,behavior:'smooth'});
+}
+function nextStep(){if(validStep()&&currentStep<4)showStep(currentStep+1)}
+function prevStep(){if(currentStep>1)showStep(currentStep-1)}
+
+function payload(){
+  const d=fields();
+  return {
+    fullName:d.fullName||'',dateOfBirth:d.dateOfBirth||'',gender:d.gender||'',nationality:d.nationality||'',
+    phone:d.phone||'',whatsapp:d.whatsapp||'',email:d.email||'',city:d.city||'',region:d.region||'',address:d.address||'',
+    highestQualification:d.highestQualification||'',fieldOfStudy:d.fieldOfStudy||'',institution:d.institution||'',
+    graduationYear:d.graduationYear||'',certifications:d.certifications||'',languages:d.languages||'',digitalSkills:d.digitalSkills||'',
+    employmentStatus:d.employmentStatus||'',experienceLevel:d.experienceLevel||'',yearsExperience:d.yearsExperience||'',
+    currentJob:d.currentJob||'',currentEmployer:d.currentEmployer||'',experienceSummary:d.experienceSummary||'',
+    preferredRole:d.preferredRole||'',jobCategory:d.jobCategory||'',preferredLocation:d.preferredLocation||'',
+    workMode:d.workMode||'',availability:d.availability||'',salaryExpectation:Number(d.salaryExpectation||0),
+    skills:d.skills||'',cvLink:d.cvLink||'',reference:d.reference||''
+  };
+}
+function buildReview(){
+  const d=payload();
+  const items=[
+    ['Full Name',d.fullName],['Date of Birth',d.dateOfBirth],['Gender',d.gender],['Nationality',d.nationality],
+    ['Phone',d.phone],['WhatsApp',d.whatsapp||d.phone],['Email',d.email],['City',d.city],['Region',d.region],['Address',d.address],
+    ['Highest Qualification',d.highestQualification],['Field of Study',d.fieldOfStudy],['Institution',d.institution],
+    ['Completion Year',d.graduationYear],['Certifications',d.certifications],['Languages',d.languages],['Digital Skills',d.digitalSkills],
+    ['Employment Status',d.employmentStatus],['Experience Level',d.experienceLevel],['Years of Experience',d.yearsExperience],
+    ['Current / Recent Job',d.currentJob],['Current / Recent Employer',d.currentEmployer],
+    ['Preferred Role',d.preferredRole],['Work Area',d.jobCategory],['Preferred Location',d.preferredLocation],
+    ['Work Arrangement',d.workMode],['Availability',d.availability],
+    ['Salary Expectation',d.salaryExpectation?Number(d.salaryExpectation).toLocaleString()+' XAF':'Not specified'],
+    ['Key Skills',d.skills],['Experience Summary',d.experienceSummary],['CV / Resume',d.cvLink],['Reference',d.reference]
+  ];
+  document.getElementById('reviewGrid').innerHTML=items.map(p=>'<div class="review-item"><small>'+esc(p[0])+'</small><strong>'+esc(p[1]||'—')+'</strong></div>').join('');
+  document.getElementById('sumName').textContent=d.fullName||'—';
+  document.getElementById('sumRole').textContent=d.preferredRole||'—';
+  document.getElementById('sumExp').textContent=d.experienceLevel||'—';
+  document.getElementById('sumLocation').textContent=d.preferredLocation||d.city||'—';
+  document.getElementById('sumAvailability').textContent=d.availability||'—';
+}
+
+function whatsappText(d){
+  const div='――――――――――――――――';
+  return [
+    '*G-SPIRIT VENTURES JOB APPLICATION*',div,'',
+    '*PERSONAL DETAILS*',
+    '*Name:* _'+d.fullName+'_','*Date of Birth:* _'+d.dateOfBirth+'_','*Gender:* _'+d.gender+'_','*Nationality:* _'+d.nationality+'_','',
+    '*CONTACT & LOCATION*',
+    '*Phone:* _'+d.phone+'_','*WhatsApp:* _'+(d.whatsapp||d.phone)+'_','*Email:* _'+d.email+'_','*City:* _'+d.city+'_','*Region:* _'+d.region+'_','*Address:* _'+(d.address||'N/A')+'_','',
+    '*EDUCATION & QUALIFICATIONS*',
+    '*Highest Qualification:* _'+d.highestQualification+'_','*Field of Study:* _'+d.fieldOfStudy+'_','*Institution:* _'+(d.institution||'N/A')+'_','*Completion Year:* _'+(d.graduationYear||'N/A')+'_',
+    '*Certifications:* _'+(d.certifications||'N/A')+'_','*Languages:* _'+(d.languages||'N/A')+'_','*Digital Skills:* _'+(d.digitalSkills||'N/A')+'_','',
+    '*CAREER PROFILE*',
+    '*Employment Status:* _'+d.employmentStatus+'_','*Experience Level:* _'+d.experienceLevel+'_','*Years:* _'+(d.yearsExperience||'N/A')+'_',
+    '*Current / Recent Job:* _'+(d.currentJob||'N/A')+'_','*Current / Recent Employer:* _'+(d.currentEmployer||'N/A')+'_',
+    '*Preferred Role:* _'+d.preferredRole+'_','*Work Area:* _'+d.jobCategory+'_','*Preferred Location:* _'+d.preferredLocation+'_',
+    '*Work Arrangement:* _'+(d.workMode||'N/A')+'_','*Availability:* _'+d.availability+'_','*Salary Expectation:* _'+(d.salaryExpectation?Number(d.salaryExpectation).toLocaleString()+' XAF':'Not specified')+'_','',
+    '*SKILLS & EXPERIENCE*','*Key Skills:* _'+d.skills+'_','*Experience Summary:* _'+d.experienceSummary+'_','',
+    '*APPLICATION SUPPORT*','*CV / Resume:* _'+(d.cvLink||'Not provided')+'_','*Reference:* _'+(d.reference||'Not provided')+'_','',
+    'Declaration: Applicant confirms that the information submitted is accurate.',div
+  ].join('\n');
+}
+async function saveApplication(d){
+  const res=await fetch(API_BASE+'/api/jobs',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(d)});
+  let data={};try{data=await res.json()}catch(e){}
+  if(!res.ok||!data.success)throw new Error(data.error||'Unable to save the job application.');
+  return data;
+}
+async function submitApplication(event){
+  event.preventDefault();
+  if(currentStep!==4){if(validStep())nextStep();return}
+  const btn=document.getElementById('submitBtn'),ok=document.getElementById('success'),err=document.getElementById('errorBox');
+  ok.style.display='none';err.style.display='none';btn.disabled=true;btn.textContent='Saving Application...';
+  const d=payload();
+  try{
+    if(!saveAttempted){await saveApplication(d);saveAttempted=true}
+    ok.style.display='block';
+    window.open('https://wa.me/'+WHATSAPP_NUMBER+'?text='+encodeURIComponent(whatsappText(d)),'_blank');
+  }catch(e){
+    err.textContent=e&&e.message?e.message:'Unable to save your application. Please try again later.';
+    err.style.display='block';
+  }finally{btn.disabled=false;btn.textContent='Submit via WhatsApp'}
+}
+
+function loadLogo(){
+  return fetch('logo.png').then(r=>r.ok?r.blob():Promise.reject()).then(blob=>new Promise((resolve,reject)=>{
+    const fr=new FileReader();fr.onloadend=()=>resolve(fr.result);fr.onerror=reject;fr.readAsDataURL(blob);
+  })).catch(()=>null);
+}
+function downloadApplicationPDF(){
+  if(currentStep!==4){if(!validStep())return;showStep(4)}
+  const d=payload(),doc=new window.jspdf.jsPDF(),w=doc.internal.pageSize.getWidth(),h=doc.internal.pageSize.getHeight();let y=44;
+  function head(logo){
+    doc.setFillColor(24,43,86);doc.rect(0,0,w,32,'F');
+    if(logo){try{doc.addImage(logo,'PNG',12,5,22,22)}catch(e){}}
+    doc.setTextColor(255,255,255);doc.setFontSize(15);doc.text('G-SPIRIT VENTURES',logo?39:12,14);doc.setFontSize(9);doc.text('Job Application',logo?39:12,21);
+    doc.text('+237 620 569 864',w-12,12,{align:'right'});doc.text('gspiritloans.com',w-12,19,{align:'right'});
+  }
+  function space(n){if(y+n>h-18){doc.addPage();head(null);y=42}}
+  function section(t){space(15);doc.setFontSize(11);doc.setTextColor(22,125,120);doc.text(t,12,y);doc.setDrawColor(22,125,120);doc.line(12,y+1.5,w-12,y+1.5);y+=8;doc.setTextColor(40,40,40)}
+  function line(k,v){const lines=doc.splitTextToSize(k+': '+String(v||'Not provided'),w-24);space(Math.max(7,lines.length*5+2));doc.setFontSize(9);doc.text(lines,12,y);y+=lines.length*5+3}
+  loadLogo().then(logo=>{
+    head(logo);doc.setTextColor(24,43,86);doc.setFontSize(14);doc.text('G-Spirit Ventures — Job Application',12,y);y+=10;
+    section('PERSONAL DETAILS');line('Full Name',d.fullName);line('Date of Birth',d.dateOfBirth);line('Gender',d.gender);line('Nationality',d.nationality);
+    section('CONTACT & LOCATION');line('Phone',d.phone);line('WhatsApp',d.whatsapp||d.phone);line('Email',d.email);line('City',d.city);line('Region',d.region);line('Address',d.address);
+    section('EDUCATION & QUALIFICATIONS');line('Highest Qualification',d.highestQualification);line('Field of Study',d.fieldOfStudy);line('Institution',d.institution);line('Completion Year',d.graduationYear);line('Certifications',d.certifications);line('Languages',d.languages);line('Digital Skills',d.digitalSkills);
+    section('CAREER PROFILE');line('Employment Status',d.employmentStatus);line('Experience Level',d.experienceLevel);line('Years of Experience',d.yearsExperience);line('Current / Recent Job',d.currentJob);line('Current / Recent Employer',d.currentEmployer);line('Preferred Role',d.preferredRole);line('Work Area',d.jobCategory);line('Preferred Location',d.preferredLocation);line('Work Arrangement',d.workMode);line('Availability',d.availability);line('Salary Expectation',d.salaryExpectation?Number(d.salaryExpectation).toLocaleString()+' XAF':'Not specified');line('Key Skills',d.skills);line('Experience Summary',d.experienceSummary);
+    section('APPLICATION SUPPORT');line('CV / Resume Link',d.cvLink);line('Professional Reference',d.reference);
+    space(15);doc.setFontSize(8);doc.setTextColor(105,115,130);doc.text('Applicant declaration: information submitted is stated to be accurate by the applicant.',12,y);
+    doc.save('G-Spirit-Job-Application-'+(d.fullName||'Applicant').replace(/[^a-z0-9]+/gi,'-')+'.pdf');
+  })
+}
+</script>
+</body>
+</html>

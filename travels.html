@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="favicon.png">
+  <title>G-Spirit Ventures - Travel & Logistics Support</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --travel-teal: #16a085;
+      --travel-dark: #0d4237;
+      --travel-light: #f0fbf8;
+      --travel-card-bg: #f5fcfb;
+      --travel-line: #cde8e1;
+      --ink: #213047;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      font-family: 'Nunito', Arial, sans-serif;
+      color: var(--ink);
+      margin: 0;
+      padding: 0;
+      background: radial-gradient(circle at 10% 10%, #dcf5ef, #ccf0e7 45%, #b2e6d9 100%);
+      min-height: 100vh;
+      overflow-x: hidden;
+      opacity: 1;
+      transition: opacity 0.35s cubic-bezier(0.22, 1, 0.36, 1), transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    body.is-exiting, body.is-entering {
+      opacity: 0;
+      transform: scale(0.98);
+    }
+
+    .page-overlay {
+      position: fixed;
+      inset: 0;
+      background: #fff;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+      z-index: 9999;
+    }
+    .page-overlay.is-visible { opacity: 1; }
+
+    header {
+      background: linear-gradient(135deg, #0a2e26, #124d40 60%, #186b59);
+      color: white;
+      padding: 14px 22px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 6px 20px rgba(13, 66, 55, 0.22);
+    }
+
+    .logo-btn {
+      background: none; border: none; padding: 0; cursor: pointer; display: inline-flex;
+    }
+    header img { max-height: 48px; width: auto; }
+
+    .brand { flex: 1; margin-left: 12px; }
+    .brand h1 { font-family: 'Fredoka', sans-serif; font-size: 22px; margin: 0; letter-spacing: 0.04em; }
+    .tagline { font-size: 13px; font-style: italic; color: #a4ebd9; margin: 0; }
+
+    .header-actions { display: flex; gap: 8px; }
+    .header-actions button {
+      background: none; color: white; border: none; padding: 6px 10px; font-size: 12px;
+      font-weight: 700; cursor: pointer; border-radius: 6px; transition: background 0.2s;
+    }
+    .header-actions button:hover { background: rgba(255,255,255,0.15); }
+
+    .container {
+      width: min(94%, 1180px);
+      margin: 28px auto 60px;
+    }
+
+    .hero, .card {
+      background: rgba(255, 255, 255, 0.96);
+      border: 1px solid rgba(22, 160, 133, 0.16);
+      border-radius: 22px;
+      box-shadow: 0 18px 46px rgba(13, 66, 55, 0.08);
+      padding: 30px 34px;
+      margin-bottom: 24px;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      background: rgba(22, 160, 133, 0.12);
+      color: var(--travel-teal);
+      border: 1px solid rgba(22, 160, 133, 0.22);
+      padding: 7px 14px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .hero h2 {
+      font-family: 'Fredoka', sans-serif;
+      color: var(--travel-dark);
+      font-size: clamp(28px, 4vw, 40px);
+      margin: 12px 0 8px;
+    }
+
+    .hero p { color: #3a635a; font-size: 16px; max-width: 760px; margin: 0 0 16px; }
+
+    .hero-layout { display: grid; grid-template-columns: 1.25fr .75fr; gap: 28px; align-items: center; }
+    .hero-copy p { margin-bottom: 20px; }
+    .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+    .hero-actions a { display: inline-flex; align-items: center; justify-content: center; min-height: 46px; padding: 0 18px; border-radius: 11px; background: var(--travel-teal); color: #fff; text-decoration: none; font-weight: 900; }
+    .hero-actions a.secondary { background: #e5f5f1; color: var(--travel-dark); }
+    .hero-aside { padding: 20px; border-radius: 18px; background: linear-gradient(145deg, #e7f8f3, #f8fcfb); border: 1px solid var(--travel-line); }
+    .hero-aside strong { display: block; color: var(--travel-dark); font-family: 'Fredoka', sans-serif; font-size: 19px; margin-bottom: 10px; }
+    .hero-aside ul { margin: 0; padding: 0; list-style: none; color: #42685f; font-size: 14px; }
+    .hero-aside li { padding: 7px 0; }
+    .hero-aside li::before { content: '✓'; color: var(--travel-teal); font-weight: 900; margin-right: 9px; }
+    .section-kicker { color: var(--travel-teal); font-size: 11px; font-weight: 900; text-transform: uppercase; letter-spacing: .12em; }
+    .info-section { margin: 34px 0; }
+    .info-section h2 { font-family: 'Fredoka', sans-serif; color: var(--travel-dark); font-size: clamp(25px, 3.5vw, 34px); margin: 7px 0 8px; }
+    .info-section > p { color: #52776e; max-width: 720px; margin: 0 0 20px; }
+    .insight-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .insight-card { background: rgba(255,255,255,.92); border: 1px solid var(--travel-line); border-radius: 16px; padding: 20px; box-shadow: 0 10px 28px rgba(13,66,55,.05); }
+    .insight-icon { font-size: 24px; }
+    .insight-card h3 { color: var(--travel-dark); font-family: 'Fredoka', sans-serif; font-size: 19px; margin: 10px 0 7px; }
+    .insight-card p { color: #55786f; margin: 0; font-size: 14px; line-height: 1.6; }
+    .notice { background: #fff8e8; border: 1px solid #f1dfb3; color: #72591f; border-radius: 13px; padding: 15px 18px; font-size: 13px; line-height: 1.6; margin-top: 18px; }
+    .form-intro { display:flex; justify-content:space-between; align-items:flex-end; gap:18px; margin-bottom:24px; }
+    .form-intro h2 { font-family:'Fredoka',sans-serif; color:var(--travel-dark); margin:5px 0; font-size:28px; }
+    .form-intro p { margin:0; color:#52776e; max-width:660px; }
+    .step-heading p { line-height: 1.55; }
+    textarea { min-height: 112px; resize: vertical; }
+    .field-hint { color:#6a8b83; font-size:12px; line-height:1.5; }
+    .progress-step.completed span { background: #8cd7c3; }
+
+    .form-progress {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 28px;
+    }
+
+    .progress-step {
+      flex: 1;
+      font-weight: 800;
+      font-size: 13px;
+      color: #7ba89e;
+    }
+
+    .progress-step span {
+      display: block;
+      height: 7px;
+      border-radius: 99px;
+      background: #d4eae3;
+      margin-bottom: 6px;
+    }
+
+    .progress-step.active, .progress-step.completed { color: var(--travel-teal); }
+    .progress-step.active span, .progress-step.completed span { background: var(--travel-teal); }
+
+    .step-heading { margin-bottom: 22px; padding-bottom: 14px; border-bottom: 1px solid var(--travel-line); }
+    .step-heading h3 { font-family: 'Fredoka', sans-serif; color: var(--travel-dark); font-size: 24px; margin: 0 0 4px; }
+    .step-heading p { color: #517a71; margin: 0; font-size: 14px; }
+
+    .field-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0 20px;
+    }
+
+    .field-wide { grid-column: 1 / -1; }
+
+    .field-card {
+      background: var(--travel-card-bg);
+      border: 1px solid var(--travel-line);
+      border-radius: 14px;
+      padding: 14px;
+      margin-bottom: 16px;
+    }
+
+    label { display: block; margin-bottom: 6px; font-weight: 800; font-size: 13px; color: var(--travel-dark); }
+    input, select, textarea {
+      width: 100%; min-height: 48px; padding: 12px; border: 1px solid #b8ded5;
+      border-radius: 10px; background: #fff; color: #1a3832; font: inherit; margin-bottom: 6px;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      outline: none; border-color: var(--travel-teal); box-shadow: 0 0 0 4px rgba(22, 160, 133, 0.12);
+    }
+
+    .form-step { display: none; }
+    .form-step.active { display: block; }
+
+    .step-actions { display: flex; gap: 12px; margin-top: 24px; }
+    .step-actions button {
+      flex: 1; min-height: 48px; border-radius: 11px; border: none; font-weight: 900;
+      font-size: 15px; cursor: pointer; transition: transform 0.15s ease, background 0.2s ease;
+    }
+
+    .next-btn, .submit-btn { background: var(--travel-teal); color: white; }
+    .next-btn:hover, .submit-btn:hover { background: #12806a; transform: translateY(-2px); }
+    .prev-btn { background: #e2f5f1; color: var(--travel-dark); }
+    .prev-btn:hover { background: #d0eee8; }
+
+    .review-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 14px; }
+    .review-item { background: #fff; border: 1px solid var(--travel-line); border-radius: 10px; padding: 10px 14px; }
+    .review-item small { display: block; color: #6a968d; font-size: 11px; text-transform: uppercase; font-weight: 800; }
+    .review-item strong { display: block; color: var(--travel-dark); font-size: 14px; margin-top: 3px; }
+
+    footer { text-align: center; padding: 24px; color: #517a71; font-size: 13px; }
+
+    @media (max-width: 760px) {
+      .field-grid, .review-grid { grid-template-columns: 1fr; }
+      .hero, .card { padding: 20px; }
+      .header-actions { display: none; }
+      .hero-layout, .insight-grid { grid-template-columns: 1fr; }
+      .form-intro { display:block; }
+      .form-progress { gap: 5px; }
+      .progress-step { font-size: 11px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="page-overlay"></div>
+
+  <header>
+    <button type="button" class="logo-btn" onclick="navigateWithTransition('index.html')" aria-label="Go to homepage">
+      <img src="logo.png" alt="G-Spirit logo">
+    </button>
+    <div class="brand">
+      <h1>G-SPIRIT VENTURES</h1>
+      <div class="tagline">Travel & Logistics Support</div>
+    </div>
+    <div class="header-actions">
+      <button type="button" onclick="navigateWithTransition('index.html')">Home</button>
+      <button type="button" onclick="navigateWithTransition('about.html')">About</button>
+      <button type="button" onclick="navigateWithTransition('contact.html')">Contact</button>
+    </div>
+  </header>
+
+  <div class="container">
+    <section class="hero">
+      <div class="hero-layout">
+        <div class="hero-copy">
+          <span class="hero-badge">Travel consultancy · Cameroon</span>
+          <h2>Make your next move with a clearer plan.</h2>
+          <p>Get practical guidance for business, study, family and logistics travel. Tell us what you’re planning, and our team will help you understand the next steps and support that may fit.</p>
+          <div class="hero-actions"><a href="#travel-form">Share your travel plans ↓</a><a class="secondary" href="#prepare">Explore what to prepare</a></div>
+        </div>
+        <aside class="hero-aside" aria-label="What happens next">
+          <strong>A useful first conversation</strong>
+          <ul><li>Share your destination, purpose and timing</li><li>Get a follow-up about practical next steps</li><li>Discuss services and any costs before proceeding</li></ul>
+        </aside>
+      </div>
+    </section>
+
+    <section class="info-section" id="prepare">
+      <span class="section-kicker">Start with the essentials</span>
+      <h2>A little preparation goes a long way</h2>
+      <p>You don’t need every detail finalized. A few basics help us understand where you are in the planning process and make our first conversation more useful.</p>
+      <div class="insight-grid">
+        <article class="insight-card"><div class="insight-icon">🧭</div><h3>Know your purpose</h3><p>Think about why you’re travelling and what a successful trip looks like, whether it’s study, work, family or moving goods.</p></article>
+        <article class="insight-card"><div class="insight-icon">📍</div><h3>Set a destination and window</h3><p>Share your intended destination and approximate departure period. Flexible dates are fine at this early stage.</p></article>
+        <article class="insight-card"><div class="insight-icon">🗂️</div><h3>Gather what you already know</h3><p>Note any important deadlines, travellers involved, documents started, budget range or specific support you’re looking for.</p></article>
+      </div>
+      <div class="notice"><strong>Helpful to know:</strong> This enquiry is a starting point for a conversation, not a visa decision, travel booking or funding approval. Avoid sharing passport numbers or other sensitive document details here. Any fees, eligibility and service availability will be discussed with you before you commit.</div>
+    </section>
+
+    <main class="card">
+      <div class="form-intro"><div><span class="section-kicker">Your travel enquiry</span><h2>Tell us what you have in mind</h2><p>Start with your travel plan. We’ll ask how to reach you after we understand the trip you’re considering.</p></div></div>
+      <div class="form-progress">
+        <div class="progress-step active" id="p-step-1"><span></span>1. Your plans</div>
+        <div class="progress-step" id="p-step-2"><span></span>2. Support & contact</div>
+        <div class="progress-step" id="p-step-3"><span></span>3. Review & Submit</div>
+      </div>
+
+      <form id="travel-form" onsubmit="event.preventDefault();">
+        <!-- Step 1 -->
+        <div class="form-step active" id="step-1">
+          <div class="step-heading">
+            <h3>Where are you hoping to go?</h3>
+            <p>Share the basics first. An approximate date is enough if your plans are still taking shape.</p>
+          </div>
+          <div class="field-grid">
+            <div class="field-card"><label for="city">Where will you be travelling from? *</label><input type="text" id="city" required placeholder="e.g. Douala, Cameroon"></div>
+            <div class="field-card"><label for="destination">Where would you like to go? *</label><input type="text" id="destination" required placeholder="e.g. Paris, France"></div>
+            <div class="field-card"><label for="travelType">What is the main purpose? *</label><select id="travelType" required><option value="">Choose a purpose</option><option value="Business & Trade">Business & Trade</option><option value="Education / Studies">Education / Studies</option><option value="Personal / Family">Personal / Family</option><option value="Logistics / Cargo Support">Logistics / Cargo Support</option><option value="Other">Other</option></select></div>
+            <div class="field-card"><label for="departureDate">When are you hoping to travel? *</label><input type="date" id="departureDate" required><div class="field-hint">An estimated date is fine. You can update it later.</div></div>
+          </div>
+          <div class="step-actions">
+            <button type="button" class="next-btn" onclick="goToStep(2)">Continue to support & contact →</button>
+          </div>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="form-step" id="step-2">
+          <div class="step-heading">
+            <h3>What kind of help would be useful?</h3>
+            <p>Tell us what you’re looking for and how our team can follow up with you.</p>
+          </div>
+          <div class="field-grid">
+            <div class="field-card"><label for="details">What support or questions do you have? *</label><textarea id="details" required placeholder="For example: planning guidance, travel logistics, study travel preparation, cargo support or a question about financing."></textarea><div class="field-hint">Please don’t include passport numbers, financial account details or other sensitive information.</div></div>
+            <div class="field-card"><label for="fullName">Your name *</label><input type="text" id="fullName" required autocomplete="name" placeholder="Your full name"></div>
+            <div class="field-card"><label for="phone">WhatsApp number *</label><input type="tel" id="phone" required autocomplete="tel" placeholder="e.g. +237 600 000 000"></div>
+            <div class="field-card"><label for="email">Email address *</label><input type="email" id="email" required autocomplete="email" placeholder="name@example.com"></div>
+          </div>
+          <div class="step-actions">
+            <button type="button" class="prev-btn" onclick="goToStep(1)">← Back</button>
+            <button type="button" class="next-btn" onclick="goToStep(3)">Review Plan →</button>
+          </div>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="form-step" id="step-3">
+          <div class="step-heading">
+            <h3>Review Travel Request</h3>
+            <p>Check your enquiry before opening WhatsApp to send it to our team.</p>
+          </div>
+          <div class="review-grid">
+            <div class="review-item"><small>Full Name</small><strong id="rev-fullName">-</strong></div>
+            <div class="review-item"><small>WhatsApp Phone</small><strong id="rev-phone">-</strong></div>
+            <div class="review-item"><small>Email</small><strong id="rev-email">-</strong></div>
+            <div class="review-item"><small>Current Origin</small><strong id="rev-city">-</strong></div>
+            <div class="review-item"><small>Destination</small><strong id="rev-destination">-</strong></div>
+            <div class="review-item"><small>Travel Purpose</small><strong id="rev-type">-</strong></div>
+            <div class="review-item"><small>Planned Date</small><strong id="rev-date">-</strong></div>
+            <div class="review-item field-wide"><small>Logistics Context</small><strong id="rev-details">-</strong></div>
+          </div>
+          <p class="field-hint" style="margin-top:16px">By continuing, you’re choosing to share these enquiry details with G-Spirit Ventures so the team can respond to your travel request.</p>
+          <div class="step-actions">
+            <button type="button" class="prev-btn" onclick="goToStep(2)">← Edit Details</button>
+            <button type="button" id="travelSubmitBtn" class="submit-btn" onclick="submitToWhatsApp()">Submit via WhatsApp</button>
+          </div>
+        </div>
+      </form>
+    </main>
+  </div>
+
+  <footer>
+    © 2026 G-Spirit Ventures. All rights reserved.
+  </footer>
+
+  <script>
+    function goToStep(step) {
+      if (step > 1) {
+        const current = document.getElementById('step-' + (step - 1));
+        const required = [...current.querySelectorAll('input[required], select[required], textarea[required]')];
+        const invalid = required.find(field => !field.reportValidity());
+        if (invalid) return;
+      }
+      document.querySelectorAll('.form-step').forEach(s => s.classList.remove('active'));
+      document.querySelectorAll('.progress-step').forEach((p, idx) => {
+        p.classList.toggle('active', idx + 1 === step);
+        p.classList.toggle('completed', idx + 1 < step);
+      });
+      document.getElementById('step-' + step).classList.add('active');
+
+      if (step === 3) {
+        document.getElementById('rev-fullName').textContent = document.getElementById('fullName').value || '-';
+        document.getElementById('rev-phone').textContent = document.getElementById('phone').value || '-';
+        document.getElementById('rev-email').textContent = document.getElementById('email').value || '-';
+        document.getElementById('rev-city').textContent = document.getElementById('city').value || '-';
+        document.getElementById('rev-destination').textContent = document.getElementById('destination').value || '-';
+        document.getElementById('rev-type').textContent = document.getElementById('travelType').value || '-';
+        document.getElementById('rev-date').textContent = document.getElementById('departureDate').value || '-';
+        document.getElementById('rev-details').textContent = document.getElementById('details').value || '-';
+      }
+    }
+
+    async function submitToWhatsApp() {
+      const name = document.getElementById('fullName').value;
+      const phone = document.getElementById('phone').value;
+      const email = document.getElementById('email').value;
+      const city = document.getElementById('city').value;
+      const destination = document.getElementById('destination').value;
+      const type = document.getElementById('travelType').value;
+      const date = document.getElementById('departureDate').value;
+      const details = document.getElementById('details').value;
+
+      const button = document.getElementById('travelSubmitBtn');
+      const whatsappWindow = window.open('about:blank', '_blank');
+      button.disabled = true;
+      button.textContent = 'Saving enquiry...';
+
+      try {
+        const response = await fetch('https://gspiritloans-api.forchinthierry.workers.dev/api/travel', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            name: name,
+            phone: phone,
+            email: email,
+            origin: city,
+            destination: destination,
+            travelType: type,
+            departureDate: date,
+            details: details
+          })
+        });
+        const result = await response.json();
+        if (!response.ok || !result.success) {
+          throw new Error(result.error || 'Unable to save your travel enquiry.');
+        }
+      } catch (error) {
+        if (whatsappWindow) whatsappWindow.close();
+        alert(error.message || 'Unable to save your travel enquiry. Please try again.');
+        button.disabled = false;
+        button.textContent = 'Submit via WhatsApp';
+        return;
+      }
+
+      const message = `*G-Spirit Ventures - Travel Inquiry*%0A%0A` +
+        `*Name:* ${name}%0A` +
+        `*Phone:* ${phone}%0A` +
+        `*Email:* ${email}%0A` +
+        `*Origin:* ${city}%0A` +
+        `*Destination:* ${destination}%0A` +
+        `*Purpose:* ${type}%0A` +
+        `*Date:* ${date}%0A` +
+        `*Requirements:* ${details}`;
+
+      const whatsappUrl = `https://wa.me/237620569864?text=${message}`;
+      if (whatsappWindow) whatsappWindow.location.href = whatsappUrl;
+      else window.location.href = whatsappUrl;
+      button.textContent = 'Enquiry saved';
+    }
+
+    function navigateWithTransition(url) {
+      document.body.classList.add('is-exiting');
+      document.querySelector('.page-overlay').classList.add('is-visible');
+      setTimeout(() => { window.location.href = url; }, 320);
+    }
+  </script>
+</body>
+</html>
