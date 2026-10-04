@@ -346,6 +346,45 @@ export default {
       `).run();
 
       await env.DB.prepare(`
+        CREATE TABLE IF NOT EXISTS job_posts (
+          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          created_at TEXT NOT NULL,
+          company TEXT NOT NULL,
+          title TEXT NOT NULL,
+          category TEXT NOT NULL,
+          location TEXT NOT NULL,
+          work_mode TEXT,
+          employment_type TEXT,
+          salary_range TEXT,
+          description TEXT NOT NULL,
+          requirements TEXT,
+          contact_name TEXT NOT NULL,
+          contact_email TEXT NOT NULL,
+          contact_phone TEXT,
+          status TEXT NOT NULL DEFAULT 'Open'
+        )
+      `).run();
+
+      await env.DB.prepare(`
+        CREATE TABLE IF NOT EXISTS job_interests (
+          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          created_at TEXT NOT NULL,
+          full_name TEXT NOT NULL,
+          phone TEXT NOT NULL,
+          email TEXT NOT NULL,
+          preferred_role TEXT NOT NULL,
+          job_category TEXT,
+          preferred_location TEXT,
+          work_mode TEXT,
+          experience_level TEXT,
+          skills TEXT,
+          cv_link TEXT,
+          consent_at TEXT,
+          status TEXT NOT NULL DEFAULT 'New'
+        )
+      `).run();
+
+      await env.DB.prepare(`
         CREATE TABLE IF NOT EXISTS travel_applications (
           id INTEGER PRIMARY KEY AUTOINCREMENT,
           created_at TEXT NOT NULL,
@@ -639,6 +678,51 @@ export default {
         return json({ success: true, message: 'Job application received successfully' });
       }
 
+      if (url.pathname === '/api/jobs/listings' && request.method === 'GET') {
+        const { results } = await env.DB.prepare(
+          "SELECT id, created_at, company, title, category, location, work_mode, employment_type, salary_range, description, requirements FROM job_posts WHERE status = 'Open' ORDER BY id DESC LIMIT 100"
+        ).all();
+        return json(results);
+      }
+
+      if (url.pathname === '/api/jobs/listings' && request.method === 'POST') {
+        const data = await request.json();
+        if (!data.company || !data.title || !data.category || !data.location || !data.description || !data.contactName || !data.contactEmail || data.attested !== true) {
+          return json({ error: 'Complete the required job and contact details.' }, 400);
+        }
+        await env.DB.prepare(`
+          INSERT INTO job_posts (
+            created_at, company, title, category, location, work_mode,
+            employment_type, salary_range, description, requirements,
+            contact_name, contact_email, contact_phone, status
+          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'Open')
+        `).bind(
+          new Date().toISOString(), data.company, data.title, data.category,
+          data.location, data.workMode || '', data.employmentType || '',
+          data.salaryRange || '', data.description, data.requirements || '',
+          data.contactName, data.contactEmail, data.contactPhone || ''
+        ).run();
+        return json({ success: true, message: 'Opening published successfully.' });
+      }
+
+      if (url.pathname === '/api/jobs/interests' && request.method === 'POST') {
+        const data = await request.json();
+        if (!data.fullName || !data.phone || !data.email || !data.preferredRole || data.consent !== true) {
+          return json({ error: 'Name, phone, email and preferred role are required.' }, 400);
+        }
+        await env.DB.prepare(`
+          INSERT INTO job_interests (
+            created_at, full_name, phone, email, preferred_role, job_category,
+            preferred_location, work_mode, experience_level, skills, cv_link, consent_at, status
+          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'New')
+        `).bind(
+          new Date().toISOString(), data.fullName, data.phone, data.email,
+          data.preferredRole, data.jobCategory || '', data.preferredLocation || '',
+          data.workMode || '', data.experienceLevel || '', data.skills || '', data.cvLink || '', new Date().toISOString()
+        ).run();
+        return json({ success: true, message: 'Career interest saved successfully.' });
+      }
+
       /*
        * ============================================================
        * PUBLIC: TRAVEL ENQUIRY
@@ -765,6 +849,24 @@ export default {
       }
 
       if (
+        url.pathname === '/api/admin/job-posts' &&
+        request.method === 'GET'
+      ) {
+        if (!(await isAuthorized(request))) return json({ error: 'Unauthorized' }, 401);
+        const { results } = await env.DB.prepare('SELECT * FROM job_posts ORDER BY id DESC').all();
+        return json(results);
+      }
+
+      if (
+        url.pathname === '/api/admin/job-interests' &&
+        request.method === 'GET'
+      ) {
+        if (!(await isAuthorized(request))) return json({ error: 'Unauthorized' }, 401);
+        const { results } = await env.DB.prepare('SELECT * FROM job_interests ORDER BY id DESC').all();
+        return json(results);
+      }
+
+      if (
         url.pathname === '/api/admin/travel' &&
         request.method === 'GET'
       ) {
@@ -807,6 +909,8 @@ export default {
           'partnership_applications',
           'capital_applications',
           'job_applications',
+          'job_posts',
+          'job_interests',
           'travel_applications',
         ];
 

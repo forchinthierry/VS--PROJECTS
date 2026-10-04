@@ -116,3 +116,38 @@ CREATE TABLE travel_applications (
   details TEXT,
   status TEXT DEFAULT 'New'
 );
+
+CREATE TABLE IF NOT EXISTS job_posts (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  created_at TEXT NOT NULL,
+  company TEXT NOT NULL,
+  title TEXT NOT NULL,
+  category TEXT NOT NULL,
+  location TEXT NOT NULL,
+  work_mode TEXT,
+  employment_type TEXT,
+  salary_range TEXT,
+  description TEXT NOT NULL,
+  requirements TEXT,
+  contact_name TEXT NOT NULL,
+  contact_email TEXT NOT NULL,
+  contact_phone TEXT,
+  status TEXT NOT NULL DEFAULT 'Open'
+);
+
+CREATE TABLE IF NOT EXISTS job_interests (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  created_at TEXT NOT NULL,
+  full_name TEXT NOT NULL,
+  phone TEXT NOT NULL,
+  email TEXT NOT NULL,
+  preferred_role TEXT NOT NULL,
+  job_category TEXT,
+  preferred_location TEXT,
+  work_mode TEXT,
+  experience_level TEXT,
+  skills TEXT,
+  cv_link TEXT,
+  consent_at TEXT,
+  status TEXT NOT NULL DEFAULT 'New'
+);

@@ -1564,7 +1564,7 @@ body[data-section-theme="travel"] th { background: linear-gradient(135deg, #0c45
       if (currentTab === 'loans') renderLoans(currentFiltered);
       else if (currentTab === 'partners') renderPartners(currentFiltered);
       else if (currentTab === 'capital') renderCapital(currentFiltered);
-      else if (currentTab === 'jobs') renderJobs(currentFiltered);
+      else if (currentTab === 'jobs') { renderJobs(currentFiltered); loadJobPortalAdminData(); }
       else renderTravel(currentFiltered);
     }
 
@@ -1942,6 +1942,49 @@ body[data-section-theme="travel"] th { background: linear-gradient(135deg, #0c45
       document.getElementById('tableWrap').innerHTML = html;
       document.getElementById('selectAllBox').checked =
         currentFiltered.length > 0 && currentFiltered.every(function (row) { return selectedIds[row.id]; });
+    }
+
+    var jobPortalAdminRequest = 0;
+    function updatePortalStatus(table, id, selectEl) {
+      fetch(API_BASE + '/api/admin/update-status', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + adminToken },
+        body: JSON.stringify({ table: table, id: id, status: selectEl.value })
+      }).then(function (response) {
+        return response.json().then(function (data) { if (!response.ok || !data.success) throw new Error(data.error || 'Status update failed'); return data; });
+      }).then(function () { loadJobPortalAdminData(); }).catch(function () { alert('Failed to update this job board status. Try again.'); });
+    }
+
+    function loadJobPortalAdminData() {
+      var requestId = ++jobPortalAdminRequest;
+      var wrap = document.getElementById('tableWrap');
+      var previousPortal = document.getElementById('jobPortalAdmin');
+      if (previousPortal) previousPortal.remove();
+      Promise.all([
+        fetch(API_BASE + '/api/admin/job-posts', { headers: { 'Authorization': 'Bearer ' + adminToken } }).then(function (r) { if (!r.ok) throw new Error('Could not load job posts'); return r.json(); }),
+        fetch(API_BASE + '/api/admin/job-interests', { headers: { 'Authorization': 'Bearer ' + adminToken } }).then(function (r) { if (!r.ok) throw new Error('Could not load career interests'); return r.json(); })
+      ]).then(function (data) {
+        if (currentTab !== 'jobs' || requestId !== jobPortalAdminRequest) return;
+        var posts = data[0] || [], interests = data[1] || [];
+        var postsHtml = posts.length ? '<div class="table-scroll"><table><thead><tr><th>Date</th><th>Role</th><th>Company</th><th>Location</th><th>Contact</th><th>Status</th></tr></thead><tbody>' + posts.map(function (row) {
+          return '<tr><td>' + formatTableDate(row.created_at) + '</td><td>' + escapeTableValue(row.title) + '</td><td>' + escapeTableValue(row.company) + '</td><td>' + escapeTableValue(row.location) + '</td><td>' + escapeTableValue(row.contact_name) + '<br>' + escapeTableValue(row.contact_email) + '</td><td><select class="status-select ' + statusClass(row.status) + '" onchange="updatePortalStatus(\'job_posts\', ' + Number(row.id) + ', this)"><option' + (row.status === 'Open' ? ' selected' : '') + '>Open</option><option' + (row.status === 'Closed' ? ' selected' : '') + '>Closed</option></select></td></tr>';
+        }).join('') + '</tbody></table></div>' : '<div class="empty-state">No community job posts yet.</div>';
+        var interestsHtml = interests.length ? '<div class="table-scroll"><table><thead><tr><th>Date</th><th>Candidate</th><th>Contact</th><th>Seeking</th><th>Area / location</th><th>Experience</th><th>Skills</th><th>Status</th></tr></thead><tbody>' + interests.map(function (row) {
+          var cvLink = /^https?:\/\//i.test(row.cv_link || '') ? '<br><a href="' + escapeTableValue(row.cv_link) + '" target="_blank" rel="noopener noreferrer">Open CV</a>' : '';
+          return '<tr><td>' + formatTableDate(row.created_at) + '</td><td>' + escapeTableValue(row.full_name) + '</td><td>' + escapeTableValue(row.phone) + '<br>' + escapeTableValue(row.email) + '</td><td>' + escapeTableValue(row.preferred_role) + '</td><td>' + escapeTableValue(row.job_category) + '<br>' + escapeTableValue(row.preferred_location) + '</td><td>' + escapeTableValue(row.experience_level) + '</td><td>' + escapeTableValue(row.skills) + cvLink + '</td><td><select class="status-select ' + statusClass(row.status) + '" onchange="updatePortalStatus(\'job_interests\', ' + Number(row.id) + ', this)">' + ['New', 'Under Review', 'Contacted', 'Matched', 'Closed'].map(function (status) { return '<option' + (row.status === status ? ' selected' : '') + '>' + status + '</option>'; }).join('') + '</select></td></tr>';
+        }).join('') + '</tbody></table></div>' : '<div class="empty-state">No career interests yet.</div>';
+        var portal = document.createElement('section');
+        portal.id = 'jobPortalAdmin';
+        portal.innerHTML = '<h2 style="margin:28px 0 10px">Community job board</h2><h3>Employer postings (' + posts.length + ')</h3>' + postsHtml + '<h3 style="margin-top:24px">Talent map interests (' + interests.length + ')</h3>' + interestsHtml;
+        wrap.appendChild(portal);
+      }).catch(function () {
+        if (currentTab !== 'jobs' || requestId !== jobPortalAdminRequest) return;
+        var note = document.createElement('p');
+        note.id = 'jobPortalAdmin';
+        note.className = 'empty-state';
+        note.textContent = 'Community job board records could not be loaded.';
+        wrap.appendChild(note);
+      });
     }
 
     function renderTravel(rows) {
