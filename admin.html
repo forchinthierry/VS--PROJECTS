@@ -880,11 +880,32 @@ header .brand-lockup::after{content:"OPERATIONS • SECURE ADMIN";margin-left:2p
 .delete-btn:hover{background:#fff7f7;color:#8e2d32;box-shadow:none}
 .results-count{margin-left:auto;padding:0 6px;color:#748094;font-size:11.5px;font-weight:600}
 .card{border-radius:14px;border:1px solid var(--line);box-shadow:0 10px 28px rgba(16,33,63,.055)}
-.table-wrap{max-height:69vh}
+.table-wrap{max-height:69vh;overflow:auto}
 table{font-size:11.5px;min-width:1180px}
 th{background:#eef2f6;color:#46556c;border-bottom:1px solid #dce3eb;padding:11px 9px;font-size:9.5px;letter-spacing:.075em;font-weight:800}
 td{padding:10px 9px;border-bottom:1px solid #edf0f4;color:#263248;background:#fff}
 tr:hover td{background:#fbfcfe}
+.table-wrap .application-table{margin-inline:auto}
+.table-wrap .application-table--jobs{min-width:1320px}
+.table-wrap .application-table--travel{min-width:1120px}
+.table-wrap .application-table--jobs th:not(:first-child),.table-wrap .application-table--jobs td:not(:first-child),
+.table-wrap .application-table--travel th:not(:first-child),.table-wrap .application-table--travel td:not(:first-child){text-align:center;vertical-align:middle}
+.table-wrap .application-table--jobs th:first-child,.table-wrap .application-table--jobs td:first-child,
+.table-wrap .application-table--travel th:first-child,.table-wrap .application-table--travel td:first-child{position:sticky;left:0;width:46px;min-width:46px;text-align:center;background:#fff;box-shadow:2px 0 5px rgba(16,33,63,.08);z-index:2}
+.table-wrap .application-table--jobs th:first-child,.table-wrap .application-table--travel th:first-child{background:#eef2f6;z-index:4}
+.table-wrap input[type="checkbox"]{width:18px;height:18px;margin:0;accent-color:var(--theme-secondary);vertical-align:middle;cursor:pointer}
+.table-scroll{max-width:100%;overflow:auto;border:1px solid var(--line);border-radius:10px}
+.table-scroll table{margin:0;min-width:940px}
+.admin-post-form{margin:20px 0 22px;padding:16px;border:1px solid var(--line);border-radius:12px;background:#f8fafc}
+.admin-post-form h3{margin:0 0 12px;color:var(--navy);font-size:17px}
+.admin-post-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.admin-post-grid label{display:grid;gap:5px;color:#43516a;font-size:11px;font-weight:800}
+.admin-post-grid input,.admin-post-grid select,.admin-post-grid textarea{width:100%;min-width:0;min-height:38px;padding:8px 10px;border:1px solid #d5dde7;border-radius:8px;background:#fff;color:var(--ink);font:inherit;font-size:12px}
+.admin-post-grid textarea{min-height:72px;resize:vertical}
+.admin-post-wide{grid-column:1/-1}
+.admin-post-submit{min-height:39px;padding:8px 14px;border:0;border-radius:8px;background:linear-gradient(135deg,var(--theme-primary),var(--theme-secondary));color:#fff;font-size:12px;font-weight:800;cursor:pointer}
+.admin-post-status{margin:8px 0 0;color:#176b4b;font-size:12px;font-weight:700}
+.post-delete-btn{border:1px solid #edcfd1;border-radius:7px;padding:6px 9px;background:#fff7f7;color:#a53b40;font-size:11px;font-weight:800;white-space:nowrap}
 select.status-select{min-width:112px;border-radius:7px;padding:6px 8px;font-size:11px}
 .whatsapp-btn,.agreement-btn{border-radius:7px;padding:6px 9px;font-size:10.5px;box-shadow:none}
 .empty-state{padding:72px 24px;background:linear-gradient(180deg,#fff,#f9fbfd);color:#8a95a6;font-size:12.5px}
@@ -901,6 +922,7 @@ select.status-select{min-width:112px;border-radius:7px;padding:6px 8px;font-size
   .container{width:96%;padding:0}.workspace-heading h2{font-size:18px}.toolbar{padding:9px}
   .toolbar input{min-width:100%;width:100%}.results-count{width:auto;margin-left:0;padding-left:2px}
   .dashboard-kpis{gap:9px}.kpi{padding:12px 14px}
+  .admin-post-grid{grid-template-columns:1fr}.admin-post-wide{grid-column:auto}
 }
 
 body[data-section-theme="loans"] header {
@@ -1311,6 +1333,7 @@ body[data-section-theme="travel"] th { background: linear-gradient(135deg, #0c45
           renderSummaryPanels();
           renderCurrentView();
           updateWorkspaceUI();
+          if (currentTab === 'jobs') loadJobPortalAdminData();
           loadSidebarCounts();
         })
         .catch(function (err) {
@@ -1564,7 +1587,7 @@ body[data-section-theme="travel"] th { background: linear-gradient(135deg, #0c45
       if (currentTab === 'loans') renderLoans(currentFiltered);
       else if (currentTab === 'partners') renderPartners(currentFiltered);
       else if (currentTab === 'capital') renderCapital(currentFiltered);
-      else if (currentTab === 'jobs') { renderJobs(currentFiltered); loadJobPortalAdminData(); }
+      else if (currentTab === 'jobs') renderJobs(currentFiltered);
       else renderTravel(currentFiltered);
     }
 
@@ -1756,8 +1779,8 @@ body[data-section-theme="travel"] th { background: linear-gradient(135deg, #0c45
         document.getElementById('tableWrap').innerHTML = '<div class="empty-state">' + (hasSearch ? 'No loan applications match that search.' : 'No loan applications yet.') + '</div>';
         return;
       }
-      var html = '<table><thead><tr>' +
-        '<th><input type="checkbox" id="selectAllBox" onclick="toggleSelectAll(this.checked)"></th>' +
+      var html = '<table class="application-table application-table--jobs"><thead><tr>' +
+        '<th><input type="checkbox" id="selectAllBox" aria-label="Select all visible job applications" title="Select all visible job applications" onclick="toggleSelectAll(this.checked)"></th>' +
         '<th>#</th><th>Date</th><th>Name</th><th>Phone</th><th>Email</th><th>DOB</th><th>Residence</th><th>Amount</th><th>Term</th><th>Purpose</th><th>Income</th><th>Employment</th><th>Surety Name</th><th>Surety Phone</th><th>Surety Address</th><th>Surety Relation</th><th>Collateral</th><th>Status</th><th>Action</th>' +
         '</tr></thead><tbody>';
       rows.forEach(function (r, index) {
@@ -1899,10 +1922,12 @@ body[data-section-theme="travel"] th { background: linear-gradient(135deg, #0c45
     }
 
     function renderJobs(rows) {
+      var portalPanel = document.getElementById('jobPortalAdmin');
       if (!rows || rows.length === 0) {
         var hasSearch = document.getElementById('searchInput').value.trim() !== '';
         document.getElementById('tableWrap').innerHTML = '<div class="empty-state">' +
           (hasSearch ? 'No job applications match that search.' : 'No job applications yet.') + '</div>';
+        if (portalPanel) document.getElementById('tableWrap').appendChild(portalPanel);
         return;
       }
 
@@ -1919,7 +1944,7 @@ body[data-section-theme="travel"] th { background: linear-gradient(135deg, #0c45
           ? '<a href="' + escapeTableValue(row.cv_link) + '" target="_blank" rel="noopener noreferrer">Open CV</a>'
           : '';
         html += '<tr>' +
-          '<td><input type="checkbox" class="row-select" onchange="toggleSelection(this, ' + row.id + ')"' + checked + '></td>' +
+          '<td><input type="checkbox" class="row-select" aria-label="Select job application ' + row.id + '" onchange="toggleSelection(this, ' + row.id + ')"' + checked + '></td>' +
           '<td>' + (index + 1) + '</td>' +
           '<td>' + formatTableDate(row.created_at) + '</td>' +
           '<td>' + escapeTableValue(row.full_name) + '</td>' +
@@ -1940,6 +1965,7 @@ body[data-section-theme="travel"] th { background: linear-gradient(135deg, #0c45
 
       html += '</tbody></table>';
       document.getElementById('tableWrap').innerHTML = html;
+      if (portalPanel) document.getElementById('tableWrap').appendChild(portalPanel);
       document.getElementById('selectAllBox').checked =
         currentFiltered.length > 0 && currentFiltered.every(function (row) { return selectedIds[row.id]; });
     }
@@ -1966,8 +1992,8 @@ body[data-section-theme="travel"] th { background: linear-gradient(135deg, #0c45
       ]).then(function (data) {
         if (currentTab !== 'jobs' || requestId !== jobPortalAdminRequest) return;
         var posts = data[0] || [], interests = data[1] || [];
-        var postsHtml = posts.length ? '<div class="table-scroll"><table><thead><tr><th>Date</th><th>Role</th><th>Company</th><th>Location</th><th>Contact</th><th>Status</th></tr></thead><tbody>' + posts.map(function (row) {
-          return '<tr><td>' + formatTableDate(row.created_at) + '</td><td>' + escapeTableValue(row.title) + '</td><td>' + escapeTableValue(row.company) + '</td><td>' + escapeTableValue(row.location) + '</td><td>' + escapeTableValue(row.contact_name) + '<br>' + escapeTableValue(row.contact_email) + '</td><td><select class="status-select ' + statusClass(row.status) + '" onchange="updatePortalStatus(\'job_posts\', ' + Number(row.id) + ', this)"><option' + (row.status === 'Open' ? ' selected' : '') + '>Open</option><option' + (row.status === 'Closed' ? ' selected' : '') + '>Closed</option></select></td></tr>';
+        var postsHtml = posts.length ? '<div class="table-scroll"><table><thead><tr><th>Date</th><th>Role</th><th>Company</th><th>Location</th><th>Contact</th><th>Status</th><th>Action</th></tr></thead><tbody>' + posts.map(function (row) {
+          return '<tr><td>' + formatTableDate(row.created_at) + '</td><td>' + escapeTableValue(row.title) + '</td><td>' + escapeTableValue(row.company) + '</td><td>' + escapeTableValue(row.location) + '</td><td>' + escapeTableValue(row.contact_name) + '<br>' + escapeTableValue(row.contact_email) + '</td><td><select class="status-select ' + statusClass(row.status) + '" onchange="updatePortalStatus(\'job_posts\', ' + Number(row.id) + ', this)"><option' + (row.status === 'Open' ? ' selected' : '') + '>Open</option><option' + (row.status === 'Closed' ? ' selected' : '') + '>Closed</option></select></td><td><button type="button" class="post-delete-btn" onclick="deleteJobPost(' + Number(row.id) + ')">Delete</button></td></tr>';
         }).join('') + '</tbody></table></div>' : '<div class="empty-state">No community job posts yet.</div>';
         var interestsHtml = interests.length ? '<div class="table-scroll"><table><thead><tr><th>Date</th><th>Candidate</th><th>Contact</th><th>Seeking</th><th>Area / location</th><th>Experience</th><th>Skills</th><th>Status</th></tr></thead><tbody>' + interests.map(function (row) {
           var cvLink = /^https?:\/\//i.test(row.cv_link || '') ? '<br><a href="' + escapeTableValue(row.cv_link) + '" target="_blank" rel="noopener noreferrer">Open CV</a>' : '';
@@ -1975,7 +2001,23 @@ body[data-section-theme="travel"] th { background: linear-gradient(135deg, #0c45
         }).join('') + '</tbody></table></div>' : '<div class="empty-state">No career interests yet.</div>';
         var portal = document.createElement('section');
         portal.id = 'jobPortalAdmin';
-        portal.innerHTML = '<h2 style="margin:28px 0 10px">Community job board</h2><h3>Employer postings (' + posts.length + ')</h3>' + postsHtml + '<h3 style="margin-top:24px">Talent map interests (' + interests.length + ')</h3>' + interestsHtml;
+        portal.innerHTML = '<h2 style="margin:28px 0 10px">Community job board</h2>' +
+          '<form id="adminJobPostForm" class="admin-post-form"><h3>Add a job posting</h3><div class="admin-post-grid">' +
+          '<label>Company / organisation<input name="company" required></label>' +
+          '<label>Job title<input name="title" required></label>' +
+          '<label>Work area<select name="category" required><option value="">Choose area</option><option>Finance &amp; Accounting</option><option>Administration &amp; Operations</option><option>Sales &amp; Business Development</option><option>Customer Service</option><option>Marketing &amp; Communications</option><option>Information Technology / Digital</option><option>Human Resources</option><option>Logistics / Procurement</option><option>Education / Training</option><option>Other</option></select></label>' +
+          '<label>Location<input name="location" required></label>' +
+          '<label>Work arrangement<select name="workMode"><option>On-site</option><option>Hybrid</option><option>Remote</option></select></label>' +
+          '<label>Employment type<select name="employmentType"><option>Full-time</option><option>Part-time</option><option>Contract</option><option>Internship</option><option>Temporary</option></select></label>' +
+          '<label>Salary / range<input name="salaryRange" placeholder="Optional"></label>' +
+          '<label>Contact name<input name="contactName" required></label>' +
+          '<label>Contact email<input name="contactEmail" type="email" required></label>' +
+          '<label>Contact phone<input name="contactPhone" type="tel"></label>' +
+          '<label class="admin-post-wide">Role description<textarea name="description" required></textarea></label>' +
+          '<label class="admin-post-wide">Requirements<textarea name="requirements"></textarea></label>' +
+          '</div><button type="submit" class="admin-post-submit">Publish posting</button><p class="admin-post-status" id="adminPostStatus" role="status"></p></form>' +
+          '<h3>Employer postings (' + posts.length + ')</h3>' + postsHtml + '<h3 style="margin-top:24px">Talent map interests (' + interests.length + ')</h3>' + interestsHtml;
+        portal.querySelector('#adminJobPostForm').addEventListener('submit', submitAdminJobPost);
         wrap.appendChild(portal);
       }).catch(function () {
         if (currentTab !== 'jobs' || requestId !== jobPortalAdminRequest) return;
@@ -1987,6 +2029,55 @@ body[data-section-theme="travel"] th { background: linear-gradient(135deg, #0c45
       });
     }
 
+    async function submitAdminJobPost(event) {
+      event.preventDefault();
+      var form = event.currentTarget;
+      var button = form.querySelector('button[type="submit"]');
+      var status = document.getElementById('adminPostStatus');
+      var data = Object.fromEntries(new FormData(form).entries());
+      button.disabled = true;
+      button.textContent = 'Publishing...';
+      status.textContent = '';
+      status.style.color = '';
+
+      try {
+        var response = await fetch(API_BASE + '/api/admin/job-posts', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + adminToken },
+          body: JSON.stringify(data)
+        });
+        var result = await response.json();
+        if (!response.ok || !result.success) throw new Error(result.error || 'Could not publish this posting.');
+        form.reset();
+        status.textContent = 'Posting published on the Jobs page.';
+        loadJobPortalAdminData();
+      } catch (error) {
+        status.textContent = error.message || 'Could not publish this posting.';
+        status.style.color = '#a52f39';
+      } finally {
+        button.disabled = false;
+        button.textContent = 'Publish posting';
+      }
+    }
+
+    function deleteJobPost(id) {
+      if (!confirm('Delete this job posting from the public board?')) return;
+      fetch(API_BASE + '/api/admin/delete', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + adminToken },
+        body: JSON.stringify({ table: 'job_posts', ids: [Number(id)] })
+      }).then(function (response) {
+        return response.json().then(function (data) {
+          if (!response.ok || !data.success) throw new Error(data.error || 'Delete failed.');
+          return data;
+        });
+      }).then(function () {
+        loadJobPortalAdminData();
+      }).catch(function (error) {
+        alert(error.message || 'Could not delete this job posting.');
+      });
+    }
+
     function renderTravel(rows) {
       if (!rows || rows.length === 0) {
         var hasSearch = document.getElementById('searchInput').value.trim() !== '';
@@ -1995,8 +2086,8 @@ body[data-section-theme="travel"] th { background: linear-gradient(135deg, #0c45
         return;
       }
 
-      var html = '<table><thead><tr>' +
-        '<th><input type="checkbox" id="selectAllBox" onclick="toggleSelectAll(this.checked)"></th>' +
+      var html = '<table class="application-table application-table--travel"><thead><tr>' +
+        '<th><input type="checkbox" id="selectAllBox" aria-label="Select all visible travel enquiries" title="Select all visible travel enquiries" onclick="toggleSelectAll(this.checked)"></th>' +
         '<th>#</th><th>Received</th><th>Name</th><th>Phone</th><th>Email</th>' +
         '<th>Origin</th><th>Destination</th><th>Purpose</th><th>Departure Date</th>' +
         '<th>Support Requested</th><th>Status</th><th>Action</th></tr></thead><tbody>';
@@ -2004,7 +2095,7 @@ body[data-section-theme="travel"] th { background: linear-gradient(135deg, #0c45
       rows.forEach(function (row, index) {
         var checked = selectedIds[row.id] ? ' checked' : '';
         html += '<tr>' +
-          '<td><input type="checkbox" class="row-select" onchange="toggleSelection(this, ' + row.id + ')"' + checked + '></td>' +
+          '<td><input type="checkbox" class="row-select" aria-label="Select travel enquiry ' + row.id + '" onchange="toggleSelection(this, ' + row.id + ')"' + checked + '></td>' +
           '<td>' + (index + 1) + '</td>' +
           '<td>' + formatTableDate(row.created_at) + '</td>' +
           '<td>' + escapeTableValue(row.name) + '</td>' +

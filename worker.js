@@ -858,6 +858,32 @@ export default {
       }
 
       if (
+        url.pathname === '/api/admin/job-posts' &&
+        request.method === 'POST'
+      ) {
+        if (!(await isAuthorized(request))) return json({ error: 'Unauthorized' }, 401);
+        const data = await request.json();
+        if (!data.company || !data.title || !data.category || !data.location || !data.description || !data.contactName || !data.contactEmail) {
+          return json({ error: 'Company, title, category, location, description, contact name and email are required.' }, 400);
+        }
+
+        await env.DB.prepare(`
+          INSERT INTO job_posts (
+            created_at, company, title, category, location, work_mode,
+            employment_type, salary_range, description, requirements,
+            contact_name, contact_email, contact_phone, status
+          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'Open')
+        `).bind(
+          new Date().toISOString(), data.company, data.title, data.category,
+          data.location, data.workMode || '', data.employmentType || '',
+          data.salaryRange || '', data.description, data.requirements || '',
+          data.contactName, data.contactEmail, data.contactPhone || ''
+        ).run();
+
+        return json({ success: true, message: 'Job posting added successfully.' });
+      }
+
+      if (
         url.pathname === '/api/admin/job-interests' &&
         request.method === 'GET'
       ) {
@@ -909,7 +935,7 @@ export default {
           'partnership_applications',
           'capital_applications',
           'job_applications',
-          'job_posts',
+            'job_posts',
           'job_interests',
           'travel_applications',
         ];
@@ -1012,6 +1038,7 @@ export default {
           'partnership_applications',
           'capital_applications',
           'job_applications',
+          'job_posts',
           'travel_applications',
         ];
 
