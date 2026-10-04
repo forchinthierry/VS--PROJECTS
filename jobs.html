@@ -2,231 +2,349 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#182b56">
 <link rel="icon" type="image/png" href="favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
-<title>Jobs & Careers - G-Spirit Ventures</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<title>Jobs &amp; Careers - G-Spirit Ventures</title>
 <style>
 *{box-sizing:border-box}
-:root{--navy:#182b56;--deep:#101d3c;--teal:#167d78;--gold:#d99532;--ink:#1e2941;--muted:#657187;--line:#dfe5ee;--soft:#f4f7fa}
-body{margin:0;font-family:Nunito,Arial,sans-serif;color:var(--ink);background:radial-gradient(circle at 8% 4%,rgba(22,125,120,.08),transparent 24%),radial-gradient(circle at 95% 16%,rgba(217,149,50,.07),transparent 22%),var(--soft);line-height:1.6;overflow-x:hidden}
+:root{--navy:#182b56;--deep:#101d3c;--teal:#167d78;--gold:#d99532;--ink:#1e2941;--muted:#657187;--line:#dfe5ee;--soft:#f4f7fa;--hdrstick:0px;--stick:70px}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;font-family:Nunito,Arial,sans-serif;color:var(--ink);background:radial-gradient(circle at 8% 4%,rgba(22,125,120,.08),transparent 24%),radial-gradient(circle at 95% 16%,rgba(217,149,50,.07),transparent 22%),var(--soft);line-height:1.55;overflow-x:hidden}
 a{text-decoration:none}
-header{background:linear-gradient(135deg,var(--deep),var(--navy) 62%,#1d4771);color:#fff;padding:14px max(24px,5vw);display:flex;align-items:center;justify-content:space-between;gap:20px;position:sticky;top:0;z-index:10;box-shadow:0 7px 22px rgba(16,29,60,.16)}
-.brand{display:flex;align-items:center;gap:12px;color:#fff}.brand img{max-height:48px;width:auto}.brand strong{display:block;font-size:15px;letter-spacing:.08em}.brand small{display:block;color:#b9d9df;font-size:11px}
-nav{display:flex;gap:20px;align-items:center}nav a{color:#fff;font-size:13px;font-weight:800}nav a:hover{color:#ffd98d}.nav-cta{padding:9px 14px;border-radius:8px;background:var(--gold)}
-.container{width:min(1180px,94%);margin:28px auto 55px}
-.hero,.form-card{background:rgba(255,255,255,.97);border:1px solid var(--line);border-radius:20px;box-shadow:0 16px 38px rgba(24,43,86,.07)}
-.hero{padding:32px 34px;margin-bottom:20px}.badge{display:inline-flex;padding:7px 13px;border-radius:999px;background:#edf7f5;color:var(--teal);border:1px solid #cce8e4;font-size:11px;font-weight:900;letter-spacing:.08em;text-transform:uppercase}
-h1,h2,h3{font-family:Fredoka,sans-serif;color:var(--navy)}.hero h1{font-size:clamp(32px,5vw,48px);line-height:1.08;margin:13px 0 9px}.hero p{max-width:820px;color:#5e6d82;margin:0;font-size:16px}
-.hero-layout{display:grid;grid-template-columns:1.25fr .75fr;align-items:center;gap:30px}.hero-actions{display:flex;gap:11px;flex-wrap:wrap;margin-top:20px}.hero-actions a{display:inline-flex;align-items:center;justify-content:center;min-height:45px;padding:0 17px;border-radius:9px;background:linear-gradient(135deg,var(--navy),#31598a);color:#fff;font-weight:900;font-size:13px}.hero-actions a.secondary{background:#edf1f5;color:#43516a}.hero-aside{padding:19px 21px;border:1px solid #d9e8e8;border-radius:15px;background:linear-gradient(145deg,#edf7f5,#fff7e7)}.hero-aside strong{display:block;color:var(--navy);font:600 19px Fredoka,sans-serif;margin-bottom:8px}.hero-aside ul{list-style:none;padding:0;margin:0;color:#586b7b;font-size:13px}.hero-aside li{padding:5px 0}.hero-aside li::before{content:'✓';color:var(--teal);font-weight:900;margin-right:9px}
-.info-section{margin:31px 0}.kicker{color:var(--teal);font-size:11px;font-weight:900;letter-spacing:.12em;text-transform:uppercase}.info-section h2{font-size:clamp(25px,3.4vw,34px);margin:6px 0}.info-section>p{max-width:740px;color:#647287;margin:0 0 19px}.insight-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}.insight-card{background:#fff;border:1px solid var(--line);border-radius:15px;padding:19px;box-shadow:0 10px 26px rgba(24,43,86,.05)}.insight-card .icon{font-size:23px}.insight-card h3{font-size:19px;margin:8px 0 5px}.insight-card p{font-size:13px;color:#68768a;margin:0;line-height:1.6}.notice{margin-top:16px;border:1px solid #f0dfb8;background:#fff9eb;color:#735d2c;border-radius:11px;padding:13px 16px;font-size:12px;line-height:1.6}.form-intro{margin-bottom:22px}.form-intro h2{font-size:27px;margin:4px 0}.form-intro p{margin:0;color:#647287;font-size:14px}
-.portal-section{margin:30px 0}.portal-head{display:flex;justify-content:space-between;align-items:end;gap:18px;margin-bottom:16px}.portal-head h2{font-size:clamp(26px,3.5vw,36px);margin:4px 0}.portal-head p{color:#647287;margin:0;max-width:680px}.portal-actions{display:flex;gap:9px;flex-wrap:wrap}.portal-actions button,.job-card button{border:0;border-radius:9px;padding:11px 15px;background:var(--navy);color:#fff;font-weight:900;cursor:pointer}.portal-actions button.alt{background:#e8eff7;color:var(--navy)}.job-filters{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:15px}.job-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px}.job-card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:19px;box-shadow:0 10px 28px rgba(24,43,86,.05)}.job-card-top{display:flex;justify-content:space-between;align-items:start;gap:10px}.job-card h3{font-size:21px;margin:0 0 3px}.job-company{font-weight:800;color:#627188;font-size:13px}.job-chip{font-size:10px;font-weight:900;color:#127467;background:#e8f7f3;border-radius:99px;padding:6px 9px;white-space:nowrap}.job-meta{display:flex;flex-wrap:wrap;gap:8px 13px;margin:14px 0;color:#586a7e;font-size:12px}.job-description{font-size:13px;color:#657286;white-space:pre-line;line-height:1.6}.job-requirements{font-size:12px;color:#637084;white-space:pre-line;margin:10px 0 15px}.job-card button{width:100%}.job-empty{grid-column:1/-1;text-align:center;padding:28px;color:#657286;background:#fff;border:1px dashed #cbd5e1;border-radius:14px}.portal-form{background:#fff;border:1px solid var(--line);border-radius:17px;padding:23px;box-shadow:0 12px 30px rgba(24,43,86,.05);margin:18px 0;scroll-margin-top:95px}.portal-form[hidden]{display:none}.portal-form h3{font-size:24px;margin:3px 0}.portal-form>p{color:#657286;font-size:13px;margin:0 0 15px}.portal-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 15px}.portal-status{display:none;margin:12px 0 0;padding:11px 13px;border-radius:9px;font-size:13px;font-weight:800}.portal-status.ok{display:block;background:#e8f7ef;color:#176b4b}.portal-status.bad{display:block;background:#fff0f1;color:#a52f39}
-.form-card{padding:28px 32px}
-.progress{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin-bottom:28px}.progress-step{font-size:11px;font-weight:900;color:#8b95a4}.progress-step span{display:block;height:7px;border-radius:99px;background:#e2e7ed;margin-bottom:6px}.progress-step.active,.progress-step.done{color:var(--teal)}.progress-step.active span,.progress-step.done span{background:linear-gradient(90deg,var(--teal),#43b6a8)}
-.step{display:none!important}.step.active{display:block!important;animation:show .3s ease}@keyframes show{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
-.heading{padding-bottom:15px;border-bottom:1px solid var(--line);margin-bottom:20px}.heading h2{font-size:25px;margin:0 0 4px}.heading p{font-size:13px;color:var(--muted);margin:0}
-.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 18px}.wide{grid-column:1/-1}.section-label{grid-column:1/-1;color:var(--teal);font-size:11px;font-weight:900;letter-spacing:.1em;text-transform:uppercase;margin:3px 0 3px}
-.field{background:#f9fbfc;border:1px solid #e6ebf1;border-radius:12px;padding:13px;margin-bottom:13px}label{display:block;color:var(--navy);font-size:12px;font-weight:900;margin-bottom:6px}.hint{display:block;color:#8691a3;font-size:10.5px;margin-top:-2px;margin-bottom:7px}
-input,select,textarea{width:100%;min-height:47px;padding:11px 12px;border:1px solid #ccd6e2;border-radius:9px;background:#fff;color:#27334a;font:inherit;font-size:13px}textarea{min-height:105px;resize:vertical}input:focus,select:focus,textarea:focus{outline:none;border-color:#69aaa7;box-shadow:0 0 0 3px rgba(22,125,120,.1)}
-.actions{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:24px}.actions.single{grid-template-columns:1fr}.actions.first-step{grid-template-columns:1fr}.actions.first-step .back{display:none}
-button{min-height:48px;border:0;border-radius:10px;font:inherit;font-weight:900;cursor:pointer;transition:transform .18s ease,box-shadow .18s ease}.next,.submit{background:linear-gradient(135deg,var(--navy),#31598a);color:#fff;box-shadow:0 10px 20px rgba(24,43,86,.15)}.back{background:#edf1f5;color:#43516a}.pdf{width:100%;margin-top:11px;background:linear-gradient(135deg,var(--gold),#e9b552);color:#fff}
-button:hover{transform:translateY(-1px)}button:disabled{opacity:.7;cursor:wait;transform:none}
-.consent{margin-top:18px;background:#f7fafb;border:1px solid #e1e7ed;border-radius:10px;padding:13px}.check{display:flex;align-items:flex-start;gap:10px;font-size:12px;color:#5a687b}.check input{width:auto;min-height:auto;margin-top:4px}
-.review-layout{display:grid;grid-template-columns:1.25fr .75fr;gap:18px}.review-card,.summary{background:#fbfcfd;border:1px solid var(--line);border-radius:13px;padding:16px}.review-card h3,.summary h3{margin:0 0 13px;font-size:20px}.review-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.review-item{background:#fff;border:1px solid #e7ebf0;border-radius:9px;padding:10px 12px}.review-item small{display:block;color:#8390a2;font-size:9.5px;font-weight:900;text-transform:uppercase;letter-spacing:.06em}.review-item strong{display:block;color:#2c3950;font-size:12.5px;margin-top:3px;word-break:break-word}.summary{background:linear-gradient(145deg,#edf7f5,#fff7e7)}.summary-line{display:flex;justify-content:space-between;gap:12px;padding:9px 0;border-bottom:1px solid rgba(30,41,65,.08);font-size:12px}.summary-line:last-child{border:0}.summary-line span{color:#69768a}.summary-line strong{text-align:right;color:var(--navy)}
-.success,.error{display:none;margin-top:13px;padding:11px 13px;border-radius:9px;font-size:12px;font-weight:800}.success{background:#e8f7ef;color:#176b4b;border:1px solid #bfe7d1}.error{background:#fff0f1;color:#a52f39;border:1px solid #f0c5c8}
-footer{text-align:center;padding:25px 20px;color:#778296;font-size:13px}footer a{color:var(--navy);margin:0 8px}
-@media(max-width:850px){.review-layout,.hero-layout{grid-template-columns:1fr}.insight-grid{grid-template-columns:1fr 1fr}.job-list{grid-template-columns:1fr}}
-@media(max-width:700px){header{padding:12px 18px}.brand small{display:none}nav a:not(.nav-cta){display:none}.hero,.form-card{padding:20px}.grid,.review-grid,.actions,.insight-grid,.portal-grid,.job-filters{grid-template-columns:1fr}.wide{grid-column:auto}.progress{gap:5px}.progress-step{font-size:9.5px}.portal-head{display:block}.portal-actions{margin-top:12px}}
+button{font:inherit;cursor:pointer;border:0;-webkit-tap-highlight-color:transparent}
+h1,h2,h3,h4{font-family:Fredoka,sans-serif;color:var(--navy)}
+[hidden]{display:none!important}
+
+/* header */
+header{background:linear-gradient(135deg,var(--deep),var(--navy) 62%,#1d4771);color:#fff;padding:12px max(20px,5vw);display:flex;align-items:center;justify-content:space-between;gap:16px;position:sticky;top:0;z-index:20;box-shadow:0 7px 22px rgba(16,29,60,.16)}
+.brand{display:flex;align-items:center;gap:12px;color:#fff}.brand img{max-height:44px;width:auto}.brand strong{display:block;font-size:15px;letter-spacing:.08em}.brand small{display:block;color:#b9d9df;font-size:11px}
+nav{display:flex;gap:20px;align-items:center}nav a{color:#fff;font-size:13px;font-weight:800;white-space:nowrap}nav a:hover{color:#ffd98d}.nav-cta{padding:9px 14px;border-radius:8px;background:var(--gold)}
+.container{width:min(1120px,94%);margin:20px auto 50px}
+
+/* hero */
+.hero{position:relative;overflow:hidden;border-radius:22px;padding:28px 32px;margin-bottom:16px;color:#fff;background:linear-gradient(135deg,var(--deep),var(--navy) 58%,#1d4771);box-shadow:0 16px 38px rgba(24,43,86,.14)}
+.hero::before{content:'';position:absolute;width:380px;height:380px;right:-130px;top:-190px;border:1px solid rgba(217,149,50,.45);border-radius:50%;box-shadow:0 0 0 26px rgba(217,149,50,.08),0 0 0 52px rgba(217,149,50,.04)}
+.hero-layout{position:relative;display:grid;grid-template-columns:1.4fr .6fr;gap:26px;align-items:center}
+.badge{display:inline-flex;padding:6px 12px;border-radius:999px;background:var(--gold);color:#2b1b00;font-size:11px;font-weight:900;letter-spacing:.08em;text-transform:uppercase}
+.hero h1{color:#fff;font-size:clamp(27px,5vw,42px);line-height:1.1;margin:12px 0 8px}
+.hero p{margin:0;color:#cfdcee;max-width:560px;font-size:15px}
+.hero-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 18px;border-radius:10px;font-weight:900;font-size:13px;background:var(--gold);color:#2b1b00;transition:transform .18s}
+.btn:hover{transform:translateY(-2px)}.btn.ghost{background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.35)}
+.pills{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}.pills span{font-size:12px;font-weight:800;padding:5px 11px;border-radius:999px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:#e7eefb}.pills b{color:#ffd98d}
+.flow{list-style:none;margin:0;padding:0;counter-reset:s;display:grid;gap:10px}
+.flow li{counter-increment:s;display:flex;gap:11px;align-items:center;padding:11px 13px;border-radius:13px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);font-size:13px;font-weight:700;color:#e7eefb}
+.flow li::before{content:counter(s);flex:none;width:26px;height:26px;display:grid;place-items:center;border-radius:50%;background:var(--gold);color:#2b1b00;font-weight:900;font-size:12px}
+
+/* tabs */
+.tabs{position:sticky;top:var(--hdrstick);z-index:9;display:grid;grid-template-columns:repeat(4,1fr);gap:6px;padding:6px;margin-bottom:16px;background:rgba(255,255,255,.93);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid var(--line);border-radius:16px;box-shadow:0 10px 26px rgba(24,43,86,.08)}
+.tab{position:relative;display:flex;align-items:center;justify-content:center;gap:8px;padding:11px 8px;border-radius:11px;background:transparent;color:#4a5a73;font-weight:900;font-size:13px;transition:background .2s,color .2s}
+.tab i{font-style:normal;font-size:17px}
+.tab:hover{background:#eef3f8}
+.tab[aria-selected=true]{background:linear-gradient(135deg,var(--navy),#31598a);color:#fff;box-shadow:0 8px 16px rgba(24,43,86,.2)}
+.tab em{font-style:normal;font-size:10px;font-weight:900;background:var(--gold);color:#2b1b00;border-radius:99px;padding:1px 7px;min-width:18px;text-align:center}
+.panel{scroll-margin-top:var(--stick);animation:show .3s ease}
+@keyframes show{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+/* shared bits */
+.kicker{color:var(--teal);font-size:11px;font-weight:900;letter-spacing:.12em;text-transform:uppercase}
+.slim{display:flex;gap:10px;align-items:center;padding:10px 14px;margin-bottom:14px;border:1px solid #f0dfb8;background:#fff9eb;color:#735d2c;border-radius:12px;font-size:12.5px}
+.slim b{color:#4d3a10}
+.notice{margin-top:14px;border:1px solid #f0dfb8;background:#fff9eb;color:#735d2c;border-radius:11px;padding:12px 15px;font-size:12.5px}
+
+/* roles */
+.filters{display:grid;grid-template-columns:1.4fr 1fr auto;gap:10px;margin-bottom:10px}
+.count{display:flex;justify-content:space-between;align-items:center;margin:0 2px 12px;color:var(--muted);font-size:12.5px;font-weight:800}
+.linkbtn{background:none;color:var(--teal);font-weight:900;font-size:12.5px;padding:4px 2px}
+.job-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.job{display:flex;flex-direction:column;background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px;box-shadow:0 10px 26px rgba(24,43,86,.05);transition:transform .2s,box-shadow .2s}
+.job:hover{transform:translateY(-3px);box-shadow:0 16px 32px rgba(24,43,86,.1)}
+.job-top{display:flex;gap:12px;align-items:center}
+.av{flex:none;width:44px;height:44px;border-radius:13px;display:grid;place-items:center;color:#fff;font:600 19px Fredoka,sans-serif;background:hsl(var(--h) 52% 38%)}
+.job h3{font-size:18px;margin:0;line-height:1.2}.co{font-weight:800;color:#627188;font-size:13px}
+.meta{display:flex;flex-wrap:wrap;gap:6px;margin:12px 0 8px}.meta span{font-size:11.5px;font-weight:800;color:#3f536b;background:#eef3f8;border-radius:99px;padding:4px 10px}.meta span.area{background:#e8f7f3;color:#127467}.meta span.pay{background:#fff3da;color:#8a5a0b}
+.desc{margin:0;font-size:13.5px;color:#5f6e83;white-space:pre-line}.desc.clamp{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.reqs{margin:10px 0 0;padding:10px 12px;border-radius:10px;background:#f6f9fb;font-size:12.5px;color:#586a80;white-space:pre-line}
+.job-foot{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:auto;padding-top:14px}
+.apply-btn{padding:10px 16px;border-radius:10px;background:linear-gradient(135deg,var(--navy),#31598a);color:#fff;font-weight:900;font-size:13px}
+.empty{grid-column:1/-1;text-align:center;padding:30px 18px;color:#657286;background:#fff;border:1px dashed #cbd5e1;border-radius:16px}
+.empty .big{font-size:34px}.empty .row{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:12px}
+.skel{pointer-events:none}.skel i{display:block;border-radius:8px;background:linear-gradient(90deg,#eef2f6,#f8fafc,#eef2f6);background-size:200% 100%;animation:sh 1.2s linear infinite}
+@keyframes sh{to{background-position:-200% 0}}
+
+/* forms */
+.form-card,.portal-form{background:rgba(255,255,255,.97);border:1px solid var(--line);border-radius:20px;box-shadow:0 16px 38px rgba(24,43,86,.07)}
+.form-card{padding:24px 28px;scroll-margin-top:var(--stick)}
+.portal-form{padding:22px;margin:0}.portal-form h3{font-size:24px;margin:3px 0}.portal-form>p{color:#657286;font-size:13px;margin:0 0 14px}
+.applying{display:flex;gap:10px;align-items:center;justify-content:space-between;padding:10px 14px;margin-bottom:14px;border-radius:12px;background:#e8f7f3;border:1px solid #cce8e4;color:#0e5f58;font-size:13px;font-weight:800}
+.prep{margin-bottom:14px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:0 16px}
+.prep summary{cursor:pointer;padding:13px 0;font-weight:900;color:var(--navy);font-size:14px;list-style:none}.prep summary::-webkit-details-marker{display:none}.prep summary::after{content:'＋';float:right;color:var(--teal)}.prep[open] summary::after{content:'－'}
+.prep ul{margin:0 0 12px;padding:0;list-style:none;display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.prep li{padding:11px 12px;border-radius:11px;background:#f6f9fb;font-size:12.5px;color:#586a80}.prep li b{display:block;color:var(--navy);font-size:13.5px}
+.form-intro h2{font-size:25px;margin:2px 0 2px}.form-intro p{margin:0 0 12px;color:#647287;font-size:13.5px}
+.progress-shell{padding:10px 0 12px;margin-bottom:14px;border-bottom:1px solid var(--line)}
+.progress-status{display:flex;justify-content:space-between;gap:10px;margin-bottom:8px;color:#637187;font-size:12px;font-weight:900}.progress-status strong{color:var(--navy)}
+.progress-track{height:7px;border-radius:99px;background:#e7edf2;overflow:hidden}.progress-fill{height:100%;width:0;border-radius:inherit;background:linear-gradient(90deg,var(--teal),#52c7a9);transition:width .35s ease}
+.progress{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-top:11px}
+.progress-step{font-size:10.5px;font-weight:900;color:#8994a4;text-align:center;cursor:pointer;min-width:0}
+.progress-step span{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;border:2px solid #dbe2e9;background:#fff;margin:0 auto 4px;color:#8290a1;font-size:11px;transition:.2s}
+.progress-step.active{color:var(--navy)}.progress-step.active span{background:var(--navy);border-color:var(--navy);color:#fff;box-shadow:0 0 0 4px rgba(24,43,86,.12)}
+.progress-step.done{color:var(--teal)}.progress-step.done span{background:var(--teal);border-color:var(--teal);color:#fff}
+.progress-step[aria-disabled=true]{cursor:default}.progress-step:focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:6px}
+.step{display:none}.step.active{display:block;animation:show .3s ease}
+.heading{padding-bottom:10px;border-bottom:1px solid var(--line);margin-bottom:14px}.heading h2{font-size:23px;margin:0 0 3px}.heading p{font-size:13px;color:var(--muted);margin:0}
+.grid,.portal-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 14px}
+.wide,.section-label{grid-column:1/-1}.section-label{color:var(--teal);font-size:11px;font-weight:900;letter-spacing:.1em;text-transform:uppercase;margin:6px 0 6px;padding-top:6px;border-top:1px dashed var(--line)}.section-label:first-child{border:0;padding:0;margin-top:0}
+.field{background:#f9fbfc;border:1px solid #e6ebf1;border-radius:12px;padding:10px 12px;margin-bottom:10px}
+label{display:block;color:var(--navy);font-size:12px;font-weight:900;margin-bottom:5px}.hint{display:block;color:#8691a3;font-size:11px;margin-top:5px}
+input,select,textarea{width:100%;min-height:44px;padding:9px 11px;border:1px solid #ccd6e2;border-radius:9px;background:#fff;color:#27334a;font:inherit;font-size:14px}
+textarea{min-height:92px;resize:vertical}
+input:focus,select:focus,textarea:focus{outline:none;border-color:#69aaa7;box-shadow:0 0 0 3px rgba(22,125,120,.12)}
+.actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}.actions.single{grid-template-columns:1fr}
+.next,.submit{min-height:48px;border-radius:10px;font-weight:900;background:linear-gradient(135deg,var(--navy),#31598a);color:#fff;box-shadow:0 10px 20px rgba(24,43,86,.15)}
+.back{min-height:48px;border-radius:10px;font-weight:900;background:#edf1f5;color:#43516a}
+.pdf{width:100%;min-height:46px;margin-top:10px;border-radius:10px;font-weight:900;background:#fff;color:#8a5a0b;border:1.5px solid var(--gold)}
+button:disabled{opacity:.7;cursor:wait}
+.consent{margin-top:14px;background:#f7fafb;border:1px solid #e1e7ed;border-radius:10px;padding:12px}.check{display:flex;align-items:flex-start;gap:10px;font-size:12.5px;color:#5a687b;margin:0;font-weight:600}.check input{width:20px;min-height:20px;margin-top:2px;flex:none}.check a{color:var(--teal);font-weight:800}
+.success,.error{display:none;margin-top:12px;padding:11px 13px;border-radius:9px;font-size:13px;font-weight:800}.success{background:#e8f7ef;color:#176b4b;border:1px solid #bfe7d1}.error{background:#fff0f1;color:#a52f39;border:1px solid #f0c5c8}
+/* review */
+.who{display:flex;gap:12px;align-items:center;padding:12px 14px;margin-bottom:12px;border-radius:14px;background:linear-gradient(145deg,#edf7f5,#fff7e7);border:1px solid #d9e8e8}
+.who .av{width:42px;height:42px}.who strong{display:block;color:var(--navy);font-size:15px}.who small{color:var(--muted);font-size:12.5px}
+.rv-groups{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.rv{border:1px solid var(--line);border-radius:13px;background:#fbfcfd;padding:12px 14px}
+.rv header{all:unset;display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}.rv h4{margin:0;font-size:16px}
+.rv .edit{background:#e8f7f3;color:#127467;border-radius:99px;padding:4px 12px;font-size:12px;font-weight:900}
+.rv dl{margin:0}.rv dl div{display:flex;justify-content:space-between;gap:12px;padding:6px 0;border-top:1px solid #eef1f5;font-size:12.5px}
+.rv dt{color:#7a879a;flex:none}.rv dd{margin:0;text-align:right;color:#2c3950;font-weight:800;word-break:break-word}
+/* portal wizard */
+.portal-progress{margin:12px 0 16px;padding:11px;border-radius:12px;background:#f4f7fa}.portal-progress-head{display:flex;justify-content:space-between;gap:10px;color:#637187;font-size:11px;font-weight:900;margin-bottom:7px}.portal-progress-head strong{color:var(--navy)}
+.portal-progress-track{height:6px;background:#dfe6ed;border-radius:99px;overflow:hidden}.portal-progress-fill{height:100%;width:0;background:linear-gradient(90deg,var(--teal),#52c7a9);transition:width .3s}
+.portal-page{display:none}.portal-page.active{display:block;animation:show .25s ease}.portal-page .field{margin-bottom:9px}.portal-page textarea{min-height:90px}
+.portal-page-actions{display:flex;gap:10px;justify-content:space-between;margin-top:12px}.portal-page-actions button{min-width:130px;min-height:46px;border-radius:10px;font-weight:900}.portal-page-actions .next{margin-left:auto}
+.portal-status{display:none;margin:12px 0 0;padding:11px 13px;border-radius:9px;font-size:13px;font-weight:800}.portal-status.ok{display:block;background:#e8f7ef;color:#176b4b}.portal-status.bad{display:block;background:#fff0f1;color:#a52f39}
+footer{text-align:center;padding:24px 20px 30px;color:#778296;font-size:13px}footer a{color:var(--navy);margin:0 8px;font-weight:700;white-space:nowrap}
+
+/* tablet */
+@media(max-width:900px){.hero-layout{grid-template-columns:1fr}.flow{display:none}.rv-groups{grid-template-columns:1fr}.prep ul{grid-template-columns:1fr}}
+/* mobile */
+@media(max-width:700px){
+ header{position:static;flex-wrap:wrap;padding:10px 16px;gap:8px 12px}
+ .brand small{display:none}.brand img{max-height:38px}
+ nav{order:3;width:100%;gap:18px;overflow-x:auto;padding-bottom:2px;scrollbar-width:none}nav::-webkit-scrollbar{display:none}
+ nav a:not(.nav-cta){opacity:.92}.nav-cta{margin-left:auto}
+ .container{margin-top:12px}
+ .hero{padding:20px 18px;border-radius:18px}.hero p{font-size:14px}.hero-actions .btn{flex:1}
+ .pills span{font-size:11.5px}
+ .tabs{top:0;gap:3px;padding:4px;border-radius:14px}
+ .tab{flex-direction:column;gap:1px;padding:7px 2px 6px;font-size:11px}.tab i{font-size:18px}.tab em{position:absolute;top:1px;right:calc(50% - 25px);font-size:9px;padding:0 5px;min-width:16px}
+ .filters{grid-template-columns:1fr 1fr}.filters input{grid-column:1/-1}.filters .linkbtn{grid-column:auto}
+ .job-list{grid-template-columns:1fr}
+ .form-card{padding:16px 14px;border-radius:16px}.portal-form{padding:16px 14px;border-radius:16px}
+ .grid,.portal-grid{grid-template-columns:1fr}
+ .progress-step{font-size:10px}.progress-step span{width:24px;height:24px}
+ input,select,textarea{font-size:16px}
+ .actions{grid-template-columns:1fr 1.4fr}.actions.single{grid-template-columns:1fr}
+ .portal-page-actions button{min-width:0;flex:1}.portal-page-actions .next{margin-left:0}
+ .job-foot{flex-direction:row}.apply-btn{padding:11px 18px}
+}
+@media(max-width:380px){.tab span{font-size:10px}.brand strong{font-size:13px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
 <body>
 <header>
   <a class="brand" href="index.html"><img src="logo.png" alt="G-Spirit logo"><span><strong>G-SPIRIT VENTURES</strong><small>Powering Dreams</small></span></a>
-  <nav aria-label="Primary navigation"><a href="index.html">Home</a><a href="about.html">About</a><a href="travels.html">Travel</a><a href="contact.html">Contact</a><a class="nav-cta" href="#application">Apply</a></nav>
+  <nav aria-label="Primary navigation"><a href="index.html">Home</a><a href="about.html">About</a><a href="travels.html">Travel</a><a href="contact.html">Contact</a><a class="nav-cta" href="#apply" onclick="showTab('apply');return false">Apply</a></nav>
 </header>
 
 <div class="container">
   <section class="hero">
-    <div class="hero-layout"><div><span class="badge">Careers · G-Spirit Ventures</span>
-    <h1>Find work that moves you forward.</h1>
-    <p>Find current openings, share an opportunity with the community, or register what kind of work you’re seeking. We bring both sides together and keep applications reviewable.</p>
-    <div class="hero-actions"><a href="#opportunities">Explore opportunities ↓</a><a class="secondary" href="#career-interest" onclick="togglePortalForm('interestForm');return false">Register your interest</a></div></div>
-    <aside class="hero-aside"><strong>Three ways to get started</strong><ul><li>Browse and apply for an open role</li><li>Post a verified opportunity for candidates</li><li>Tell us what you’re looking for to help us match you</li></ul></aside></div>
+    <div class="hero-layout">
+      <div>
+        <span class="badge">Careers · G-Spirit Ventures</span>
+        <h1>Find work that moves you forward.</h1>
+        <p>Browse open roles, apply in a few short steps, or tell us what you are good at and let us do the matching.</p>
+        <div class="hero-actions"><a class="btn" href="#roles" onclick="showTab('roles');return false">Browse roles</a><a class="btn ghost" href="#apply" onclick="showTab('apply');return false">Apply now</a></div>
+        <div class="pills"><span><b id="statRoles">…</b> open roles</span><span>10 work areas</span><span>Free to apply</span></div>
+      </div>
+      <ol class="flow" aria-label="How it works"><li>Browse a role or join the talent map</li><li>Apply in 5 quick steps</li><li>We follow up on WhatsApp</li></ol>
+    </div>
   </section>
 
-  <section class="portal-section" id="opportunities">
-    <div class="portal-head"><div><span class="kicker">Community job board</span><h2>Open opportunities</h2><p>Browse roles shared with G-Spirit Ventures. Applications can be reviewed by our team and followed up directly.</p></div><div class="portal-actions"><button type="button" onclick="togglePortalForm('postJobForm')">＋ Post a job</button><button type="button" class="alt" onclick="togglePortalForm('interestForm')">Share your interests</button></div></div>
-    <div class="job-filters"><input id="jobSearch" type="search" placeholder="Search role, company, or skill" aria-label="Search opportunities"><select id="jobCategoryFilter" aria-label="Filter opportunities by work area"><option value="">All work areas</option><option>Finance & Accounting</option><option>Administration & Operations</option><option>Sales & Business Development</option><option>Customer Service</option><option>Marketing & Communications</option><option>Information Technology / Digital</option><option>Human Resources</option><option>Logistics / Procurement</option><option>Education / Training</option><option>Other</option></select></div>
-    <div id="jobListings" class="job-list" aria-live="polite"><div class="job-empty">Loading opportunities…</div></div>
-  </section>
-
-  <section id="postJobForm" class="portal-form" hidden><span class="kicker">For employers</span><h3>Post an opportunity</h3><p>Share a clear, genuine opening. Listings are published to this board for candidates to discover.</p>
-    <form id="jobPostForm"><div class="portal-grid">
-      <div class="field"><label for="postCompany">Company / organisation *</label><input id="postCompany" required></div><div class="field"><label for="postTitle">Job title *</label><input id="postTitle" required placeholder="e.g. Accounts Assistant"></div>
-      <div class="field"><label for="postCategory">Work area *</label><select id="postCategory" required><option value="">Choose work area</option><option>Finance & Accounting</option><option>Administration & Operations</option><option>Sales & Business Development</option><option>Customer Service</option><option>Marketing & Communications</option><option>Information Technology / Digital</option><option>Human Resources</option><option>Logistics / Procurement</option><option>Education / Training</option><option>Other</option></select></div>
-      <div class="field"><label for="postLocation">Location *</label><input id="postLocation" required placeholder="City / region"></div><div class="field"><label for="postMode">Work arrangement</label><select id="postMode"><option>On-site</option><option>Hybrid</option><option>Remote</option></select></div>
-      <div class="field"><label for="postType">Employment type</label><select id="postType"><option>Full-time</option><option>Part-time</option><option>Contract</option><option>Internship</option><option>Temporary</option></select></div><div class="field"><label for="postSalary">Salary / range</label><input id="postSalary" placeholder="Optional, e.g. 150,000–250,000 XAF"></div>
-      <div class="field"><label for="postContactName">Contact person *</label><input id="postContactName" required></div><div class="field"><label for="postContactEmail">Contact email *</label><input id="postContactEmail" type="email" required></div><div class="field"><label for="postContactPhone">Contact phone</label><input id="postContactPhone" type="tel"></div>
-      <div class="field wide"><label for="postDescription">Role description *</label><textarea id="postDescription" required placeholder="What will the person do? What does the role offer?"></textarea></div><div class="field wide"><label for="postRequirements">Skills and requirements</label><textarea id="postRequirements" placeholder="Experience, qualifications, skills, and how to stand out"></textarea></div>
-    </div><div class="notice">Please post only genuine opportunities and include clear, accurate terms. Never ask candidates to pay to apply or share passwords or verification codes.</div><label class="check"><input id="postAttestation" type="checkbox" required><span>I’m authorised to share this opening, and the role details are accurate.</span></label><button class="next" type="submit">Publish opening</button><div id="postJobStatus" class="portal-status" role="status"></div></form>
-  </section>
-
-  <section id="interestForm" class="portal-form" hidden><span class="kicker">For job seekers</span><h3 id="career-interest">Tell us what you’re looking for</h3><p>Register a concise career profile for opportunity mapping. You can submit a full application when a role is a fit.</p>
-    <form id="jobInterestForm"><div class="portal-grid"><div class="field"><label for="interestName">Your name *</label><input id="interestName" required></div><div class="field"><label for="interestPhone">Phone / WhatsApp *</label><input id="interestPhone" type="tel" required></div><div class="field"><label for="interestEmail">Email *</label><input id="interestEmail" type="email" required></div><div class="field"><label for="interestRole">Role you’re seeking *</label><input id="interestRole" required placeholder="e.g. Sales Representative"></div><div class="field"><label for="interestCategory">Work area</label><select id="interestCategory"><option value="">Choose work area</option><option>Finance & Accounting</option><option>Administration & Operations</option><option>Sales & Business Development</option><option>Customer Service</option><option>Marketing & Communications</option><option>Information Technology / Digital</option><option>Human Resources</option><option>Logistics / Procurement</option><option>Education / Training</option><option>Other</option></select></div><div class="field"><label for="interestLocation">Preferred location</label><input id="interestLocation" placeholder="City, region or open to relocate"></div><div class="field"><label for="interestMode">Work arrangement</label><select id="interestMode"><option value="">Any arrangement</option><option>On-site</option><option>Hybrid</option><option>Remote</option></select></div><div class="field"><label for="interestExperience">Experience level</label><select id="interestExperience"><option value="">Choose level</option><option>Entry Level / Graduate</option><option>1–2 Years</option><option>3–5 Years</option><option>6–10 Years</option><option>10+ Years</option></select></div><div class="field wide"><label for="interestSkills">Skills / short introduction</label><textarea id="interestSkills" placeholder="What should we know when matching you to a role?"></textarea></div><div class="field wide"><label for="interestCv">CV link (optional)</label><input id="interestCv" type="url" placeholder="Link to a CV you’re comfortable sharing"></div></div><label class="check"><input id="interestConsent" type="checkbox" required><span>I agree that G-Spirit Ventures may use these details to map my skills to relevant opportunities and contact me about them.</span></label><button class="next" type="submit">Add me to the talent map</button><div id="interestStatus" class="portal-status" role="status"></div></form>
-  </section>
-
-  <section class="info-section" id="prepare"><span class="kicker">Before you apply</span><h2>Make your experience easy to understand</h2><p>You can prepare a few details in advance. You don’t need a perfect CV to tell us what you’re good at and where you’d like to go next.</p>
-    <div class="insight-grid"><article class="insight-card"><div class="icon">🎯</div><h3>Choose a direction</h3><p>Think about the roles, work areas and locations that fit your interests and experience.</p></article><article class="insight-card"><div class="icon">📚</div><h3>Bring your experience to life</h3><p>Include relevant training, practical skills and examples of work you’ve done or results you’ve contributed to.</p></article><article class="insight-card"><div class="icon">🕒</div><h3>Set expectations</h3><p>Share when you could start and any work arrangement or salary expectations you want the team to understand.</p></article></div>
-    <div class="notice"><strong>Good to know:</strong> Sending an application does not guarantee a role or interview. G-Spirit Ventures will discuss an opportunity and its terms with you directly. Never pay a person who promises a job or asks for your account password or verification code.</div>
-  </section>
-
-  <main id="application" class="form-card">
-    <div class="form-intro"><span class="kicker">Your application</span><h2>Build your candidate profile</h2><p>Complete the steps that apply to you. You’ll review everything before submitting.</p></div>
-    <div class="progress">
-      <div class="progress-step active" data-step="1"><span></span>1. Career goals</div>
-      <div class="progress-step" data-step="2"><span></span>2. Education</div>
-      <div class="progress-step" data-step="3"><span></span>3. Your details</div>
-      <div class="progress-step" data-step="4"><span></span>4. Review</div>
+  <div id="hub">
+    <div class="tabs" id="tabs" role="tablist" aria-label="Careers sections">
+      <button type="button" class="tab" role="tab" data-tab="roles" aria-selected="true"><i>🔎</i><span>Roles</span><em id="tabCount">…</em></button>
+      <button type="button" class="tab" role="tab" data-tab="apply" aria-selected="false"><i>📝</i><span>Apply</span></button>
+      <button type="button" class="tab" role="tab" data-tab="talent" aria-selected="false"><i>🧭</i><span>Talent map</span></button>
+      <button type="button" class="tab" role="tab" data-tab="post" aria-selected="false"><i>➕</i><span>Post a job</span></button>
     </div>
 
-    <form id="jobForm" onsubmit="submitApplication(event)">
-      <section class="step active" data-step="1">
-        <div class="heading"><h2>Career Goals & Preferences</h2><p>Help us understand your experience and the type of role you are looking for.</p></div>
-        <div class="grid">
-          <div class="section-label">Employment background</div>
-          <div class="field"><label for="employmentStatus">Current Employment Status *</label><select id="employmentStatus" required><option value="">Select status</option><option>Employed</option><option>Self-employed</option><option>Unemployed</option><option>Student / Final-year Student</option><option>Recent Graduate</option><option>Other</option></select></div>
-          <div class="field"><label for="experienceLevel">Experience Level *</label><select id="experienceLevel" required><option value="">Select level</option><option>Entry Level / Graduate</option><option>1–2 Years</option><option>3–5 Years</option><option>6–10 Years</option><option>10+ Years</option></select></div>
-          <div class="field"><label for="yearsExperience">Total Years of Experience</label><input id="yearsExperience" type="number" min="0" max="60" placeholder="e.g. 4"></div>
-          <div class="field"><label for="currentJob">Current / Most Recent Job</label><input id="currentJob" placeholder="Job title / occupation"></div>
-          <div class="field"><label for="currentEmployer">Current / Most Recent Employer</label><input id="currentEmployer" placeholder="Company / organisation"></div>
-          <div class="field wide"><label for="experienceSummary">Employment & Experience Summary *</label><textarea id="experienceSummary" required placeholder="Describe your main responsibilities, achievements, and relevant experience."></textarea></div>
-          <div class="section-label">Target opportunity</div>
-          <div class="field"><label for="preferredRole">Preferred Role / Position *</label><input id="preferredRole" required placeholder="Position you are seeking"></div>
-          <div class="field"><label for="jobCategory">Preferred Work Area *</label><select id="jobCategory" required><option value="">Select area</option><option>Finance & Accounting</option><option>Administration & Operations</option><option>Sales & Business Development</option><option>Customer Service</option><option>Marketing & Communications</option><option>Information Technology / Digital</option><option>Human Resources</option><option>Logistics / Procurement</option><option>Education / Training</option><option>Other</option></select></div>
-          <div class="field"><label for="preferredLocation">Preferred Work Location *</label><input id="preferredLocation" required placeholder="City, region or Cameroon-wide"></div>
-          <div class="field"><label for="workMode">Preferred Work Arrangement</label><select id="workMode"><option value="">Select preference</option><option>On-site</option><option>Hybrid</option><option>Remote</option><option>Open to any</option></select></div>
-          <div class="field"><label for="availability">Availability to Start *</label><select id="availability" required><option value="">Select availability</option><option>Immediately</option><option>Within 2 weeks</option><option>Within 1 month</option><option>1–3 months</option><option>More than 3 months</option></select></div>
-          <div class="field"><label for="salaryExpectation">Expected Monthly Salary (XAF)</label><input id="salaryExpectation" type="number" min="0" step="1000" placeholder="Optional"></div>
-          <div class="field wide"><label for="skills">Key Skills & Strengths *</label><textarea id="skills" required placeholder="List your strongest skills and capabilities relevant to the type of work you want."></textarea></div>
-          <div class="section-label">Application support</div>
-          <div class="field"><label for="cvLink">CV / Resume Link</label><input id="cvLink" type="url" placeholder="Google Drive, OneDrive, LinkedIn, etc."><span class="hint">Optional. Use a link accessible to the recruitment team.</span></div>
-          <div class="field"><label for="reference">Professional Reference</label><input id="reference" placeholder="Name, organisation and contact"></div>
-        </div>
-        <div class="consent"><label class="check"><input id="consent" type="checkbox" required><span>I confirm that the information provided is accurate to the best of my knowledge and authorize G-Spirit Ventures to use these details for recruitment and opportunity matching. Submission does not guarantee employment.</span></label></div>
-        <div class="actions first-step"><button type="button" class="back" onclick="prevStep()">← Back</button><button type="button" class="next" onclick="nextStep()">Continue to qualifications →</button></div>
-      </section>
+    <!-- ROLES -->
+    <div class="panel" id="panel-roles" role="tabpanel">
+      <div class="slim">🛡️ <span><b>Stay safe:</b> never pay anyone who promises you a job, and never share passwords or verification codes.</span></div>
+      <div class="filters">
+        <input id="jobSearch" type="search" placeholder="Search role, company or skill" aria-label="Search opportunities">
+        <select id="jobCategoryFilter" aria-label="Filter by work area" data-areas data-ph="All work areas"></select>
+        <button type="button" class="linkbtn" id="clearFilters" hidden>Clear ✕</button>
+      </div>
+      <div class="count"><span id="roleCount">Loading roles…</span></div>
+      <div id="jobListings" class="job-list" aria-live="polite"></div>
+    </div>
 
-      <section class="step" data-step="2">
-        <div class="heading"><h2>Education & Qualifications</h2><p>Tell us about your highest level of education and relevant professional development.</p></div>
-        <div class="grid">
-          <div class="section-label">Academic background</div>
-          <div class="field"><label for="highestQualification">Highest Qualification *</label><select id="highestQualification" required><option value="">Select qualification</option><option>GCE O-Level / equivalent</option><option>GCE A-Level / equivalent</option><option>HND</option><option>Bachelor's Degree / Licence</option><option>Master's Degree</option><option>PhD / Doctorate</option><option>Professional Qualification</option><option>Vocational / Technical Training</option><option>Other</option></select></div>
-          <div class="field"><label for="fieldOfStudy">Field of Study *</label><input id="fieldOfStudy" required placeholder="Accounting, Engineering, Computer Science..."></div>
-          <div class="field"><label for="institution">Institution</label><input id="institution" placeholder="School, university or training institution"></div>
-          <div class="field"><label for="graduationYear">Completion Year</label><input id="graduationYear" type="number" min="1950" max="2100" placeholder="e.g. 2024"></div>
-          <div class="section-label">Additional qualifications</div>
-          <div class="field wide"><label for="certifications">Certifications / Training</label><textarea id="certifications" placeholder="Professional certifications, licences, short courses, vocational training, etc."></textarea></div>
-          <div class="field"><label for="languages">Languages</label><input id="languages" placeholder="English, French, Pidgin English..."></div>
-          <div class="field"><label for="digitalSkills">Digital / Computer Skills</label><input id="digitalSkills" placeholder="Excel, Word, Google Workspace, software, programming..."></div>
+    <!-- APPLY -->
+    <div class="panel" id="panel-apply" role="tabpanel" hidden>
+      <div id="applyingFor" class="applying" hidden><span id="applyingText"></span><button type="button" class="linkbtn" id="applyingClear">Clear</button></div>
+      <details class="prep"><summary>💡 30-second prep: what to have ready</summary>
+        <ul><li><b>🎯 A direction</b>The role, work area and place that suit you.</li><li><b>📚 Your proof</b>Training, skills, and results you have achieved.</li><li><b>🕒 Your timing</b>When you can start and what pay you expect.</li></ul>
+        <div class="notice" style="margin:0 0 12px">Applying does not guarantee a role or an interview. G-Spirit Ventures will discuss any opportunity and its terms with you directly.</div>
+      </details>
+      <main id="application" class="form-card">
+        <div class="form-intro"><span class="kicker">Your application</span><h2>Build your candidate profile</h2><p>Five short steps. Your answers stay here as you move along.</p></div>
+        <div class="progress-shell" aria-label="Application progress">
+          <div class="progress-status"><strong id="progressLabel" aria-live="polite">Step 1 of 5 · Role</strong><span id="progressPercent">20%</span></div>
+          <div class="progress-track" role="progressbar" aria-label="Application completion" aria-valuemin="1" aria-valuemax="5" aria-valuenow="1"><div id="progressFill" class="progress-fill"></div></div>
+          <div class="progress"><div class="progress-step active" data-step="1"><span>1</span>Role</div><div class="progress-step" data-step="2"><span>2</span>Career</div><div class="progress-step" data-step="3"><span>3</span>Skills</div><div class="progress-step" data-step="4"><span>4</span>You</div><div class="progress-step" data-step="5"><span>5</span>Review</div></div>
         </div>
-        <div class="actions"><button type="button" class="back" onclick="prevStep()">← Back</button><button type="button" class="next" onclick="nextStep()">Continue to your details →</button></div>
-      </section>
+        <form id="jobForm" onsubmit="submitApplication(event)"><section class="step active" data-step="1"><div class="heading"><h2>What role are you after?</h2><p>Pick a listing from the board, or tell us the direction you want.</p></div><div class="grid"><div class="field"><label for="preferredRole">Preferred role / position *</label><input id="preferredRole" type="text" required placeholder="e.g. Accounts Assistant"></div><div class="field"><label for="jobCategory">Work area *</label><select id="jobCategory" required data-areas data-ph="Select area"></select></div><div class="field"><label for="preferredLocation">Preferred location *</label><input id="preferredLocation" type="text" required placeholder="City, region or Cameroon-wide"></div><div class="field"><label for="workMode">Work arrangement</label><select id="workMode"><option value="">Select preference</option><option>On-site</option><option>Hybrid</option><option>Remote</option><option>Open to any</option></select></div><div class="field"><label for="availability">Available to start *</label><select id="availability" required><option value="">Select availability</option><option>Immediately</option><option>Within 2 weeks</option><option>Within 1 month</option><option>1–3 months</option><option>More than 3 months</option></select></div><div class="field"><label for="salaryExpectation">Expected monthly salary (XAF)</label><input id="salaryExpectation" type="number" placeholder="Optional" min="0" step="1000" inputmode="numeric"></div></div><div class="actions single"><button type="button" class="next" onclick="nextStep()">Next: experience →</button></div></section><section class="step" data-step="2"><div class="heading"><h2>Your career snapshot</h2><p>A few details help us see where you are today.</p></div><div class="grid"><div class="field"><label for="employmentStatus">Employment status *</label><select id="employmentStatus" required><option value="">Select status</option><option>Employed</option><option>Self-employed</option><option>Unemployed</option><option>Student / Final-year Student</option><option>Recent Graduate</option><option>Other</option></select></div><div class="field"><label for="experienceLevel">Experience level *</label><select id="experienceLevel" required><option value="">Select level</option><option>Entry Level / Graduate</option><option>1–2 Years</option><option>3–5 Years</option><option>6–10 Years</option><option>10+ Years</option></select></div><div class="field"><label for="yearsExperience">Total years of experience</label><input id="yearsExperience" type="number" placeholder="e.g. 4" min="0" max="60" inputmode="numeric"></div><div class="field"><label for="currentJob">Current / most recent job</label><input id="currentJob" type="text" placeholder="Job title / occupation"></div><div class="field wide"><label for="currentEmployer">Current / most recent employer</label><input id="currentEmployer" type="text" placeholder="Company / organisation"></div><div class="field wide"><label for="experienceSummary">Work experience summary *</label><textarea id="experienceSummary" required placeholder="Main responsibilities, achievements or practical experience."></textarea></div></div><div class="actions"><button type="button" class="back" onclick="prevStep()">← Back</button><button type="button" class="next" onclick="nextStep()">Next: skills &amp; learning →</button></div></section><section class="step" data-step="3"><div class="heading"><h2>Skills &amp; learning</h2><p>A few clear examples beat a long biography.</p></div><div class="grid"><div class="section-label">Skills</div><div class="field wide"><label for="skills">Key skills &amp; strengths *</label><textarea id="skills" required placeholder="The skills most relevant to your preferred role."></textarea></div><div class="section-label">Education</div><div class="field"><label for="highestQualification">Highest qualification *</label><select id="highestQualification" required><option value="">Select qualification</option><option>GCE O-Level / equivalent</option><option>GCE A-Level / equivalent</option><option>HND</option><option>Bachelor's Degree / Licence</option><option>Master's Degree</option><option>PhD / Doctorate</option><option>Professional Qualification</option><option>Vocational / Technical Training</option><option>Other</option></select></div><div class="field"><label for="fieldOfStudy">Field of study *</label><input id="fieldOfStudy" type="text" required placeholder="Accounting, Engineering, IT..."></div><div class="field"><label for="institution">Institution</label><input id="institution" type="text" placeholder="School, university or training centre"></div><div class="field"><label for="graduationYear">Completion year</label><input id="graduationYear" type="number" placeholder="e.g. 2024" min="1950" max="2100" inputmode="numeric"></div><div class="section-label">Extras &amp; proof</div><div class="field wide"><label for="certifications">Certifications / training</label><textarea id="certifications" placeholder="Courses, licences or vocational training"></textarea></div><div class="field"><label for="languages">Languages</label><input id="languages" type="text" placeholder="English, French, Pidgin..."></div><div class="field"><label for="digitalSkills">Digital skills</label><input id="digitalSkills" type="text" placeholder="Excel, Word, software..."></div><div class="field"><label for="cvLink">CV / resume link</label><input id="cvLink" type="url" placeholder="Google Drive, OneDrive, LinkedIn..."><span class="hint">Optional. Make sure the link is open to the recruitment team.</span></div><div class="field"><label for="reference">Professional reference</label><input id="reference" type="text" placeholder="Name, organisation, contact"><span class="hint">Please check they are happy to be contacted.</span></div></div><div class="actions"><button type="button" class="back" onclick="prevStep()">← Back</button><button type="button" class="next" onclick="nextStep()">Next: about you →</button></div></section><section class="step" data-step="4"><div class="heading"><h2>About you</h2><p>Use contact details you check regularly.</p></div><div class="grid"><div class="section-label">About you</div><div class="field"><label for="fullName">Full name *</label><input id="fullName" type="text" required placeholder="Full name" autocomplete="name"></div><div class="field"><label for="dateOfBirth">Date of birth *</label><input id="dateOfBirth" type="date" required></div><div class="field"><label for="gender">Gender *</label><select id="gender" required><option value="">Select gender</option><option>Male</option><option>Female</option><option>Prefer not to say</option></select></div><div class="field"><label for="nationality">Nationality *</label><select id="nationality" required><option value="">Select nationality</option><option selected>Cameroonian</option><option>Other</option></select></div><div class="section-label">How can we reach you?</div><div class="field"><label for="phone">Phone number *</label><input id="phone" type="tel" required placeholder="+237 6xx xxx xxx" inputmode="tel"></div><div class="field"><label for="whatsapp">WhatsApp number</label><input id="whatsapp" type="tel" placeholder="If different from phone" inputmode="tel"></div><div class="field"><label for="email">Email address *</label><input id="email" type="email" required placeholder="name@example.com" autocomplete="email"></div><div class="field"><label for="city">Current city / town *</label><input id="city" type="text" required placeholder="Douala, Yaoundé, Buea..."></div><div class="field"><label for="region">Region of residence *</label><select id="region" required><option value="">Select region</option><option>Adamawa</option><option>Centre</option><option>East</option><option>Far North</option><option>Littoral</option><option>North</option><option>North-West</option><option>South</option><option>South-West</option><option>West</option></select></div><div class="field"><label for="address">Residential address</label><input id="address" type="text" placeholder="Neighbourhood, town/city" autocomplete="street-address"></div></div><div class="actions"><button type="button" class="back" onclick="prevStep()">← Back</button><button type="button" class="next" onclick="nextStep()">Review application →</button></div></section><section class="step" data-step="5"><div class="heading"><h2>Review &amp; submit</h2><p>Check everything, tap <b>Edit</b> on any block to fix it. We save your application first, then WhatsApp opens so you can send it to us.</p></div>
+<div id="reviewWho" class="who"></div><div id="reviewGroups" class="rv-groups"></div>
+<div class="consent"><label class="check"><input id="consent" type="checkbox" required><span>I confirm the details are accurate and allow G-Spirit Ventures to use them for recruitment and opportunity matching. Applying does not guarantee employment. See our <a href="privacy.html">Privacy Policy</a>.</span></label></div>
+<div id="success" class="success">✓ Application saved. WhatsApp is opening with your details, just press send.</div><div id="errorBox" class="error"></div>
+<div class="actions"><button type="button" class="back" onclick="prevStep()">← Back</button><button type="submit" id="submitBtn" class="submit">Submit via WhatsApp</button></div>
+<button type="button" class="pdf" onclick="downloadApplicationPDF()">⬇ Download a PDF copy</button></section></form>
+      </main>
+    </div>
 
-      <section class="step" data-step="3">
-        <div class="heading"><h2>Personal & Contact Information</h2><p>Provide the information we need to identify and contact you.</p></div>
-        <div class="grid">
-          <div class="section-label">Personal details</div>
-          <div class="field"><label for="fullName">Full Name *</label><input id="fullName" required autocomplete="name" placeholder="Full name"></div>
-          <div class="field"><label for="dateOfBirth">Date of Birth *</label><input id="dateOfBirth" type="date" required></div>
-          <div class="field"><label for="gender">Gender *</label><select id="gender" required><option value="">Select gender</option><option>Male</option><option>Female</option><option>Prefer not to say</option></select></div>
-          <div class="field"><label for="nationality">Nationality *</label><select id="nationality" required><option value="">Select nationality</option><option selected>Cameroonian</option><option>Other</option></select></div>
-          <div class="section-label">Contact & residence</div>
-          <div class="field"><label for="phone">Phone Number *</label><input id="phone" type="tel" inputmode="tel" required placeholder="+237 6xx xxx xxx"></div>
-          <div class="field"><label for="whatsapp">WhatsApp Number</label><input id="whatsapp" type="tel" inputmode="tel" placeholder="If different from phone"></div>
-          <div class="field"><label for="email">Email Address *</label><input id="email" type="email" required autocomplete="email" placeholder="name@example.com"></div>
-          <div class="field"><label for="city">Current City / Town *</label><input id="city" required placeholder="Douala, Yaoundé, Buea, Bamenda..."></div>
-          <div class="field"><label for="region">Region of Residence *</label><select id="region" required><option value="">Select region</option><option>Adamawa</option><option>Centre</option><option>East</option><option>Far North</option><option>Littoral</option><option>North</option><option>North-West</option><option>South</option><option>South-West</option><option>West</option></select></div>
-          <div class="field"><label for="address">Residential Address</label><input id="address" autocomplete="street-address" placeholder="Neighbourhood, town/city, region"></div>
-        </div>
-        <div class="actions single"><button type="button" class="next" onclick="nextStep()">Review Application →</button></div>
-      </section>
-
-      <section class="step" data-step="4">
-        <div class="heading"><h2>Review & Submit</h2><p>Check your information carefully. Your application is saved first, then WhatsApp opens with the details for direct submission.</p></div>
-        <div class="review-layout">
-          <div class="review-card"><h3>Application Details</h3><div id="reviewGrid" class="review-grid"></div></div>
-          <aside class="summary"><h3>Application Summary</h3>
-            <div class="summary-line"><span>Applicant</span><strong id="sumName">—</strong></div>
-            <div class="summary-line"><span>Target Role</span><strong id="sumRole">—</strong></div>
-            <div class="summary-line"><span>Experience</span><strong id="sumExp">—</strong></div>
-            <div class="summary-line"><span>Location</span><strong id="sumLocation">—</strong></div>
-            <div class="summary-line"><span>Availability</span><strong id="sumAvailability">—</strong></div>
-          </aside>
-        </div>
-        <div id="success" class="success">✓ Application saved successfully. WhatsApp is opening with your application details.</div>
-        <div id="errorBox" class="error"></div>
-        <div class="actions"><button type="button" class="back" onclick="prevStep()">← Edit Application</button><button type="submit" id="submitBtn" class="submit">Submit via WhatsApp</button></div>
-        <button type="button" class="pdf" onclick="downloadApplicationPDF()">Download Application (PDF)</button>
-      </section>
+    <!-- TALENT MAP -->
+    <div class="panel" id="panel-talent" role="tabpanel" hidden><section id="interestForm" class="portal-form"><span class="kicker">For job seekers</span><h3 id="career-interest">Tell us what you’re looking for</h3><p>Register a concise career profile for opportunity mapping. You can submit a full application when a role is a fit.</p>
+    <form id="jobInterestForm"><div class="portal-progress" data-progress><div class="portal-progress-head"><strong data-label>Step 1 of 2 · About you</strong><span data-percent>50%</span></div><div class="portal-progress-track"><div class="portal-progress-fill"></div></div></div>
+      <div class="portal-page active" data-page="1"><div class="portal-grid"><div class="field"><label for="interestName">Your name *</label><input id="interestName" required></div><div class="field"><label for="interestPhone">Phone / WhatsApp *</label><input id="interestPhone" type="tel" required></div><div class="field"><label for="interestEmail">Email *</label><input id="interestEmail" type="email" required></div><div class="field"><label for="interestRole">Role you’re seeking *</label><input id="interestRole" required placeholder="e.g. Sales Representative"></div><div class="field"><label for="interestCategory">Work area</label><select id="interestCategory" data-areas data-ph="Choose work area"></select></div></div><div class="portal-page-actions"><button type="button" class="back">Back</button><button type="button" class="next" onclick="portalWizard('jobInterestForm',1)">Next: preferences →</button></div></div>
+      <div class="portal-page" data-page="2"><div class="portal-grid"><div class="field"><label for="interestLocation">Preferred location</label><input id="interestLocation" placeholder="City, region or open to relocate"></div><div class="field"><label for="interestMode">Work arrangement</label><select id="interestMode"><option value="">Any arrangement</option><option>On-site</option><option>Hybrid</option><option>Remote</option></select></div><div class="field"><label for="interestExperience">Experience level</label><select id="interestExperience"><option value="">Choose level</option><option>Entry Level / Graduate</option><option>1–2 Years</option><option>3–5 Years</option><option>6–10 Years</option><option>10+ Years</option></select></div><div class="field wide"><label for="interestSkills">Skills / short introduction</label><textarea id="interestSkills" placeholder="What should we know when matching you to a role?"></textarea></div><div class="field wide"><label for="interestCv">CV link (optional)</label><input id="interestCv" type="url" placeholder="Link to a CV you’re comfortable sharing"></div></div><label class="check"><input id="interestConsent" type="checkbox" required><span>I agree that G-Spirit Ventures may use these details to map my skills to relevant opportunities and contact me about them.</span></label><div class="portal-page-actions"><button type="button" class="back" onclick="portalWizard('jobInterestForm',-1)">← Back</button><button class="next" type="submit">Add me to the talent map</button></div></div><div id="interestStatus" class="portal-status" role="status"></div>
     </form>
-  </main>
+  </section></div>
+
+    <!-- POST -->
+    <div class="panel" id="panel-post" role="tabpanel" hidden><section id="postJobForm" class="portal-form"><span class="kicker">For employers</span><h3>Post an opportunity</h3><p>Share a clear, genuine opening. Listings are published to this board for candidates to discover.</p>
+    <form id="jobPostForm"><div class="portal-progress" data-progress><div class="portal-progress-head"><strong data-label>Step 1 of 3 · Role</strong><span data-percent>33%</span></div><div class="portal-progress-track"><div class="portal-progress-fill"></div></div></div>
+      <div class="portal-page active" data-page="1"><div class="portal-grid"><div class="field"><label for="postCompany">Company / organisation *</label><input id="postCompany" required></div><div class="field"><label for="postTitle">Job title *</label><input id="postTitle" required placeholder="e.g. Accounts Assistant"></div><div class="field"><label for="postCategory">Work area *</label><select id="postCategory" required data-areas data-ph="Choose work area"></select></div></div><div class="portal-page-actions"><button type="button" class="back">Back</button><button type="button" class="next" onclick="portalWizard('jobPostForm',1)">Next: conditions →</button></div></div>
+      <div class="portal-page" data-page="2"><div class="portal-grid"><div class="field"><label for="postLocation">Location *</label><input id="postLocation" required placeholder="City / region"></div><div class="field"><label for="postMode">Work arrangement</label><select id="postMode"><option>On-site</option><option>Hybrid</option><option>Remote</option></select></div><div class="field"><label for="postType">Employment type</label><select id="postType"><option>Full-time</option><option>Part-time</option><option>Contract</option><option>Internship</option><option>Temporary</option></select></div><div class="field"><label for="postSalary">Salary / range</label><input id="postSalary" placeholder="Optional, e.g. 150,000–250,000 XAF"></div><div class="field wide"><label for="postDescription">Role description *</label><textarea id="postDescription" required placeholder="What will the person do? What does the role offer?"></textarea></div><div class="field wide"><label for="postRequirements">Skills and requirements</label><textarea id="postRequirements" placeholder="Experience, qualifications, skills, and how to stand out"></textarea></div></div><div class="portal-page-actions"><button type="button" class="back" onclick="portalWizard('jobPostForm',-1)">← Back</button><button type="button" class="next" onclick="portalWizard('jobPostForm',1)">Next: contact →</button></div></div>
+      <div class="portal-page" data-page="3"><div class="portal-grid"><div class="field"><label for="postContactName">Contact person *</label><input id="postContactName" required></div><div class="field"><label for="postContactEmail">Contact email *</label><input id="postContactEmail" type="email" required></div><div class="field"><label for="postContactPhone">Contact phone</label><input id="postContactPhone" type="tel"></div></div><div class="notice">Please post only genuine opportunities and include clear, accurate terms. Never ask candidates to pay to apply or share passwords or verification codes.</div><label class="check"><input id="postAttestation" type="checkbox" required><span>I’m authorised to share this opening, and the role details are accurate.</span></label><div class="portal-page-actions"><button type="button" class="back" onclick="portalWizard('jobPostForm',-1)">← Back</button><button class="next" type="submit">Publish opening</button></div></div><div id="postJobStatus" class="portal-status" role="status"></div>
+    </form>
+  </section></div>
+  </div>
 </div>
 
-<footer>© 2026 G-Spirit Ventures. All rights reserved.<div style="margin-top:7px"><a href="privacy.html">Privacy Policy</a><a href="terms.html">Terms</a><a href="index.html">Home</a></div></footer>
+<footer>© 2026 G-Spirit Ventures. All rights reserved.<div style="margin-top:8px"><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a><a href="index.html">Home</a><a href="about.html">About</a><a href="travels.html">Travel</a><a href="contact.html">Contact</a></div></footer>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script>
 const API_BASE='https://gspiritloans-api.forchinthierry.workers.dev';
 const WHATSAPP_NUMBER='237620569864';
+const TOTAL=5;
+const AREAS=['Finance & Accounting','Administration & Operations','Sales & Business Development','Customer Service','Marketing & Communications','Information Technology / Digital','Human Resources','Logistics / Procurement','Education / Training','Other'];
+const AREA_ICON={'Finance & Accounting':'💹','Administration & Operations':'🗂️','Sales & Business Development':'🤝','Customer Service':'🎧','Marketing & Communications':'📣','Information Technology / Digital':'💻','Human Resources':'🧑‍🤝‍🧑','Logistics / Procurement':'🚚','Education / Training':'🎓','Other':'✨'};
 const form=document.getElementById('jobForm');
-let currentStep=1;
-let saveAttempted=false;
+let currentStep=1,saveAttempted=false,availableJobs=[],prefill=null;
 
-function fields(){return Object.fromEntries([...form.querySelectorAll('input[id],select[id],textarea[id]')].map(el=>[el.id,el.type==='checkbox'?(el.checked?'on':''):el.value]))}
-function togglePortalForm(id){const target=document.getElementById(id);target.hidden=!target.hidden;if(!target.hidden)target.scrollIntoView({behavior:'smooth',block:'start'})}
+/* fill work-area selects */
+document.querySelectorAll('select[data-areas]').forEach(s=>{s.innerHTML='<option value="">'+(s.dataset.ph||'Select')+'</option>'+AREAS.map(a=>'<option>'+a.replace(/&/g,'&amp;')+'</option>').join('')});
+
+/* sticky offsets */
+function setSticky(){const h=document.querySelector('header'),t=document.getElementById('tabs');const hs=getComputedStyle(h).position==='sticky'?h.offsetHeight:0;document.documentElement.style.setProperty('--hdrstick',hs+'px');document.documentElement.style.setProperty('--stick',(hs+t.offsetHeight+10)+'px')}
+window.addEventListener('resize',setSticky);window.addEventListener('load',setSticky);setSticky();
+
+/* tabs */
+function showTab(name,scroll){
+  document.querySelectorAll('.panel').forEach(p=>p.hidden=p.id!=='panel-'+name);
+  document.querySelectorAll('.tab').forEach(t=>t.setAttribute('aria-selected',String(t.dataset.tab===name)));
+  try{history.replaceState(null,'','#'+name)}catch(e){}
+  if(scroll!==false){const hub=document.getElementById('hub');window.scrollTo({top:Math.max(0,hub.getBoundingClientRect().top+window.scrollY-(parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--hdrstick'))||0)-6),behavior:'smooth'})}
+}
+function togglePortalForm(id){showTab(id==='postJobForm'?'post':'talent')}
+document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>showTab(t.dataset.tab)));
+(function(){const map={roles:'roles',opportunities:'roles',apply:'apply',application:'apply',talent:'talent','career-interest':'talent',post:'post'};const h=(location.hash||'').slice(1);if(map[h])showTab(map[h],false)})();
+
+/* ---- portal (post / talent) helpers ---- */
 function portalValue(id){return document.getElementById(id).value.trim()}
+function initPortalWizard(formId){const form=document.getElementById(formId);const pages=[...form.querySelectorAll('.portal-page')];form.dataset.currentPage='1';pages.forEach((page,index)=>page.classList.toggle('active',index===0));updatePortalWizard(form)}
+function updatePortalWizard(form){const pages=[...form.querySelectorAll('.portal-page')];const current=Number(form.dataset.currentPage||1);const total=pages.length;const progress=form.querySelector('[data-progress]');progress.querySelector('[data-label]').textContent='Step '+current+' of '+total+' · '+(form.id==='jobPostForm'?['Role','Details','Contact'][current-1]:['About you','Preferences'][current-1]);progress.querySelector('[data-percent]').textContent=Math.round(current/total*100)+'%';progress.querySelector('.portal-progress-fill').style.width=(current/total*100)+'%';form.querySelectorAll('.portal-page-actions .back').forEach(button=>button.hidden=current===1)}
+function portalWizard(formId,direction){const form=document.getElementById(formId);const pages=[...form.querySelectorAll('.portal-page')];const current=Number(form.dataset.currentPage||1);const page=pages[current-1];if(direction>0){for(const field of page.querySelectorAll('input,select,textarea')){if(!field.checkValidity()){field.reportValidity();return}}}const next=Math.max(1,Math.min(pages.length,current+direction));form.dataset.currentPage=String(next);pages.forEach((item,index)=>item.classList.toggle('active',index===next-1));updatePortalWizard(form)}
 function portalStatus(id,message,ok){const box=document.getElementById(id);box.textContent=message;box.className='portal-status '+(ok?'ok':'bad')}
 function escapeHtml(value){return String(value||'').replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]))}
-let availableJobs=[];
+document.getElementById('jobPostForm').addEventListener('submit',async event=>{event.preventDefault();const button=event.submitter;button.disabled=true;button.textContent='Publishing…';try{const data={company:portalValue('postCompany'),title:portalValue('postTitle'),category:portalValue('postCategory'),location:portalValue('postLocation'),workMode:portalValue('postMode'),employmentType:portalValue('postType'),salaryRange:portalValue('postSalary'),contactName:portalValue('postContactName'),contactEmail:portalValue('postContactEmail'),contactPhone:portalValue('postContactPhone'),description:portalValue('postDescription'),requirements:portalValue('postRequirements'),attested:document.getElementById('postAttestation').checked};const response=await fetch(API_BASE+'/api/jobs/listings',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)});const result=await response.json();if(!response.ok||!result.success)throw new Error(result.error||'Could not publish this opening.');event.target.reset();initPortalWizard('jobPostForm');portalStatus('postJobStatus','Your opening is now published on the job board.',true);loadJobListings()}catch(error){portalStatus('postJobStatus',error.message||'Could not publish this opening.',false)}finally{button.disabled=false;button.textContent='Publish opening'}});
+document.getElementById('jobInterestForm').addEventListener('submit',async event=>{event.preventDefault();const button=event.submitter;button.disabled=true;button.textContent='Saving your profile…';try{const data={fullName:portalValue('interestName'),phone:portalValue('interestPhone'),email:portalValue('interestEmail'),preferredRole:portalValue('interestRole'),jobCategory:portalValue('interestCategory'),preferredLocation:portalValue('interestLocation'),workMode:portalValue('interestMode'),experienceLevel:portalValue('interestExperience'),skills:portalValue('interestSkills'),cvLink:portalValue('interestCv'),consent:document.getElementById('interestConsent').checked};const response=await fetch(API_BASE+'/api/jobs/interests',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)});const result=await response.json();if(!response.ok||!result.success)throw new Error(result.error||'Could not save your interest.');event.target.reset();initPortalWizard('jobInterestForm');portalStatus('interestStatus','You’re on our talent map. We’ll use these details to identify relevant opportunities.',true)}catch(error){portalStatus('interestStatus',error.message||'Could not save your interest.',false)}finally{button.disabled=false;button.textContent='Add me to the talent map'}});
+initPortalWizard('jobPostForm');initPortalWizard('jobInterestForm');
+
+/* ---- job board ---- */
+function hue(s){let h=0;for(const c of String(s||'x'))h=(h*31+c.charCodeAt(0))%360;return h}
+function skeletons(){document.getElementById('jobListings').innerHTML=[0,1,2,3].map(()=>'<div class="job skel"><div class="job-top"><i style="width:44px;height:44px"></i><div style="flex:1"><i style="height:14px;width:70%;margin-bottom:8px"></i><i style="height:11px;width:40%"></i></div></div><i style="height:12px;margin-top:18px"></i><i style="height:12px;margin-top:8px;width:85%"></i><i style="height:38px;margin-top:18px;width:40%"></i></div>').join('')}
 function renderJobListings(){
-  const query=document.getElementById('jobSearch').value.trim().toLowerCase();
-  const category=document.getElementById('jobCategoryFilter').value;
-  const rows=availableJobs.filter(job=>(!category||job.category===category)&&(!query||[job.title,job.company,job.category,job.location,job.description,job.requirements].join(' ').toLowerCase().includes(query)));
+  const q=document.getElementById('jobSearch').value.trim().toLowerCase(),cat=document.getElementById('jobCategoryFilter').value;
+  document.getElementById('clearFilters').hidden=!(q||cat);
+  const rows=availableJobs.filter(j=>(!cat||j.category===cat)&&(!q||[j.title,j.company,j.category,j.location,j.description,j.requirements].join(' ').toLowerCase().includes(q)));
+  document.getElementById('roleCount').textContent=availableJobs.length?('Showing '+rows.length+' of '+availableJobs.length+' role'+(availableJobs.length===1?'':'s')):'No roles posted yet';
   const board=document.getElementById('jobListings');
-  if(!rows.length){board.innerHTML='<div class="job-empty">No open roles match that search yet. <button type="button" class="alt" onclick="togglePortalForm(\'interestForm\')">Register your interest for future matches</button></div>';return}
-  board.innerHTML=rows.map(job=>'<article class="job-card"><div class="job-card-top"><div><h3>'+escapeHtml(job.title)+'</h3><div class="job-company">'+escapeHtml(job.company)+'</div></div><span class="job-chip">'+escapeHtml(job.category)+'</span></div><div class="job-meta"><span>📍 '+escapeHtml(job.location)+'</span><span>🕒 '+escapeHtml(job.work_mode||'Flexible')+'</span><span>💼 '+escapeHtml(job.employment_type||'Role')+'</span>'+(job.salary_range?'<span>💰 '+escapeHtml(job.salary_range)+'</span>':'')+'</div><div class="job-description">'+escapeHtml(job.description)+'</div>'+(job.requirements?'<div class="job-requirements"><strong>Looking for:</strong><br>'+escapeHtml(job.requirements)+'</div>':'')+'<button type="button" onclick="applyForListing('+Number(job.id)+')">Apply for this role →</button></article>').join('');
+  if(!rows.length){board.innerHTML='<div class="empty"><div class="big">🌱</div><strong>'+(availableJobs.length?'No roles match that search.':'No open roles right now.')+'</strong><div>Tell us what you are looking for and we will match you when something fits.</div><div class="row"><button type="button" class="apply-btn" data-go="talent">Join the talent map</button><button type="button" class="linkbtn" data-go="post">Post a job</button></div></div>';return}
+  board.innerHTML=rows.map(j=>{
+    const long=(j.description||'').length>150||j.requirements;
+    return '<article class="job"><div class="job-top"><div class="av" style="--h:'+hue(j.company)+'">'+escapeHtml((j.company||'?').trim().charAt(0).toUpperCase())+'</div><div><h3>'+escapeHtml(j.title)+'</h3><div class="co">'+escapeHtml(j.company)+'</div></div></div>'
+    +'<div class="meta"><span class="area">'+(AREA_ICON[j.category]||'✨')+' '+escapeHtml(j.category)+'</span><span>📍 '+escapeHtml(j.location)+'</span><span>🕒 '+escapeHtml(j.work_mode||'Flexible')+'</span><span>💼 '+escapeHtml(j.employment_type||'Role')+'</span>'+(j.salary_range?'<span class="pay">💰 '+escapeHtml(j.salary_range)+'</span>':'')+'</div>'
+    +'<p class="desc clamp">'+escapeHtml(j.description)+'</p>'+(j.requirements?'<div class="reqs" hidden><strong>Looking for:</strong><br>'+escapeHtml(j.requirements)+'</div>':'')
+    +'<div class="job-foot">'+(long?'<button type="button" class="linkbtn" data-more>Details ▾</button>':'<span></span>')+'<button type="button" class="apply-btn" data-apply="'+Number(j.id)+'">Apply →</button></div></article>'}).join('');
 }
-function loadJobListings(){fetch(API_BASE+'/api/jobs/listings').then(r=>{if(!r.ok)throw new Error('Could not load roles');return r.json()}).then(rows=>{availableJobs=Array.isArray(rows)?rows:[];renderJobListings()}).catch(()=>{document.getElementById('jobListings').innerHTML='<div class="job-empty">We couldn’t load the job board just now. Please try again shortly, or register your interest.</div>'})}
-function applyForListing(id){const job=availableJobs.find(item=>Number(item.id)===Number(id));if(!job)return;document.getElementById('preferredRole').value=job.title+' — '+job.company;document.getElementById('experienceSummary').value='Applying for: '+job.title+' at '+job.company+' (job board reference #'+job.id+').\n\n';document.getElementById('application').scrollIntoView({behavior:'smooth',block:'start'})}
+document.getElementById('jobListings').addEventListener('click',e=>{
+  const m=e.target.closest('[data-more]'),a=e.target.closest('[data-apply]'),g=e.target.closest('[data-go]'),r=e.target.closest('[data-retry]');
+  if(m){const card=m.closest('.job'),d=card.querySelector('.desc'),q=card.querySelector('.reqs'),open=d.classList.toggle('clamp')===false;if(q)q.hidden=!open;m.textContent=open?'Less ▴':'Details ▾'}
+  if(a)applyForListing(a.dataset.apply);
+  if(g)showTab(g.dataset.go);
+  if(r){skeletons();loadJobListings()}
+});
+function loadJobListings(){
+  fetch(API_BASE+'/api/jobs/listings').then(r=>{if(!r.ok)throw new Error('Could not load roles');return r.json()}).then(rows=>{
+    availableJobs=Array.isArray(rows)?rows:[];
+    document.getElementById('statRoles').textContent=availableJobs.length;document.getElementById('tabCount').textContent=availableJobs.length;renderJobListings();
+  }).catch(()=>{
+    document.getElementById('statRoles').textContent='–';document.getElementById('tabCount').textContent='–';document.getElementById('roleCount').textContent='';
+    document.getElementById('jobListings').innerHTML='<div class="empty"><div class="big">📡</div><strong>We could not load the job board.</strong><div>Check your connection and try again, or join the talent map meanwhile.</div><div class="row"><button type="button" class="apply-btn" data-retry>Try again</button><button type="button" class="linkbtn" data-go="talent">Join the talent map</button></div></div>'})
+}
 document.getElementById('jobSearch').addEventListener('input',renderJobListings);
 document.getElementById('jobCategoryFilter').addEventListener('change',renderJobListings);
-document.getElementById('jobPostForm').addEventListener('submit',async event=>{event.preventDefault();const button=event.submitter;button.disabled=true;button.textContent='Publishing…';try{const data={company:portalValue('postCompany'),title:portalValue('postTitle'),category:portalValue('postCategory'),location:portalValue('postLocation'),workMode:portalValue('postMode'),employmentType:portalValue('postType'),salaryRange:portalValue('postSalary'),contactName:portalValue('postContactName'),contactEmail:portalValue('postContactEmail'),contactPhone:portalValue('postContactPhone'),description:portalValue('postDescription'),requirements:portalValue('postRequirements'),attested:document.getElementById('postAttestation').checked};const response=await fetch(API_BASE+'/api/jobs/listings',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)});const result=await response.json();if(!response.ok||!result.success)throw new Error(result.error||'Could not publish this opening.');event.target.reset();portalStatus('postJobStatus','Your opening is now published on the job board.',true);loadJobListings()}catch(error){portalStatus('postJobStatus',error.message||'Could not publish this opening.',false)}finally{button.disabled=false;button.textContent='Publish opening'}});
-document.getElementById('jobInterestForm').addEventListener('submit',async event=>{event.preventDefault();const button=event.submitter;button.disabled=true;button.textContent='Saving your profile…';try{const data={fullName:portalValue('interestName'),phone:portalValue('interestPhone'),email:portalValue('interestEmail'),preferredRole:portalValue('interestRole'),jobCategory:portalValue('interestCategory'),preferredLocation:portalValue('interestLocation'),workMode:portalValue('interestMode'),experienceLevel:portalValue('interestExperience'),skills:portalValue('interestSkills'),cvLink:portalValue('interestCv'),consent:document.getElementById('interestConsent').checked};const response=await fetch(API_BASE+'/api/jobs/interests',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)});const result=await response.json();if(!response.ok||!result.success)throw new Error(result.error||'Could not save your interest.');event.target.reset();portalStatus('interestStatus','You’re on our talent map. We’ll use these details to identify relevant opportunities.',true)}catch(error){portalStatus('interestStatus',error.message||'Could not save your interest.',false)}finally{button.disabled=false;button.textContent='Add me to the talent map'}});
-loadJobListings();
-function esc(v){return String(v??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'})[m])}
-function validStep(){
-  const step=document.querySelector('.step[data-step="'+currentStep+'"]');
-  if(!step)return true;
-  for(const el of step.querySelectorAll('input,select,textarea')){
-    if(!el.checkValidity()){el.reportValidity();return false}
-  }
-  return true;
+document.getElementById('clearFilters').addEventListener('click',()=>{document.getElementById('jobSearch').value='';document.getElementById('jobCategoryFilter').value='';renderJobListings()});
+
+function applyForListing(id){
+  const job=availableJobs.find(x=>Number(x.id)===Number(id));if(!job)return;
+  prefill={role:job.title+' — '+job.company,summary:'Applying for: '+job.title+' at '+job.company+' (job board reference #'+job.id+').\n\n'};
+  document.getElementById('preferredRole').value=prefill.role;document.getElementById('experienceSummary').value=prefill.summary;
+  document.getElementById('applyingText').textContent='Applying for: '+prefill.role;document.getElementById('applyingFor').hidden=false;
+  showTab('apply',false);showStep(1,false);document.getElementById('hub').scrollIntoView({behavior:'smooth'});
 }
-function showStep(n){
-  n=Math.max(1,Math.min(4,n));
-  currentStep=n;
-  document.querySelectorAll('#jobForm .step').forEach(s=>{
-    const active=+s.dataset.step===n;
-    s.classList.toggle('active',active);
-    s.setAttribute('aria-hidden',String(!active));
-  });
-  document.querySelectorAll('.progress-step').forEach(s=>{const x=+s.dataset.step;s.classList.toggle('active',x===n);s.classList.toggle('done',x<n)});
-  if(n===4)buildReview();
-  window.scrollTo({top:document.getElementById('application').offsetTop-15,behavior:'smooth'});
+document.getElementById('applyingClear').addEventListener('click',()=>{
+  if(prefill){const r=document.getElementById('preferredRole'),s=document.getElementById('experienceSummary');if(r.value===prefill.role)r.value='';if(s.value===prefill.summary)s.value=''}
+  prefill=null;document.getElementById('applyingFor').hidden=true});
+
+/* ---- application wizard ---- */
+function fields(){return Object.fromEntries([...form.querySelectorAll('input[id],select[id],textarea[id]')].map(el=>[el.id,el.type==='checkbox'?(el.checked?'on':''):el.value]))}
+const STEP_LABELS=['Role','Career','Skills & learning','About you','Review'];
+function stepEl(n){return form.querySelector('.step[data-step="'+n+'"]')}
+function validStep(){const s=stepEl(currentStep);if(!s)return true;for(const el of s.querySelectorAll('input,select,textarea')){if(!el.checkValidity()){el.reportValidity();return false}}return true}
+function validAll(){for(let n=1;n<=TOTAL;n++){const s=stepEl(n);for(const el of s.querySelectorAll('input,select,textarea')){if(n===TOTAL&&el.id==='consent')continue;if(!el.checkValidity()){showStep(n,false);el.reportValidity();return false}}}return true}
+function showStep(n,shouldScroll){
+  n=Math.max(1,Math.min(TOTAL,n));currentStep=n;
+  form.querySelectorAll('.step').forEach(s=>{const on=+s.dataset.step===n;s.classList.toggle('active',on);s.setAttribute('aria-hidden',String(!on))});
+  document.querySelectorAll('.progress-step').forEach(s=>{const x=+s.dataset.step;s.classList.toggle('active',x===n);s.classList.toggle('done',x<n);s.setAttribute('aria-current',x===n?'step':'false');s.setAttribute('aria-disabled',String(x>n))});
+  const pct=Math.round(n/TOTAL*100);
+  document.getElementById('progressLabel').textContent='Step '+n+' of '+TOTAL+' · '+STEP_LABELS[n-1];
+  document.getElementById('progressPercent').textContent=pct+'%';document.getElementById('progressFill').style.width=pct+'%';
+  document.querySelector('.progress-track[role="progressbar"]').setAttribute('aria-valuenow',String(n));
+  if(n===TOTAL)buildReview();
+  if(shouldScroll!==false)document.getElementById('application').scrollIntoView({behavior:'smooth',block:'start'});
 }
-function nextStep(){if(validStep()&&currentStep<4)showStep(currentStep+1)}
+function nextStep(){if(validStep()&&currentStep<TOTAL)showStep(currentStep+1)}
 function prevStep(){if(currentStep>1)showStep(currentStep-1)}
+document.querySelectorAll('.progress-step').forEach(step=>{step.setAttribute('role','button');step.tabIndex=0;const go=()=>{const t=Number(step.dataset.step);if(t<=currentStep)showStep(t)};step.addEventListener('click',go);step.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();go()}})});
+showStep(1,false);
 
 function payload(){
   const d=fields();
@@ -242,27 +360,17 @@ function payload(){
     skills:d.skills||'',cvLink:d.cvLink||'',reference:d.reference||''
   };
 }
+
 function buildReview(){
-  const d=payload();
-  const items=[
-    ['Full Name',d.fullName],['Date of Birth',d.dateOfBirth],['Gender',d.gender],['Nationality',d.nationality],
-    ['Phone',d.phone],['WhatsApp',d.whatsapp||d.phone],['Email',d.email],['City',d.city],['Region',d.region],['Address',d.address],
-    ['Highest Qualification',d.highestQualification],['Field of Study',d.fieldOfStudy],['Institution',d.institution],
-    ['Completion Year',d.graduationYear],['Certifications',d.certifications],['Languages',d.languages],['Digital Skills',d.digitalSkills],
-    ['Employment Status',d.employmentStatus],['Experience Level',d.experienceLevel],['Years of Experience',d.yearsExperience],
-    ['Current / Recent Job',d.currentJob],['Current / Recent Employer',d.currentEmployer],
-    ['Preferred Role',d.preferredRole],['Work Area',d.jobCategory],['Preferred Location',d.preferredLocation],
-    ['Work Arrangement',d.workMode],['Availability',d.availability],
-    ['Salary Expectation',d.salaryExpectation?Number(d.salaryExpectation).toLocaleString()+' XAF':'Not specified'],
-    ['Key Skills',d.skills],['Experience Summary',d.experienceSummary],['CV / Resume',d.cvLink],['Reference',d.reference]
-  ];
-  document.getElementById('reviewGrid').innerHTML=items.map(p=>'<div class="review-item"><small>'+esc(p[0])+'</small><strong>'+esc(p[1]||'—')+'</strong></div>').join('');
-  document.getElementById('sumName').textContent=d.fullName||'—';
-  document.getElementById('sumRole').textContent=d.preferredRole||'—';
-  document.getElementById('sumExp').textContent=d.experienceLevel||'—';
-  document.getElementById('sumLocation').textContent=d.preferredLocation||d.city||'—';
-  document.getElementById('sumAvailability').textContent=d.availability||'—';
+  const d=payload(),pay=d.salaryExpectation?Number(d.salaryExpectation).toLocaleString()+' XAF':'';
+  const G=[['Role',1,[['Role',d.preferredRole],['Work area',d.jobCategory],['Location',d.preferredLocation],['Arrangement',d.workMode],['Available',d.availability],['Expected pay',pay]]],
+   ['Career',2,[['Status',d.employmentStatus],['Level',d.experienceLevel],['Years',d.yearsExperience],['Recent job',d.currentJob],['Employer',d.currentEmployer],['Summary',d.experienceSummary]]],
+   ['Skills & learning',3,[['Skills',d.skills],['Qualification',d.highestQualification],['Field',d.fieldOfStudy],['Institution',d.institution],['Completed',d.graduationYear],['Training',d.certifications],['Languages',d.languages],['Digital',d.digitalSkills],['CV link',d.cvLink],['Reference',d.reference]]],
+   ['About you',4,[['Name',d.fullName],['Date of birth',d.dateOfBirth],['Gender',d.gender],['Nationality',d.nationality],['Phone',d.phone],['WhatsApp',d.whatsapp||d.phone],['Email',d.email],['City',d.city],['Region',d.region],['Address',d.address]]]];
+  document.getElementById('reviewGroups').innerHTML=G.map(g=>'<section class="rv"><header><h4>'+g[0]+'</h4><button type="button" class="edit" data-edit="'+g[1]+'">Edit</button></header><dl>'+g[2].filter(r=>r[1]).map(r=>'<div><dt>'+escapeHtml(r[0])+'</dt><dd>'+escapeHtml(r[1])+'</dd></div>').join('')+'</dl></section>').join('');
+  document.getElementById('reviewWho').innerHTML='<div class="av" style="--h:'+hue(d.fullName)+'">'+escapeHtml((d.fullName||'?').trim().charAt(0).toUpperCase())+'</div><div><strong>'+escapeHtml(d.fullName||'Your application')+'</strong><small>'+escapeHtml(d.preferredRole||'')+(d.preferredLocation?' · '+escapeHtml(d.preferredLocation):'')+'</small></div>';
 }
+document.getElementById('reviewGroups').addEventListener('click',e=>{const b=e.target.closest('[data-edit]');if(b)showStep(+b.dataset.edit)});
 
 function whatsappText(d){
   const div='――――――――――――――――';
@@ -291,29 +399,31 @@ async function saveApplication(d){
   if(!res.ok||!data.success)throw new Error(data.error||'Unable to save the job application.');
   return data;
 }
+
 async function submitApplication(event){
   event.preventDefault();
-  if(currentStep!==4){if(validStep())nextStep();return}
+  if(currentStep!==TOTAL){if(validStep())nextStep();return}
   const btn=document.getElementById('submitBtn'),ok=document.getElementById('success'),err=document.getElementById('errorBox');
-  ok.style.display='none';err.style.display='none';btn.disabled=true;btn.textContent='Saving Application...';
+  ok.style.display='none';err.style.display='none';btn.disabled=true;btn.textContent='Saving application…';
+  const wa=window.open('about:blank','_blank'); /* opened first so mobile browsers do not block it */
   const d=payload();
   try{
     if(!saveAttempted){await saveApplication(d);saveAttempted=true}
     ok.style.display='block';
-    window.open('https://wa.me/'+WHATSAPP_NUMBER+'?text='+encodeURIComponent(whatsappText(d)),'_blank');
+    const url='https://wa.me/'+WHATSAPP_NUMBER+'?text='+encodeURIComponent(whatsappText(d));
+    if(wa)wa.location.href=url;else window.location.href=url;
   }catch(e){
-    err.textContent=e&&e.message?e.message:'Unable to save your application. Please try again later.';
-    err.style.display='block';
+    if(wa)wa.close();
+    err.textContent=e&&e.message?e.message:'Unable to save your application. Please try again later.';err.style.display='block';
   }finally{btn.disabled=false;btn.textContent='Submit via WhatsApp'}
 }
-
 function loadLogo(){
   return fetch('logo.png').then(r=>r.ok?r.blob():Promise.reject()).then(blob=>new Promise((resolve,reject)=>{
     const fr=new FileReader();fr.onloadend=()=>resolve(fr.result);fr.onerror=reject;fr.readAsDataURL(blob);
   })).catch(()=>null);
 }
 function downloadApplicationPDF(){
-  if(currentStep!==4){if(!validStep())return;showStep(4)}
+  if(!validAll())return;
   const d=payload(),doc=new window.jspdf.jsPDF(),w=doc.internal.pageSize.getWidth(),h=doc.internal.pageSize.getHeight();let y=44;
   function head(logo){
     doc.setFillColor(24,43,86);doc.rect(0,0,w,32,'F');
@@ -335,6 +445,8 @@ function downloadApplicationPDF(){
     doc.save('G-Spirit-Job-Application-'+(d.fullName||'Applicant').replace(/[^a-z0-9]+/gi,'-')+'.pdf');
   })
 }
+
+skeletons();loadJobListings();
 </script>
 </body>
 </html>

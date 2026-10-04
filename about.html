@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <link rel="icon" type="image/png" href="favicon.png">
   <title>About Us - G-Spirit Ventures</title>
+  <meta name="description" content="The story of G-Spirit Ventures: from student business capital in 2020 to loans, capital, partnerships, careers and travel support across Cameroon.">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -493,6 +494,81 @@
     .footer-links a { border-color: #167d78; color: #167d78; }
     .footer-links a:hover { background: #167d78; color: #fff; }
     @media (max-width: 650px) { .values { grid-template-columns: 1fr; } .page-banner { padding: 52px 20px; } .floating-apply-btn { right: 12px; bottom: 16px; } .capital-accent { right: 12px; bottom: 72px; } }
+
+    /* ===== About upgrade ===== */
+    html { scroll-behavior: smooth; }
+    .banner-chips { display:flex; flex-wrap:wrap; gap:8px; justify-content:center; margin-top:22px; position:relative; z-index:1; }
+    .banner-chips span { font-size:12px; font-weight:800; letter-spacing:.06em; padding:7px 13px; border-radius:999px; background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.22); color:#fff; backdrop-filter:blur(4px); }
+    .banner-chips span:nth-child(1){ background:rgba(217,149,50,.9); border-color:transparent; color:#2b1b00; }
+    .kicker { display:block; color:#167d78; font-size:11px; font-weight:900; letter-spacing:.14em; text-transform:uppercase; margin-bottom:4px; }
+    .lead { font-size:18px; color:#2c3a57; line-height:1.7; }
+    .lead::first-letter { font-family:'DM Serif Display',Georgia,serif; font-size:3.1em; float:left; line-height:.85; padding:6px 10px 0 0; color:#d99532; }
+
+    .stats { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin:30px 0 6px; }
+    .stat { text-align:center; padding:20px 10px; border-radius:14px; background:linear-gradient(160deg,#182b56,#1d4771); color:#fff; position:relative; overflow:hidden; }
+    .stat::after { content:''; position:absolute; width:90px; height:90px; right:-30px; top:-30px; border-radius:50%; background:rgba(217,149,50,.22); }
+    .stat b { display:block; font-family:'DM Serif Display',Georgia,serif; font-size:clamp(28px,4.5vw,40px); line-height:1.1; color:#ffd98d; position:relative; z-index:1; }
+    .stat small { display:block; font-size:12px; color:#cfe0ee; margin-top:4px; position:relative; z-index:1; }
+
+    .timeline { position:relative; margin:22px 0 4px; padding-left:34px; }
+    .timeline::before { content:''; position:absolute; left:10px; top:6px; bottom:6px; width:3px; border-radius:3px; background:linear-gradient(#d99532,#167d78,#6c3483); }
+    .tl-item { position:relative; padding:0 0 22px; }
+    .tl-item:last-child { padding-bottom:0; }
+    .tl-item::before { content:''; position:absolute; left:-31px; top:5px; width:15px; height:15px; border-radius:50%; background:#fff; border:3px solid #167d78; box-shadow:0 0 0 4px rgba(22,125,120,.12); }
+    .tl-item:first-child::before { border-color:#d99532; box-shadow:0 0 0 4px rgba(217,149,50,.2); }
+    .tl-item:last-child::before { border-color:#6c3483; background:#6c3483; box-shadow:0 0 0 5px rgba(108,52,131,.18); }
+    .tl-when { font-size:11px; font-weight:900; letter-spacing:.12em; text-transform:uppercase; color:#d99532; }
+    .tl-item h3 { font-family:'DM Serif Display',Georgia,serif; font-size:21px; margin:2px 0 4px; color:#182b56; font-weight:400; }
+    .tl-item p { margin:0; color:#5b6880; font-size:15px; }
+
+    .values { grid-template-columns:repeat(3,1fr); }
+    .value { transition:transform .25s ease, box-shadow .25s ease; }
+    .value:hover { transform:translateY(-4px); box-shadow:0 14px 28px rgba(24,43,86,.1); }
+
+    .services { display:grid; grid-template-columns:repeat(2,1fr); gap:14px; margin-top:20px; }
+    .svc { --c:#167d78; display:flex; flex-direction:column; text-decoration:none; color:inherit; background:#fff; border:1px solid #dfe5ee; border-top:4px solid var(--c); border-radius:14px; padding:20px 20px 16px; transition:transform .25s ease, box-shadow .25s ease; }
+    .svc:hover { transform:translateY(-5px); box-shadow:0 18px 34px rgba(24,43,86,.12); }
+    .svc:nth-child(5) { grid-column:1/-1; }
+    .svc .ico { width:46px; height:46px; display:grid; place-items:center; font-size:23px; border-radius:12px; background:color-mix(in srgb,var(--c) 12%,#fff); margin-bottom:10px; }
+    .svc h3 { margin:0 0 6px; font-family:'DM Serif Display',Georgia,serif; font-weight:400; font-size:22px; color:#182b56; }
+    .svc p { margin:0 0 14px; font-size:14.5px; color:#5b6880; flex:1; }
+    .svc .go { font-size:13px; font-weight:900; color:var(--c); }
+    .svc .go::after { content:' →'; display:inline-block; transition:transform .2s ease; }
+    .svc:hover .go::after { transform:translateX(5px); }
+
+    .path { margin-top:20px; padding:24px; border-radius:16px; background:linear-gradient(145deg,#edf7f5,#fff7e7); border:1px solid #d9e8e8; }
+    .path-q { font-family:'DM Serif Display',Georgia,serif; font-size:22px; color:#182b56; margin:0 0 14px; }
+    .chips { display:flex; flex-wrap:wrap; gap:9px; }
+    .chip { font:inherit; font-size:13px; font-weight:800; padding:10px 15px; border-radius:999px; border:1.5px solid #b9cfd0; background:#fff; color:#27415d; cursor:pointer; transition:all .2s ease; }
+    .chip:hover { border-color:#167d78; transform:translateY(-2px); }
+    .chip[aria-pressed="true"] { background:#182b56; border-color:#182b56; color:#fff; box-shadow:0 8px 16px rgba(24,43,86,.2); }
+    .path-out { margin-top:18px; padding:18px 20px; background:#fff; border-radius:12px; border-left:5px solid #d99532; min-height:96px; animation:pathIn .35s ease; }
+    @keyframes pathIn { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:none} }
+    .path-out h3 { margin:0 0 6px; font-family:'DM Serif Display',Georgia,serif; font-weight:400; font-size:21px; color:#182b56; }
+    .path-out p { margin:0 0 12px; color:#586a80; font-size:14.5px; }
+    .path-cta { display:inline-block; padding:10px 18px; border-radius:999px; background:#d99532; color:#fff; font-weight:900; font-size:13px; text-decoration:none; box-shadow:0 8px 16px rgba(217,149,50,.28); transition:transform .2s ease; }
+    .path-cta:hover { transform:translateY(-2px); }
+
+    .safe { display:flex; gap:16px; align-items:flex-start; margin-top:20px; padding:18px 20px; border-radius:14px; background:#fff9eb; border:1px solid #f0dfb8; color:#6b5626; }
+    .safe .shield { font-size:28px; line-height:1; }
+    .safe strong { display:block; color:#4d3a10; margin-bottom:3px; }
+    .safe p { margin:0; font-size:14px; }
+
+    .cta-band { margin-top:34px; padding:34px 26px; text-align:center; border-radius:18px; color:#fff; background:linear-gradient(135deg,#182b56,#1d4771 60%,#167d78); position:relative; overflow:hidden; }
+    .cta-band::before { content:''; position:absolute; width:300px; height:300px; left:-110px; bottom:-170px; border-radius:50%; border:1px solid rgba(217,149,50,.45); box-shadow:0 0 0 24px rgba(217,149,50,.07); }
+    .cta-band h2 { color:#fff; border:0; margin:0 0 8px; position:relative; }
+    .cta-band p { margin:0 auto 18px; max-width:560px; color:#d5e3f0; position:relative; }
+    .cta-row { display:flex; gap:10px; justify-content:center; flex-wrap:wrap; position:relative; }
+    .cta-row a { padding:12px 20px; border-radius:999px; font-weight:900; font-size:14px; text-decoration:none; background:#d99532; color:#2b1b00; transition:transform .2s ease; }
+    .cta-row a.ghost { background:rgba(255,255,255,.12); color:#fff; border:1px solid rgba(255,255,255,.35); }
+    .cta-row a:hover { transform:translateY(-3px); }
+
+    @media (max-width: 700px) {
+      .stats { grid-template-columns:repeat(2,1fr); }
+      .services { grid-template-columns:1fr; }
+      .svc:nth-child(5) { grid-column:auto; }
+      .lead { font-size:16.5px; }
+    }
   </style>
 </head>
 <body class="is-entering">
@@ -508,6 +584,8 @@
     </div>
     <div class="header-actions">
       <button type="button" onclick="navigateWithTransition('index.html')">Home</button>
+      <button type="button" onclick="navigateWithTransition('jobs.html')">Jobs</button>
+      <button type="button" onclick="navigateWithTransition('travels.html')">Travel</button>
       <button type="button" onclick="navigateWithTransition('terms.html')">Terms</button>
       <button type="button" onclick="navigateWithTransition('about.html')">About</button>
       <button type="button" onclick="navigateWithTransition('contact.html')">Contact Us</button>
@@ -516,7 +594,8 @@
 
   <div class="page-banner">
     <h1>About Us</h1>
-    <p>The story behind G-Spirit Ventures</p>
+    <p>Born in a lockdown. Built for people.</p>
+    <div class="banner-chips"><span>EST. MAY 2020</span><span>Loans</span><span>Capital</span><span>Partnerships</span><span>Careers</span><span>Travel</span></div>
   </div>
 
   <div class="container">
@@ -525,21 +604,42 @@
       <div class="badge reveal is-visible">🎓</div>
 
       <div class="reveal">
+        <span class="kicker">Our story</span>
         <h2>Where It Started</h2>
-        <p>G-Spirit Ventures began in May 2020, in the middle of the COVID-19 pandemic. Schools across Cameroon had shut down, and with them, the routines and income that so many families depended on. Watching students and young people search for ways to stay afloat, the founder made a decision: instead of standing by, provide the capital these industrious young minds needed to start or sustain small businesses of their own.</p>
-        <p>What began as small amounts of business capital for a handful of determined students grew, over time, into something much bigger — a lending service that now reaches far beyond the classroom.</p>
+        <p class="lead">G-Spirit Ventures began in May 2020, in the middle of the COVID-19 pandemic. Schools across Cameroon had shut down, and with them, the routines and income that so many families depended on. Watching students and young people search for ways to stay afloat, the founder made a decision: instead of standing by, provide the capital these industrious young minds needed to start or sustain small businesses of their own.</p>
+        <p>What began as small amounts of business capital for a handful of determined students grew, over time, into something much bigger — a lending service, and then a wider platform for opportunity, that now reaches far beyond the classroom.</p>
 
         <div class="quote">
           "It started with wanting to help a few students turn a hard season into something productive. It grew because the need was everywhere — not just in schools, but in every corner of daily life."
         </div>
       </div>
 
-      <div class="reveal">
-        <h2>Why "G-Spirit"</h2>
-        <p>The name carries the same spirit brought into every classroom for over ten years: patience, clarity, and genuinely wanting to see people succeed. That spirit didn't stop at the school gate — it's the same one behind every loan application reviewed here.</p>
+      <div class="stats reveal-stagger" id="stats">
+        <div class="stat"><b data-count="2020" data-from="2000">2020</b><small>The year we started</small></div>
+        <div class="stat"><b data-count="10" data-suffix="+">10+</b><small>Years of classroom spirit</small></div>
+        <div class="stat"><b data-count="5">5</b><small>Ways we help you move</small></div>
+        <div class="stat"><b data-count="24" data-suffix="h">24h</b><small>Typical decision window</small></div>
       </div>
 
       <div class="reveal">
+        <span class="kicker">The journey</span>
+        <h2>How We Grew</h2>
+        <div class="timeline">
+          <div class="tl-item"><div class="tl-when">May 2020</div><h3>A lockdown, a decision</h3><p>With schools closed, the founder starts putting small business capital into the hands of determined students.</p></div>
+          <div class="tl-item"><div class="tl-when">Then</div><h3>The need was everywhere</h3><p>Teachers between paychecks, farmers before planting season, traders restocking, families financing hire purchases — loans open up to everyone.</p></div>
+          <div class="tl-item"><div class="tl-when">Next</div><h3>Capital and partnerships</h3><p>Structured capital for businesses with real momentum, and partnerships with people and institutions who share the mission.</p></div>
+          <div class="tl-item"><div class="tl-when">Today</div><h3>Work and the world beyond</h3><p>A community job board, a talent map for job seekers, and travel and logistics support — one Ventures family, many doors.</p></div>
+        </div>
+      </div>
+
+      <div class="reveal">
+        <span class="kicker">The name</span>
+        <h2>Why "G-Spirit"</h2>
+        <p>The name carries the same spirit brought into every classroom for over ten years: patience, clarity, and genuinely wanting to see people succeed. That spirit didn't stop at the school gate — it's the same one behind every application reviewed here, whether it's a loan, a job, or a journey.</p>
+      </div>
+
+      <div class="reveal">
+        <span class="kicker">Our compass</span>
         <h2>What We Believe</h2>
         <div class="values reveal-stagger">
           <div class="value">
@@ -561,21 +661,79 @@
       </div>
 
       <div class="reveal">
-        <h2>What We Render</h2>
-        <p>G-Spirit is not just a lender; we are a practical growth partner. We render three core services designed to help people, businesses, and communities move forward with confidence:</p>
-
-        <p><strong>1. Loan Solutions:</strong> We provide accessible loan support for individuals and families who need quick funding for emergencies, school needs, personal projects, daily operations, or important life moments. Whether it is a short-term gap, a business injection, or a pressing need that cannot wait, our loan service is built to deliver fast, honest support with clear repayment terms.</p>
-
-        <p><strong>2. Capital for Businesses:</strong> We support entrepreneurs and growing businesses with structured capital solutions to launch, expand, stock inventory, improve operations, invest in equipment, or strengthen a promising concept. Our capital offering is designed for ambition: when a business has a real opportunity and a clear growth path, we help fuel the next step.</p>
-
-        <p><strong>3. Partnership Opportunities:</strong> We also build partnerships with people, institutions, and organizations that share our mission of creating opportunity. Through collaboration, co-creation, and strategic support, we connect partners with practical pathways to grow impact, expand networks, and contribute to sustainable progress. In other words, we do not only finance ideas — we help build ecosystems around progress.</p>
-
-        <p>From the first student seeking a starting line to the business owner needing momentum and the partner looking to create lasting value, G-Spirit exists to help each of these stories move forward. We are here for the personal emergency, the business breakthrough, and the shared mission.</p>
+        <span class="kicker">What we render</span>
+        <h2>Five Ways We Move You Forward</h2>
+        <p>G-Spirit is not just a lender; we are a practical growth partner. Whatever stage you are at, there is a door built for it:</p>
+        <div class="services reveal-stagger">
+          <a class="svc" href="apply.html" style="--c:#d99532">
+            <div class="ico">💰</div><h3>Loan Solutions</h3>
+            <p>Quick, honest funding for emergencies, school needs, personal projects, hire purchase and daily operations — with clear repayment terms and no guesswork.</p>
+            <span class="go">Apply for a loan</span>
+          </a>
+          <a class="svc" href="capital.html" style="--c:#6c3483">
+            <div class="ico">🚀</div><h3>Capital for Businesses</h3>
+            <p>Structured capital to launch, expand, stock inventory, buy equipment or strengthen a promising concept. When the opportunity is real, we help fuel the next step.</p>
+            <span class="go">Request capital</span>
+          </a>
+          <a class="svc" href="partner.html" style="--c:#167d78">
+            <div class="ico">🤝</div><h3>Partnership Opportunities</h3>
+            <p>Collaboration, co-creation and strategic support with people and institutions who share our mission. We do not only finance ideas — we help build ecosystems around progress.</p>
+            <span class="go">Explore partnering</span>
+          </a>
+          <a class="svc" href="jobs.html" style="--c:#2f6fb0">
+            <div class="ico">💼</div><h3>Careers &amp; Job Board</h3>
+            <p>Employers share genuine openings, job seekers tell us what they are good at, and we bring both sides together. Browse roles, post one, or join the talent map.</p>
+            <span class="go">See opportunities</span>
+          </a>
+          <a class="svc" href="travels.html" style="--c:#c4562f">
+            <div class="ico">✈️</div><h3>Travel &amp; Logistics Support</h3>
+            <p>Practical guidance for business, study, family and cargo travel. Share your destination and timing, get clear next steps, and discuss any costs before you commit. We help you prepare — we never promise visa outcomes.</p>
+            <span class="go">Share your travel plans</span>
+          </a>
+        </div>
       </div>
 
       <div class="reveal">
+        <span class="kicker">Not sure where to begin?</span>
+        <h2>Find Your Path</h2>
+        <div class="path">
+          <p class="path-q">What are you trying to do right now?</p>
+          <div class="chips" id="chips" role="group" aria-label="Choose what you need">
+            <button type="button" class="chip" data-k="cash">I need funds quickly</button>
+            <button type="button" class="chip" data-k="grow">I'm growing a business</button>
+            <button type="button" class="chip" data-k="team">I want to collaborate</button>
+            <button type="button" class="chip" data-k="work">I'm looking for work</button>
+            <button type="button" class="chip" data-k="trip">I'm planning a trip</button>
+          </div>
+          <div class="path-out" id="pathOut" aria-live="polite">
+            <h3>Tap an option above 👆</h3>
+            <p>We'll point you to the right door, no forms to fill just yet.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="reveal">
+        <div class="safe">
+          <div class="shield">🛡️</div>
+          <div><strong>Straight talk, always</strong>
+          <p>We explain terms before you commit. Never pay anyone who promises you a job or a visa, and never share passwords or verification codes with anyone. Our team will only ever discuss fees with you openly, and in advance.</p></div>
+        </div>
+      </div>
+
+      <div class="reveal">
+        <span class="kicker">The promise</span>
         <h2>Powering Dreams</h2>
-        <p>From those first loans to student entrepreneurs, G-Spirit Ventures has grown to stand behind all kinds of people chasing progress: teachers between paychecks, farmers investing in the next planting season, small business owners restocking inventory, families financing hire purchases, and anyone facing an unforeseen circumstance that just can't wait. Different needs, same spirit — real support, when it's needed most.</p>
+        <p>From those first loans to student entrepreneurs, G-Spirit Ventures has grown to stand behind all kinds of people chasing progress: teachers between paychecks, farmers investing in the next planting season, small business owners restocking inventory, families financing hire purchases, graduates searching for their first role, and travellers preparing for the next chapter. Different needs, same spirit — real support, when it's needed most.</p>
+
+        <div class="cta-band">
+          <h2>Your story could be next.</h2>
+          <p>Tell us where you are and where you want to go. We'll take it from there.</p>
+          <div class="cta-row">
+            <a href="apply.html">Apply for a Loan</a>
+            <a href="jobs.html" class="ghost">Browse Jobs</a>
+            <a href="contact.html" class="ghost">Talk to Us</a>
+          </div>
+        </div>
       </div>
 
       <div class="agreement-buttons reveal" style="display:none;"></div>
@@ -677,6 +835,41 @@ el.style.opacity='0';el.style.transform='translateY(20px)';
 setTimeout(()=>{el.style.transition='all .7s ease';el.style.opacity='1';el.style.transform='translateY(0)';},200*i);
 });
 });
+</script>
+
+<script>
+(function(){
+  var data={
+    cash:{t:'Start with a loan 💰',p:'Fast, honest funding for emergencies, school needs, personal projects or hire purchase. Collateral is verified in person and the terms are explained upfront.',h:'apply.html',l:'Apply for a loan →'},
+    grow:{t:'Look at business capital 🚀',p:'Structured capital to launch, expand, stock up or invest in equipment, assessed on your business plan and growth path.',h:'capital.html',l:'Request capital →'},
+    team:{t:'Let\'s build together 🤝',p:'We partner with people, institutions and organisations who want to create lasting opportunity. Tell us what you have in mind.',h:'partner.html',l:'Explore partnering →'},
+    work:{t:'Find work that moves you forward 💼',p:'Browse open roles, post an opening, or join the talent map and let us match you. Never pay anyone who promises you a job.',h:'jobs.html',l:'See opportunities →'},
+    trip:{t:'Plan your next move ✈️',p:'Share where you are going, why and when. We\'ll follow up with practical next steps and discuss any costs before you commit.',h:'travels.html',l:'Share your travel plans →'}
+  };
+  var out=document.getElementById('pathOut'),chips=document.querySelectorAll('#chips .chip');
+  chips.forEach(function(c){c.addEventListener('click',function(){
+    var d=data[c.dataset.k];
+    chips.forEach(function(x){x.setAttribute('aria-pressed',String(x===c))});
+    var n=out.cloneNode(false);n.id='pathOut';
+    n.innerHTML='<h3>'+d.t+'</h3><p>'+d.p+'</p><a class="path-cta" href="'+d.h+'">'+d.l+'</a>';
+    out.parentNode.replaceChild(n,out);out=n;
+  })});
+
+  var stats=document.getElementById('stats');
+  if(!stats)return;
+  var reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function run(){
+    stats.querySelectorAll('b[data-count]').forEach(function(el){
+      var to=+el.dataset.count,from=+(el.dataset.from||0),suf=el.dataset.suffix||'',t0=null,dur=1400;
+      function step(ts){if(!t0)t0=ts;var p=Math.min((ts-t0)/dur,1),e=1-Math.pow(1-p,3);
+        el.textContent=Math.round(from+(to-from)*e)+(p===1?suf:'');if(p<1)requestAnimationFrame(step)}
+      requestAnimationFrame(step);
+    });
+  }
+  if(reduce||!('IntersectionObserver' in window))return;
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){run();io.disconnect()}})},{threshold:.4});
+  io.observe(stats);
+})();
 </script>
 </body>
 </html>

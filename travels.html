@@ -2,441 +2,556 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#0a2e26">
+  <meta name="description" content="Practical guidance for business, study, family and cargo travel from G-Spirit Ventures. Share your plans and get clear next steps.">
   <link rel="icon" type="image/png" href="favicon.png">
-  <title>G-Spirit Ventures - Travel & Logistics Support</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>G-Spirit Ventures - Travel &amp; Logistics Support</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
   <style>
-    :root {
-      --travel-teal: #16a085;
-      --travel-dark: #0d4237;
-      --travel-light: #f0fbf8;
-      --travel-card-bg: #f5fcfb;
-      --travel-line: #cde8e1;
-      --ink: #213047;
+    :root{--teal:#16a085;--teal-d:#12806a;--dark:#0d4237;--deep:#0a2e26;--light:#f0fbf8;--card:#f5fcfb;--line:#cde8e1;--ink:#213047;--gold:#f2b84b;--muted:#52776e}
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+    body{font-family:'Nunito',Arial,sans-serif;color:var(--ink);margin:0;background:radial-gradient(circle at 10% 10%,#dcf5ef,#ccf0e7 45%,#b2e6d9 100%);min-height:100vh;overflow-x:hidden;line-height:1.55;opacity:1;transition:opacity .35s cubic-bezier(.22,1,.36,1),transform .35s cubic-bezier(.22,1,.36,1)}
+    body.is-exiting,body.is-entering{opacity:0;transform:scale(.98)}
+    .page-overlay{position:fixed;inset:0;background:#fff;opacity:0;pointer-events:none;transition:opacity .35s cubic-bezier(.22,1,.36,1);z-index:9999}
+    .page-overlay.is-visible{opacity:1}
+    a{text-decoration:none}
+    button{font:inherit;cursor:pointer;border:0;-webkit-tap-highlight-color:transparent}
+    [hidden]{display:none!important}
+    h1,h2,h3,h4{font-family:'Fredoka',sans-serif;color:var(--dark)}
+
+    /* ---------- header ---------- */
+    header{background:linear-gradient(135deg,var(--deep),#124d40 60%,#186b59);color:#fff;padding:12px max(20px,4vw);display:flex;align-items:center;gap:14px;position:sticky;top:0;z-index:1000;box-shadow:0 6px 20px rgba(13,66,55,.22)}
+    .logo-btn{display:inline-flex;line-height:0}
+    header img{max-height:46px;width:auto}
+    .brand{flex:1;min-width:0}
+    .brand h1{font-size:20px;margin:0;letter-spacing:.04em;color:#fff;line-height:1.1}
+    .tagline{font-size:12.5px;font-style:italic;color:#a4ebd9;margin:0}
+    .header-actions{display:flex;gap:4px}
+    .header-actions a{color:#fff;padding:7px 11px;font-size:12.5px;font-weight:800;border-radius:8px;transition:background .2s;white-space:nowrap}
+    .header-actions a:hover{background:rgba(255,255,255,.15)}
+    .header-actions a.cta{background:var(--gold);color:#3a2a00}
+
+    .container{width:min(94%,1120px);margin:22px auto 70px}
+
+    /* ---------- hero ---------- */
+    .hero{position:relative;overflow:hidden;border-radius:24px;padding:30px 34px;margin-bottom:18px;color:#fff;background:linear-gradient(135deg,var(--deep),#0f4a3c 55%,#17705c);box-shadow:0 18px 46px rgba(13,66,55,.18)}
+    .hero::before{content:'';position:absolute;width:380px;height:380px;left:-150px;top:-200px;border:1px solid rgba(242,184,75,.4);border-radius:50%;box-shadow:0 0 0 26px rgba(242,184,75,.07),0 0 0 52px rgba(242,184,75,.035)}
+    .hero-plane{position:absolute;right:-6px;bottom:-4px;width:420px;height:120px;opacity:.55;pointer-events:none}
+    .hero-plane svg{position:absolute;inset:0}
+    .fly{position:absolute;left:0;top:0;margin:-11px 0 0 -11px;font-size:22px;offset-path:path('M6 108 Q 190 -50 410 40');offset-rotate:0deg;animation:fly 7s linear infinite}
+    @keyframes fly{from{offset-distance:0%}to{offset-distance:100%}}
+    .hero-layout{position:relative;z-index:1;display:grid;grid-template-columns:1.3fr .7fr;gap:26px;align-items:center}
+    .hero-badge{display:inline-flex;background:var(--gold);color:#3a2a00;padding:6px 13px;border-radius:999px;font-size:11px;font-weight:900;letter-spacing:.08em;text-transform:uppercase}
+    .hero h2{color:#fff;font-size:clamp(27px,5vw,42px);line-height:1.1;margin:12px 0 8px}
+    .hero p{color:#cdeee6;font-size:15.5px;max-width:600px;margin:0}
+    .hero-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+    .btn{display:inline-flex;align-items:center;justify-content:center;min-height:46px;padding:0 20px;border-radius:11px;font-weight:900;font-size:14px;background:var(--gold);color:#3a2a00;transition:transform .18s}
+    .btn:hover{transform:translateY(-2px)}
+    .btn.ghost{background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.35)}
+    .pills{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+    .pills span{font-size:12px;font-weight:800;padding:5px 11px;border-radius:999px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:#e3f8f2}
+    .flow{list-style:none;margin:0;padding:0;counter-reset:s;display:grid;gap:10px}
+    .flow li{counter-increment:s;display:flex;gap:11px;align-items:center;padding:11px 13px;border-radius:13px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.16);font-size:13px;font-weight:700;color:#e3f8f2;backdrop-filter:blur(4px)}
+    .flow li::before{content:counter(s);flex:none;width:26px;height:26px;display:grid;place-items:center;border-radius:50%;background:var(--gold);color:#3a2a00;font-weight:900;font-size:12px}
+
+    /* ---------- help tiles ---------- */
+    .kicker{color:var(--teal);font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.12em}
+    .help{margin:0 0 20px}
+    .help-head{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin:0 2px 10px}
+    .help-head h2{font-size:22px;margin:0}
+    .help-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+    .tile{text-align:left;background:rgba(255,255,255,.95);border:1px solid var(--line);border-radius:16px;padding:15px;box-shadow:0 10px 26px rgba(13,66,55,.06);transition:transform .2s,box-shadow .2s,border-color .2s;color:inherit}
+    .tile:hover{transform:translateY(-4px);box-shadow:0 16px 30px rgba(13,66,55,.12);border-color:var(--teal)}
+    .tile .ico{width:42px;height:42px;display:grid;place-items:center;border-radius:12px;background:#e3f6f1;font-size:21px;margin-bottom:8px}
+    .tile h3{font-size:16.5px;margin:0 0 3px}
+    .tile p{margin:0;font-size:12.5px;color:#55786f;line-height:1.45}
+
+    /* ---------- form card ---------- */
+    .card{background:rgba(255,255,255,.97);border:1px solid rgba(22,160,133,.16);border-radius:24px;box-shadow:0 18px 46px rgba(13,66,55,.08);padding:28px 32px;margin-bottom:20px;scroll-margin-top:84px}
+    .form-intro h2{font-size:27px;margin:4px 0 2px}
+    .form-intro p{margin:0 0 14px;color:var(--muted);font-size:14.5px}
+    .slim{display:flex;gap:10px;align-items:flex-start;padding:10px 14px;margin-bottom:16px;border:1px solid #f1dfb3;background:#fff8e8;color:#72591f;border-radius:12px;font-size:12.5px}
+    .slim a{color:#5e4813;font-weight:800;text-decoration:underline}
+
+    .track-wrap{margin-bottom:22px}
+    .track{position:relative;height:8px;border-radius:99px;background:#d4eae3;margin:14px 0 8px}
+    .track .fill{position:absolute;left:0;top:0;bottom:0;border-radius:inherit;background:linear-gradient(90deg,var(--teal),#52d1b6);transition:width .45s cubic-bezier(.22,1,.36,1);width:33%}
+    .track .plane{position:absolute;top:50%;left:33%;transform:translate(-50%,-62%);font-size:22px;transition:left .45s cubic-bezier(.22,1,.36,1);filter:drop-shadow(0 2px 2px rgba(13,66,55,.25))}
+    .form-progress{display:flex;gap:8px}
+    .progress-step{flex:1;font-weight:800;font-size:12.5px;color:#7ba89e;text-align:center}
+    .progress-step.active,.progress-step.completed{color:var(--teal)}
+    .progress-step button{background:none;color:inherit;font:inherit;font-weight:800;padding:2px 4px}
+
+    .step-heading{margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--line)}
+    .step-heading h3{font-size:23px;margin:0 0 3px}
+    .step-heading p{color:#517a71;margin:0;font-size:14px}
+    .form-step{display:none}
+    .form-step.active{display:block;animation:rise .35s ease}
+    @keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+
+    .field-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 16px}
+    .field-wide{grid-column:1/-1}
+    .field-card{position:relative;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px 8px;margin-bottom:14px}
+    label,.lbl{display:block;margin-bottom:6px;font-weight:800;font-size:13px;color:var(--dark)}
+    input,select,textarea{width:100%;min-height:48px;padding:11px 12px;border:1px solid #b8ded5;border-radius:10px;background:#fff;color:#1a3832;font:inherit;font-size:16px;margin-bottom:6px}
+    textarea{min-height:104px;resize:vertical}
+    input:focus,select:focus,textarea:focus{outline:none;border-color:var(--teal);box-shadow:0 0 0 4px rgba(22,160,133,.13)}
+    .field-hint{color:#6a8b83;font-size:12px;line-height:1.5;margin:0 0 4px}
+    .sr{position:absolute;left:14px;right:14px;bottom:6px;height:1px;opacity:0;pointer-events:none;min-height:0;padding:0;border:0;margin:0}
+
+    /* route */
+    .route{display:grid;grid-template-columns:1fr auto 1fr;gap:0 10px;align-items:start}
+    .swap{align-self:center;margin-top:8px;width:42px;height:42px;border-radius:50%;background:#e3f6f1;color:var(--dark);font-size:19px;font-weight:900;transition:transform .35s,background .2s}
+    .swap:hover{background:#cdeee6}.swap.spin{transform:rotate(180deg)}
+    .flightline{grid-column:1/-1;position:relative;height:18px;margin:-4px 8px 12px}
+    .flightline::before{content:'';position:absolute;left:0;right:0;top:50%;border-top:2px dashed #9bd6c8}
+    .flightline b{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:#fff;padding:0 8px;font-size:18px}
+
+    /* purpose + quick chips */
+    .opts{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:6px}
+    .opt{display:flex;flex-direction:column;align-items:center;gap:3px;padding:11px 6px;border-radius:12px;border:1.5px solid #b8ded5;background:#fff;color:var(--dark);font-weight:800;font-size:12.5px;text-align:center;line-height:1.2;transition:all .18s}
+    .opt i{font-style:normal;font-size:22px}
+    .opt:hover{border-color:var(--teal);transform:translateY(-2px)}
+    .opt[aria-checked="true"]{background:var(--dark);border-color:var(--dark);color:#fff;box-shadow:0 8px 16px rgba(13,66,55,.22)}
+    .chips{display:flex;flex-wrap:wrap;gap:7px;margin:2px 0 6px}
+    .chip{padding:7px 12px;border-radius:999px;background:#e3f6f1;color:var(--dark);font-size:12px;font-weight:800;border:1px solid #c5e8df;transition:all .18s}
+    .chip:hover{background:#cdeee6}.chip.on{background:var(--teal);color:#fff;border-color:var(--teal)}
+
+    .step-actions{display:flex;gap:12px;margin-top:20px}
+    .step-actions button{flex:1;min-height:50px;border-radius:12px;font-weight:900;font-size:15px;transition:transform .15s,background .2s}
+    .next-btn,.submit-btn{background:var(--teal);color:#fff;box-shadow:0 10px 20px rgba(22,160,133,.25)}
+    .next-btn:hover,.submit-btn:hover{background:var(--teal-d);transform:translateY(-2px)}
+    .prev-btn{background:#e2f5f1;color:var(--dark);flex:0 0 36%!important}
+    button:disabled{opacity:.7;cursor:wait;transform:none!important}
+    .form-error{margin-top:14px;padding:11px 14px;border-radius:10px;background:#fff0f1;color:#a52f39;border:1px solid #f0c5c8;font-size:13px;font-weight:800}
+
+    /* review */
+    .rv-trip{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 18px;border-radius:16px;color:#fff;background:linear-gradient(135deg,var(--deep),#17705c);margin-bottom:12px}
+    .rv-route{display:flex;align-items:center;gap:10px;font-family:'Fredoka',sans-serif;font-size:clamp(18px,4.5vw,24px);line-height:1.15;min-width:0}
+    .rv-route span{overflow-wrap:anywhere}.rv-route em{font-style:normal;color:var(--gold);font-size:20px}
+    .rv-sub{font-size:12.5px;color:#bfeee2;margin-top:4px}
+    .rv-edit{flex:none;background:rgba(255,255,255,.14);color:#fff;border:1px solid rgba(255,255,255,.3);border-radius:99px;padding:6px 14px;font-size:12px;font-weight:900}
+    .rv-box{background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px 14px}
+    .rv-box header{all:unset;display:flex;justify-content:space-between;align-items:center;margin-bottom:4px}
+    .rv-box h4{margin:0;font-size:16px}
+    .rv-box .rv-edit{background:#e3f6f1;color:var(--dark);border-color:#c5e8df}
+    .rv-box dl{margin:0}.rv-box dl div{display:flex;justify-content:space-between;gap:14px;padding:7px 0;border-top:1px solid #edf5f2;font-size:13.5px}
+    .rv-box dt{color:#6a968d;flex:none;font-weight:700}.rv-box dd{margin:0;text-align:right;color:var(--dark);font-weight:800;overflow-wrap:anywhere;white-space:pre-line}
+    .consent-note{margin:14px 0 0;color:#6a8b83;font-size:12.5px}.consent-note a{color:var(--teal);font-weight:800}
+
+    /* done */
+    .done{text-align:center;padding:10px 0 4px;animation:rise .4s ease}
+    .done .big{font-size:56px;display:inline-block;animation:lift 1.6s ease-out}
+    @keyframes lift{0%{transform:translate(-40px,30px) scale(.6);opacity:0}60%{opacity:1}100%{transform:none}}
+    .done h3{font-size:26px;margin:6px 0 4px}.done>p{color:var(--muted);margin:0 auto 18px;max-width:480px}
+    .done ol{list-style:none;margin:0 auto 18px;padding:0;max-width:440px;text-align:left;display:grid;gap:9px}
+    .done li{display:flex;gap:11px;align-items:center;padding:11px 14px;border-radius:12px;background:var(--card);border:1px solid var(--line);font-size:14px;font-weight:700;color:var(--dark)}
+    .done li b{flex:none;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:var(--teal);color:#fff;font-size:12px}
+    .done .row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+    .done .row a,.done .row button{min-height:46px;padding:0 20px;border-radius:12px;font-weight:900;font-size:14px;display:inline-flex;align-items:center}
+    .done .wa{background:#25d366;color:#fff}.done .again{background:#e2f5f1;color:var(--dark)}
+
+    /* before you go */
+    .more{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:6px}
+    .panel{background:rgba(255,255,255,.95);border:1px solid var(--line);border-radius:20px;padding:20px 22px;box-shadow:0 10px 28px rgba(13,66,55,.05)}
+    .panel h2{font-size:21px;margin:4px 0 12px}
+    .check{display:flex;align-items:flex-start;gap:11px;padding:10px 12px;margin-bottom:8px;border-radius:12px;background:var(--card);border:1px solid var(--line);cursor:pointer;font-size:13.5px;color:#3d655b;font-weight:600;line-height:1.4}
+    .check input{width:22px;min-height:22px;height:22px;margin:0;flex:none;accent-color:var(--teal)}
+    .check b{display:block;color:var(--dark);font-size:14px}
+    .check:has(input:checked){background:#e3f6f1;border-color:#9bd6c8}
+    .check:has(input:checked) b{text-decoration:line-through;opacity:.7}
+    .ready{display:flex;justify-content:space-between;align-items:center;font-size:12.5px;font-weight:800;color:var(--muted);margin-bottom:10px}
+    .ready .bar{flex:1;height:6px;margin:0 10px;border-radius:99px;background:#d4eae3;overflow:hidden}.ready .bar i{display:block;height:100%;width:0;background:var(--teal);transition:width .3s}
+    details.faq{border-top:1px solid var(--line);padding:2px 0}
+    details.faq:first-of-type{border-top:0}
+    details.faq summary{cursor:pointer;list-style:none;padding:11px 0;font-weight:800;color:var(--dark);font-size:14px}
+    details.faq summary::-webkit-details-marker{display:none}
+    details.faq summary::after{content:'＋';float:right;color:var(--teal)}
+    details.faq[open] summary::after{content:'－'}
+    details.faq p{margin:0 0 12px;font-size:13.5px;color:#55786f}
+
+    footer{text-align:center;padding:10px 20px 40px;color:#517a71;font-size:13px}
+    footer a{color:var(--dark);font-weight:800;margin:0 7px;white-space:nowrap}
+    footer small{display:block;max-width:560px;margin:10px auto 0;color:#6a8b83;font-size:12px}
+
+    .fab{position:fixed;left:50%;bottom:max(14px,env(safe-area-inset-bottom));transform:translate(-50%,0);z-index:900;display:none;align-items:center;gap:8px;padding:12px 20px;border-radius:999px;background:var(--gold);color:#3a2a00;font-weight:900;font-size:14px;box-shadow:0 12px 26px rgba(13,66,55,.3);transition:opacity .25s,transform .25s}
+    .fab.off{opacity:0;pointer-events:none;transform:translate(-50%,20px)}
+
+    /* ---------- tablet ---------- */
+    @media(max-width:900px){.hero-layout{grid-template-columns:1fr}.flow,.hero-plane{display:none}.help-grid{grid-template-columns:repeat(2,1fr)}.more{grid-template-columns:1fr}.opts{grid-template-columns:repeat(3,1fr)}}
+    /* ---------- mobile ---------- */
+    @media(max-width:700px){
+      header{position:static;flex-wrap:wrap;padding:10px 16px;gap:6px 12px}
+      .brand h1{font-size:17px}.tagline{font-size:11.5px}header img{max-height:38px}
+      .header-actions{order:3;width:100%;overflow-x:auto;scrollbar-width:none;gap:2px}.header-actions::-webkit-scrollbar{display:none}
+      .header-actions a.cta{margin-left:auto}
+      .container{margin-top:14px;margin-bottom:90px}
+      .hero{padding:22px 18px;border-radius:20px}.hero p{font-size:14.5px}.hero-actions .btn{flex:1}
+      .card{padding:18px 15px;border-radius:20px}
+      .field-grid{grid-template-columns:1fr}
+      .route{grid-template-columns:1fr;gap:0}
+      .swap{justify-self:center;margin:-6px 0 6px;width:38px;height:38px;transform:rotate(90deg)}.swap.spin{transform:rotate(270deg)}
+      .flightline{display:none}
+      .opts{grid-template-columns:repeat(2,1fr)}.opt:last-child{grid-column:1/-1}
+      .help-grid{gap:9px}.tile{padding:13px}
+      .step-actions{position:sticky;bottom:0;background:linear-gradient(transparent,#fff 28%);padding:14px 0 4px;margin:14px 0 0}
+      .rv-trip{padding:14px}
+      .fab{display:inline-flex}
     }
-
-    * { box-sizing: border-box; }
-
-    body {
-      font-family: 'Nunito', Arial, sans-serif;
-      color: var(--ink);
-      margin: 0;
-      padding: 0;
-      background: radial-gradient(circle at 10% 10%, #dcf5ef, #ccf0e7 45%, #b2e6d9 100%);
-      min-height: 100vh;
-      overflow-x: hidden;
-      opacity: 1;
-      transition: opacity 0.35s cubic-bezier(0.22, 1, 0.36, 1), transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
-    }
-
-    body.is-exiting, body.is-entering {
-      opacity: 0;
-      transform: scale(0.98);
-    }
-
-    .page-overlay {
-      position: fixed;
-      inset: 0;
-      background: #fff;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.35s cubic-bezier(0.22, 1, 0.36, 1);
-      z-index: 9999;
-    }
-    .page-overlay.is-visible { opacity: 1; }
-
-    header {
-      background: linear-gradient(135deg, #0a2e26, #124d40 60%, #186b59);
-      color: white;
-      padding: 14px 22px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-      box-shadow: 0 6px 20px rgba(13, 66, 55, 0.22);
-    }
-
-    .logo-btn {
-      background: none; border: none; padding: 0; cursor: pointer; display: inline-flex;
-    }
-    header img { max-height: 48px; width: auto; }
-
-    .brand { flex: 1; margin-left: 12px; }
-    .brand h1 { font-family: 'Fredoka', sans-serif; font-size: 22px; margin: 0; letter-spacing: 0.04em; }
-    .tagline { font-size: 13px; font-style: italic; color: #a4ebd9; margin: 0; }
-
-    .header-actions { display: flex; gap: 8px; }
-    .header-actions button {
-      background: none; color: white; border: none; padding: 6px 10px; font-size: 12px;
-      font-weight: 700; cursor: pointer; border-radius: 6px; transition: background 0.2s;
-    }
-    .header-actions button:hover { background: rgba(255,255,255,0.15); }
-
-    .container {
-      width: min(94%, 1180px);
-      margin: 28px auto 60px;
-    }
-
-    .hero, .card {
-      background: rgba(255, 255, 255, 0.96);
-      border: 1px solid rgba(22, 160, 133, 0.16);
-      border-radius: 22px;
-      box-shadow: 0 18px 46px rgba(13, 66, 55, 0.08);
-      padding: 30px 34px;
-      margin-bottom: 24px;
-    }
-
-    .hero-badge {
-      display: inline-flex;
-      background: rgba(22, 160, 133, 0.12);
-      color: var(--travel-teal);
-      border: 1px solid rgba(22, 160, 133, 0.22);
-      padding: 7px 14px;
-      border-radius: 999px;
-      font-size: 11px;
-      font-weight: 900;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-    }
-
-    .hero h2 {
-      font-family: 'Fredoka', sans-serif;
-      color: var(--travel-dark);
-      font-size: clamp(28px, 4vw, 40px);
-      margin: 12px 0 8px;
-    }
-
-    .hero p { color: #3a635a; font-size: 16px; max-width: 760px; margin: 0 0 16px; }
-
-    .hero-layout { display: grid; grid-template-columns: 1.25fr .75fr; gap: 28px; align-items: center; }
-    .hero-copy p { margin-bottom: 20px; }
-    .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
-    .hero-actions a { display: inline-flex; align-items: center; justify-content: center; min-height: 46px; padding: 0 18px; border-radius: 11px; background: var(--travel-teal); color: #fff; text-decoration: none; font-weight: 900; }
-    .hero-actions a.secondary { background: #e5f5f1; color: var(--travel-dark); }
-    .hero-aside { padding: 20px; border-radius: 18px; background: linear-gradient(145deg, #e7f8f3, #f8fcfb); border: 1px solid var(--travel-line); }
-    .hero-aside strong { display: block; color: var(--travel-dark); font-family: 'Fredoka', sans-serif; font-size: 19px; margin-bottom: 10px; }
-    .hero-aside ul { margin: 0; padding: 0; list-style: none; color: #42685f; font-size: 14px; }
-    .hero-aside li { padding: 7px 0; }
-    .hero-aside li::before { content: '✓'; color: var(--travel-teal); font-weight: 900; margin-right: 9px; }
-    .section-kicker { color: var(--travel-teal); font-size: 11px; font-weight: 900; text-transform: uppercase; letter-spacing: .12em; }
-    .info-section { margin: 34px 0; }
-    .info-section h2 { font-family: 'Fredoka', sans-serif; color: var(--travel-dark); font-size: clamp(25px, 3.5vw, 34px); margin: 7px 0 8px; }
-    .info-section > p { color: #52776e; max-width: 720px; margin: 0 0 20px; }
-    .insight-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
-    .insight-card { background: rgba(255,255,255,.92); border: 1px solid var(--travel-line); border-radius: 16px; padding: 20px; box-shadow: 0 10px 28px rgba(13,66,55,.05); }
-    .insight-icon { font-size: 24px; }
-    .insight-card h3 { color: var(--travel-dark); font-family: 'Fredoka', sans-serif; font-size: 19px; margin: 10px 0 7px; }
-    .insight-card p { color: #55786f; margin: 0; font-size: 14px; line-height: 1.6; }
-    .notice { background: #fff8e8; border: 1px solid #f1dfb3; color: #72591f; border-radius: 13px; padding: 15px 18px; font-size: 13px; line-height: 1.6; margin-top: 18px; }
-    .form-intro { display:flex; justify-content:space-between; align-items:flex-end; gap:18px; margin-bottom:24px; }
-    .form-intro h2 { font-family:'Fredoka',sans-serif; color:var(--travel-dark); margin:5px 0; font-size:28px; }
-    .form-intro p { margin:0; color:#52776e; max-width:660px; }
-    .step-heading p { line-height: 1.55; }
-    textarea { min-height: 112px; resize: vertical; }
-    .field-hint { color:#6a8b83; font-size:12px; line-height:1.5; }
-    .progress-step.completed span { background: #8cd7c3; }
-
-    .form-progress {
-      display: flex;
-      gap: 8px;
-      margin-bottom: 28px;
-    }
-
-    .progress-step {
-      flex: 1;
-      font-weight: 800;
-      font-size: 13px;
-      color: #7ba89e;
-    }
-
-    .progress-step span {
-      display: block;
-      height: 7px;
-      border-radius: 99px;
-      background: #d4eae3;
-      margin-bottom: 6px;
-    }
-
-    .progress-step.active, .progress-step.completed { color: var(--travel-teal); }
-    .progress-step.active span, .progress-step.completed span { background: var(--travel-teal); }
-
-    .step-heading { margin-bottom: 22px; padding-bottom: 14px; border-bottom: 1px solid var(--travel-line); }
-    .step-heading h3 { font-family: 'Fredoka', sans-serif; color: var(--travel-dark); font-size: 24px; margin: 0 0 4px; }
-    .step-heading p { color: #517a71; margin: 0; font-size: 14px; }
-
-    .field-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 0 20px;
-    }
-
-    .field-wide { grid-column: 1 / -1; }
-
-    .field-card {
-      background: var(--travel-card-bg);
-      border: 1px solid var(--travel-line);
-      border-radius: 14px;
-      padding: 14px;
-      margin-bottom: 16px;
-    }
-
-    label { display: block; margin-bottom: 6px; font-weight: 800; font-size: 13px; color: var(--travel-dark); }
-    input, select, textarea {
-      width: 100%; min-height: 48px; padding: 12px; border: 1px solid #b8ded5;
-      border-radius: 10px; background: #fff; color: #1a3832; font: inherit; margin-bottom: 6px;
-    }
-
-    input:focus, select:focus, textarea:focus {
-      outline: none; border-color: var(--travel-teal); box-shadow: 0 0 0 4px rgba(22, 160, 133, 0.12);
-    }
-
-    .form-step { display: none; }
-    .form-step.active { display: block; }
-
-    .step-actions { display: flex; gap: 12px; margin-top: 24px; }
-    .step-actions button {
-      flex: 1; min-height: 48px; border-radius: 11px; border: none; font-weight: 900;
-      font-size: 15px; cursor: pointer; transition: transform 0.15s ease, background 0.2s ease;
-    }
-
-    .next-btn, .submit-btn { background: var(--travel-teal); color: white; }
-    .next-btn:hover, .submit-btn:hover { background: #12806a; transform: translateY(-2px); }
-    .prev-btn { background: #e2f5f1; color: var(--travel-dark); }
-    .prev-btn:hover { background: #d0eee8; }
-
-    .review-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 14px; }
-    .review-item { background: #fff; border: 1px solid var(--travel-line); border-radius: 10px; padding: 10px 14px; }
-    .review-item small { display: block; color: #6a968d; font-size: 11px; text-transform: uppercase; font-weight: 800; }
-    .review-item strong { display: block; color: var(--travel-dark); font-size: 14px; margin-top: 3px; }
-
-    footer { text-align: center; padding: 24px; color: #517a71; font-size: 13px; }
-
-    @media (max-width: 760px) {
-      .field-grid, .review-grid { grid-template-columns: 1fr; }
-      .hero, .card { padding: 20px; }
-      .header-actions { display: none; }
-      .hero-layout, .insight-grid { grid-template-columns: 1fr; }
-      .form-intro { display:block; }
-      .form-progress { gap: 5px; }
-      .progress-step { font-size: 11px; }
-    }
+    @media(prefers-reduced-motion:reduce){*,*::before{animation:none!important;transition:none!important}.fly{offset-distance:55%}}
   </style>
 </head>
-<body>
-
+<body class="is-entering">
   <div class="page-overlay"></div>
 
   <header>
-    <button type="button" class="logo-btn" onclick="navigateWithTransition('index.html')" aria-label="Go to homepage">
-      <img src="logo.png" alt="G-Spirit logo">
-    </button>
-    <div class="brand">
-      <h1>G-SPIRIT VENTURES</h1>
-      <div class="tagline">Travel & Logistics Support</div>
-    </div>
-    <div class="header-actions">
-      <button type="button" onclick="navigateWithTransition('index.html')">Home</button>
-      <button type="button" onclick="navigateWithTransition('about.html')">About</button>
-      <button type="button" onclick="navigateWithTransition('contact.html')">Contact</button>
-    </div>
+    <a class="logo-btn" href="index.html" aria-label="Go to homepage"><img src="logo.png" alt="G-Spirit logo"></a>
+    <div class="brand"><h1>G-SPIRIT VENTURES</h1><div class="tagline">Travel &amp; Logistics Support</div></div>
+    <nav class="header-actions" aria-label="Primary navigation">
+      <a href="index.html">Home</a><a href="about.html">About</a><a href="jobs.html">Jobs</a><a href="contact.html">Contact</a><a class="cta" href="#travel-form" data-jump>Plan a trip</a>
+    </nav>
   </header>
 
   <div class="container">
+    <!-- HERO -->
     <section class="hero">
+      <div class="hero-plane" aria-hidden="true">
+        <svg viewBox="0 0 420 120" width="420" height="120"><path d="M6 108 Q 190 -50 410 40" fill="none" stroke="#fff" stroke-width="2" stroke-dasharray="3 8" stroke-linecap="round"/><circle cx="6" cy="108" r="5" fill="#f2b84b"/><circle cx="410" cy="40" r="5" fill="#f2b84b"/></svg>
+        <span class="fly">✈️</span>
+      </div>
       <div class="hero-layout">
-        <div class="hero-copy">
+        <div>
           <span class="hero-badge">Travel consultancy · Cameroon</span>
           <h2>Make your next move with a clearer plan.</h2>
           <p>Get practical guidance for business, study, family and logistics travel. Tell us what you’re planning, and our team will help you understand the next steps and support that may fit.</p>
-          <div class="hero-actions"><a href="#travel-form">Share your travel plans ↓</a><a class="secondary" href="#prepare">Explore what to prepare</a></div>
+          <div class="hero-actions"><a class="btn" href="#travel-form" data-jump>Share your travel plans</a><a class="btn ghost" href="#prepare" data-jump>What to prepare</a></div>
+          <div class="pills"><span>💼 Business</span><span>🎓 Study</span><span>👨‍👩‍👧 Family</span><span>📦 Cargo</span></div>
         </div>
-        <aside class="hero-aside" aria-label="What happens next">
-          <strong>A useful first conversation</strong>
-          <ul><li>Share your destination, purpose and timing</li><li>Get a follow-up about practical next steps</li><li>Discuss services and any costs before proceeding</li></ul>
-        </aside>
+        <ol class="flow" aria-label="What happens next"><li>Share your destination, purpose and timing</li><li>Get a follow-up on practical next steps</li><li>Discuss services and any costs before you commit</li></ol>
       </div>
     </section>
 
-    <section class="info-section" id="prepare">
-      <span class="section-kicker">Start with the essentials</span>
-      <h2>A little preparation goes a long way</h2>
-      <p>You don’t need every detail finalized. A few basics help us understand where you are in the planning process and make our first conversation more useful.</p>
-      <div class="insight-grid">
-        <article class="insight-card"><div class="insight-icon">🧭</div><h3>Know your purpose</h3><p>Think about why you’re travelling and what a successful trip looks like, whether it’s study, work, family or moving goods.</p></article>
-        <article class="insight-card"><div class="insight-icon">📍</div><h3>Set a destination and window</h3><p>Share your intended destination and approximate departure period. Flexible dates are fine at this early stage.</p></article>
-        <article class="insight-card"><div class="insight-icon">🗂️</div><h3>Gather what you already know</h3><p>Note any important deadlines, travellers involved, documents started, budget range or specific support you’re looking for.</p></article>
+    <!-- HELP TILES -->
+    <section class="help" aria-label="What we help with">
+      <div class="help-head"><h2>What can we help with?</h2><span class="kicker">Tap one to start</span></div>
+      <div class="help-grid">
+        <button type="button" class="tile" data-type="Business &amp; Trade"><div class="ico">💼</div><h3>Business &amp; trade</h3><p>Trips for meetings, sourcing and trade.</p></button>
+        <button type="button" class="tile" data-type="Education / Studies"><div class="ico">🎓</div><h3>Study travel</h3><p>Preparing to travel for school or training.</p></button>
+        <button type="button" class="tile" data-type="Personal / Family"><div class="ico">👨‍👩‍👧</div><h3>Family &amp; personal</h3><p>Visiting, reuniting or moving with loved ones.</p></button>
+        <button type="button" class="tile" data-type="Logistics / Cargo Support"><div class="ico">📦</div><h3>Cargo &amp; logistics</h3><p>Support for moving goods the right way.</p></button>
       </div>
-      <div class="notice"><strong>Helpful to know:</strong> This enquiry is a starting point for a conversation, not a visa decision, travel booking or funding approval. Avoid sharing passport numbers or other sensitive document details here. Any fees, eligibility and service availability will be discussed with you before you commit.</div>
     </section>
 
-    <main class="card">
-      <div class="form-intro"><div><span class="section-kicker">Your travel enquiry</span><h2>Tell us what you have in mind</h2><p>Start with your travel plan. We’ll ask how to reach you after we understand the trip you’re considering.</p></div></div>
-      <div class="form-progress">
-        <div class="progress-step active" id="p-step-1"><span></span>1. Your plans</div>
-        <div class="progress-step" id="p-step-2"><span></span>2. Support & contact</div>
-        <div class="progress-step" id="p-step-3"><span></span>3. Review & Submit</div>
+    <!-- FORM -->
+    <main class="card" id="travel-form">
+      <div class="form-intro">
+        <span class="kicker">Your travel enquiry</span>
+        <h2>Tell us what you have in mind</h2>
+        <p>Three quick steps. We ask how to reach you after we understand the trip.</p>
+      </div>
+      <div class="slim">ℹ️ <span>This is the start of a conversation, not a visa decision, booking or funding approval. Please don’t include passport numbers or financial details. <a href="terms.html">Terms</a></span></div>
+
+      <div id="formArea">
+        <div class="track-wrap">
+          <div class="track" role="progressbar" aria-label="Enquiry progress" aria-valuemin="1" aria-valuemax="3" aria-valuenow="1"><div class="fill" id="fill"></div><span class="plane" id="plane" aria-hidden="true">✈️</span></div>
+          <div class="form-progress">
+            <div class="progress-step active" id="p-step-1"><button type="button" data-goto="1">1. Your plans</button></div>
+            <div class="progress-step" id="p-step-2"><button type="button" data-goto="2">2. Support &amp; contact</button></div>
+            <div class="progress-step" id="p-step-3"><button type="button" data-goto="3">3. Review</button></div>
+          </div>
+        </div>
+
+        <form id="travel-form-el">
+          <!-- Step 1 -->
+          <div class="form-step active" id="step-1">
+            <div class="step-heading"><h3>Where are you hoping to go?</h3><p>Share the basics first. An approximate date is enough if plans are still taking shape.</p></div>
+            <div class="route">
+              <div class="field-card"><label for="city">From *</label><input type="text" id="city" required list="cities" autocomplete="off" placeholder="e.g. Douala, Cameroon"></div>
+              <button type="button" class="swap" id="swap" aria-label="Swap origin and destination">⇄</button>
+              <div class="field-card"><label for="destination">To *</label><input type="text" id="destination" required autocomplete="off" placeholder="e.g. Paris, France"></div>
+              <div class="flightline" aria-hidden="true"><b>✈️</b></div>
+            </div>
+            <datalist id="cities"><option value="Douala, Cameroon"><option value="Yaoundé, Cameroon"><option value="Buea, Cameroon"><option value="Limbe, Cameroon"><option value="Bamenda, Cameroon"><option value="Bafoussam, Cameroon"><option value="Kribi, Cameroon"><option value="Garoua, Cameroon"></datalist>
+
+            <div class="field-card" style="position:relative">
+              <span class="lbl" id="purposeLbl">What is the main purpose? *</span>
+              <div class="opts" role="radiogroup" aria-labelledby="purposeLbl">
+                <button type="button" class="opt" role="radio" aria-checked="false" data-v="Business &amp; Trade"><i>💼</i>Business &amp; Trade</button>
+                <button type="button" class="opt" role="radio" aria-checked="false" data-v="Education / Studies"><i>🎓</i>Education / Studies</button>
+                <button type="button" class="opt" role="radio" aria-checked="false" data-v="Personal / Family"><i>👨‍👩‍👧</i>Personal / Family</button>
+                <button type="button" class="opt" role="radio" aria-checked="false" data-v="Logistics / Cargo Support"><i>📦</i>Logistics / Cargo</button>
+                <button type="button" class="opt" role="radio" aria-checked="false" data-v="Other"><i>✨</i>Other</button>
+              </div>
+              <select id="travelType" class="sr" required aria-label="Main purpose"><option value="">Choose a purpose</option><option value="Business &amp; Trade">Business &amp; Trade</option><option value="Education / Studies">Education / Studies</option><option value="Personal / Family">Personal / Family</option><option value="Logistics / Cargo Support">Logistics / Cargo Support</option><option value="Other">Other</option></select>
+            </div>
+
+            <div class="field-card">
+              <label for="departureDate">When are you hoping to travel? *</label>
+              <input type="date" id="departureDate" required>
+              <div class="chips" id="dateChips"><button type="button" class="chip" data-m="1">In ~1 month</button><button type="button" class="chip" data-m="3">In ~3 months</button><button type="button" class="chip" data-m="6">In ~6 months</button></div>
+              <div class="field-hint">An estimate is fine. You can update it later.</div>
+            </div>
+            <div class="step-actions"><button type="button" class="next-btn" data-next>Continue to support &amp; contact →</button></div>
+          </div>
+
+          <!-- Step 2 -->
+          <div class="form-step" id="step-2">
+            <div class="step-heading"><h3>What kind of help would be useful?</h3><p>Tell us what you’re looking for and how our team can reach you.</p></div>
+            <div class="field-card">
+              <label for="details">What support or questions do you have? *</label>
+              <div class="chips" id="topicChips"><button type="button" class="chip" data-t="Planning guidance">Planning guidance</button><button type="button" class="chip" data-t="Travel logistics">Travel logistics</button><button type="button" class="chip" data-t="Study travel preparation">Study travel prep</button><button type="button" class="chip" data-t="Cargo support">Cargo support</button><button type="button" class="chip" data-t="A question about financing">Financing question</button></div>
+              <textarea id="details" required placeholder="Tell us a little more, e.g. how many travellers, deadlines, or what you are unsure about."></textarea>
+              <div class="field-hint">Please don’t include passport numbers, financial account details or other sensitive information.</div>
+            </div>
+            <div class="field-grid">
+              <div class="field-card"><label for="fullName">Your name *</label><input type="text" id="fullName" required autocomplete="name" placeholder="Your full name"></div>
+              <div class="field-card"><label for="phone">WhatsApp number *</label><input type="tel" id="phone" required autocomplete="tel" inputmode="tel" placeholder="e.g. +237 600 000 000"></div>
+              <div class="field-card field-wide"><label for="email">Email address *</label><input type="email" id="email" required autocomplete="email" inputmode="email" placeholder="name@example.com"></div>
+            </div>
+            <div class="step-actions"><button type="button" class="prev-btn" data-prev>← Back</button><button type="button" class="next-btn" data-next>Review plan →</button></div>
+          </div>
+
+          <!-- Step 3 -->
+          <div class="form-step" id="step-3">
+            <div class="step-heading"><h3>Review your travel request</h3><p>Check everything, then we save it and open WhatsApp so you can send it to our team.</p></div>
+            <div class="rv-trip">
+              <div><div class="rv-route"><span id="rev-city">-</span><em>✈</em><span id="rev-destination">-</span></div><div class="rv-sub"><span id="rev-type">-</span> · <span id="rev-date">-</span></div></div>
+              <button type="button" class="rv-edit" data-goto="1">Edit</button>
+            </div>
+            <div class="rv-box">
+              <header><h4>Support &amp; contact</h4><button type="button" class="rv-edit" data-goto="2">Edit</button></header>
+              <dl>
+                <div><dt>What you need</dt><dd id="rev-details">-</dd></div>
+                <div><dt>Name</dt><dd id="rev-fullName">-</dd></div>
+                <div><dt>WhatsApp</dt><dd id="rev-phone">-</dd></div>
+                <div><dt>Email</dt><dd id="rev-email">-</dd></div>
+              </dl>
+            </div>
+            <p class="consent-note">By continuing, you’re choosing to share these enquiry details with G-Spirit Ventures so the team can respond to your travel request. See our <a href="privacy.html">Privacy Policy</a> and <a href="terms.html">Terms</a>.</p>
+            <div id="formError" class="form-error" role="alert" hidden></div>
+            <div class="step-actions"><button type="button" class="prev-btn" data-prev>← Back</button><button type="button" id="travelSubmitBtn" class="submit-btn">Submit via WhatsApp</button></div>
+          </div>
+        </form>
       </div>
 
-      <form id="travel-form" onsubmit="event.preventDefault();">
-        <!-- Step 1 -->
-        <div class="form-step active" id="step-1">
-          <div class="step-heading">
-            <h3>Where are you hoping to go?</h3>
-            <p>Share the basics first. An approximate date is enough if your plans are still taking shape.</p>
-          </div>
-          <div class="field-grid">
-            <div class="field-card"><label for="city">Where will you be travelling from? *</label><input type="text" id="city" required placeholder="e.g. Douala, Cameroon"></div>
-            <div class="field-card"><label for="destination">Where would you like to go? *</label><input type="text" id="destination" required placeholder="e.g. Paris, France"></div>
-            <div class="field-card"><label for="travelType">What is the main purpose? *</label><select id="travelType" required><option value="">Choose a purpose</option><option value="Business & Trade">Business & Trade</option><option value="Education / Studies">Education / Studies</option><option value="Personal / Family">Personal / Family</option><option value="Logistics / Cargo Support">Logistics / Cargo Support</option><option value="Other">Other</option></select></div>
-            <div class="field-card"><label for="departureDate">When are you hoping to travel? *</label><input type="date" id="departureDate" required><div class="field-hint">An estimated date is fine. You can update it later.</div></div>
-          </div>
-          <div class="step-actions">
-            <button type="button" class="next-btn" onclick="goToStep(2)">Continue to support & contact →</button>
-          </div>
-        </div>
-
-        <!-- Step 2 -->
-        <div class="form-step" id="step-2">
-          <div class="step-heading">
-            <h3>What kind of help would be useful?</h3>
-            <p>Tell us what you’re looking for and how our team can follow up with you.</p>
-          </div>
-          <div class="field-grid">
-            <div class="field-card"><label for="details">What support or questions do you have? *</label><textarea id="details" required placeholder="For example: planning guidance, travel logistics, study travel preparation, cargo support or a question about financing."></textarea><div class="field-hint">Please don’t include passport numbers, financial account details or other sensitive information.</div></div>
-            <div class="field-card"><label for="fullName">Your name *</label><input type="text" id="fullName" required autocomplete="name" placeholder="Your full name"></div>
-            <div class="field-card"><label for="phone">WhatsApp number *</label><input type="tel" id="phone" required autocomplete="tel" placeholder="e.g. +237 600 000 000"></div>
-            <div class="field-card"><label for="email">Email address *</label><input type="email" id="email" required autocomplete="email" placeholder="name@example.com"></div>
-          </div>
-          <div class="step-actions">
-            <button type="button" class="prev-btn" onclick="goToStep(1)">← Back</button>
-            <button type="button" class="next-btn" onclick="goToStep(3)">Review Plan →</button>
-          </div>
-        </div>
-
-        <!-- Step 3 -->
-        <div class="form-step" id="step-3">
-          <div class="step-heading">
-            <h3>Review Travel Request</h3>
-            <p>Check your enquiry before opening WhatsApp to send it to our team.</p>
-          </div>
-          <div class="review-grid">
-            <div class="review-item"><small>Full Name</small><strong id="rev-fullName">-</strong></div>
-            <div class="review-item"><small>WhatsApp Phone</small><strong id="rev-phone">-</strong></div>
-            <div class="review-item"><small>Email</small><strong id="rev-email">-</strong></div>
-            <div class="review-item"><small>Current Origin</small><strong id="rev-city">-</strong></div>
-            <div class="review-item"><small>Destination</small><strong id="rev-destination">-</strong></div>
-            <div class="review-item"><small>Travel Purpose</small><strong id="rev-type">-</strong></div>
-            <div class="review-item"><small>Planned Date</small><strong id="rev-date">-</strong></div>
-            <div class="review-item field-wide"><small>Logistics Context</small><strong id="rev-details">-</strong></div>
-          </div>
-          <p class="field-hint" style="margin-top:16px">By continuing, you’re choosing to share these enquiry details with G-Spirit Ventures so the team can respond to your travel request.</p>
-          <div class="step-actions">
-            <button type="button" class="prev-btn" onclick="goToStep(2)">← Edit Details</button>
-            <button type="button" id="travelSubmitBtn" class="submit-btn" onclick="submitToWhatsApp()">Submit via WhatsApp</button>
-          </div>
-        </div>
-      </form>
+      <!-- Done -->
+      <div class="done" id="done" hidden>
+        <div class="big">✈️</div>
+        <h3>Your enquiry is saved!</h3>
+        <p>Thank you. Here’s what happens next:</p>
+        <ol><li><b>✓</b>Enquiry saved with our team</li><li><b>2</b>Send the pre-filled WhatsApp message (it should have just opened)</li><li><b>3</b>We follow up with practical next steps and discuss any costs first</li></ol>
+        <div class="row"><a class="wa" id="waAgain" href="#" target="_blank" rel="noopener">Open WhatsApp again</a><button type="button" class="again" id="newEnquiry">Start another enquiry</button></div>
+      </div>
     </main>
+
+    <!-- BEFORE YOU GO -->
+    <section class="more" id="prepare">
+      <div class="panel">
+        <span class="kicker">Start with the essentials</span>
+        <h2>Are you ready to enquire?</h2>
+        <div class="ready"><span id="readyTxt">0 of 4</span><div class="bar"><i id="readyBar"></i></div><span>ready</span></div>
+        <label class="check"><input type="checkbox"><span><b>🧭 Know your purpose</b>Why you’re travelling and what success looks like.</span></label>
+        <label class="check"><input type="checkbox"><span><b>📍 Pick a destination and window</b>Flexible dates are fine at this stage.</span></label>
+        <label class="check"><input type="checkbox"><span><b>🗂️ Gather what you know</b>Deadlines, travellers, documents started, budget range.</span></label>
+        <label class="check"><input type="checkbox"><span><b>🔒 Keep sensitive details back</b>No passport numbers or account details in this form.</span></label>
+      </div>
+      <div class="panel">
+        <span class="kicker">Good to know</span>
+        <h2>Quick answers</h2>
+        <details class="faq"><summary>Do you guarantee a visa or booking?</summary><p>No. We offer guidance and logistics support. Visas, tickets and approvals are decided by embassies, airlines and other third parties.</p></details>
+        <details class="faq"><summary>Does sending an enquiry cost anything or commit me?</summary><p>No. An enquiry is just a conversation starter. Any fees, eligibility and service availability are discussed with you before you commit.</p></details>
+        <details class="faq"><summary>What happens after I submit?</summary><p>We save your enquiry first, then WhatsApp opens with your details ready to send. Our team follows up with next steps.</p></details>
+        <details class="faq"><summary>What should I never send?</summary><p>Passport numbers, bank or mobile money details, passwords and verification codes. Never pay anyone who promises you a visa.</p></details>
+      </div>
+    </section>
   </div>
 
   <footer>
-    © 2026 G-Spirit Ventures. All rights reserved.
+    <div><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a><a href="index.html">Home</a><a href="about.html">About</a><a href="jobs.html">Jobs</a><a href="contact.html">Contact</a></div>
+    <div style="margin-top:8px">© 2026 G-Spirit Ventures. All rights reserved.</div>
+    <small>Travel &amp; logistics support is a consultancy service, not a visa decision, booking or funding approval.</small>
   </footer>
 
+  <a class="fab" id="fab" href="#travel-form" data-jump>✈️ Plan my trip</a>
+
   <script>
-    function goToStep(step) {
-      if (step > 1) {
-        const current = document.getElementById('step-' + (step - 1));
-        const required = [...current.querySelectorAll('input[required], select[required], textarea[required]')];
-        const invalid = required.find(field => !field.reportValidity());
-        if (invalid) return;
+    const API_URL = 'https://gspiritloans-api.forchinthierry.workers.dev/api/travel';
+    const WHATSAPP = '237620569864';
+    const $ = id => document.getElementById(id);
+    let step = 1, saved = false;
+
+    /* ---------- page transitions ---------- */
+    (function () {
+      var overlay = document.querySelector('.page-overlay');
+      function go(url) {
+        if (!url || url.startsWith('mailto:') || url.startsWith('tel:')) return;
+        document.body.classList.add('is-exiting'); overlay.classList.add('is-visible');
+        setTimeout(function () { window.location.href = url; }, 320);
       }
-      document.querySelectorAll('.form-step').forEach(s => s.classList.remove('active'));
-      document.querySelectorAll('.progress-step').forEach((p, idx) => {
-        p.classList.toggle('active', idx + 1 === step);
-        p.classList.toggle('completed', idx + 1 < step);
+      window.navigateWithTransition = go;
+      document.addEventListener('click', function (e) {
+        var a = e.target.closest && e.target.closest('a[href]');
+        if (!a) return;
+        var href = a.getAttribute('href');
+        if (!href || href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('tel:') || a.target === '_blank' || /^https?:\/\//i.test(href)) return;
+        e.preventDefault(); go(href);
       });
-      document.getElementById('step-' + step).classList.add('active');
+      window.addEventListener('pageshow', function () {
+        document.body.classList.remove('is-exiting'); document.body.classList.add('is-entering');
+        overlay.classList.remove('is-visible');
+        requestAnimationFrame(function () { document.body.classList.remove('is-entering'); });
+      });
+      requestAnimationFrame(function () { document.body.classList.remove('is-entering'); });
+    })();
 
-      if (step === 3) {
-        document.getElementById('rev-fullName').textContent = document.getElementById('fullName').value || '-';
-        document.getElementById('rev-phone').textContent = document.getElementById('phone').value || '-';
-        document.getElementById('rev-email').textContent = document.getElementById('email').value || '-';
-        document.getElementById('rev-city').textContent = document.getElementById('city').value || '-';
-        document.getElementById('rev-destination').textContent = document.getElementById('destination').value || '-';
-        document.getElementById('rev-type').textContent = document.getElementById('travelType').value || '-';
-        document.getElementById('rev-date').textContent = document.getElementById('departureDate').value || '-';
-        document.getElementById('rev-details').textContent = document.getElementById('details').value || '-';
-      }
+    /* ---------- smooth jumps ---------- */
+    function jump(sel) { const el = document.querySelector(sel); if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+    document.querySelectorAll('[data-jump]').forEach(a => a.addEventListener('click', e => { e.preventDefault(); jump(a.getAttribute('href')); }));
+
+    /* ---------- purpose picker (synced with the select) ---------- */
+    function setPurpose(v) {
+      $('travelType').value = v;
+      document.querySelectorAll('.opt').forEach(o => o.setAttribute('aria-checked', String(o.dataset.v === v)));
     }
+    document.querySelectorAll('.opt').forEach(o => o.addEventListener('click', () => setPurpose(o.dataset.v)));
+    $('travelType').addEventListener('change', e => setPurpose(e.target.value));
+    document.querySelectorAll('.tile').forEach(t => t.addEventListener('click', () => {
+      setPurpose(t.dataset.type); goToStep(1, true); jump('#travel-form');
+      setTimeout(() => { const c = $('city'); if (c && !c.value) c.focus({ preventScroll: true }); }, 450);
+    }));
 
-    async function submitToWhatsApp() {
-      const name = document.getElementById('fullName').value;
-      const phone = document.getElementById('phone').value;
-      const email = document.getElementById('email').value;
-      const city = document.getElementById('city').value;
-      const destination = document.getElementById('destination').value;
-      const type = document.getElementById('travelType').value;
-      const date = document.getElementById('departureDate').value;
-      const details = document.getElementById('details').value;
+    /* ---------- route swap, date + topic chips ---------- */
+    $('swap').addEventListener('click', e => {
+      const a = $('city'), b = $('destination'), t = a.value; a.value = b.value; b.value = t;
+      e.currentTarget.classList.toggle('spin');
+    });
+    (function () {
+      const d = $('departureDate'), t = new Date(); t.setMinutes(t.getMinutes() - t.getTimezoneOffset());
+      d.min = t.toISOString().slice(0, 10);
+    })();
+    $('dateChips').addEventListener('click', e => {
+      const c = e.target.closest('[data-m]'); if (!c) return;
+      const dt = new Date(); dt.setMonth(dt.getMonth() + Number(c.dataset.m)); dt.setMinutes(dt.getMinutes() - dt.getTimezoneOffset());
+      $('departureDate').value = dt.toISOString().slice(0, 10);
+      document.querySelectorAll('#dateChips .chip').forEach(x => x.classList.toggle('on', x === c));
+    });
+    $('departureDate').addEventListener('input', () => document.querySelectorAll('#dateChips .chip').forEach(x => x.classList.remove('on')));
+    $('topicChips').addEventListener('click', e => {
+      const c = e.target.closest('[data-t]'); if (!c) return;
+      const box = $('details'), txt = c.dataset.t;
+      if (c.classList.toggle('on')) box.value = (box.value.trim() ? box.value.trim().replace(/[.,;]?$/, ', ') : '') + txt;
+      else box.value = box.value.replace(new RegExp('(,\\s*)?' + txt.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')), '').replace(/^,\s*/, '');
+      box.focus({ preventScroll: true });
+    });
 
-      const button = document.getElementById('travelSubmitBtn');
-      const whatsappWindow = window.open('about:blank', '_blank');
-      button.disabled = true;
-      button.textContent = 'Saving enquiry...';
-
-      try {
-        const response = await fetch('https://gspiritloans-api.forchinthierry.workers.dev/api/travel', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            name: name,
-            phone: phone,
-            email: email,
-            origin: city,
-            destination: destination,
-            travelType: type,
-            departureDate: date,
-            details: details
-          })
-        });
-        const result = await response.json();
-        if (!response.ok || !result.success) {
-          throw new Error(result.error || 'Unable to save your travel enquiry.');
+    /* ---------- wizard ---------- */
+    function fmtDate(v) {
+      if (!v) return '-';
+      const d = new Date(v + 'T00:00:00');
+      return isNaN(d) ? v : d.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+    }
+    function validateCurrent() {
+      const cur = $('step-' + step);
+      for (const f of cur.querySelectorAll('input[required], select[required], textarea[required]')) {
+        if (!f.checkValidity()) {
+          if (f.id === 'travelType') { cur.querySelector('.opts').scrollIntoView({ block: 'center', behavior: 'smooth' }); }
+          f.reportValidity(); return false;
         }
-      } catch (error) {
-        if (whatsappWindow) whatsappWindow.close();
-        alert(error.message || 'Unable to save your travel enquiry. Please try again.');
-        button.disabled = false;
-        button.textContent = 'Submit via WhatsApp';
-        return;
       }
-
-      const message = `*G-Spirit Ventures - Travel Inquiry*%0A%0A` +
-        `*Name:* ${name}%0A` +
-        `*Phone:* ${phone}%0A` +
-        `*Email:* ${email}%0A` +
-        `*Origin:* ${city}%0A` +
-        `*Destination:* ${destination}%0A` +
-        `*Purpose:* ${type}%0A` +
-        `*Date:* ${date}%0A` +
-        `*Requirements:* ${details}`;
-
-      const whatsappUrl = `https://wa.me/237620569864?text=${message}`;
-      if (whatsappWindow) whatsappWindow.location.href = whatsappUrl;
-      else window.location.href = whatsappUrl;
-      button.textContent = 'Enquiry saved';
+      return true;
     }
-
-    function navigateWithTransition(url) {
-      document.body.classList.add('is-exiting');
-      document.querySelector('.page-overlay').classList.add('is-visible');
-      setTimeout(() => { window.location.href = url; }, 320);
+    function goToStep(n, force) {
+      if (n > step && !force && !validateCurrent()) return;
+      step = n;
+      document.querySelectorAll('.form-step').forEach(s => s.classList.remove('active'));
+      $('step-' + n).classList.add('active');
+      document.querySelectorAll('.progress-step').forEach((p, i) => {
+        p.classList.toggle('active', i + 1 === n); p.classList.toggle('completed', i + 1 < n);
+      });
+      const pct = Math.round(n / 3 * 100);
+      $('fill').style.width = pct + '%'; $('plane').style.left = pct + '%';
+      document.querySelector('.track').setAttribute('aria-valuenow', String(n));
+      if (n === 3) {
+        $('rev-fullName').textContent = $('fullName').value || '-';
+        $('rev-phone').textContent = $('phone').value || '-';
+        $('rev-email').textContent = $('email').value || '-';
+        $('rev-city').textContent = $('city').value || '-';
+        $('rev-destination').textContent = $('destination').value || '-';
+        $('rev-type').textContent = $('travelType').value || '-';
+        $('rev-date').textContent = fmtDate($('departureDate').value);
+        $('rev-details').textContent = $('details').value || '-';
+      }
+      $('formError').hidden = true;
+      const top = $('travel-form').getBoundingClientRect().top;
+      if (top < 0 || top > 140) jump('#travel-form');
     }
+    document.querySelectorAll('[data-next]').forEach(b => b.addEventListener('click', () => goToStep(step + 1)));
+    document.querySelectorAll('[data-prev]').forEach(b => b.addEventListener('click', () => goToStep(step - 1)));
+    document.querySelectorAll('[data-goto]').forEach(b => b.addEventListener('click', () => {
+      const t = Number(b.dataset.goto);
+      if (t <= step) { goToStep(t, true); return; }
+      while (step < t) { if (!validateCurrent()) return; goToStep(step + 1, true); }
+    }));
+    /* Enter on a field moves forward instead of doing nothing */
+    $('travel-form-el').addEventListener('submit', e => { e.preventDefault(); if (step < 3) goToStep(step + 1); });
+
+    /* ---------- submit ---------- */
+    async function submitToWhatsApp() {
+      const v = id => $(id).value.trim();
+      const data = { name: v('fullName'), phone: v('phone'), email: v('email'), origin: v('city'), destination: v('destination'), travelType: v('travelType'), departureDate: v('departureDate'), details: v('details') };
+      const btn = $('travelSubmitBtn'), err = $('formError');
+      err.hidden = true;
+      for (let n = 1; n <= 2; n++) {
+        for (const f of $('step-' + n).querySelectorAll('[required]')) {
+          if (!f.checkValidity()) { goToStep(n, true); f.reportValidity(); return; }
+        }
+      }
+      const wa = window.open('about:blank', '_blank'); /* opened first so phones don't block it */
+      btn.disabled = true; btn.textContent = 'Saving enquiry…';
+      try {
+        if (!saved) {
+          const res = await fetch(API_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
+          let out = {}; try { out = await res.json(); } catch (x) {}
+          if (!res.ok || !out.success) throw new Error(out.error || 'Unable to save your travel enquiry. Please try again.');
+          saved = true;
+        }
+      } catch (e) {
+        if (wa) wa.close();
+        err.textContent = e.message || 'Unable to save your travel enquiry. Please try again.'; err.hidden = false;
+        btn.disabled = false; btn.textContent = 'Submit via WhatsApp'; return;
+      }
+      const msg = ['*G-Spirit Ventures - Travel Inquiry*', '',
+        '*Name:* ' + data.name, '*Phone:* ' + data.phone, '*Email:* ' + data.email,
+        '*Origin:* ' + data.origin, '*Destination:* ' + data.destination, '*Purpose:* ' + data.travelType,
+        '*Date:* ' + fmtDate(data.departureDate), '*Requirements:* ' + data.details].join('\n');
+      const url = 'https://wa.me/' + WHATSAPP + '?text=' + encodeURIComponent(msg);
+      $('waAgain').href = url;
+      if (wa) wa.location.href = url; else window.location.href = url;
+      $('formArea').hidden = true; $('done').hidden = false;
+      btn.disabled = false; btn.textContent = 'Submit via WhatsApp';
+      jump('#travel-form');
+    }
+    $('travelSubmitBtn').addEventListener('click', submitToWhatsApp);
+    $('newEnquiry').addEventListener('click', () => {
+      $('travel-form-el').reset(); setPurpose(''); saved = false;
+      document.querySelectorAll('.chip.on').forEach(c => c.classList.remove('on'));
+      $('done').hidden = true; $('formArea').hidden = false; goToStep(1, true);
+    });
+
+    /* ---------- readiness checklist ---------- */
+    const checks = [...document.querySelectorAll('.check input')];
+    function ready() { const n = checks.filter(c => c.checked).length; $('readyTxt').textContent = n + ' of ' + checks.length; $('readyBar').style.width = (n / checks.length * 100) + '%'; }
+    checks.forEach(c => c.addEventListener('change', ready));
+
+    /* ---------- floating "plan my trip" button (mobile) ---------- */
+    (function () {
+      const fab = $('fab'), form = $('travel-form');
+      if (!('IntersectionObserver' in window)) return;
+      new IntersectionObserver(es => es.forEach(e => fab.classList.toggle('off', e.isIntersecting)), { threshold: 0.12 }).observe(form);
+    })();
   </script>
 </body>
 </html>
