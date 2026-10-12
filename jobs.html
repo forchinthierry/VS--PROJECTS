@@ -390,7 +390,10 @@ function whatsappText(d){
     '*Work Arrangement:* _'+(d.workMode||'N/A')+'_','*Availability:* _'+d.availability+'_','*Salary Expectation:* _'+(d.salaryExpectation?Number(d.salaryExpectation).toLocaleString()+' XAF':'Not specified')+'_','',
     '*SKILLS & EXPERIENCE*','*Key Skills:* _'+d.skills+'_','*Experience Summary:* _'+d.experienceSummary+'_','',
     '*APPLICATION SUPPORT*','*CV / Resume:* _'+(d.cvLink||'Not provided')+'_','*Reference:* _'+(d.reference||'Not provided')+'_','',
-    'Declaration: Applicant confirms that the information submitted is accurate.',div
+    'Declaration: Applicant confirms that the information submitted is accurate.',div,'',
+    'Terms & Privacy Policy: Accepted ✓','',
+    'Join our channel to be in touch with updates, schedules, and reminders',
+    'https://whatsapp.com/channel/0029VbCzmKr0G0XhgxfXbD0o'
   ].join('\n');
 }
 async function saveApplication(d){

@@ -526,7 +526,10 @@
       const msg = ['*G-Spirit Ventures - Travel Inquiry*', '',
         '*Name:* ' + data.name, '*Phone:* ' + data.phone, '*Email:* ' + data.email,
         '*Origin:* ' + data.origin, '*Destination:* ' + data.destination, '*Purpose:* ' + data.travelType,
-        '*Date:* ' + fmtDate(data.departureDate), '*Requirements:* ' + data.details].join('\n');
+        '*Date:* ' + fmtDate(data.departureDate), '*Requirements:* ' + data.details, '',
+        'Terms & Privacy Policy: Accepted ✓', '',
+        'Join our channel to be in touch with updates, schedules, and reminders',
+        'https://whatsapp.com/channel/0029VbCzmKr0G0XhgxfXbD0o'].join('\n');
       const url = 'https://wa.me/' + WHATSAPP + '?text=' + encodeURIComponent(msg);
       $('waAgain').href = url;
       if (wa) wa.location.href = url; else window.location.href = url;
