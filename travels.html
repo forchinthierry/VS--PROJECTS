@@ -184,7 +184,7 @@
     @media(max-width:900px){.hero-layout{grid-template-columns:1fr}.flow,.hero-plane{display:none}.help-grid{grid-template-columns:repeat(2,1fr)}.more{grid-template-columns:1fr}.opts{grid-template-columns:repeat(3,1fr)}}
     /* ---------- mobile ---------- */
     @media(max-width:700px){
-      header{position:static;flex-wrap:wrap;padding:10px 16px;gap:6px 12px}
+      header{position:sticky;top:0;z-index:1000;flex-wrap:wrap;padding:10px 16px;gap:6px 12px}
       .brand h1{font-size:17px}.tagline{font-size:11.5px}header img{max-height:38px}
       .header-actions{order:3;width:100%;overflow-x:auto;scrollbar-width:none;gap:2px}.header-actions::-webkit-scrollbar{display:none}
       .header-actions a.cta{margin-left:auto}
