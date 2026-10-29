@@ -1021,6 +1021,42 @@ body[data-section-theme="travel"] th { background: linear-gradient(135deg, #0c45
     border-color: #d3e2ec;
     color: #173b59;
   }
+  #dashboard > header .sidebar-toggle,
+  #dashboard > header .refresh-btn,
+  #dashboard > header .nav-btn {
+    min-height: 42px;
+    padding: 9px 15px;
+    border: 1px solid transparent;
+    border-radius: 10px;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 800;
+    box-shadow: 0 4px 10px rgba(16, 33, 63, .18);
+  }
+  #dashboard > header .sidebar-toggle {
+    background: #173b59;
+    border-color: #102c44;
+  }
+  #dashboard > header .refresh-btn {
+    background: #087c72;
+    border-color: #06665e;
+  }
+  #dashboard > header .nav-btn {
+    background: #b42332;
+    border-color: #941b28;
+  }
+  #dashboard > header .sidebar-toggle:hover,
+  #dashboard > header .refresh-btn:hover,
+  #dashboard > header .nav-btn:hover {
+    filter: brightness(1.12);
+    box-shadow: 0 6px 14px rgba(16, 33, 63, .24);
+  }
+  #dashboard > header .sidebar-toggle:focus-visible,
+  #dashboard > header .refresh-btn:focus-visible,
+  #dashboard > header .nav-btn:focus-visible {
+    outline: 3px solid #d99532;
+    outline-offset: 2px;
+  }
 </style>
 </head>
 <body>
