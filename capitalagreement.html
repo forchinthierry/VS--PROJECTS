@@ -372,9 +372,6 @@
       <h2>Agreement Details</h2>
       <label for="agreementDate">Agreement Date</label>
       <input type="date" id="agreementDate" required>
-
-      <label for="investmentTermMonths">Investment Term (months)</label>
-      <input type="number" id="investmentTermMonths" min="1" value="12" required>
     </div>
 
     <div class="card">
@@ -408,25 +405,76 @@
     </div>
 
     <div class="card">
+      <h2>Manager / Monthly Payer</h2>
+      <p class="hint">The person responsible for making the monthly payments under this agreement.</p>
+      <div class="two-col">
+        <div>
+          <label for="managerName">Manager's Full Name</label>
+          <input type="text" id="managerName" required>
+
+          <label for="managerId">National ID / Passport No.</label>
+          <input type="text" id="managerId" required>
+        </div>
+        <div>
+          <label for="managerAddress">Address</label>
+          <input type="text" id="managerAddress" required>
+
+          <label for="managerPhone">Phone</label>
+          <input type="tel" id="managerPhone" required>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
       <h2>Investment Details</h2>
       <div class="two-col">
         <div>
-          <label for="loanAmount">Capital Investment (XAF)</label>
+          <label for="loanAmount">Capital Invested (XAF)</label>
           <input type="number" id="loanAmount" min="0" required>
 
-          <label for="loanInterest">Equity / Stake Offered (%)</label>
+          <label for="loanInterest">Investor's Ownership Percentage (%)</label>
           <input type="number" id="loanInterest" min="0" max="100" step="0.5" value="10" required>
+
+          <label for="ownershipCashValue">Agreed Cash Equivalent of Investor's Stake (XAF)</label>
+          <input type="number" id="ownershipCashValue" min="0" required>
+          <p class="hint">The parties' agreed cash value for the ownership percentage above, as of this agreement date.</p>
         </div>
         <div>
           <label for="otherDesc">Additional Terms</label>
           <input type="text" id="otherDesc" placeholder="e.g. Board seat, profit share">
 
-          <label for="otherAmount">Valuation (XAF) - if known</label>
+          <label for="otherAmount">Business Valuation (XAF, optional)</label>
           <input type="number" id="otherAmount" min="0" value="0">
         </div>
       </div>
 
       <div class="summary-preview" id="loanSummaryPreview"></div>
+    </div>
+
+    <div class="card">
+      <h2>Monthly Payment & Payout</h2>
+      <div class="two-col">
+        <div>
+          <label for="monthlyPayment">Monthly Payment to Investor (XAF)</label>
+          <input type="number" id="monthlyPayment" min="1" required>
+
+          <label for="firstPaymentDate">First Payment Due</label>
+          <input type="date" id="firstPaymentDate" required>
+        </div>
+        <div>
+          <label for="paymentDueDay">Monthly Due Day (1-28)</label>
+          <input type="number" id="paymentDueDay" min="1" max="28" value="1" required>
+
+          <label for="equityTreatment">Ownership After Full Lump-Sum Settlement</label>
+          <select id="equityTreatment" required>
+            <option value="">Select the agreed treatment</option>
+            <option value="retained">Investor retains the ownership percentage</option>
+            <option value="transferred">Ownership percentage transfers to the Manager and is cancelled for the Investor</option>
+          </select>
+        </div>
+      </div>
+      <div class="summary-preview" id="payoutSummaryPreview"></div>
+      <p class="hint">The monthly payment is ongoing and separate from the lump-sum settlement. It continues until the Investor receives the full settlement amount, which is the greater of the capital invested or the agreed cash equivalent of the Investor's stake. Monthly payments do not reduce that amount.</p>
     </div>
 
     <div class="card">
@@ -442,6 +490,15 @@
 
       <label for="businessDescription">Brief Business Description</label>
       <textarea id="businessDescription" rows="2" required></textarea>
+    </div>
+
+    <div class="card">
+      <h2>Current Business Assets</h2>
+      <label for="businessAssets">Asset Schedule</label>
+      <textarea id="businessAssets" rows="4" placeholder="List each asset, its condition, and estimated value" required></textarea>
+      <label for="businessAssetsValue">Estimated Total Current Asset Value (XAF)</label>
+      <input type="number" id="businessAssetsValue" min="0" required>
+      <p class="hint">List assets as of the agreement date. The parties should verify the inventory and supporting records before signing.</p>
     </div>
 
     <div class="card">
@@ -591,8 +648,12 @@
             '<input type="text" class="b-name" required>' +
             '<label>National ID / Passport No.</label>' +
             '<input type="text" class="b-nic" required>' +
+            '<label>Date of Birth</label>' +
+            '<input type="date" class="b-dob" required>' +
           '</div>' +
           '<div>' +
+            '<label>ID Card / Passport Date of Issue</label>' +
+            '<input type="date" class="b-id-issue-date" required>' +
             '<label>Residence / Business Address</label>' +
             '<input type="text" class="b-residence" required>' +
             '<label>Phone</label>' +
@@ -670,16 +731,32 @@
       var amount = parseFloat(document.getElementById('loanAmount').value) || 0;
       var equity = parseFloat(document.getElementById('loanInterest').value) || 0;
       var valuation = parseFloat(document.getElementById('otherAmount').value) || 0;
+      var ownershipCashValue = parseFloat(document.getElementById('ownershipCashValue').value) || 0;
 
       document.getElementById('loanSummaryPreview').innerHTML =
         '<div class="summary-box"><strong>Capital Investment</strong><span>' + formatCurrency(amount) + ' XAF</span></div>' +
-        '<div class="summary-box"><strong>Equity Offered</strong><span>' + equity + '%</span></div>' +
+        '<div class="summary-box"><strong>Investor Ownership</strong><span>' + equity + '%</span></div>' +
+        '<div class="summary-box"><strong>Stake Cash Equivalent</strong><span>' + formatCurrency(ownershipCashValue) + ' XAF</span></div>' +
         (valuation > 0 ? '<div class="summary-box"><strong>Valuation</strong><span>' + formatCurrency(valuation) + ' XAF</span></div>' : '');
+
+      updatePayoutSummary();
     }
 
-    ['loanAmount', 'loanInterest', 'otherAmount'].forEach(function (id) {
+    function updatePayoutSummary() {
+      var amount = parseFloat(document.getElementById('loanAmount').value) || 0;
+      var ownershipCashValue = parseFloat(document.getElementById('ownershipCashValue').value) || 0;
+      var monthlyPayment = parseFloat(document.getElementById('monthlyPayment').value) || 0;
+      var lumpSumSettlementAmount = Math.max(amount, ownershipCashValue);
+
+      document.getElementById('payoutSummaryPreview').innerHTML =
+        '<div class="summary-box"><strong>Monthly Payment</strong><span>' + formatCurrency(monthlyPayment) + ' XAF</span></div>' +
+        '<div class="summary-box"><strong>Lump-Sum Settlement</strong><span>' + formatCurrency(lumpSumSettlementAmount) + ' XAF</span></div>';
+    }
+
+    ['loanAmount', 'loanInterest', 'otherAmount', 'ownershipCashValue'].forEach(function (id) {
       document.getElementById(id).addEventListener('input', updateLoanSummary);
     });
+    document.getElementById('monthlyPayment').addEventListener('input', updatePayoutSummary);
 
     function loadImageAsDataURL(url) {
       return fetch(url)
@@ -702,15 +779,11 @@
         return;
       }
 
-      var required = ['agreementDate', 'investmentTermMonths', 'lenderRepName', 'lenderRepId', 'lenderAddress',
-                       'lenderPhone', 'loanAmount', 'businessName', 'businessSector', 'businessStage',
-                       'businessDescription', 'capitalUse'];
-      for (var i = 0; i < required.length; i++) {
-        var el = document.getElementById(required[i]);
-        if (!el.value) {
-          el.focus();
-          alert('Please fill in all required fields.');
-          el.style.borderColor = '#d9534f';
+      var requiredFields = Array.prototype.slice.call(document.querySelectorAll('[required]'));
+      for (var i = 0; i < requiredFields.length; i++) {
+        if (!requiredFields[i].checkValidity()) {
+          requiredFields[i].focus();
+          requiredFields[i].reportValidity();
           return;
         }
       }
@@ -719,21 +792,32 @@
         return {
           name: b.querySelector('.b-name').value,
           nic: b.querySelector('.b-nic').value,
+          dateOfBirth: formatDateDMY(b.querySelector('.b-dob').value),
+          idIssueDate: formatDateDMY(b.querySelector('.b-id-issue-date').value),
           residence: b.querySelector('.b-residence').value,
           phone: b.querySelector('.b-phone').value
         };
       });
 
       var agreementDate = formatDateDMY(document.getElementById('agreementDate').value);
-      var investmentTermMonths = document.getElementById('investmentTermMonths').value;
       var lenderName = document.getElementById('lenderName').value;
       var lenderRepName = document.getElementById('lenderRepName').value;
       var lenderRepId = document.getElementById('lenderRepId').value;
       var lenderAddress = document.getElementById('lenderAddress').value;
       var lenderPhone = document.getElementById('lenderPhone').value;
+      var managerName = document.getElementById('managerName').value;
+      var managerId = document.getElementById('managerId').value;
+      var managerAddress = document.getElementById('managerAddress').value;
+      var managerPhone = document.getElementById('managerPhone').value;
 
       var amount = parseFloat(document.getElementById('loanAmount').value) || 0;
       var equity = parseFloat(document.getElementById('loanInterest').value) || 0;
+      var ownershipCashValue = parseFloat(document.getElementById('ownershipCashValue').value) || 0;
+      var lumpSumSettlementAmount = Math.max(amount, ownershipCashValue);
+      var monthlyPayment = parseFloat(document.getElementById('monthlyPayment').value) || 0;
+      var firstPaymentDate = formatDateDMY(document.getElementById('firstPaymentDate').value);
+      var paymentDueDay = document.getElementById('paymentDueDay').value;
+      var equityTreatment = document.getElementById('equityTreatment').value;
       var otherDesc = document.getElementById('otherDesc').value || 'N/A';
       var valuation = parseFloat(document.getElementById('otherAmount').value) || 0;
 
@@ -741,6 +825,8 @@
       var businessSector = document.getElementById('businessSector').value;
       var businessStage = document.getElementById('businessStage').value;
       var businessDescription = document.getElementById('businessDescription').value;
+      var businessAssets = document.getElementById('businessAssets').value;
+      var businessAssetsValue = parseFloat(document.getElementById('businessAssetsValue').value) || 0;
       var capitalUse = document.getElementById('capitalUse').value;
       var milestones = document.getElementById('milestones').value || 'Not specified';
 
@@ -881,15 +967,16 @@
 
         richParagraph([
           t('This Capital Investment Agreement is made and effective on '), d(agreementDate),
-          t(', between the Founder(s) / Business(es) named below and '), d(lenderName),
-          t(' (hereafter the "Investor").')
+          t(', by the Founder(s) / Business(es) and the Manager / Payer identified below in favor of '), d(lenderName),
+          t(' (the "Investor"). The Manager / Payer undertakes the monthly payment obligations stated in this Agreement.')
         ]);
 
         heading('Founder(s) / Business(es)');
         borrowers.forEach(function (b, idx) {
           var segs = [];
           if (borrowers.length > 1) segs.push(t('Founder ' + (idx + 1) + ': '));
-          segs.push(d(b.name), t(', ID/Passport No. '), d(b.nic), t(', resident at '), d(b.residence), t(', telephone '), d(b.phone), t('.'));
+          segs.push(d(b.name), t(', ID/Passport No. '), d(b.nic), t(', date of birth '), d(b.dateOfBirth),
+            t(', ID/Passport issued on '), d(b.idIssueDate), t(', resident at '), d(b.residence), t(', telephone '), d(b.phone), t('.'));
           richParagraph(segs);
         });
 
@@ -899,20 +986,49 @@
           t('), of '), d(lenderAddress), t(', telephone '), d(lenderPhone), t('.')
         ]);
 
+        heading('Manager / Monthly Payer');
+        richParagraph([
+          d(managerName), t(' (ID/Passport No. '), d(managerId), t('), of '), d(managerAddress),
+          t(', telephone '), d(managerPhone), t('.')
+        ]);
+
         heading('Investment Commitment');
         richParagraph([
           t('The Investor agrees to provide a capital investment of '), d(amountWithWords(amount)),
-          t(' to the Founder(s) for the business described below, in exchange for a '), d(equity + '%'),
-          t(' equity stake in the business. The investment term is '), d(investmentTermMonths + ' month(s)'),
-          t(' from the date of this Agreement.'),
-          (valuation > 0 ? t(' The agreed pre-money valuation is ' + formatCurrency(valuation) + ' XAF.') : t(''))
+          t(' for the business described below. In consideration of the investment, the Investor is entitled to '), d(equity + '%'),
+          t(' ownership of the business. The parties agree that the cash equivalent of this ownership interest, as of the Agreement date, is '),
+          d(amountWithWords(ownershipCashValue)), t('.'),
+          (valuation > 0 ? t(' The agreed business valuation is ' + formatCurrency(valuation) + ' XAF.') : t(''))
         ]);
+
+        heading('Ongoing Monthly Payment and Lump-Sum Settlement');
+        richParagraph([
+          t('The Manager / Payer shall pay the Investor '), d(amountWithWords(monthlyPayment)),
+          t(' per month, with the first payment due on '), d(firstPaymentDate),
+          t(' and each later payment due on day '), d(paymentDueDay),
+          t(' of each calendar month. This recurring payment has no fixed end date and is separate from the lump-sum settlement described below.')
+        ]);
+        richParagraph([
+          t('The Founder(s) and/or Manager may end the ongoing monthly payment obligation only by paying the Investor a lump-sum settlement of '),
+          d(amountWithWords(lumpSumSettlementAmount)), t(', being the greater of the original capital invested ('), d(amountWithWords(amount)),
+          t(') or the agreed cash equivalent of the Investor\'s ownership interest ('), d(amountWithWords(ownershipCashValue)), t(').')
+        ]);
+        paragraph('Monthly payments are not credited toward, and do not reduce, the lump-sum settlement amount. The monthly payment obligation stops only when the Investor has received the full lump-sum settlement in cleared funds. Any change to the monthly payment amount or schedule must be agreed in writing by the parties.');
+        if (equityTreatment === 'transferred') {
+          paragraph('Upon the Investor receiving the full lump-sum settlement, the Investor\'s stated ownership interest shall transfer to the Manager and cease to be held by the Investor, subject to completion of any business or registry records required to give effect to that transfer.');
+        } else {
+          paragraph('The Investor retains the stated ownership interest after the lump-sum settlement. The monthly payments do not transfer, cancel, or reduce that ownership interest.');
+        }
 
         heading('Business Details');
         richParagraph([t('Business Name: '), d(businessName)]);
         richParagraph([t('Sector: '), d(businessSector)]);
         richParagraph([t('Stage: '), d(businessStage)]);
         richParagraph([t('Description: '), d(businessDescription)]);
+
+        heading('Current Business Assets');
+        richParagraph([t('The parties record the following business assets as of the Agreement date: '), d(businessAssets)]);
+        richParagraph([t('Estimated total current asset value: '), d(amountWithWords(businessAssetsValue)), t('. This is the parties\' stated estimate and is not an independent valuation.')]);
 
         heading('Use of Capital');
         richParagraph([d(capitalUse)]);
@@ -945,6 +1061,7 @@
           signLines.push({ label: (borrowers.length > 1 ? 'Founder ' + (idx + 1) : 'Founder') + ' — ' + b.name });
         });
         signLines.push({ label: 'Investor — ' + lenderRepName + ' (for ' + lenderName + ')' });
+        signLines.push({ label: 'Manager / Payer — ' + managerName });
         if (witnessName) signLines.push({ label: 'Witness — ' + witnessName });
 
         var sigRowHeight = 16;
