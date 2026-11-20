@@ -915,14 +915,60 @@ select.status-select{min-width:112px;border-radius:7px;padding:6px 8px;font-size
 .login-card button{background:linear-gradient(135deg,#10213f,#1c426f);box-shadow:0 12px 22px rgba(16,33,63,.18)}
 .login-card button:hover{background:linear-gradient(135deg,#0c1931,#18385d);box-shadow:0 14px 24px rgba(16,33,63,.22)}
 @media(max-width:900px){
-  header .brand-lockup::after{display:none}.dashboard-kpis{grid-template-columns:1fr}
-  .workspace-heading{align-items:flex-start;flex-direction:column;gap:7px}.workspace-meta{text-align:left}
+  header .brand-lockup::after{display:none}
+  .dashboard-shell{display:block}
+  .sidebar{position:static;width:100%;margin:0 0 14px;padding:10px 12px}
+  .sidebar-title{margin:2px 4px 8px}
+  .nav-list{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:7px}
+  .nav-item{justify-content:center;min-width:0;padding:9px 7px}
+  .nav-copy{gap:5px;justify-content:center}
+  .workspace-heading{align-items:flex-start;gap:7px}
+  .workspace-meta{text-align:left}
+  .dashboard-kpis{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .table-wrap{max-height:64vh;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain}
 }
 @media(max-width:640px){
-  .container{width:96%;padding:0}.workspace-heading h2{font-size:18px}.toolbar{padding:9px}
-  .toolbar input{min-width:100%;width:100%}.results-count{width:auto;margin-left:0;padding-left:2px}
-  .dashboard-kpis{gap:9px}.kpi{padding:12px 14px}
-  .admin-post-grid{grid-template-columns:1fr}.admin-post-wide{grid-column:auto}
+  #dashboard>header{display:grid;grid-template-columns:minmax(0,1fr);align-items:center;min-height:0;padding:9px 12px 8px;gap:8px}
+  #dashboard>header .brand-lockup{grid-row:1;gap:8px;min-width:0;font-size:13px;line-height:1.2;white-space:nowrap}
+  #dashboard>header .brand-mark{width:32px;height:32px;flex:0 0 32px}
+  #dashboard>header .header-actions{grid-row:2;justify-self:end;gap:7px;flex:0 0 auto;margin:0}
+  #dashboard>header .sidebar-toggle,#dashboard>header .refresh-btn,#dashboard>header .nav-btn{min-height:34px;padding:6px 10px;font-size:11px;line-height:1}
+  #dashboard>header .sidebar-toggle{width:36px;padding:5px;font-size:17px}
+  .container{width:100%;margin:13px auto 28px;padding:0 12px}
+  .summary-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+  .summary-card{min-width:0;padding:10px}
+  .workspace-heading{margin-bottom:10px}
+  .workspace-heading h2{font-size:18px}
+  .workspace-heading p{font-size:11.5px;line-height:1.45}
+  .workspace-meta{font-size:10px}
+  .workspace-meta strong{font-size:11px}
+  .sidebar{padding:9px;border-radius:12px}
+  .sidebar.collapsed{display:none}
+  .sidebar-title{font-size:9px;letter-spacing:.1em}
+  .nav-list{grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}
+  .nav-item{justify-content:flex-start;min-height:42px;padding:6px 8px;font-size:11px}
+  .nav-item:last-child{grid-column:1/-1}
+  .nav-icon{width:27px;height:27px;flex:0 0 27px}
+  .nav-copy{justify-content:space-between;gap:5px;min-width:0}
+  .nav-label{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .dashboard-kpis{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-bottom:10px}
+  .kpi{padding:10px 12px;border-radius:11px}
+  .kpi-label{font-size:8px;letter-spacing:.06em}
+  .kpi-value{font-size:19px}
+  .toolbar{display:flex;gap:7px;padding:9px;margin-bottom:10px;align-items:stretch}
+  .toolbar input{order:0;flex:1 0 100%;min-width:0;width:100%;min-height:42px}
+  .toolbar button{flex:1 1 calc(50% - 7px);min-width:0;min-height:40px;padding:8px 6px;font-size:10px;white-space:normal}
+  .results-count{flex:1 0 100%;width:100%;margin:0;padding:3px 2px 0;text-align:left}
+  .card{border-radius:11px}
+  .table-wrap{max-height:58vh;overflow:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
+  .table-wrap table{font-size:10.5px}
+  .table-wrap th{padding:9px 7px;font-size:8.5px}
+  .table-wrap td{padding:8px 7px}
+  .table-scroll{-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain}
+  .admin-post-form{margin:14px 0;padding:12px}
+  .admin-post-grid{grid-template-columns:1fr;gap:9px}
+  .admin-post-wide{grid-column:auto}
+  .empty-state{padding:48px 16px}
 }
 
 body[data-section-theme="loans"] header {
